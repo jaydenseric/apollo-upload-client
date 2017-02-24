@@ -34,7 +34,7 @@ Also setup [Apollo upload server](https://github.com/jaydenseric/apollo-upload-s
 
 Once setup, you will be able to use [`File`](https://developer.mozilla.org/en/docs/Web/API/File) objects, [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList) objects, or `File` arrays within query or mutation input variables.
 
-The files upload to a temp directory; the paths and metadata will be avalable under the variable name in the resolver. See the [server usage](https://github.com/jaydenseric/apollo-upload-server#usage).
+The files upload to a temp directory; the paths and metadata will be available under the variable name in the resolver. See the [server usage](https://github.com/jaydenseric/apollo-upload-server#usage).
 
 ### Single file
 
