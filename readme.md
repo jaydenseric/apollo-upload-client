@@ -1,8 +1,8 @@
-# ![Apollo upload client](https://cdn.rawgit.com/jaydenseric/apollo-upload-client/v1.0.1/apollo-upload-logo.svg)
+# ![Apollo upload client](https://cdn.rawgit.com/jaydenseric/apollo-upload-client/v1.0.2/apollo-upload-logo.svg)
 
 ![NPM version](https://img.shields.io/npm/v/apollo-upload-client.svg?style=flat-square) ![Github issues](https://img.shields.io/github/issues/jaydenseric/apollo-upload-client.svg?style=flat-square) ![Github stars](https://img.shields.io/github/stars/jaydenseric/apollo-upload-client.svg?style=flat-square)
 
-In combination with [Apollo upload server](https://github.com/jaydenseric/apollo-upload-server), enhances [Apollo](http://apollodata.com) for intuitive file uploads via GraphQL mutations or queries.
+Enhances [Apollo](http://apollodata.com) for intuitive file uploads via GraphQL mutations or queries. Use with [Apollo upload server](https://github.com/jaydenseric/apollo-upload-server).
 
 - [> 2%](http://browserl.ist/?q=%3E+2%25) market share browsers supported.
 - [MIT license](https://en.wikipedia.org/wiki/MIT_License).
@@ -34,11 +34,11 @@ Also setup [Apollo upload server](https://github.com/jaydenseric/apollo-upload-s
 
 Once setup, you will be able to use [`File`](https://developer.mozilla.org/en/docs/Web/API/File) objects, [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList) objects, or `File` arrays within query or mutation input variables.
 
-The files upload to a temp directory; the paths and metadata will be avalable under the variable name in the resolver. See the [server usage](https://github.com/jaydenseric/apollo-upload-server#Usage).
+The files upload to a temp directory; the paths and metadata will be avalable under the variable name in the resolver. See the [server usage](https://github.com/jaydenseric/apollo-upload-server#usage).
 
 ### Single file
 
-See [server usage for this example](https://github.com/jaydenseric/apollo-upload-server#Single-file).
+See [server usage for this example](https://github.com/jaydenseric/apollo-upload-server#single-file).
 
 ```js
 import React, {Component, PropTypes} from 'react'
@@ -79,7 +79,7 @@ export default class extends Component {
 
 ### Multiple files
 
-See [server usage for this example](https://github.com/jaydenseric/apollo-upload-server#Multiple-files).
+See [server usage for this example](https://github.com/jaydenseric/apollo-upload-server#multiple-files).
 
 ```js
 import React, {Component, PropTypes} from 'react'
@@ -124,6 +124,6 @@ export default class extends Component {
 
 ## Inspiration
 
-- [@HriBB](https://github.com/HriBB)’s [apollo-upload-network-interface](https://github.com/HriBB/apollo-upload-network-interface) and [graphql-server-express-upload](https://github.com/HriBB/graphql-server-express-upload) projects.
+- [@HriBB](https://github.com/HriBB)’s [graphql-server-express-upload](https://github.com/HriBB/graphql-server-express-upload) and [apollo-upload-network-interface](https://github.com/HriBB/apollo-upload-network-interface) projects.
 - [@danielbuechele](https://github.com/danielbuechele)’s [Medium article](https://medium.com/@danielbuechele/file-uploads-with-graphql-and-apollo-5502bbf3941e).
 - [@jessedvrs](https://github.com/jessedvrs)’s [example code](https://github.com/HriBB/apollo-upload-network-interface/issues/5#issuecomment-280018715).
