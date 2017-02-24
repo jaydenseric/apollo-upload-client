@@ -1,6 +1,7 @@
 {
   "name": "apollo-upload-client",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "description": "In combination with Apollo upload server, enhances Apollo for intuitive file uploads via GraphQL mutations or queries.",
   "license": "MIT",
   "author": {
     "name": "Jayden Seric",
@@ -11,6 +12,14 @@
     "type": "git",
     "url": "https://github.com/jaydenseric/apollo-upload-client.git"
   },
+  "homepage": "https://github.com/jaydenseric/apollo-upload-client#readme",
+  "bugs": "https://github.com/jaydenseric/apollo-upload-client/issues",
+  "keywords": [
+    "apollo",
+    "graphql",
+    "file",
+    "upload"
+  ],
   "dependencies": {
     "apollo-client": "^0.8.7",
     "object-path": "^0.11.3",
