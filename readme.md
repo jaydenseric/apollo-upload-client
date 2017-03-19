@@ -19,7 +19,7 @@ Create the Apollo client with the special network interface:
 
 ```js
 import ApolloClient from 'apollo-client'
-import createNetworkInterface from 'apollo-upload-client'
+import {createNetworkInterface} from 'apollo-upload-client'
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({

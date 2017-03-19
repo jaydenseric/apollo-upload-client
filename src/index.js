@@ -2,11 +2,7 @@ import {HTTPFetchNetworkInterface, printAST} from 'apollo-client'
 import RecursiveIterator from 'recursive-iterator'
 import objectPath from 'object-path'
 
-export default function createNetworkInterface ({uri, ...options}) {
-  return new UploadHTTPFetchNetworkInterface(uri, options)
-}
-
-class UploadHTTPFetchNetworkInterface extends HTTPFetchNetworkInterface {
+export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
   constructor (...args) {
     super(...args)
 
@@ -72,4 +68,8 @@ class UploadHTTPFetchNetworkInterface extends HTTPFetchNetworkInterface {
       }
     })
   }
+}
+
+export function createNetworkInterface ({uri, ...options}) {
+  return new HTTPUploadNetworkInterface(uri, options)
 }
