@@ -2,9 +2,8 @@ import {HTTPFetchNetworkInterface, printAST} from 'apollo-client'
 import RecursiveIterator from 'recursive-iterator'
 import objectPath from 'object-path'
 
-export default function createNetworkInterface (opts) {
-  const {uri} = opts
-  return new UploadHTTPFetchNetworkInterface(uri, opts)
+export default function createNetworkInterface ({uri, ...options}) {
+  return new UploadHTTPFetchNetworkInterface(uri, options)
 }
 
 class UploadHTTPFetchNetworkInterface extends HTTPFetchNetworkInterface {
@@ -63,10 +62,10 @@ class UploadHTTPFetchNetworkInterface extends HTTPFetchNetworkInterface {
     formData.append('variables', JSON.stringify(request.variables))
 
     // Send the multipart form
-    return window.fetch(this._opts.uri, {
-      ...options,
+    return window.fetch(this._uri, {
       body: formData,
       method: 'POST',
+      ...options,
       headers: {
         Accept: '*/*',
         ...options.headers
