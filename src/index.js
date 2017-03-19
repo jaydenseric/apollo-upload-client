@@ -1,5 +1,4 @@
-import {printAST} from 'apollo-client'
-import {HTTPFetchNetworkInterface} from 'apollo-client/transport/networkInterface'
+import {HTTPFetchNetworkInterface, printAST} from 'apollo-client'
 import RecursiveIterator from 'recursive-iterator'
 import objectPath from 'object-path'
 
