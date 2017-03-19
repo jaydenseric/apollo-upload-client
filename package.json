@@ -29,16 +29,13 @@
     "babel-eslint": "^7.1.1",
     "babel-preset-env": "^1.2.2",
     "babel-preset-stage-0": "^6.22.0",
-    "eslint": "^3.18.0",
-    "eslint-config-standard": "^7.1.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^2.1.1",
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.7.1",
-    "rollup-watch": "^3.2.2"
+    "rollup-watch": "^3.2.2",
+    "standard": "^9.0.2"
   },
   "scripts": {
-    "lint": "eslint .",
+    "lint": "standard",
     "prebuild": "npm run lint",
     "build": "rollup --config",
     "build:watch": "npm run build -- --watch",
@@ -67,10 +64,10 @@
       "stage-0"
     ]
   },
-  "eslintConfig": {
+  "standard": {
     "parser": "babel-eslint",
-    "extends": [
-      "standard"
+    "ignore": [
+      "dist/**"
     ]
   }
 }
