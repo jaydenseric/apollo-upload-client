@@ -11,13 +11,9 @@ export class HTTPUploadBatchNetworkInterface extends HTTPBatchedNetworkInterface
     })
     formData.append('operations', JSON.stringify(operations))
     return window.fetch(this._uri, {
-      body: formData,
       method: 'POST',
-      ...options,
-      headers: {
-        Accept: '*/*',
-        ...options.headers
-      }
+      body: formData,
+      ...options
     })
   }
 }

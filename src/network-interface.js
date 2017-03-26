@@ -8,13 +8,9 @@ export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
     formData.append('operations', JSON.stringify(operation))
     files.forEach(({variablesPath, file}) => formData.append(variablesPath, file))
     return window.fetch(this._uri, {
-      body: formData,
       method: 'POST',
-      ...options,
-      headers: {
-        Accept: '*/*',
-        ...options.headers
-      }
+      body: formData,
+      ...options
     })
   }
 }
