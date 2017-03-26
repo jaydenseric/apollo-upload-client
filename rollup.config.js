@@ -6,7 +6,9 @@ export default {
   entry: 'src/index.js',
   external: Object.keys(pkg.dependencies),
   plugins: [
-    babel()
+    babel({
+      runtimeHelpers: true
+    })
   ],
   targets: [{
     dest: pkg['main'],
