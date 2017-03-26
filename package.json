@@ -21,12 +21,12 @@
     "upload"
   ],
   "dependencies": {
-    "apollo-client": "^1.0.0-rc.4",
+    "apollo-client": "^1.0.0-rc.6",
     "object-path": "^0.11.4",
     "recursive-iterator": "^2.0.3"
   },
   "devDependencies": {
-    "babel-eslint": "^7.1.1",
+    "babel-eslint": "^7.2.1",
     "babel-preset-env": "^1.2.2",
     "babel-preset-stage-0": "^6.22.0",
     "rollup": "^0.41.6",
