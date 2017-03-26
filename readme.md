@@ -15,7 +15,7 @@ Install with [Yarn](https://yarnpkg.com):
 yarn add apollo-upload-client
 ```
 
-Create the Apollo client with the special network interface:
+Setup Apollo client with a special network interface:
 
 ```js
 import ApolloClient from 'apollo-client'
@@ -24,6 +24,20 @@ import {createNetworkInterface} from 'apollo-upload-client'
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({
     uri: '/graphql'
+  })
+})
+```
+
+Alternatively enable [query batching](http://dev.apollodata.com/core/network.html#query-batching):
+
+```js
+import ApolloClient from 'apollo-client'
+import {createBatchNetworkInterface} from 'apollo-upload-client'
+
+const client = new ApolloClient({
+  networkInterface: createBatchNetworkInterface({
+    uri: '/graphql',
+    batchInterval: 10
   })
 })
 ```
@@ -117,10 +131,6 @@ export default class extends Component {
   }
 }
 ```
-
-## Caveats
-
-- Batching is not compatible as only the standard Apollo network interface has been extended yet.
 
 ## Inspiration
 
