@@ -1,7 +1,7 @@
 {
   "name": "apollo-upload-client",
   "version": "2.0.2",
-  "description": "Enhances Apollo for intuitive file uploads via GraphQL mutations.",
+  "description": "Enhances Apollo Client for intuitive file uploads via GraphQL mutations.",
   "license": "MIT",
   "author": {
     "name": "Jayden Seric",
