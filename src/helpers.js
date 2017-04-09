@@ -1,4 +1,3 @@
-import {printAST} from 'apollo-client'
 import RecursiveIterator from 'recursive-iterator'
 import objectPath from 'object-path'
 
@@ -43,8 +42,6 @@ export function extractRequestFiles (request) {
       }
     }
   }
-
-  request.query = printAST(request.query)
 
   return {
     operation: request,

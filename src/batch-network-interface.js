@@ -1,4 +1,4 @@
-import {HTTPBatchedNetworkInterface} from 'apollo-client'
+import {HTTPBatchedNetworkInterface, printAST} from 'apollo-client'
 import {extractRequestFiles} from './helpers'
 
 export class HTTPUploadBatchNetworkInterface extends HTTPBatchedNetworkInterface {
@@ -18,6 +18,12 @@ export class HTTPUploadBatchNetworkInterface extends HTTPBatchedNetworkInterface
 
       // Only initiate a multipart form request if there are uploads
       if (batchFiles.length) {
+        // For each operation, convert query AST to string for transport
+        batchOperations.forEach(operation => {
+          operation.query = printAST(operation.query)
+        })
+
+        // Build the form
         const formData = new window.FormData()
         formData.append('operations', JSON.stringify(batchOperations))
         batchFiles.forEach(({operationIndex, files}) => {

@@ -1,4 +1,4 @@
-import {HTTPFetchNetworkInterface} from 'apollo-client'
+import {HTTPFetchNetworkInterface, printAST} from 'apollo-client'
 import {extractRequestFiles} from './helpers'
 
 export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
@@ -10,6 +10,10 @@ export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
 
       // Only initiate a multipart form request if there are uploads
       if (files.length) {
+        // Convert query AST to string for transport
+        operation.query = printAST(operation.query)
+
+        // Build the form
         const formData = new window.FormData()
         formData.append('operations', JSON.stringify(operation))
         files.forEach(({variablesPath, file}) => formData.append(variablesPath, file))
