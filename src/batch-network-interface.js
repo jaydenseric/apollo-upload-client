@@ -34,13 +34,13 @@ export class HTTPUploadBatchNetworkInterface extends HTTPBatchedNetworkInterface
         return window.fetch(this._uri, {
           method: 'POST',
           body: formData,
-          ...options
+          ...options.opts
         })
       }
     }
 
     // Standard fetch method fallback
-    return super.batchedFetchFromRemoteEndpoint({requests, options})
+    return super.batchedFetchFromRemoteEndpoint({requests, options: options.opts})
   }
 }
 

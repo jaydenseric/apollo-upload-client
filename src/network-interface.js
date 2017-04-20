@@ -22,13 +22,13 @@ export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
         return window.fetch(this._uri, {
           method: 'POST',
           body: formData,
-          ...options
+          ...options.opts
         })
       }
     }
 
     // Standard fetch method fallback
-    return super.fetchFromRemoteEndpoint({request, options})
+    return super.fetchFromRemoteEndpoint({request, options: options.opts})
   }
 }
 
