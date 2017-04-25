@@ -55,40 +55,29 @@ The files upload to a temp directory; the paths and metadata will be available u
 See [server usage for this example](https://github.com/jaydenseric/apollo-upload-server#single-file).
 
 ```js
-import React, {Component, PropTypes} from 'react'
-import {graphql} from 'react-apollo'
-import gql from 'graphql-tag'
+import React from 'react'
+import {graphql, gql} from 'react-apollo'
 
-@graphql(gql`
+export default graphql(gql`
   mutation updateUserAvatar ($userId: String!, $avatar: File!) {
     updateUserAvatar (userId: $userId, avatar: $avatar) {
       id
     }
   }
-`)
-export default class extends Component {
-  static propTypes = {
-    userId: PropTypes.string.isRequired,
-    mutate: PropTypes.func.isRequired
-  }
-
-  onChange = ({target}) => {
+`)(({userId, mutate}) => {
+  const handleChange = ({target}) => {
     if (target.validity.valid) {
-      this.props
-        .mutate({
-          variables: {
-            userId: this.props.userId,
-            avatar: target.files[0]
-          }
-        })
-        .then(({data}) => console.log('Mutation response:', data))
+      mutate({
+        variables: {
+          userId,
+          avatar: target.files[0]
+        }
+      }).then(({data}) => console.log('Mutation response:', data))
     }
   }
 
-  render () {
-    return <input type='file' accept={'image/jpeg,image/png'} required onChange={this.onChange} />
-  }
-}
+  return <input type='file' accept={'image/jpeg,image/png'} required onChange={handleChange} />
+})
 ```
 
 ### Multiple files
@@ -96,40 +85,29 @@ export default class extends Component {
 See [server usage for this example](https://github.com/jaydenseric/apollo-upload-server#multiple-files).
 
 ```js
-import React, {Component, PropTypes} from 'react'
-import {graphql} from 'react-apollo'
-import gql from 'graphql-tag'
+import React from 'react'
+import {graphql, gql} from 'react-apollo'
 
-@graphql(gql`
+export default graphql(gql`
   mutation updateGallery ($galleryId: String!, $images: [File!]!) {
     updateGallery (galleryId: $galleryId, images: $images) {
       id
     }
   }
-`)
-export default class extends Component {
-  static propTypes = {
-    galleryId: PropTypes.string.isRequired,
-    mutate: PropTypes.func.isRequired
-  }
-
-  onChange = ({target}) => {
+`)(({galleryId, mutate}) => {
+  const handleChange = ({target}) => {
     if (target.validity.valid) {
-      this.props
-        .mutate({
-          variables: {
-            galleryId: this.props.galleryId,
-            images: target.files
-          }
-        })
-        .then(({data}) => console.log('Mutation response:', data))
+      mutate({
+        variables: {
+          galleryId,
+          images: target.files
+        }
+      }).then(({data}) => console.log('Mutation response:', data))
     }
   }
 
-  render () {
-    return <input type='file' accept={'image/jpeg,image/png'} multiple required onChange={this.onChange} />
-  }
-}
+  return <input type='file' accept={'image/jpeg,image/png'} multiple required onChange={handleChange} />
+})
 ```
 
 ## Inspiration
