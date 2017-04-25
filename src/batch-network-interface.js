@@ -40,10 +40,10 @@ export class HTTPUploadBatchNetworkInterface extends HTTPBatchedNetworkInterface
     }
 
     // Standard fetch method fallback
-    return super.batchedFetchFromRemoteEndpoint({requests, options: options.opts})
+    return super.batchedFetchFromRemoteEndpoint({requests, options})
   }
 }
 
-export function createBatchNetworkInterface ({uri, batchInterval, ...options}) {
-  return new HTTPUploadBatchNetworkInterface(uri, batchInterval, options)
+export function createBatchNetworkInterface ({uri, batchInterval, opts = {}}) {
+  return new HTTPUploadBatchNetworkInterface(uri, batchInterval, opts)
 }

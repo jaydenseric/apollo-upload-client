@@ -28,10 +28,10 @@ export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
     }
 
     // Standard fetch method fallback
-    return super.fetchFromRemoteEndpoint({request, options: options.opts})
+    return super.fetchFromRemoteEndpoint({request, options})
   }
 }
 
-export function createNetworkInterface ({uri, ...options}) {
-  return new HTTPUploadNetworkInterface(uri, options)
+export function createNetworkInterface ({uri, opts = {}}) {
+  return new HTTPUploadNetworkInterface(uri, opts)
 }
