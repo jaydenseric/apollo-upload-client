@@ -66,9 +66,7 @@
       "stage-0"
     ],
     "plugins": [
-      [
-        "transform-runtime"
-      ]
+      "transform-runtime"
     ]
   },
   "standard": {
