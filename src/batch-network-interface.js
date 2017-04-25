@@ -9,10 +9,12 @@ export class HTTPUploadBatchNetworkInterface extends HTTPBatchedNetworkInterface
       const batchFiles = []
       const batchOperations = requests.map((request, operationIndex) => {
         const {operation, files} = extractRequestFiles(request)
-        batchFiles.push({
-          operationIndex,
-          files
-        })
+        if (files.length) {
+          batchFiles.push({
+            operationIndex,
+            files
+          })
+        }
         return operation
       })
 
