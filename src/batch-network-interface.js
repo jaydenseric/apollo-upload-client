@@ -36,7 +36,6 @@ export class HTTPUploadBatchNetworkInterface extends HTTPBatchedNetworkInterface
         return window.fetch(this._uri, {
           method: 'POST',
           body: formData,
-          ...options.opts,
           ...options
         })
       }
