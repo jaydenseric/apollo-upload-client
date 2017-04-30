@@ -22,7 +22,8 @@ export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
         return window.fetch(this._uri, {
           method: 'POST',
           body: formData,
-          ...options.opts
+          ...options.opts,
+          ...options
         })
       }
     }
