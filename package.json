@@ -43,7 +43,8 @@
     "build:watch": "npm run build -- --watch",
     "prepublish": "npm run build"
   },
-  "main": "dist/apollo-upload-client.js",
+  "main": "src/index.js",
+  "main1": "dist/apollo-upload-client.js",
   "module": "dist/apollo-upload-client.module.js",
   "files": [
     "src",
