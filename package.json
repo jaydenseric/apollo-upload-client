@@ -21,7 +21,7 @@
     "upload"
   ],
   "dependencies": {
-    "apollo-client": "^1.0.4",
+    "apollo-client": "1.x",
     "babel-runtime": "^6.23.0",
     "object-path": "^0.11.4",
     "recursive-iterator": "^2.0.3"
