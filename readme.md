@@ -9,10 +9,10 @@ Enhances [Apollo](http://apollodata.com) for intuitive file uploads via GraphQL 
 
 ## Setup
 
-Install with [Yarn](https://yarnpkg.com):
+Install with [npm](https://npmjs.com):
 
 ```
-yarn add apollo-upload-client
+npm install apollo-upload-client
 ```
 
 Setup Apollo client with a special network interface:
