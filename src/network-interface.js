@@ -4,7 +4,10 @@ import {extractRequestFiles} from './helpers'
 export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
   fetchFromRemoteEndpoint ({request, options}) {
     // Skip upload proccess if SSR
-    if (typeof window !== 'undefined') {
+    if (
+      (typeof window !== 'undefined') ||
+      (typeof navigator !== 'undefined' && navigator.product === 'ReactNative')
+    ) {
       // Extract any files from the request
       const {operation, files} = extractRequestFiles(request)
 
@@ -14,12 +17,12 @@ export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
         operation.query = printAST(operation.query)
 
         // Build the form
-        const formData = new window.FormData()
+        const formData = new FormData()
         formData.append('operations', JSON.stringify(operation))
         files.forEach(({variablesPath, file}) => formData.append(variablesPath, file))
 
         // Send request
-        return window.fetch(this._uri, {
+        return fetch(this._uri, {
           method: 'POST',
           body: formData,
           ...options

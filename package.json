@@ -73,6 +73,10 @@
     "parser": "babel-eslint",
     "ignore": [
       "dist/**"
+    ],
+    "globals": [
+      "fetch",
+      "FormData"
     ]
   }
 }
