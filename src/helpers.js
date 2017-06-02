@@ -16,7 +16,7 @@ export function extractRequestFiles (request) {
   // Recursively search GraphQL input variables for FileList or File objects
   for (let {node, path} of new RecursiveIterator(request.variables)) {
     let isFileList, isFile
-    if (typeof navigator != 'undefined' && navigator.product == 'ReactNative') {
+    if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
       isFileList = false
       isFile = typeof node === 'object' && Boolean('name' in node && 'type' in node && 'size' in node && 'path' in node)
       if (isFile) {

@@ -6,7 +6,7 @@ export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
     // Skip upload proccess if SSR
     if (
       (typeof window !== 'undefined') ||
-      (typeof navigator != 'undefined' && navigator.product == 'ReactNative')
+      (typeof navigator !== 'undefined' && navigator.product === 'ReactNative')
     ) {
       // Extract any files from the request
       const {operation, files} = extractRequestFiles(request)
