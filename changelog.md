@@ -7,6 +7,7 @@
 - Dropped Yarn in favor of npm@5. Removed `yarn.lock` and updated install instructions.
 - New ESLint config. Dropped [Standard Style](https://standardjs.com) and began using [Prettier](https://github.com/prettier/eslint-plugin-prettier).
 - Using [lint-staged](https://github.com/okonet/lint-staged) to ensure contributors don't commit lint errors.
+- Removed `build:watch` script. Use `npm run build -- --watch` directly.
 
 ## 4.0.3
 
