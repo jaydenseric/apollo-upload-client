@@ -19,7 +19,7 @@ Setup Apollo client with a special network interface:
 
 ```js
 import ApolloClient from 'apollo-client'
-import {createNetworkInterface} from 'apollo-upload-client'
+import { createNetworkInterface } from 'apollo-upload-client'
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({
@@ -32,7 +32,7 @@ Alternatively enable [query batching](http://dev.apollodata.com/core/network.htm
 
 ```js
 import ApolloClient from 'apollo-client'
-import {createBatchNetworkInterface} from 'apollo-upload-client'
+import { createBatchNetworkInterface } from 'apollo-upload-client'
 
 const client = new ApolloClient({
   networkInterface: createBatchNetworkInterface({
@@ -56,7 +56,7 @@ See [server usage for this example](https://github.com/jaydenseric/apollo-upload
 
 ```js
 import React from 'react'
-import {graphql, gql} from 'react-apollo'
+import { graphql, gql } from 'react-apollo'
 
 export default graphql(gql`
   mutation updateUserAvatar ($userId: String!, $avatar: File!) {
@@ -64,19 +64,26 @@ export default graphql(gql`
       id
     }
   }
-`)(({userId, mutate}) => {
-  const handleChange = ({target}) => {
+`)(({ userId, mutate }) => {
+  const handleChange = ({ target }) => {
     if (target.validity.valid) {
       mutate({
         variables: {
           userId,
           avatar: target.files[0]
         }
-      }).then(({data}) => console.log('Mutation response:', data))
+      }).then(({ data }) => console.log('Mutation response:', data))
     }
   }
 
-  return <input type='file' accept={'image/jpeg,image/png'} required onChange={handleChange} />
+  return (
+    <input
+      type="file"
+      accept={'image/jpeg,image/png'}
+      required
+      onChange={handleChange}
+    />
+  )
 })
 ```
 
@@ -86,7 +93,7 @@ See [server usage for this example](https://github.com/jaydenseric/apollo-upload
 
 ```js
 import React from 'react'
-import {graphql, gql} from 'react-apollo'
+import { graphql, gql } from 'react-apollo'
 
 export default graphql(gql`
   mutation updateGallery ($galleryId: String!, $images: [File!]!) {
@@ -94,19 +101,27 @@ export default graphql(gql`
       id
     }
   }
-`)(({galleryId, mutate}) => {
-  const handleChange = ({target}) => {
+`)(({ galleryId, mutate }) => {
+  const handleChange = ({ target }) => {
     if (target.validity.valid) {
       mutate({
         variables: {
           galleryId,
           images: target.files
         }
-      }).then(({data}) => console.log('Mutation response:', data))
+      }).then(({ data }) => console.log('Mutation response:', data))
     }
   }
 
-  return <input type='file' accept={'image/jpeg,image/png'} multiple required onChange={handleChange} />
+  return (
+    <input
+      type="file"
+      accept={'image/jpeg,image/png'}
+      multiple
+      required
+      onChange={handleChange}
+    />
+  )
 })
 ```
 
