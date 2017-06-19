@@ -9,12 +9,12 @@ import objectPath from 'object-path'
  * @param {string} request.operationName - Name of the GraphQL query or mutation.
  * @returns {Object} - Request with files extracted to a list with their original object paths.
  */
-export function extractRequestFiles (request) {
+export function extractRequestFiles(request) {
   const files = []
   let variablesPath
 
   // Recursively search GraphQL input variables for FileList or File objects
-  for (let {node, path} of new RecursiveIterator(request.variables)) {
+  for (let { node, path } of new RecursiveIterator(request.variables)) {
     const isFileList = node instanceof window.FileList
     const isFile = node instanceof window.File
 

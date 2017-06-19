@@ -10,13 +10,16 @@ export default {
       runtimeHelpers: true
     })
   ],
-  targets: [{
-    dest: pkg['main'],
-    format: 'cjs',
-    sourceMap: true
-  }, {
-    dest: pkg['module'],
-    format: 'es',
-    sourceMap: true
-  }]
+  targets: [
+    {
+      dest: pkg['main'],
+      format: 'cjs',
+      sourceMap: true
+    },
+    {
+      dest: pkg['module'],
+      format: 'es',
+      sourceMap: true
+    }
+  ]
 }

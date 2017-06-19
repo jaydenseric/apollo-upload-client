@@ -1,12 +1,12 @@
-import {HTTPFetchNetworkInterface, printAST} from 'apollo-client'
-import {extractRequestFiles} from './helpers'
+import { HTTPFetchNetworkInterface, printAST } from 'apollo-client'
+import { extractRequestFiles } from './helpers'
 
 export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
-  fetchFromRemoteEndpoint ({request, options}) {
+  fetchFromRemoteEndpoint({ request, options }) {
     // Skip upload proccess if SSR
     if (typeof window !== 'undefined') {
       // Extract any files from the request
-      const {operation, files} = extractRequestFiles(request)
+      const { operation, files } = extractRequestFiles(request)
 
       // Only initiate a multipart form request if there are uploads
       if (files.length) {
@@ -16,7 +16,9 @@ export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
         // Build the form
         const formData = new window.FormData()
         formData.append('operations', JSON.stringify(operation))
-        files.forEach(({variablesPath, file}) => formData.append(variablesPath, file))
+        files.forEach(({ variablesPath, file }) =>
+          formData.append(variablesPath, file)
+        )
 
         // Send request
         return window.fetch(this._uri, {
@@ -28,10 +30,10 @@ export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
     }
 
     // Standard fetch method fallback
-    return super.fetchFromRemoteEndpoint({request, options})
+    return super.fetchFromRemoteEndpoint({ request, options })
   }
 }
 
-export function createNetworkInterface ({uri, opts = {}}) {
+export function createNetworkInterface({ uri, opts = {} }) {
   return new HTTPUploadNetworkInterface(uri, opts)
 }
