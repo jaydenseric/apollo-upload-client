@@ -1,3 +1,7 @@
+import {
+  isFileInput,
+  isFileInputList,
+} from './file-input';
 /**
  * Extracts files from an Apollo Client Request, remembering positions in
  * variables.
@@ -14,7 +18,7 @@ export function extractRequestFiles(request) {
   function recurse(node, path = '') {
     // Iterate enumerable properties
     Object.keys(node).forEach(key => {
-      if (node[key] instanceof window.File) {
+      if (isFileInput(node[key])) {
         // Extract the file and it's original path in the GraphQL input
         // variables for later transport as a multipart form field.
         files.push({
@@ -26,16 +30,21 @@ export function extractRequestFiles(request) {
         // must be deleted without reindexing the array.
         delete node[key]
       } else {
-        if (node[key] instanceof window.FileList)
+        if (isFileInputList(node[key])) {
           // Convert to an array so recursion can extract the files
           node[key] = Array.from(node[key])
-        if (typeof node[key] == 'object') recurse(node[key], `${path}.${key}`)
+        }
+        if (typeof node[key] == 'object') {
+          recurse(node[key], `${path}.${key}`)
+        }
       }
     })
   }
 
   // Recurse the request variables
-  if (request.variables) recurse(request.variables)
+  if (request.variables) {
+    recurse(request.variables)
+  }
 
   return { operation: request, files }
 }
