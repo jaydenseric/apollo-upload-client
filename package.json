@@ -22,9 +22,7 @@
   ],
   "dependencies": {
     "apollo-client": "^1.4.2",
-    "babel-runtime": "^6.23.0",
-    "object-path": "^0.11.4",
-    "recursive-iterator": "^2.0.3"
+    "babel-runtime": "^6.23.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
