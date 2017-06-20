@@ -10,7 +10,7 @@
 export function extractRequestFiles(request) {
   const files = []
 
-  // Recursivly extracts files from an object tree
+  // Recursively extracts files from an object tree
   function recurse(node, path = '') {
     // Iterate enumerable properties
     Object.keys(node).forEach(key => {
