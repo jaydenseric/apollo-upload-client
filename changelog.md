@@ -1,6 +1,6 @@
 # apollo-upload-client change log
 
-## next
+## 4.0.6
 
 - Corrected `package-lock.json`.
 - Source comment typo fix.
