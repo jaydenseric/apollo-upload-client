@@ -1,6 +1,6 @@
 # apollo-upload-client change log
 
-## next
+## 4.0.5
 
 - Removed 2 dependencies by refactoring `extractRequestFiles` with bespoke recursion logic, shaving several KB off the bundle size and fixing [#13](https://github.com/jaydenseric/apollo-upload-client/issues/13).
 
