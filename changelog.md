@@ -1,6 +1,6 @@
 # apollo-upload-client change log
 
-## next
+## 4.0.4
 
 - Updated dependencies.
 - Added a change log.
