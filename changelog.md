@@ -1,6 +1,6 @@
 # apollo-upload-client change log
 
-## next
+## 4.0.7
 
 - Prevent error caused by `null` values in query/mutation variables, fixing [#15](https://github.com/jaydenseric/apollo-upload-client/issues/15).
 
