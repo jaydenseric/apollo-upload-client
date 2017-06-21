@@ -1,5 +1,4 @@
 /**
- * @providesModule FileInput
  * @flow
  */
 // On Android we need a polyfill for Symbol
