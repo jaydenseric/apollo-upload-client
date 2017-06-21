@@ -1,6 +1,6 @@
 {
   "name": "apollo-upload-client",
-  "version": "4.0.6",
+  "version": "4.0.7",
   "description": "Enhances Apollo Client for intuitive file uploads via GraphQL mutations.",
   "license": "MIT",
   "author": {

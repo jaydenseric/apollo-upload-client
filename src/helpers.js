@@ -31,7 +31,8 @@ export function extractRequestFiles(request) {
           // Convert to an array so recursion can extract the files
           node[key] = Array.from(node[key])
         }
-        if (node[key] !== null && typeof node[key] == 'object') {
+        if (node[key] !== null && typeof node[key] === 'object') {
+          // Recurse into child node
           recurse(node[key], `${path}.${key}`)
         }
       }
