@@ -29,7 +29,10 @@ export function extractRequestFiles(request) {
         if (node[key] instanceof window.FileList)
           // Convert to an array so recursion can extract the files
           node[key] = Array.from(node[key])
-        if (typeof node[key] == 'object') recurse(node[key], `${path}.${key}`)
+        if (node[key] !== null && typeof node[key] === 'object') {
+          // Recurse into child node
+          recurse(node[key], `${path}.${key}`)
+        }
       }
     })
   }

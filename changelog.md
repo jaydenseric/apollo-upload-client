@@ -1,5 +1,9 @@
 # apollo-upload-client change log
 
+## next
+
+- Prevent error caused by `null` values in query/mutation variables, fixing [#15](https://github.com/jaydenseric/apollo-upload-client/issues/15).
+
 ## 4.0.6
 
 - Corrected `package-lock.json`.
