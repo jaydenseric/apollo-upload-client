@@ -4,7 +4,10 @@ import { extractRequestFiles } from './helpers'
 export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
   fetchFromRemoteEndpoint({ request, options }) {
     // Skip upload proccess if SSR
-    if (typeof window !== 'undefined' || (typeof global !== 'undefined' && typeof global.FormData !== 'undefined')) {
+    if (
+      typeof window !== 'undefined' ||
+      (typeof global !== 'undefined' && typeof global.FormData !== 'undefined')
+    ) {
       // Extract any files from the request
       const { operation, files } = extractRequestFiles(request)
 

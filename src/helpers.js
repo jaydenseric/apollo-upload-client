@@ -1,7 +1,4 @@
-import {
-  isFileInput,
-  isFileInputList,
-} from './file-input';
+import { isFileInput, isFileInputList } from './file-input'
 /**
  * Extracts files from an Apollo Client Request, remembering positions in
  * variables.

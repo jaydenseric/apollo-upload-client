@@ -86,10 +86,10 @@
       "node": true,
       "browser": true
     },
-    "globals": [
-      "fetch",
-      "FormData"
-    ],
+    "globals": {
+      "fetch": true,
+      "FormData": true
+    },
     "extends": [
       "eslint:recommended"
     ],
