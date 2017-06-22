@@ -86,8 +86,8 @@
       "browser": true
     },
     "globals": {
-      "fetch": true,
-      "FormData": true
+      "fetch": false,
+      "FormData": false
     },
     "extends": [
       "eslint:recommended"
