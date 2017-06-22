@@ -4,7 +4,10 @@ import { extractRequestFiles } from './helpers'
 export class HTTPUploadBatchNetworkInterface extends HTTPBatchedNetworkInterface {
   batchedFetchFromRemoteEndpoint({ requests, options }) {
     // Skip upload proccess if SSR
-    if (typeof window !== 'undefined') {
+    if (
+      typeof window !== 'undefined' ||
+      (typeof global !== 'undefined' && typeof global.FormData !== 'undefined')
+    ) {
       // Extract any files from the request
       const batchFiles = []
       const batchOperations = requests.map((request, operationIndex) => {
@@ -26,7 +29,7 @@ export class HTTPUploadBatchNetworkInterface extends HTTPBatchedNetworkInterface
         })
 
         // Build the form
-        const formData = new window.FormData()
+        const formData = new FormData()
         formData.append('operations', JSON.stringify(batchOperations))
         batchFiles.forEach(({ operationIndex, files }) => {
           files.forEach(({ variablesPath, file }) =>
@@ -35,7 +38,7 @@ export class HTTPUploadBatchNetworkInterface extends HTTPBatchedNetworkInterface
         })
 
         // Send request
-        return window.fetch(this._uri, {
+        return fetch(this._uri, {
           method: 'POST',
           body: formData,
           ...options
