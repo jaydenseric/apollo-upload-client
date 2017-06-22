@@ -18,7 +18,7 @@ export function extractRequestFiles(request) {
       if (typeof node[key] !== 'object' || node[key] === null) return
       if (
         // Web file
-        node[key] instanceof File ||
+        (typeof File !== 'undefined' && node[key] instanceof File) ||
         // React Native file
         ('name' in node[key] && 'type' in node[key] && 'uri' in node[key])
       ) {
@@ -35,7 +35,8 @@ export function extractRequestFiles(request) {
         return
       }
       // Convert file list to an array so recursion can reach the files
-      if (node[key] instanceof FileList) node[key] = Array.from(node[key])
+      if (typeof FileList !== 'undefined' && node[key] instanceof FileList)
+        node[key] = Array.from(node[key])
       // Recurse into child node
       recurse(node[key], `${path}.${key}`)
     })
