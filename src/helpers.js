@@ -40,9 +40,7 @@ export function extractRequestFiles(request) {
   }
 
   // Recurse the request variables
-  if (request.variables) {
-    recurse(request.variables)
-  }
+  if (request.variables) recurse(request.variables)
 
   return { operation: request, files }
 }
