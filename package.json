@@ -29,7 +29,6 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
-    "babel-plugin-external-helpers": "^6.22.0",
     "eslint": "^4.0.0",
     "eslint-plugin-prettier": "^2.1.2",
     "husky": "^0.13.4",
@@ -37,8 +36,6 @@
     "prettier": "^1.4.4",
     "rollup": "^0.43.0",
     "rollup-plugin-babel": "^2.7.1",
-    "rollup-plugin-commonjs": "^8.0.2",
-    "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-watch": "^4.0.0"
   },
   "scripts": {
@@ -69,6 +66,9 @@
         }
       ],
       "stage-0"
+    ],
+    "plugins": [
+      "transform-runtime"
     ]
   },
   "eslintConfig": {
