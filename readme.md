@@ -4,7 +4,7 @@
 
 Enhances [Apollo](http://apollodata.com) for intuitive file uploads via GraphQL mutations or queries. Use with [Apollo upload server](https://github.com/jaydenseric/apollo-upload-server).
 
-- [> 2%](http://browserl.ist/?q=%3E+2%25) market share browsers supported.
+- [> 2%](http://browserl.ist/?q=%3E+2%25) market share browsers and React Native supported.
 - [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
 ## Setup
@@ -13,6 +13,12 @@ Install with [npm](https://npmjs.com):
 
 ```
 npm install apollo-upload-client
+```
+
+React Native installs packages without their dev dependencies and [unconventionally](https://github.com/facebook/react-native/issues/10966) Babel is run over `node_modules`. Babel errors when it tries to respect config found in this package with presets and plugins absent. To overcome this install these dev dependencies (at versions matching `package.json`):
+
+```
+npm install --save-dev babel-preset-env babel-preset-stage-0 babel-plugin-transform-runtime
 ```
 
 Setup Apollo client with a special network interface:
@@ -47,6 +53,8 @@ Also setup [Apollo upload server](https://github.com/jaydenseric/apollo-upload-s
 ## Usage
 
 Once setup, you will be able to use [`File`](https://developer.mozilla.org/en/docs/Web/API/File) objects, [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList) objects, or `File` arrays within query or mutation input variables.
+
+For React Native, any object with the properties `name`, `type` and `uri` within variables will be treated as a file.
 
 The files upload to a temp directory; the paths and metadata will be available under the variable name in the resolver. See the [server usage](https://github.com/jaydenseric/apollo-upload-server#usage).
 
