@@ -1,5 +1,9 @@
 # apollo-upload-client change log
 
+## 4.1.0-alpha.2
+
+- Fixed error when File and FileList are undefined globals in React Native, see [comment](https://github.com/jaydenseric/apollo-upload-client/issues/10#issuecomment-310336487).
+
 ## 4.1.0-alpha.1
 
 - Support React Native, fixing [#10](https://github.com/jaydenseric/apollo-upload-client/issues/10).
