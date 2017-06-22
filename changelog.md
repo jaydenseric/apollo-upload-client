@@ -1,6 +1,6 @@
 # apollo-upload-client change log
 
-## next
+## 4.1.0-alpha.1
 
 - Support React Native, fixing [#10](https://github.com/jaydenseric/apollo-upload-client/issues/10).
 
