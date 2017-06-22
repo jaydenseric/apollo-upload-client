@@ -38,10 +38,10 @@ Alternatively enable [query batching](http://dev.apollodata.com/core/network.htm
 
 ```js
 import ApolloClient from 'apollo-client'
-import { createBatchNetworkInterface } from 'apollo-upload-client'
+import { createBatchingNetworkInterface } from 'apollo-upload-client'
 
 const client = new ApolloClient({
-  networkInterface: createBatchNetworkInterface({
+  networkInterface: createBatchingNetworkInterface({
     uri: '/graphql',
     batchInterval: 10
   })
