@@ -14,30 +14,34 @@ export function extractRequestFiles(request) {
   function recurse(node, path = '') {
     // Iterate enumerable properties
     Object.keys(node).forEach(key => {
-      if (node[key] instanceof window.File) {
+      // Skip non-object
+      if (typeof node[key] !== 'object' || node[key] === null) return
+      if (
+        // Web file
+        node[key] instanceof File ||
+        // React Native file
+        ('name' in node[key] && 'type' in node[key] && 'uri' in node[key])
+      ) {
         // Extract the file and it's original path in the GraphQL input
         // variables for later transport as a multipart form field.
         files.push({
           variablesPath: `variables${path}.${key}`,
           file: node[key]
         })
-        // Delete the file from the request variables. It will be repopulated on
+        // Delete the file from the request variables. It gets repopulated on
         // the server by apollo-upload-server middleware. If an array item it
         // must be deleted without reindexing the array.
         delete node[key]
-      } else {
-        if (node[key] instanceof window.FileList)
-          // Convert to an array so recursion can extract the files
-          node[key] = Array.from(node[key])
-        if (node[key] !== null && typeof node[key] === 'object') {
-          // Recurse into child node
-          recurse(node[key], `${path}.${key}`)
-        }
+        return
       }
+      // Convert file list to an array so recursion can reach the files
+      if (node[key] instanceof FileList) node[key] = Array.from(node[key])
+      // Recurse into child node
+      recurse(node[key], `${path}.${key}`)
     })
   }
 
-  // Recurse the request variables
+  // Recurse request variables
   if (request.variables) recurse(request.variables)
 
   return { operation: request, files }

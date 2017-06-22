@@ -1,5 +1,9 @@
 # apollo-upload-client change log
 
+## next
+
+- Support React Native, fixing [#10](https://github.com/jaydenseric/apollo-upload-client/issues/10).
+
 ## 4.0.7
 
 - Prevent error caused by `null` values in query/mutation variables, fixing [#15](https://github.com/jaydenseric/apollo-upload-client/issues/15).
