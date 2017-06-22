@@ -1,3 +1,5 @@
+import { isFile } from './file-input'
+
 /**
  * Extracts files from an Apollo Client Request, remembering positions in
  * variables.
@@ -16,12 +18,7 @@ export function extractRequestFiles(request) {
     Object.keys(node).forEach(key => {
       // Skip non-object
       if (typeof node[key] !== 'object' || node[key] === null) return
-      if (
-        // Web file
-        (typeof File !== 'undefined' && node[key] instanceof File) ||
-        // React Native file
-        ('name' in node[key] && 'type' in node[key] && 'uri' in node[key])
-      ) {
+      if (isFile(node[key])) {
         // Extract the file and it's original path in the GraphQL input
         // variables for later transport as a multipart form field.
         files.push({
