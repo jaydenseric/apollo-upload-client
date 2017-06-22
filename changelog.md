@@ -1,6 +1,6 @@
 # apollo-upload-client change log
 
-## next
+## 4.1.0
 
 - Documented React Native.
 
