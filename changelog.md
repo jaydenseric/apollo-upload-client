@@ -1,5 +1,12 @@
 # apollo-upload-client change log
 
+## next
+
+- Updated dependencies.
+- Compatibility changes for `apollo-client@1.5.0`:
+  - Prevent a query batching error caused by an API change, fixing [#20](https://github.com/jaydenseric/apollo-upload-client/issues/20).
+  - Support the new `batchMax` option in `createBatchNetworkInterface`.
+
 ## 4.1.0
 
 - Documented React Native.
