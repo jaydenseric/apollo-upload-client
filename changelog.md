@@ -1,11 +1,11 @@
 # apollo-upload-client change log
 
-## next
+## 4.1.1
 
 - Updated dependencies.
 - Compatibility changes for `apollo-client@1.5.0`:
   - Prevent a query batching error caused by an API change, fixing [#20](https://github.com/jaydenseric/apollo-upload-client/issues/20).
-  - Support the new `batchMax` option in `createBatchNetworkInterface`.
+  - Support the new [`batchMax`](https://github.com/apollographql/core-docs/pull/302/files) option in `createBatchNetworkInterface`.
 
 ## 4.1.0
 
