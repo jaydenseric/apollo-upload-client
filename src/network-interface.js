@@ -1,7 +1,7 @@
 import { HTTPFetchNetworkInterface, printAST } from 'apollo-client'
 import { extractRequestFiles } from './helpers'
 
-export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
+export class UploadHTTPFetchNetworkInterface extends HTTPFetchNetworkInterface {
   fetchFromRemoteEndpoint({ request, options }) {
     // Skip upload proccess if SSR
     if (typeof FormData !== 'undefined') {
@@ -35,5 +35,5 @@ export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
 }
 
 export function createNetworkInterface({ uri, opts = {} }) {
-  return new HTTPUploadNetworkInterface(uri, opts)
+  return new UploadHTTPFetchNetworkInterface(uri, opts)
 }
