@@ -1,6 +1,6 @@
 {
   "name": "apollo-upload-client",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "Enhances Apollo Client for intuitive file uploads via GraphQL mutations.",
   "license": "MIT",
   "author": {
@@ -21,7 +21,7 @@
     "upload"
   ],
   "dependencies": {
-    "apollo-client": "^1.4.2",
+    "apollo-client": "^1.5.0",
     "babel-runtime": "^6.23.0"
   },
   "devDependencies": {
@@ -51,26 +51,6 @@
     "src",
     "dist"
   ],
-  "babel": {
-    "presets": [
-      [
-        "env",
-        {
-          "targets": {
-            "browsers": [
-              "> 2%"
-            ]
-          },
-          "modules": false,
-          "loose": true
-        }
-      ],
-      "stage-0"
-    ],
-    "plugins": [
-      "transform-runtime"
-    ]
-  },
   "eslintConfig": {
     "parser": "babel-eslint",
     "parserOptions": {
