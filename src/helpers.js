@@ -73,7 +73,7 @@ export class ReactNativeFile {
    * const file = new ReactNativeFile({
    *  uri: uriFromCameraRoll,
    *  type: 'image/jpeg',
-   *  name: photo.jpg
+   *  name: 'photo.jpg'
    * })
    */
   constructor({ uri, type, name }) {
@@ -89,11 +89,11 @@ export class ReactNativeFile {
    * const files = ReactNativeFile.list({
    *   uri: uriFromCameraRoll1,
    *   type: 'image/jpeg',
-   *   name: photo-1.jpg
+   *   name: 'photo-1.jpg'
    * }, {
    *   uri: uriFromCameraRoll2,
    *   type: 'image/jpeg',
-   *   name: photo-2.jpg
+   *   name: 'photo-2.jpg'
    * })
    */
   static list = files => files.map(file => new ReactNativeFile(file))
