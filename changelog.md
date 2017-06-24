@@ -1,6 +1,6 @@
 # apollo-upload-client change log
 
-## next
+## 5.0.0-alpha.1
 
 - Updated dependencies.
 - Simplified React Native setup by moving Babel config out of `package.json`, fixing [#19](https://github.com/jaydenseric/apollo-upload-client/issues/19) via [#23](https://github.com/jaydenseric/apollo-upload-client/pull/23).
