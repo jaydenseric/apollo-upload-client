@@ -48,6 +48,7 @@ export class HTTPUploadBatchNetworkInterface extends HTTPBatchedNetworkInterface
   }
 }
 
-export function createBatchNetworkInterface({ uri, batchInterval, opts = {} }) {
-  return new HTTPUploadBatchNetworkInterface(uri, batchInterval, opts)
-}
+export const createBatchNetworkInterface = ({
+  opts: fetchOpts = {},
+  ...options
+}) => new HTTPUploadBatchNetworkInterface({ fetchOpts, ...options })

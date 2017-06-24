@@ -1,4 +1,4 @@
-# ![Apollo upload client](https://cdn.rawgit.com/jaydenseric/apollo-upload-client/v4.1.0/apollo-upload-logo.svg)
+# ![Apollo upload client](https://cdn.rawgit.com/jaydenseric/apollo-upload-client/v4.1.1/apollo-upload-logo.svg)
 
 ![NPM version](https://img.shields.io/npm/v/apollo-upload-client.svg?style=flat-square) ![Github issues](https://img.shields.io/github/issues/jaydenseric/apollo-upload-client.svg?style=flat-square) ![Github stars](https://img.shields.io/github/stars/jaydenseric/apollo-upload-client.svg?style=flat-square)
 
@@ -13,12 +13,6 @@ Install with [npm](https://npmjs.com):
 
 ```
 npm install apollo-upload-client
-```
-
-React Native installs packages without their dev dependencies and [unconventionally](https://github.com/facebook/react-native/issues/10966) Babel is run over `node_modules`. Babel errors when it tries to respect config found in this package with presets and plugins absent. To overcome this install these dev dependencies (at versions matching `package.json`):
-
-```
-npm install --save-dev babel-preset-env babel-preset-stage-0 babel-plugin-transform-runtime
 ```
 
 Setup Apollo client with a special network interface:
