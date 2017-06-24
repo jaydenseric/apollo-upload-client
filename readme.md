@@ -15,12 +15,6 @@ Install with [npm](https://npmjs.com):
 npm install apollo-upload-client
 ```
 
-React Native installs packages without their dev dependencies and [unconventionally](https://github.com/facebook/react-native/issues/10966) Babel is run over `node_modules`. Babel errors when it tries to respect config found in this package with presets and plugins absent. To overcome this install these dev dependencies (at versions matching `package.json`):
-
-```
-npm install --save-dev babel-preset-env babel-preset-stage-0 babel-plugin-transform-runtime
-```
-
 Setup Apollo client with a special network interface:
 
 ```js

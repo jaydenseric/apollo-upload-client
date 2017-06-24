@@ -51,26 +51,6 @@
     "src",
     "dist"
   ],
-  "babel": {
-    "presets": [
-      [
-        "env",
-        {
-          "targets": {
-            "browsers": [
-              "> 2%"
-            ]
-          },
-          "modules": false,
-          "loose": true
-        }
-      ],
-      "stage-0"
-    ],
-    "plugins": [
-      "transform-runtime"
-    ]
-  },
   "eslintConfig": {
     "parser": "babel-eslint",
     "parserOptions": {
