@@ -3,7 +3,7 @@ import { extractRequestFiles } from './helpers'
 
 export class UploadHTTPBatchedNetworkInterface extends HTTPBatchedNetworkInterface {
   batchedFetchFromRemoteEndpoint({ requests, options }) {
-    // Skip upload proccess if SSR
+    // Skip process if uploads are impossible
     if (typeof FormData !== 'undefined') {
       // Extract any files from the request
       const batchFiles = []
