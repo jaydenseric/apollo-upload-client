@@ -1,7 +1,7 @@
 import { HTTPBatchedNetworkInterface, printAST } from 'apollo-client'
 import { extractRequestFiles } from './helpers'
 
-export class HTTPUploadBatchNetworkInterface extends HTTPBatchedNetworkInterface {
+export class UploadHTTPBatchedNetworkInterface extends HTTPBatchedNetworkInterface {
   batchedFetchFromRemoteEndpoint({ requests, options }) {
     // Skip upload proccess if SSR
     if (typeof FormData !== 'undefined') {
@@ -48,7 +48,7 @@ export class HTTPUploadBatchNetworkInterface extends HTTPBatchedNetworkInterface
   }
 }
 
-export const createBatchNetworkInterface = ({
+export const createBatchingNetworkInterface = ({
   opts: fetchOpts = {},
   ...options
-}) => new HTTPUploadBatchNetworkInterface({ fetchOpts, ...options })
+}) => new UploadHTTPBatchedNetworkInterface({ fetchOpts, ...options })
