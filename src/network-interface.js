@@ -6,7 +6,7 @@ export class UploadHTTPFetchNetworkInterface extends HTTPFetchNetworkInterface {
     // Standard fetch method fallback
     const fallback = () => super.fetchFromRemoteEndpoint({ request, options })
 
-    // Skip upload proccess if SSR
+    // Skip process if uploads are impossible
     if (typeof FormData === 'undefined') return fallback()
 
     // Extract any files from the request
@@ -29,7 +29,7 @@ export class UploadHTTPFetchNetworkInterface extends HTTPFetchNetworkInterface {
     return fetch(this._uri, {
       method: 'POST',
       body: formData,
-      ...options,
+      ...options
     })
   }
 }
