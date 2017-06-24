@@ -4,10 +4,11 @@ import { extractRequestFiles } from './helpers'
 export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
   fetchFromRemoteEndpoint({ request, options }) {
     // Standard fetch method fallback
-    let fallback = () => super.fetchFromRemoteEndpoint({ request, options })
+    const fallback = () => super.fetchFromRemoteEndpoint({ request, options })
 
     // Skip upload proccess if SSR
     if (typeof FormData === 'undefined') return fallback()
+
     // Extract any files from the request
     const { operation, files } = extractRequestFiles(request)
 
@@ -30,7 +31,6 @@ export class HTTPUploadNetworkInterface extends HTTPFetchNetworkInterface {
       body: formData,
       ...options,
     })
-    return fallback()
   }
 }
 
