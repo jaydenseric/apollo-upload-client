@@ -3,48 +3,49 @@ import { extractRequestFiles } from './helpers'
 
 export class UploadHTTPBatchedNetworkInterface extends HTTPBatchedNetworkInterface {
   batchedFetchFromRemoteEndpoint({ requests, options }) {
-    // Skip upload proccess if SSR
-    if (typeof FormData !== 'undefined') {
-      // Extract any files from the request
-      const batchFiles = []
-      const batchOperations = requests.map((request, operationIndex) => {
-        const { operation, files } = extractRequestFiles(request)
-        if (files.length) {
-          batchFiles.push({
-            operationIndex,
-            files
-          })
-        }
-        return operation
-      })
+    // Standard fetch method fallback
+    const fallback = () =>
+      super.batchedFetchFromRemoteEndpoint({ requests, options })
 
-      // Only initiate a multipart form request if there are uploads
-      if (batchFiles.length) {
-        // For each operation, convert query AST to string for transport
-        batchOperations.forEach(operation => {
-          operation.query = printAST(operation.query)
-        })
+    // Skip process if uploads are impossible
+    if (typeof FormData === 'undefined') return fallback()
 
-        // Build the form
-        const formData = new FormData()
-        formData.append('operations', JSON.stringify(batchOperations))
-        batchFiles.forEach(({ operationIndex, files }) => {
-          files.forEach(({ variablesPath, file }) =>
-            formData.append(`${operationIndex}.${variablesPath}`, file)
-          )
-        })
-
-        // Send request
-        return fetch(this._uri, {
-          method: 'POST',
-          body: formData,
-          ...options
+    // Extract any files from the request
+    const batchFiles = []
+    const batchOperations = requests.map((request, operationIndex) => {
+      const { operation, files } = extractRequestFiles(request)
+      if (files.length) {
+        batchFiles.push({
+          operationIndex,
+          files
         })
       }
-    }
+      return operation
+    })
 
-    // Standard fetch method fallback
-    return super.batchedFetchFromRemoteEndpoint({ requests, options })
+    // Only initiate a multipart form request if there are uploads
+    if (!batchFiles.length) return fallback()
+
+    // For each operation, convert query AST to string for transport
+    batchOperations.forEach(operation => {
+      operation.query = printAST(operation.query)
+    })
+
+    // Build the form
+    const formData = new FormData()
+    formData.append('operations', JSON.stringify(batchOperations))
+    batchFiles.forEach(({ operationIndex, files }) => {
+      files.forEach(({ variablesPath, file }) =>
+        formData.append(`${operationIndex}.${variablesPath}`, file)
+      )
+    })
+
+    // Send request
+    return fetch(this._uri, {
+      method: 'POST',
+      body: formData,
+      ...options
+    })
   }
 }
 
