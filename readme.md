@@ -127,7 +127,7 @@ export default graphql(gql`
 
 ### React Native
 
-React Native [polyfills FormData](https://github.com/facebook/react-native/blob/v0.45.1/Libraries/Network/FormData.js) under the hood and objects with the properties `uri`, `type` and `name` substitute `window.File`. Assuming all objects with those properties in variables are files would be risky. Use `ReactNativeFile` instances in query of mutation variables to mark files for upload:
+React Native [polyfills FormData](https://github.com/facebook/react-native/blob/v0.45.1/Libraries/Network/FormData.js) under the hood and objects with the properties `uri`, `type` and `name` substitute `window.File`. Assuming all objects with those properties in variables are files would be risky. Use `ReactNativeFile` instances in query or mutation variables to mark files for upload:
 
 ```js
 import { ReactNativeFile } from 'apollo-upload-client'
