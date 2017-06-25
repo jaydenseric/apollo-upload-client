@@ -2,8 +2,10 @@
 
 ## next
 
-- Readme tweaks and fixes.
 - Removed `package-lock.json`. Lockfiles are [not recommended](https://github.com/sindresorhus/ama/issues/479#issuecomment-310661514) for packages.
+- Readme tweaks and fixes:
+  - Renamed the `File` input type `Upload` for clarity.
+  - Wording and formatting improvements.
 
 ## 5.0.0-alpha.1
 

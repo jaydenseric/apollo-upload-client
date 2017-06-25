@@ -45,9 +45,9 @@ Also setup [apollo-upload-server](https://github.com/jaydenseric/apollo-upload-s
 
 ## Usage
 
-Once setup, you will be able to use [`File`](https://developer.mozilla.org/en/docs/Web/API/File) and [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList) objects, `File` arrays, and `ReactNativeFile` instances within query or mutation input variables.
+Once setup, you will be able to use [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en/docs/Web/API/File) and [`ReactNativeFile`](https://github.com/jaydenseric/apollo-upload-client#react-native) instances anywhere within mutation or query input variables.
 
-With [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server) setup, the files upload to a temp directory. The paths and metadata will be available under the variable name in the resolver. See the [server usage](https://github.com/jaydenseric/apollo-upload-server#usage).
+With [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server) setup, the files upload to a temp directory. `Upload` input type metadata replaces file instances in the arguments received by the resolver. See the [server usage](https://github.com/jaydenseric/apollo-upload-server#usage).
 
 ### Single file
 
@@ -58,7 +58,7 @@ import React from 'react'
 import { graphql, gql } from 'react-apollo'
 
 export default graphql(gql`
-  mutation updateUserAvatar($userId: String!, $avatar: File!) {
+  mutation updateUserAvatar($userId: String!, $avatar: Upload!) {
     updateUserAvatar(userId: $userId, avatar: $avatar) {
       id
     }
@@ -95,7 +95,7 @@ import React from 'react'
 import { graphql, gql } from 'react-apollo'
 
 export default graphql(gql`
-  mutation updateGallery($galleryId: String!, $images: [File!]!) {
+  mutation updateGallery($galleryId: String!, $images: [Upload!]!) {
     updateGallery(galleryId: $galleryId, images: $images) {
       id
     }
