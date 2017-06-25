@@ -1,6 +1,6 @@
 # apollo-upload-client change log
 
-## next
+## 5.0.0
 
 - Removed `package-lock.json`. Lockfiles are [not recommended](https://github.com/sindresorhus/ama/issues/479#issuecomment-310661514) for packages.
 - Readme tweaks and fixes:
