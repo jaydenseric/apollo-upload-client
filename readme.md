@@ -1,8 +1,8 @@
-# ![Apollo upload client](https://cdn.rawgit.com/jaydenseric/apollo-upload-client/v5.0.0-alpha.1/apollo-upload-logo.svg)
+# ![apollo-upload-client](https://cdn.rawgit.com/jaydenseric/apollo-upload-client/v5.0.0-alpha.1/apollo-upload-logo.svg)
 
 ![NPM version](https://img.shields.io/npm/v/apollo-upload-client.svg?style=flat-square) ![Github issues](https://img.shields.io/github/issues/jaydenseric/apollo-upload-client.svg?style=flat-square) ![Github stars](https://img.shields.io/github/stars/jaydenseric/apollo-upload-client.svg?style=flat-square)
 
-Enhances [Apollo](http://apollodata.com) for intuitive file uploads via GraphQL mutations or queries. Use with [Apollo upload server](https://github.com/jaydenseric/apollo-upload-server).
+Enhances [Apollo](http://apollodata.com) for intuitive file uploads via GraphQL mutations or queries. Use with [apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server).
 
 - [> 2%](http://browserl.ist/?q=%3E+2%25) market share browsers and React Native supported.
 - [MIT license](https://en.wikipedia.org/wiki/MIT_License).
@@ -15,7 +15,7 @@ Install with [npm](https://npmjs.com):
 npm install apollo-upload-client
 ```
 
-Setup Apollo client with a special network interface:
+Setup Apollo Client with a special network interface:
 
 ```js
 import ApolloClient from 'apollo-client'
@@ -36,13 +36,12 @@ import { createBatchingNetworkInterface } from 'apollo-upload-client'
 
 const client = new ApolloClient({
   networkInterface: createBatchingNetworkInterface({
-    uri: '/graphql',
-    batchInterval: 10
+    uri: '/graphql'
   })
 })
 ```
 
-Also setup [Apollo upload server](https://github.com/jaydenseric/apollo-upload-server).
+Also setup [apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server).
 
 ## Usage
 
