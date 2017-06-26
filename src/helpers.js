@@ -38,6 +38,21 @@ export function extractRequestFiles(request) {
         return
       }
 
+      if (typeof Blob !== 'undefined' && node[key] instanceof Blob) {
+        files.push({
+          variablesPath: `variables${path}.${key}`,
+          file: node[key]
+        })
+
+        // Delete the file from the request variables. It gets repopulated on
+        // the server by apollo-upload-server middleware. If an array item it
+        // must be deleted without reindexing the array.
+        delete node[key]
+
+        // No deeper recursion
+        return
+      }
+
       // Convert file list to an array so recursion can reach the files
       if (typeof FileList !== 'undefined' && node[key] instanceof FileList)
         node[key] = Array.from(node[key])
