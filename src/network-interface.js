@@ -16,9 +16,13 @@ export class UploadHTTPFetchNetworkInterface extends HTTPFetchNetworkInterface {
         // Build the form
         const formData = new FormData()
         formData.append('operations', JSON.stringify(operation))
-        files.forEach(({ variablesPath, file }) =>
-          formData.append(variablesPath, file)
-        )
+        files.forEach(({ variablesPath, file }) => {
+          if (typeof Blob !== 'undefined' && file instanceof Blob) {
+            formData.append(variablesPath, file, file.name)
+          } else {
+            formData.append(variablesPath, file)
+          }
+        })
 
         // Send request
         return fetch(this._uri, {
