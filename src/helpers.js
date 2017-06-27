@@ -20,25 +20,11 @@ export function extractRequestFiles(request) {
       // Check if the node is a file
       if (
         (typeof File !== 'undefined' && node[key] instanceof File) ||
-        node[key] instanceof ReactNativeFile
+        node[key] instanceof ReactNativeFile ||
+        (typeof Blob !== 'undefined' && node[key] instanceof Blob)
       ) {
         // Extract the file and it's original path in the GraphQL input
         // variables for later transport as a multipart form field.
-        files.push({
-          variablesPath: `variables${path}.${key}`,
-          file: node[key]
-        })
-
-        // Delete the file from the request variables. It gets repopulated on
-        // the server by apollo-upload-server middleware. If an array item it
-        // must be deleted without reindexing the array.
-        delete node[key]
-
-        // No deeper recursion
-        return
-      }
-
-      if (typeof Blob !== 'undefined' && node[key] instanceof Blob) {
         files.push({
           variablesPath: `variables${path}.${key}`,
           file: node[key]
