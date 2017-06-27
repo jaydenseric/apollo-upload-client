@@ -20,7 +20,8 @@ export function extractRequestFiles(request) {
       // Check if the node is a file
       if (
         (typeof File !== 'undefined' && node[key] instanceof File) ||
-        node[key] instanceof ReactNativeFile
+        node[key] instanceof ReactNativeFile ||
+        (typeof Blob !== 'undefined' && node[key] instanceof Blob)
       ) {
         // Extract the file and it's original path in the GraphQL input
         // variables for later transport as a multipart form field.
