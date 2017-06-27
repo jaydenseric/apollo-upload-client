@@ -1,5 +1,5 @@
 {
-  "name": "apollo-upload-client-coda",
+  "name": "apollo-upload-client",
   "version": "5.0.0",
   "description": "Enhances Apollo Client for intuitive file uploads via GraphQL mutations.",
   "license": "MIT",
