@@ -1,24 +1,22 @@
 import { HTTPFetchNetworkInterface, printAST } from 'apollo-client'
-import { extractRequestFiles } from './helpers'
+import { extractFiles } from 'extract-files'
 
 export class UploadHTTPFetchNetworkInterface extends HTTPFetchNetworkInterface {
   fetchFromRemoteEndpoint({ request, options }) {
-    // Skip process if uploads are impossible
+    // Continue if uploads are possible
     if (typeof FormData !== 'undefined') {
-      // Extract any files from the request
-      const { operation, files } = extractRequestFiles(request)
+      // Extract any files from the request variables
+      const files = extractFiles(request.variables, 'variables')
 
-      // Only initiate a multipart form request if there are uploads
+      // Continue if there are files to upload
       if (files.length) {
         // Convert query AST to string for transport
-        operation.query = printAST(operation.query)
+        request.query = printAST(request.query)
 
-        // Build the form
+        // Construct a multipart form
         const formData = new FormData()
-        formData.append('operations', JSON.stringify(operation))
-        files.forEach(({ variablesPath, file }) =>
-          formData.append(variablesPath, file)
-        )
+        formData.append('operations', JSON.stringify(request))
+        files.forEach(({ path, file }) => formData.append(path, file))
 
         // Send request
         return fetch(this._uri, {

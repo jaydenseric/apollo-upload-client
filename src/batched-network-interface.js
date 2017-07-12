@@ -1,38 +1,28 @@
 import { HTTPBatchedNetworkInterface, printAST } from 'apollo-client'
-import { extractRequestFiles } from './helpers'
+import { extractFiles } from 'extract-files'
 
 export class UploadHTTPBatchedNetworkInterface extends HTTPBatchedNetworkInterface {
   batchedFetchFromRemoteEndpoint({ requests, options }) {
-    // Skip process if uploads are impossible
+    // Continue if uploads are possible
     if (typeof FormData !== 'undefined') {
-      // Extract any files from the request
-      const batchFiles = []
-      const batchOperations = requests.map((request, operationIndex) => {
-        const { operation, files } = extractRequestFiles(request)
-        if (files.length) {
-          batchFiles.push({
-            operationIndex,
-            files
-          })
-        }
-        return operation
-      })
+      // Extract any files from the each request variables
+      const files = requests.reduce(
+        (files, request, index) =>
+          files.concat(extractFiles(request.variables, `${index}.variables`)),
+        []
+      )
 
-      // Only initiate a multipart form request if there are uploads
-      if (batchFiles.length) {
-        // For each operation, convert query AST to string for transport
-        batchOperations.forEach(operation => {
-          operation.query = printAST(operation.query)
+      // Continue if there are files to upload
+      if (files.length) {
+        // For each request convert query AST to string for transport
+        requests.forEach(request => {
+          request.query = printAST(request.query)
         })
 
-        // Build the form
+        // Construct a multipart form
         const formData = new FormData()
-        formData.append('operations', JSON.stringify(batchOperations))
-        batchFiles.forEach(({ operationIndex, files }) => {
-          files.forEach(({ variablesPath, file }) =>
-            formData.append(`${operationIndex}.${variablesPath}`, file)
-          )
-        })
+        formData.append('operations', JSON.stringify(requests))
+        files.forEach(({ path, file }) => formData.append(path, file))
 
         // Send request
         return fetch(this._uri, {
