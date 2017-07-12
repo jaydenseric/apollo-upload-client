@@ -5,6 +5,7 @@
 - Updated dependencies.
 - Readme tweaks including a new licence badge.
 - Fixed Rollup build warnings.
+- Fixed an npm v5 warning by using `prepublishOnly` instead of `prepublish`.
 
 ## 5.0.0
 

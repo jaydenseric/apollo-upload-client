@@ -42,7 +42,7 @@
     "lint": "eslint .",
     "prebuild": "npm run lint",
     "build": "rollup --config",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "precommit": "lint-staged"
   },
   "main": "dist/apollo-upload-client.js",
