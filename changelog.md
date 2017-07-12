@@ -4,6 +4,7 @@
 
 - Updated dependencies.
 - Readme tweaks including a new licence badge.
+- Fixed Rollup build warnings.
 
 ## 5.0.0
 
