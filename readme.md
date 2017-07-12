@@ -1,11 +1,13 @@
-# ![apollo-upload-client](https://cdn.rawgit.com/jaydenseric/apollo-upload-client/v5.0.0/apollo-upload-logo.svg)
+![Apollo upload logo](https://cdn.rawgit.com/jaydenseric/apollo-upload-client/v5.0.0/apollo-upload-logo.svg)
 
-![NPM version](https://img.shields.io/npm/v/apollo-upload-client.svg?style=flat-square) ![Github issues](https://img.shields.io/github/issues/jaydenseric/apollo-upload-client.svg?style=flat-square) ![Github stars](https://img.shields.io/github/stars/jaydenseric/apollo-upload-client.svg?style=flat-square)
+# apollo-upload-client
+
+![NPM version](https://img.shields.io/npm/v/apollo-upload-client.svg?style=flat-square)
+![Licence](https://img.shields.io/npm/l/apollo-upload-client.svg?style=flat-square)
+![Github issues](https://img.shields.io/github/issues/jaydenseric/apollo-upload-client.svg?style=flat-square)
+![Github stars](https://img.shields.io/github/stars/jaydenseric/apollo-upload-client.svg?style=flat-square)
 
 Enhances [Apollo](http://apollodata.com) for intuitive file uploads via GraphQL mutations or queries. Use with [apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server).
-
-- [> 2%](http://browserl.ist/?q=%3E+2%25) market share browsers and React Native supported.
-- [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
 ## Setup
 
@@ -126,7 +128,7 @@ export default graphql(gql`
 
 ### React Native
 
-React Native [polyfills FormData](https://github.com/facebook/react-native/blob/v0.45.1/Libraries/Network/FormData.js) under the hood and objects with the properties `uri`, `type` and `name` substitute `window.File`. Assuming all objects with those properties in variables are files would be risky. Use `ReactNativeFile` instances in query or mutation variables to mark files for upload:
+React Native [polyfills FormData](https://github.com/facebook/react-native/blob/v0.45.1/Libraries/Network/FormData.js) under the hood and objects with the properties `uri`, `type` and `name` substitute `window.File`. It would be risky to assume all objects with those properties in variables are files. Use `ReactNativeFile` instances in query or mutation variables to explicitly mark files for upload:
 
 ```js
 import { ReactNativeFile } from 'apollo-upload-client'
@@ -153,6 +155,11 @@ const files = ReactNativeFile.list({
 
 // ✂
 ```
+
+## Support
+
+- [> 2%](http://browserl.ist/?q=%3E+2%25) market share browsers.
+- React Native.
 
 ## Inspiration
 
