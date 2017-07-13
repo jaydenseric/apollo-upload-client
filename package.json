@@ -23,7 +23,7 @@
   "dependencies": {
     "apollo-client": "^1.8.0",
     "babel-runtime": "^6.23.0",
-    "extract-files": "^1.0.0"
+    "extract-files": "^1.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
@@ -35,9 +35,9 @@
     "husky": "^0.14.3",
     "lint-staged": "^4.0.1",
     "prettier": "^1.5.2",
-    "rollup": "^0.43.1",
+    "rollup": "^0.45.2",
     "rollup-plugin-babel": "^2.7.1",
-    "rollup-watch": "^4.0.0"
+    "rollup-watch": "^4.3.1"
   },
   "scripts": {
     "lint": "eslint .",
