@@ -1,6 +1,6 @@
 # apollo-upload-client change log
 
-## next
+## 5.1.0
 
 - Updated dependencies.
 - Readme tweaks including a new licence badge.
