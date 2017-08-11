@@ -21,22 +21,22 @@
     "upload"
   ],
   "dependencies": {
-    "apollo-client": "^1.8.0",
-    "babel-runtime": "^6.23.0",
-    "extract-files": "^1.1.0"
+    "apollo-client": "^1.9.1",
+    "babel-runtime": "^6.25.0",
+    "extract-files": "^2.0.1"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-0": "^6.24.1",
-    "eslint": "^4.2.0",
+    "eslint": "^4.4.1",
     "eslint-plugin-prettier": "^2.1.2",
     "husky": "^0.14.3",
-    "lint-staged": "^4.0.1",
-    "prettier": "^1.5.2",
+    "lint-staged": "^4.0.3",
+    "prettier": "^1.5.3",
     "rollup": "^0.45.2",
-    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-babel": "^3.0.1",
     "rollup-watch": "^4.3.1"
   },
   "scripts": {

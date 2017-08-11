@@ -2,6 +2,7 @@
 
 ## next
 
+- Updated dependencies.
 - Readme fixes:
   - Fixed usage example code for `ReactNativeFile.list`.
   - Fixed capitalization of ‘npm’.
