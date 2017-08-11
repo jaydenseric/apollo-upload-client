@@ -1,6 +1,6 @@
 # apollo-upload-client change log
 
-## next
+## 5.1.1
 
 - Updated dependencies.
 - Readme fixes:
