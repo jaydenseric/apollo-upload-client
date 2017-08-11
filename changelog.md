@@ -1,5 +1,11 @@
 # apollo-upload-client change log
 
+## next
+
+- Readme fixes:
+  - Fixed usage example code for `ReactNativeFile.list`.
+  - Fixed capitalization of ‘npm’.
+
 ## 5.1.0
 
 - Updated dependencies.

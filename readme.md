@@ -2,7 +2,7 @@
 
 # apollo-upload-client
 
-![NPM version](https://img.shields.io/npm/v/apollo-upload-client.svg?style=flat-square)
+![npm version](https://img.shields.io/npm/v/apollo-upload-client.svg?style=flat-square)
 ![Licence](https://img.shields.io/npm/l/apollo-upload-client.svg?style=flat-square)
 ![Github issues](https://img.shields.io/github/issues/jaydenseric/apollo-upload-client.svg?style=flat-square)
 ![Github stars](https://img.shields.io/github/stars/jaydenseric/apollo-upload-client.svg?style=flat-square)
@@ -143,7 +143,7 @@ const file = new ReactNativeFile({
 })
 
 // Multiple files
-const files = ReactNativeFile.list({
+const files = ReactNativeFile.list([{
   uri: uriFromCameraRoll1,
   type: 'image/jpeg',
   name: 'photo-1.jpg'
@@ -151,7 +151,7 @@ const files = ReactNativeFile.list({
   uri: uriFromCameraRoll2,
   type: 'image/jpeg',
   name: 'photo-2.jpg'
-})
+}])
 
 // ✂
 ```
