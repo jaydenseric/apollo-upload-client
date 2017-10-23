@@ -6,6 +6,7 @@
 - Rejigged package scripts.
 - Updated Prettier and ESLint config.
 - Lint errors when attempting to commit partially staged files no longer commits the whole file.
+- Relative readme logo path.
 
 ## 5.1.1
 
