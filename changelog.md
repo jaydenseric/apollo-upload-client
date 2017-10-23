@@ -3,6 +3,9 @@
 ## Next
 
 - Updated dependencies.
+- Rejigged package scripts.
+- Updated Prettier and ESLint config.
+- Lint errors when attempting to commit partially staged files no longer commits the whole file.
 
 ## 5.1.1
 

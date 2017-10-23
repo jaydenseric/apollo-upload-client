@@ -20,6 +20,12 @@
     "file",
     "upload"
   ],
+  "files": [
+    "src",
+    "dist"
+  ],
+  "main": "dist/apollo-upload-client.js",
+  "module": "dist/apollo-upload-client.module.js",
   "dependencies": {
     "apollo-client": "^1.9.3",
     "babel-runtime": "^6.26.0",
@@ -41,18 +47,14 @@
     "rollup-watch": "^4.3.1"
   },
   "scripts": {
-    "lint": "eslint .",
-    "prebuild": "npm run lint",
     "build": "rollup --config",
-    "prepublishOnly": "npm run build",
-    "precommit": "lint-staged"
+    "lint": "eslint .",
+    "precommit": "lint-staged",
+    "prepublishOnly": "npm run lint && npm run build"
   },
-  "main": "dist/apollo-upload-client.js",
-  "module": "dist/apollo-upload-client.module.js",
-  "files": [
-    "src",
-    "dist"
-  ],
+  "lint-staged": {
+    "*.js": "eslint"
+  },
   "eslintConfig": {
     "parser": "babel-eslint",
     "parserOptions": {
@@ -74,19 +76,15 @@
       "prettier"
     ],
     "rules": {
-      "prettier/prettier": [
+      "curly": [
         "error",
-        {
-          "semi": false,
-          "singleQuote": true
-        }
-      ]
+        "multi"
+      ],
+      "prettier/prettier": "error"
     }
   },
-  "lint-staged": {
-    "**/*.js": [
-      "eslint --fix",
-      "git add"
-    ]
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   }
 }
