@@ -1,5 +1,9 @@
 # apollo-upload-client change log
 
+## Next
+
+- Updated dependencies.
+
 ## 5.1.1
 
 - Updated dependencies.
