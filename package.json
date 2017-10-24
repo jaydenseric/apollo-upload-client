@@ -22,41 +22,42 @@
   ],
   "files": [
     "src",
-    "dist"
+    "lib"
   ],
-  "main": "dist/apollo-upload-client.js",
-  "module": "dist/apollo-upload-client.module.js",
+  "main": "lib/main/index.js",
+  "module": "lib/module/index.mjs",
+  "browserslist": "> 2%",
   "dependencies": {
     "apollo-client": "^1.9.3",
-    "babel-runtime": "^6.26.0",
+    "babel-polyfill": "^7.0.0-beta.3",
+    "babel-runtime": "^7.0.0-beta.3",
     "extract-files": "^2.0.1"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.1",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-stage-0": "^6.24.1",
+    "babel-cli": "^7.0.0-beta.3",
+    "babel-plugin-transform-runtime": "^7.0.0-beta.3",
+    "babel-preset-env": "^7.0.0-beta.3",
     "eslint": "^4.9.0",
     "eslint-plugin-prettier": "^2.3.1",
     "husky": "^0.14.3",
     "lint-staged": "^4.3.0",
-    "prettier": "^1.7.4",
-    "rollup": "^0.45.2",
-    "rollup-plugin-babel": "^3.0.2",
-    "rollup-watch": "^4.3.1"
+    "prettier": "^1.7.4"
   },
   "scripts": {
-    "build": "rollup --config",
-    "lint": "eslint .",
+    "build": "npm run build:main && npm run build:module && prettier --write 'lib/**/*.{js,mjs}'",
+    "build:main": "babel src --out-dir lib/main --config-file ./babelrc.main.json",
+    "build:module": "babel src --out-dir lib/module --config-file ./babelrc.module.json --keep-file-extension",
+    "lint": "eslint . --ext js,mjs",
     "precommit": "lint-staged",
     "prepublishOnly": "npm run lint && npm run build"
   },
   "lint-staged": {
     "*.js": "eslint"
   },
+  "eslintIgnore": [
+    "lib"
+  ],
   "eslintConfig": {
-    "parser": "babel-eslint",
     "parserOptions": {
       "sourceType": "module",
       "ecmaVersion": 2017,

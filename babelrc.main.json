@@ -1,0 +1,13 @@
+{
+  "extends": "./babelrc.common.json",
+  "presets": [
+    [
+      "env",
+      {
+        "useBuiltIns": "usage",
+        "shippedProposals": true,
+        "loose": true
+      }
+    ]
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "comments": false,
+  "plugins": [
+    [
+      "transform-runtime",
+      {
+        "polyfill": false,
+        "regenerator": false
+      }
+    ]
+  ]
+}
