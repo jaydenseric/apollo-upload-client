@@ -2,7 +2,7 @@
   "extends": "./babelrc.common.json",
   "presets": [
     [
-      "env",
+      "@babel/preset-env",
       {
         "useBuiltIns": "usage",
         "shippedProposals": true,
