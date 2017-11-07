@@ -15,7 +15,10 @@ export const createUploadLink = (
   new ApolloLink(
     ({ operationName, variables, query, extensions, getContext }) =>
       new Observable(observer => {
-        const { fetchOptions: contextFetchOptions = {} } = getContext()
+        const {
+          uri: fetchUri = uri,
+          fetchOptions: contextFetchOptions = {}
+        } = getContext()
 
         const fetchOptions = {
           headers: {},
@@ -48,7 +51,7 @@ export const createUploadLink = (
           fetchOptions.body = JSON.stringify(requestOperation)
         }
 
-        fetcher(uri, fetchOptions)
+        fetcher(fetchUri, fetchOptions)
           .then(response =>
             response.json().then(result => {
               if (!response.ok)
