@@ -2,10 +2,10 @@
 
 # apollo-upload-client
 
-![npm version](https://img.shields.io/npm/v/apollo-upload-client.svg?style=flat-square)
-![Licence](https://img.shields.io/npm/l/apollo-upload-client.svg?style=flat-square)
-![Github issues](https://img.shields.io/github/issues/jaydenseric/apollo-upload-client.svg?style=flat-square)
-![Github stars](https://img.shields.io/github/stars/jaydenseric/apollo-upload-client.svg?style=flat-square)
+[![npm version](https://img.shields.io/npm/v/apollo-upload-client.svg)](https://npm.im/apollo-upload-client)
+![Licence](https://img.shields.io/npm/l/apollo-upload-client.svg)
+[![Github issues](https://img.shields.io/github/issues/jaydenseric/apollo-upload-client.svg)](https://github.com/jaydenseric/apollo-upload-client/issues)
+[![Github stars](https://img.shields.io/github/stars/jaydenseric/apollo-upload-client.svg)](https://github.com/jaydenseric/apollo-upload-client/stargazers)
 
 Enhances [Apollo](http://apollodata.com) for intuitive file uploads via GraphQL mutations or queries. Use with [apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server).
 
