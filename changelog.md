@@ -3,12 +3,12 @@
 ## Next
 
 - Updated dependencies.
+- Apollo Client v2 compatibility:
+  - Export a terminating Apollo Link instead of custom network interfaces.
+  - New `apollo-link` and `graphql` peer dependencies.
 - Rejigged package scripts.
 - Updated Prettier and ESLint config.
 - Lint errors when attempting to commit partially staged files no longer commits the whole file.
-- Relative readme logo path.
-- Added links to readme badges.
-- Removed “Inspiration” section from the readme; the links don’t really apply to the evolved codebase.
 - Using Babel v7 directly instead of Rollup.
 - Using `babel-preset-env` to handle polyfills so only required ones are included for our level of browser support.
 - Using `prettier` to format distribution code as well as source code.
@@ -16,6 +16,10 @@
 - Renamed `dist` directory to `lib`.
 - Module files now have `.mjs` extension.
 - Removed `babel-eslint` as the vanilla parser works fine.
+- Readme improvements:
+  - Relative logo path.
+  - Added links to badges.
+  - Removed the inspiration links; they are less relevant to the evolved codebase.
 
 ## 5.1.1
 

@@ -30,16 +30,21 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.31",
     "@babel/runtime": "^7.0.0-beta.31",
-    "apollo-client": "^1.9.3",
     "extract-files": "^2.0.1"
+  },
+  "peerDependencies": {
+    "apollo-link": "^1.0.0",
+    "graphql": "^0.11.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.31",
     "@babel/core": "^7.0.0-beta.31",
     "@babel/plugin-transform-runtime": "^7.0.0-beta.31",
     "@babel/preset-env": "^7.0.0-beta.31",
+    "apollo-link": "^1.0.0",
     "eslint": "^4.10.0",
     "eslint-plugin-prettier": "^2.3.1",
+    "graphql": "^0.11.7",
     "husky": "^0.14.3",
     "lint-staged": "^4.3.0",
     "prettier": "^1.7.4"

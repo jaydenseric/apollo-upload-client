@@ -11,35 +11,19 @@ Enhances [Apollo](http://apollodata.com) for intuitive file uploads via GraphQL 
 
 ## Setup
 
-Install with [npm](https://npmjs.com):
+Install this package and peer dependencies with [npm](https://npmjs.com):
 
 ```
-npm install apollo-upload-client
+npm install apollo-upload-client apollo-link graphql
 ```
 
-Setup Apollo Client with a special network interface:
+Initialize Apollo Client with this terminating link:
 
 ```js
-import ApolloClient from 'apollo-client'
-import { createNetworkInterface } from 'apollo-upload-client'
+import { createUploadLink } from 'apollo-upload-client'
 
-const client = new ApolloClient({
-  networkInterface: createNetworkInterface({
-    uri: '/graphql'
-  })
-})
-```
-
-Alternatively enable [query batching](http://dev.apollodata.com/core/network.html#query-batching):
-
-```js
-import ApolloClient from 'apollo-client'
-import { createBatchingNetworkInterface } from 'apollo-upload-client'
-
-const client = new ApolloClient({
-  networkInterface: createBatchingNetworkInterface({
-    uri: '/graphql'
-  })
+const link = createUploadLink({
+  // Options…
 })
 ```
 

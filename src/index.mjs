@@ -1,85 +1,68 @@
-import {
-  HTTPFetchNetworkInterface,
-  HTTPBatchedNetworkInterface,
-  printAST
-} from 'apollo-client'
+import { ApolloLink, Observable } from 'apollo-link'
+import { print } from 'graphql/language/printer'
 import { extractFiles } from 'extract-files'
 
 export { ReactNativeFile } from 'extract-files'
 
-export class UploadHTTPFetchNetworkInterface extends HTTPFetchNetworkInterface {
-  fetchFromRemoteEndpoint({ request, options }) {
-    // Continue if uploads are possible
-    if (typeof FormData !== 'undefined') {
-      // Extract any files from the request variables
-      const files = extractFiles(request.variables, 'variables')
+export const createUploadLink = (
+  {
+    includeExtensions,
+    uri = '/graphql',
+    fetchOptions: linkFetchOptions = {},
+    fetch: fetcher = fetch
+  } = {}
+) =>
+  new ApolloLink(
+    ({ operationName, variables, query, extensions, getContext }) =>
+      new Observable(observer => {
+        const { fetchOptions: contextFetchOptions = {} } = getContext()
 
-      // Continue if there are files to upload
-      if (files.length) {
-        // Convert query AST to string for transport
-        request.query = printAST(request.query)
+        const fetchOptions = {
+          headers: {},
+          ...linkFetchOptions,
+          ...contextFetchOptions,
+          method: 'POST'
+        }
 
-        // Construct a multipart form
-        const formData = new FormData()
-        formData.append('operations', JSON.stringify(request))
-        files.forEach(({ path, file }) => formData.append(path, file))
+        const requestOperation = {
+          operationName,
+          variables,
+          query: print(query)
+        }
 
-        // Send request
-        return fetch(this._uri, {
-          method: 'POST',
-          body: formData,
-          ...options
-        })
-      }
-    }
+        if (includeExtensions) requestOperation.extensions = extensions
 
-    // Standard fetch method fallback
-    return super.fetchFromRemoteEndpoint({ request, options })
-  }
-}
+        const files = extractFiles(requestOperation)
 
-export function createNetworkInterface({ uri, opts = {} }) {
-  return new UploadHTTPFetchNetworkInterface(uri, opts)
-}
+        if (files.length) {
+          fetchOptions.body = new FormData()
+          fetchOptions.body.append(
+            'operations',
+            JSON.stringify(requestOperation)
+          )
+          files.forEach(({ path, file }) =>
+            fetchOptions.body.append(path, file)
+          )
+        } else {
+          fetchOptions.headers['content-type'] = 'application/json'
+          fetchOptions.body = JSON.stringify(requestOperation)
+        }
 
-export class UploadHTTPBatchedNetworkInterface extends HTTPBatchedNetworkInterface {
-  batchedFetchFromRemoteEndpoint({ requests, options }) {
-    // Continue if uploads are possible
-    if (typeof FormData !== 'undefined') {
-      // Extract any files from the each request variables
-      const files = requests.reduce(
-        (files, request, index) =>
-          files.concat(extractFiles(request.variables, `${index}.variables`)),
-        []
-      )
+        fetcher(uri, fetchOptions)
+          .then(response =>
+            response.json().then(result => {
+              if (!response.ok)
+                throw new Error(
+                  `Error ${response.status}: ${response.statusText}.`
+                )
 
-      // Continue if there are files to upload
-      if (files.length) {
-        // For each request convert query AST to string for transport
-        requests.forEach(request => {
-          request.query = printAST(request.query)
-        })
-
-        // Construct a multipart form
-        const formData = new FormData()
-        formData.append('operations', JSON.stringify(requests))
-        files.forEach(({ path, file }) => formData.append(path, file))
-
-        // Send request
-        return fetch(this._uri, {
-          method: 'POST',
-          body: formData,
-          ...options
-        })
-      }
-    }
-
-    // Standard fetch method fallback
-    return super.batchedFetchFromRemoteEndpoint({ requests, options })
-  }
-}
-
-export const createBatchingNetworkInterface = ({
-  opts: fetchOpts = {},
-  ...options
-}) => new UploadHTTPBatchedNetworkInterface({ fetchOpts, ...options })
+              return result
+            })
+          )
+          .then(result => {
+            observer.next(result)
+            observer.complete()
+          })
+          .catch(observer.error)
+      })
+  )
