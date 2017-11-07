@@ -8,6 +8,7 @@
 - Lint errors when attempting to commit partially staged files no longer commits the whole file.
 - Relative readme logo path.
 - Added links to readme badges.
+- Removed “Inspiration” section from the readme; the links don’t really apply to the evolved codebase.
 - Using Babel v7 directly instead of Rollup.
 - Using `babel-preset-env` to handle polyfills so only required ones are included for our level of browser support.
 - Using `prettier` to format distribution code as well as source code.
