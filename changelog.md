@@ -20,6 +20,7 @@
   - Relative logo path.
   - Added links to badges.
   - Removed the inspiration links; they are less relevant to the evolved codebase.
+  - Mark relevant example code blocks as JSX instead of JS.
 
 ## 5.1.1
 

@@ -39,7 +39,7 @@ With [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-serve
 
 See [server usage for this example](https://github.com/jaydenseric/apollo-upload-server#single-file).
 
-```js
+```jsx
 import React from 'react'
 import { graphql, gql } from 'react-apollo'
 
@@ -76,7 +76,7 @@ export default graphql(gql`
 
 See [server usage for this example](https://github.com/jaydenseric/apollo-upload-server#multiple-files).
 
-```js
+```jsx
 import React from 'react'
 import { graphql, gql } from 'react-apollo'
 
