@@ -44,7 +44,7 @@ import React from 'react'
 import { graphql, gql } from 'react-apollo'
 
 export default graphql(gql`
-  mutation updateUserAvatar($userId: String!, $avatar: Upload!) {
+  mutation($userId: String!, $avatar: Upload!) {
     updateUserAvatar(userId: $userId, avatar: $avatar) {
       id
     }
@@ -81,7 +81,7 @@ import React from 'react'
 import { graphql, gql } from 'react-apollo'
 
 export default graphql(gql`
-  mutation updateGallery($galleryId: String!, $images: [Upload!]!) {
+  mutation($galleryId: String!, $images: [Upload!]!) {
     updateGallery(galleryId: $galleryId, images: $images) {
       id
     }
