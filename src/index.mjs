@@ -46,6 +46,7 @@ export const createUploadLink = (
           files.forEach(({ path, file }) =>
             fetchOptions.body.append(path, file)
           )
+          delete fetchOptions.headers['content-type']
         } else {
           fetchOptions.headers['content-type'] = 'application/json'
           fetchOptions.body = JSON.stringify(requestOperation)
