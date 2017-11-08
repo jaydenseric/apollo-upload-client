@@ -16,9 +16,14 @@
   "bugs": "https://github.com/jaydenseric/apollo-upload-client/issues",
   "keywords": [
     "apollo",
+    "client",
+    "link",
     "graphql",
     "file",
-    "upload"
+    "upload",
+    "multipart",
+    "react",
+    "native"
   ],
   "files": [
     "src",
