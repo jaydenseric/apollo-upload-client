@@ -1,6 +1,6 @@
 # apollo-upload-client change log
 
-## Next
+## 6.0.0-beta.1
 
 - Updated dependencies.
 - Apollo Client v2 compatibility:
