@@ -34,6 +34,19 @@ instructions](https://github.com/jaydenseric/apollo-upload-server#setup) for the
 [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server)
 middleware.
 
+### Options
+
+`createUploadLink` options are a subset of [`createHttpLink`
+options](https://www.apollographql.com/docs/link/links/http.html#Options):
+
+* `uri`: Default is `/graphql`.
+* `fetch`: Default is global `fetch`.
+* `includeExtensions`: Toggles sending `extensions` fields to the GraphQL
+  server. Default is `false`.
+* `fetchOptions`: [`fetch` init parameter options
+  object](https://developer.mozilla.org/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters)
+  to merge with upload requirements. Default is `{}`.
+
 ## Usage
 
 Use [`File`](https://developer.mozilla.org/en/docs/Web/API/File),
