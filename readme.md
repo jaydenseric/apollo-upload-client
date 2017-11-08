@@ -40,8 +40,8 @@ With [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-serve
 See [server usage for this example](https://github.com/jaydenseric/apollo-upload-server#single-file).
 
 ```jsx
-import React from 'react'
-import { graphql, gql } from 'react-apollo'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 
 export default graphql(gql`
   mutation($userId: String!, $avatar: Upload!) {
@@ -77,8 +77,8 @@ export default graphql(gql`
 See [server usage for this example](https://github.com/jaydenseric/apollo-upload-server#multiple-files).
 
 ```jsx
-import React from 'react'
-import { graphql, gql } from 'react-apollo'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 
 export default graphql(gql`
   mutation($galleryId: String!, $images: [Upload!]!) {
