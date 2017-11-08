@@ -7,11 +7,13 @@
 [![Github issues](https://img.shields.io/github/issues/jaydenseric/apollo-upload-client.svg)](https://github.com/jaydenseric/apollo-upload-client/issues)
 [![Github stars](https://img.shields.io/github/stars/jaydenseric/apollo-upload-client.svg)](https://github.com/jaydenseric/apollo-upload-client/stargazers)
 
-Enhances [Apollo](http://apollodata.com) for intuitive file uploads via GraphQL mutations or queries. Use with [apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server).
+Enhances [Apollo](http://apollodata.com) for intuitive file uploads via GraphQL
+mutations or queries. Use with
+[apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server).
 
 ## Setup
 
-Install this package and peer dependencies with [npm](https://npmjs.com):
+Install with peer dependencies using [npm](https://npmjs.com):
 
 ```
 npm install apollo-upload-client apollo-link graphql
@@ -27,120 +29,98 @@ const link = createUploadLink({
 })
 ```
 
-Also setup [apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server).
+See also the [setup
+instructions](https://github.com/jaydenseric/apollo-upload-server#setup) for the
+[`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server)
+middleware.
 
 ## Usage
 
-Once setup, you will be able to use [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en/docs/Web/API/File) and [`ReactNativeFile`](https://github.com/jaydenseric/apollo-upload-client#react-native) instances anywhere within mutation or query input variables.
+Use [`File`](https://developer.mozilla.org/en/docs/Web/API/File),
+[`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList) or
+[`ReactNativeFile`](#react-native) instances anywhere within mutation or query
+input variables. For server instructions see
+[`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server).
+Checkout the [example API and
+client](https://github.com/jaydenseric/apollo-upload-examples).
 
-With [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server) setup, the files upload to a temp directory. `Upload` input type metadata replaces file instances in the arguments received by the resolver. See the [server usage](https://github.com/jaydenseric/apollo-upload-server#usage).
-
-### Single file
-
-See [server usage for this example](https://github.com/jaydenseric/apollo-upload-server#single-file).
+### [`File`](https://developer.mozilla.org/en/docs/Web/API/File) example
 
 ```jsx
-import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+import { graphql } from 'react-apollo'
 
 export default graphql(gql`
-  mutation($userId: String!, $avatar: Upload!) {
-    updateUserAvatar(userId: $userId, avatar: $avatar) {
+  mutation($file: Upload!) {
+    uploadFile(file: $file) {
       id
     }
   }
-`)(({ userId, mutate }) => {
-  const handleChange = ({ target }) => {
-    if (target.validity.valid) {
-      mutate({
-        variables: {
-          userId,
-          avatar: target.files[0]
-        }
-      }).then(({ data }) => console.log('Mutation response:', data))
+`)(({ mutate }) => (
+  <input
+    type="file"
+    required
+    onChange={({ target }) =>
+      target.validity.valid && mutate({ variables: { file: target.files[0] } })
     }
-  }
-
-  return (
-    <input
-      type="file"
-      accept={'image/jpeg,image/png'}
-      required
-      onChange={handleChange}
-    />
-  )
-})
+  />
+))
 ```
 
-### Multiple files
-
-See [server usage for this example](https://github.com/jaydenseric/apollo-upload-server#multiple-files).
+### [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList) example
 
 ```jsx
-import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+import { graphql } from 'react-apollo'
 
 export default graphql(gql`
-  mutation($galleryId: String!, $images: [Upload!]!) {
-    updateGallery(galleryId: $galleryId, images: $images) {
+  mutation($files: [Upload!]!) {
+    uploadFiles(files: $files) {
       id
     }
   }
-`)(({ galleryId, mutate }) => {
-  const handleChange = ({ target }) => {
-    if (target.validity.valid) {
-      mutate({
-        variables: {
-          galleryId,
-          images: target.files
-        }
-      }).then(({ data }) => console.log('Mutation response:', data))
+`)(({ mutate }) => (
+  <input
+    type="file"
+    multiple
+    required
+    onChange={({ target }) =>
+      target.validity.valid && mutate({ variables: { files: target.files } })
     }
-  }
-
-  return (
-    <input
-      type="file"
-      accept={'image/jpeg,image/png'}
-      multiple
-      required
-      onChange={handleChange}
-    />
-  )
-})
+  />
+))
 ```
 
 ### React Native
 
-React Native [polyfills FormData](https://github.com/facebook/react-native/blob/v0.45.1/Libraries/Network/FormData.js) under the hood and objects with the properties `uri`, `type` and `name` substitute `window.File`. It would be risky to assume all objects with those properties in variables are files. Use `ReactNativeFile` instances in query or mutation variables to explicitly mark files for upload:
+Substitute [`File`](https://developer.mozilla.org/en/docs/Web/API/File) with
+`ReactNativeFile` from
+[`extract-files`](https://github.com/jaydenseric/extract-files):
 
 ```js
-import { ReactNativeFile } from 'apollo-upload-client'
+import { ReactNativeFile } from 'apollo-fetch-upload'
 
-// ✂
-
-// Single file
 const file = new ReactNativeFile({
-  uri: uriFromCameraRoll,
+  uri: '…',
   type: 'image/jpeg',
   name: 'photo.jpg'
 })
 
-// Multiple files
-const files = ReactNativeFile.list([{
-  uri: uriFromCameraRoll1,
-  type: 'image/jpeg',
-  name: 'photo-1.jpg'
-}, {
-  uri: uriFromCameraRoll2,
-  type: 'image/jpeg',
-  name: 'photo-2.jpg'
-}])
-
-// ✂
+const files = ReactNativeFile.list([
+  {
+    uri: '…',
+    type: 'image/jpeg',
+    name: 'photo-1.jpg'
+  },
+  {
+    uri: '…',
+    type: 'image/jpeg',
+    name: 'photo-2.jpg'
+  }
+])
 ```
 
 ## Support
 
-- [> 2%](http://browserl.ist/?q=%3E+2%25) market share browsers.
-- React Native.
+* [> 2%](http://browserl.ist/?q=%3E+2%25) market share browsers.
+* React Native.
