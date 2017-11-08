@@ -54,6 +54,7 @@
     "build:main": "babel src --out-dir lib/main --config-file ./babelrc.main.json",
     "build:module": "babel src --out-dir lib/module --config-file ./babelrc.module.json --keep-file-extension",
     "lint": "eslint . --ext js,mjs",
+    "fix": "npm run lint -- --fix && prettier --write readme.md",
     "precommit": "lint-staged",
     "prepublishOnly": "npm run lint && npm run build"
   },
