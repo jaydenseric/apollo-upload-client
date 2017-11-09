@@ -1,6 +1,6 @@
 # apollo-upload-client change log
 
-## next
+## 6.0.0-beta.2
 
 * Match the `apollo-link-http` API and support setting `credentials` and
   `headers` directly on the link and via context, fixing
