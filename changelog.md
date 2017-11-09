@@ -1,6 +1,6 @@
 # apollo-upload-client change log
 
-## Next
+## 6.0.0-beta.3
 
 * Corrected network error handling, fixing
   [#38](https://github.com/jaydenseric/apollo-upload-client/issues/38).
