@@ -7,26 +7,16 @@ export { ReactNativeFile } from 'extract-files'
 export const createUploadLink = (
   {
     includeExtensions,
-    uri = '/graphql',
+    uri: linkUri = '/graphql',
+    credentials: linkCredentials,
+    headers: linkHeaders,
     fetchOptions: linkFetchOptions = {},
-    fetch: fetcher = fetch
+    fetch: linkFetch = fetch
   } = {}
 ) =>
   new ApolloLink(
     ({ operationName, variables, query, extensions, getContext }) =>
       new Observable(observer => {
-        const {
-          uri: fetchUri = uri,
-          fetchOptions: contextFetchOptions = {}
-        } = getContext()
-
-        const fetchOptions = {
-          headers: {},
-          ...linkFetchOptions,
-          ...contextFetchOptions,
-          method: 'POST'
-        }
-
         const requestOperation = {
           operationName,
           variables,
@@ -36,6 +26,27 @@ export const createUploadLink = (
         if (includeExtensions) requestOperation.extensions = extensions
 
         const files = extractFiles(requestOperation)
+
+        const {
+          uri = linkUri,
+          credentials = linkCredentials,
+          headers: contextHeaders,
+          fetchOptions: contextFetchOptions = {}
+        } = getContext()
+
+        const fetchOptions = {
+          ...linkFetchOptions,
+          ...contextFetchOptions,
+          headers: {
+            ...linkFetchOptions.headers,
+            ...contextFetchOptions.headers,
+            ...linkHeaders,
+            ...contextHeaders
+          },
+          method: 'POST'
+        }
+
+        if (credentials) fetchOptions.credentials = credentials
 
         if (files.length) {
           fetchOptions.body = new FormData()
@@ -51,7 +62,7 @@ export const createUploadLink = (
           fetchOptions.body = JSON.stringify(requestOperation)
         }
 
-        fetcher(fetchUri, fetchOptions)
+        linkFetch(uri, fetchOptions)
           .then(response =>
             response.json().then(result => {
               if (!response.ok)

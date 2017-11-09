@@ -2,6 +2,8 @@
 
 ## next
 
+- Match the `apollo-link-http` API and support setting `credentials` and `headers` directly on the link and via context, fixing [#36](https://github.com/jaydenseric/apollo-upload-client/issues/36).
+- Fixed [a bug](https://github.com/jaydenseric/apollo-upload-client/pull/37#issuecomment-343005839) that can cause the wrong `content-type: application/json` header to be used when uploading.
 - Updated change log Apollo documentation links.
 
 ## 6.0.0-beta.1
