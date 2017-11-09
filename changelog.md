@@ -1,5 +1,9 @@
 # apollo-upload-client change log
 
+## next
+
+- Updated change log Apollo documentation links.
+
 ## 6.0.0-beta.1
 
 - Updated dependencies.
@@ -36,7 +40,7 @@
 - Readme tweaks including a new licence badge.
 - Fixed Rollup build warnings.
 - Fixed an npm v5 warning by using `prepublishOnly` instead of `prepublish`.
-- Refactored network interfaces; moved file extraction logic and `ReactNativeFile` to a seperate [`extract-files`](https://www.npmjs.com/package/extract-files) package.
+- Refactored network interfaces; moved file extraction logic and `ReactNativeFile` to a seperate [`extract-files`](https://npm.im/extract-files) package.
 
 ## 5.0.0
 
@@ -50,7 +54,7 @@
 - Updated dependencies.
 - Simplified React Native setup by moving Babel config out of `package.json`, fixing [#19](https://github.com/jaydenseric/apollo-upload-client/issues/19) via [#23](https://github.com/jaydenseric/apollo-upload-client/pull/23).
 - Export a new `ReactNativeFile` class to more reliably identify files for upload in React Native, via [#17](https://github.com/jaydenseric/apollo-upload-client/pull/17).
-- Renamed several exports for consistency with [`apollo-client`](http://dev.apollodata.com/core/apollo-client-api.html), via [#18](https://github.com/jaydenseric/apollo-upload-client/pull/18).
+- Renamed several exports for consistency with `apollo-client`, via [#18](https://github.com/jaydenseric/apollo-upload-client/pull/18).
   - `HTTPUploadNetworkInterface` renamed `UploadHTTPFetchNetworkInterface`.
   - `HTTPUploadBatchNetworkInterface` renamed `UploadHTTPBatchedNetworkInterface`.
   - `createBatchNetworkInterface` renamed `createBatchingNetworkInterface`.
@@ -135,7 +139,7 @@
 
 ## 3.0.0
 
-- Support `apollo-upload-server` v2 and [query batching](http://dev.apollodata.com/core/network.html#query-batching).
+- Support `apollo-upload-server` v2 and [query batching](https://apollographql.com/docs/apollo-server/requests.html#batching).
 - Removed the seemingly redundant `Accept` header from requests.
 - Clearer package description.
 
