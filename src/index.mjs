@@ -63,20 +63,15 @@ export const createUploadLink = (
         }
 
         linkFetch(uri, fetchOptions)
-          .then(response =>
-            response.json().then(result => {
-              if (!response.ok)
-                throw new Error(
-                  `Error ${response.status}: ${response.statusText}.`
-                )
-
-              return result
-            })
-          )
+          .then(response => {
+            if (!response.ok)
+              throw new Error(`${response.status} (${response.statusText})`)
+            return response.json()
+          })
           .then(result => {
             observer.next(result)
             observer.complete()
           })
-          .catch(observer.error)
+          .catch(error => observer.error(error))
       })
   )

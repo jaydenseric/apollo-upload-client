@@ -1,5 +1,10 @@
 # apollo-upload-client change log
 
+## Next
+
+* Corrected network error handling, fixing
+  [#38](https://github.com/jaydenseric/apollo-upload-client/issues/38).
+
 ## 6.0.0-beta.2
 
 * Match the `apollo-link-http` API and support setting `credentials` and
