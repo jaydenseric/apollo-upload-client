@@ -111,7 +111,7 @@ Substitute [`File`](https://developer.mozilla.org/en/docs/Web/API/File) with
 [`extract-files`](https://github.com/jaydenseric/extract-files):
 
 ```js
-import { ReactNativeFile } from 'apollo-fetch-upload'
+import { ReactNativeFile } from 'apollo-upload-client'
 
 const file = new ReactNativeFile({
   uri: '…',
