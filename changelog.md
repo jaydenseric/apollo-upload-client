@@ -2,6 +2,7 @@
 
 ## Next
 
+* Updated `prettier`.
 * Readme API documentation fixes:
   * Corrected React Native example code import via
     [#39](https://github.com/jaydenseric/apollo-upload-client/pull/39).
@@ -17,8 +18,8 @@
 * Match the `apollo-link-http` API and support setting `credentials` and
   `headers` directly on the link and via context, fixing
   [#36](https://github.com/jaydenseric/apollo-upload-client/issues/36).
-* Fixed [a
-  bug](https://github.com/jaydenseric/apollo-upload-client/pull/37#issuecomment-343005839)
+* Fixed
+  [a bug](https://github.com/jaydenseric/apollo-upload-client/pull/37#issuecomment-343005839)
   that can cause the wrong `content-type: application/json` header to be used
   when uploading.
 * Updated change log Apollo documentation links.
@@ -69,8 +70,8 @@
 
 ## 5.0.0
 
-* Removed `package-lock.json`. Lockfiles are [not
-  recommended](https://github.com/sindresorhus/ama/issues/479#issuecomment-310661514)
+* Removed `package-lock.json`. Lockfiles are
+  [not recommended](https://github.com/sindresorhus/ama/issues/479#issuecomment-310661514)
   for packages.
 * Readme tweaks and fixes:
   * Renamed the `File` input type `Upload` for clarity.
@@ -195,8 +196,8 @@
 
 ## 3.0.0
 
-* Support `apollo-upload-server` v2 and [query
-  batching](https://apollographql.com/docs/apollo-server/requests.html#batching).
+* Support `apollo-upload-server` v2 and
+  [query batching](https://apollographql.com/docs/apollo-server/requests.html#batching).
 * Removed the seemingly redundant `Accept` header from requests.
 * Clearer package description.
 

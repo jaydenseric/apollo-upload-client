@@ -29,23 +29,24 @@ const link = createUploadLink({
 })
 ```
 
-See also the [setup
-instructions](https://github.com/jaydenseric/apollo-upload-server#setup) for the
+See also the
+[setup instructions](https://github.com/jaydenseric/apollo-upload-server#setup)
+for the
 [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server)
 middleware.
 
 ### Options
 
-`createUploadLink` options match [`createHttpLink`
-options](https://www.apollographql.com/docs/link/links/http.html#Options):
+`createUploadLink` options match
+[`createHttpLink` options](https://www.apollographql.com/docs/link/links/http.html#Options):
 
 * `includeExtensions`: Toggles sending `extensions` fields to the GraphQL
   server. Default is `false`.
 * `uri`: GraphQL endpoint URI. Default is `/graphql`.
 * `credentials`: Overrides `fetchOptions.credentials`.
 * `headers`: Merges with and overrides `fetchOptions.headers`.
-* `fetchOptions`: [`fetch` init
-  object](https://developer.mozilla.org/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters).
+* `fetchOptions`:
+  [`fetch` init object](https://developer.mozilla.org/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters).
   Overridden by upload requirements.
 * `fetch`: Default is global `fetch`.
 
@@ -56,8 +57,8 @@ Use [`File`](https://developer.mozilla.org/en/docs/Web/API/File),
 [`ReactNativeFile`](#react-native) instances anywhere within mutation or query
 input variables. For server instructions see
 [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server).
-Checkout the [example API and
-client](https://github.com/jaydenseric/apollo-upload-examples).
+Checkout the
+[example API and client](https://github.com/jaydenseric/apollo-upload-examples).
 
 ### [`File`](https://developer.mozilla.org/en/docs/Web/API/File) example
 
