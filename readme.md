@@ -36,16 +36,18 @@ middleware.
 
 ### Options
 
-`createUploadLink` options are a subset of [`createHttpLink`
+`createUploadLink` options match [`createHttpLink`
 options](https://www.apollographql.com/docs/link/links/http.html#Options):
 
-* `uri`: Default is `/graphql`.
-* `fetch`: Default is global `fetch`.
 * `includeExtensions`: Toggles sending `extensions` fields to the GraphQL
   server. Default is `false`.
-* `fetchOptions`: [`fetch` init parameter options
-  object](https://developer.mozilla.org/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters)
-  to merge with upload requirements. Default is `{}`.
+* `uri`: GraphQL endpoint URI. Default is `/graphql`.
+* `credentials`: Overrides `fetchOptions.credentials`.
+* `headers`: Merges with and overrides `fetchOptions.headers`.
+* `fetchOptions`: [`fetch` init
+  object](https://developer.mozilla.org/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters).
+  Overridden by upload requirements.
+* `fetch`: Default is global `fetch`.
 
 ## Usage
 

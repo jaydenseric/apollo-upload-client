@@ -1,5 +1,12 @@
 # apollo-upload-client change log
 
+## Next
+
+* Readme API documentation fixes:
+  * Corrected React Native example code import via
+    [#39](https://github.com/jaydenseric/apollo-upload-client/pull/39).
+  * Updated `createUploadLink` options.
+
 ## 6.0.0-beta.3
 
 * Corrected network error handling, fixing
