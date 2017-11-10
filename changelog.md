@@ -1,6 +1,6 @@
 # apollo-upload-client change log
 
-## Next
+## 6.0.0
 
 * Updated `prettier`.
 * No longer publish the `src` directory.
