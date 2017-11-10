@@ -3,6 +3,7 @@
 ## Next
 
 * Updated `prettier`.
+* No longer publish the `src` directory.
 * Readme API documentation fixes:
   * Corrected React Native example code import via
     [#39](https://github.com/jaydenseric/apollo-upload-client/pull/39).
