@@ -1,6 +1,6 @@
 # apollo-upload-client changelog
 
-## Next
+## 6.0.1
 
 * Updated dependencies. Fixes broken `core-js` imports due to `@babel/polyfill@7.0.0-beta.32`.
 * Configured prettier to no longer hard wrap markdown prose.
