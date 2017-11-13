@@ -2,14 +2,9 @@
 
 # apollo-upload-client
 
-[![npm version](https://img.shields.io/npm/v/apollo-upload-client.svg)](https://npm.im/apollo-upload-client)
-![Licence](https://img.shields.io/npm/l/apollo-upload-client.svg)
-[![Github issues](https://img.shields.io/github/issues/jaydenseric/apollo-upload-client.svg)](https://github.com/jaydenseric/apollo-upload-client/issues)
-[![Github stars](https://img.shields.io/github/stars/jaydenseric/apollo-upload-client.svg)](https://github.com/jaydenseric/apollo-upload-client/stargazers)
+[![npm version](https://img.shields.io/npm/v/apollo-upload-client.svg)](https://npm.im/apollo-upload-client) ![Licence](https://img.shields.io/npm/l/apollo-upload-client.svg) [![Github issues](https://img.shields.io/github/issues/jaydenseric/apollo-upload-client.svg)](https://github.com/jaydenseric/apollo-upload-client/issues) [![Github stars](https://img.shields.io/github/stars/jaydenseric/apollo-upload-client.svg)](https://github.com/jaydenseric/apollo-upload-client/stargazers)
 
-Enhances [Apollo](https://apollographql.com) for intuitive file uploads via
-GraphQL mutations or queries. Use with
-[apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server).
+Enhances [Apollo](https://apollographql.com) for intuitive file uploads via GraphQL mutations or queries. Use with [apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server).
 
 ## Setup
 
@@ -29,36 +24,22 @@ const link = createUploadLink({
 })
 ```
 
-See also the
-[setup instructions](https://github.com/jaydenseric/apollo-upload-server#setup)
-for the
-[`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server)
-middleware.
+See also the [setup instructions](https://github.com/jaydenseric/apollo-upload-server#setup) for the [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server) middleware.
 
 ### Options
 
-`createUploadLink` options match
-[`createHttpLink` options](https://www.apollographql.com/docs/link/links/http.html#Options):
+`createUploadLink` options match [`createHttpLink` options](https://www.apollographql.com/docs/link/links/http.html#Options):
 
-* `includeExtensions`: Toggles sending `extensions` fields to the GraphQL
-  server. Default is `false`.
+* `includeExtensions`: Toggles sending `extensions` fields to the GraphQL server. Default is `false`.
 * `uri`: GraphQL endpoint URI. Default is `/graphql`.
 * `credentials`: Overrides `fetchOptions.credentials`.
 * `headers`: Merges with and overrides `fetchOptions.headers`.
-* `fetchOptions`:
-  [`fetch` init object](https://developer.mozilla.org/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters).
-  Overridden by upload requirements.
+* `fetchOptions`: [`fetch` init object](https://developer.mozilla.org/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters). Overridden by upload requirements.
 * `fetch`: Default is global `fetch`.
 
 ## Usage
 
-Use [`File`](https://developer.mozilla.org/en/docs/Web/API/File),
-[`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList) or
-[`ReactNativeFile`](#react-native) instances anywhere within mutation or query
-input variables. For server instructions see
-[`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server).
-See the
-[example API and client](https://github.com/jaydenseric/apollo-upload-examples).
+Use [`File`](https://developer.mozilla.org/en/docs/Web/API/File), [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList) or [`ReactNativeFile`](#react-native) instances anywhere within mutation or query input variables. For server instructions see [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server). See the [example API and client](https://github.com/jaydenseric/apollo-upload-examples).
 
 ### [`File`](https://developer.mozilla.org/en/docs/Web/API/File) example
 
@@ -109,9 +90,7 @@ export default graphql(gql`
 
 ### React Native
 
-Substitute [`File`](https://developer.mozilla.org/en/docs/Web/API/File) with
-`ReactNativeFile` from
-[`extract-files`](https://github.com/jaydenseric/extract-files):
+Substitute [`File`](https://developer.mozilla.org/en/docs/Web/API/File) with `ReactNativeFile` from [`extract-files`](https://github.com/jaydenseric/extract-files):
 
 ```js
 import { ReactNativeFile } from 'apollo-upload-client'
