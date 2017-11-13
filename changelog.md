@@ -1,6 +1,6 @@
 # apollo-upload-client changelog
 
-## Next
+## 6.0.2
 
 * Fix broken exports. See [babel/babel#6805](https://github.com/babel/babel/issues/6805).
 
