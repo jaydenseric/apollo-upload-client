@@ -1,5 +1,9 @@
 # apollo-upload-client changelog
 
+## Next
+
+* Fix broken exports. See [babel/babel#6805](https://github.com/babel/babel/issues/6805).
+
 ## 6.0.1
 
 * Updated dependencies. Fixes broken `core-js` imports due to `@babel/polyfill@7.0.0-beta.32`.

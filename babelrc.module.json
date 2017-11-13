@@ -6,7 +6,6 @@
       {
         "useBuiltIns": "usage",
         "shippedProposals": true,
-        "loose": true,
         "modules": false
       }
     ]

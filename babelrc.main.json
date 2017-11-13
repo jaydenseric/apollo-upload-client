@@ -5,8 +5,7 @@
       "@babel/preset-env",
       {
         "useBuiltIns": "usage",
-        "shippedProposals": true,
-        "loose": true
+        "shippedProposals": true
       }
     ]
   ]
