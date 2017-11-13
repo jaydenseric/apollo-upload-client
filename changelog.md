@@ -6,6 +6,7 @@
 * Configured prettier to no longer hard wrap markdown prose.
 * Fixed an Apollo link in the readme.
 * Misc. readme and changelog typo fixes.
+* Externally host the readme logo again to fix display in npm. See [npm/www#272](https://github.com/npm/www/issues/272).
 
 ## 6.0.0
 
