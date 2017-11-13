@@ -32,8 +32,8 @@
   "module": "lib/module/index.mjs",
   "browserslist": "> 2%",
   "dependencies": {
-    "@babel/polyfill": "^7.0.0-beta.31",
-    "@babel/runtime": "^7.0.0-beta.31",
+    "@babel/polyfill": "^7.0.0-beta.32",
+    "@babel/runtime": "^7.0.0-beta.32",
     "extract-files": "^2.0.1"
   },
   "peerDependencies": {
@@ -41,16 +41,16 @@
     "graphql": "^0.11.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.31",
-    "@babel/core": "^7.0.0-beta.31",
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.31",
-    "@babel/preset-env": "^7.0.0-beta.31",
-    "apollo-link": "^1.0.0",
-    "eslint": "^4.10.0",
+    "@babel/cli": "^7.0.0-beta.32",
+    "@babel/core": "^7.0.0-beta.32",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.32",
+    "@babel/preset-env": "^7.0.0-beta.32",
+    "apollo-link": "^1.0.1",
+    "eslint": "^4.11.0",
     "eslint-plugin-prettier": "^2.3.1",
     "graphql": "^0.11.7",
     "husky": "^0.14.3",
-    "lint-staged": "^4.3.0",
+    "lint-staged": "^5.0.0",
     "prettier": "^1.8.2"
   },
   "scripts": {

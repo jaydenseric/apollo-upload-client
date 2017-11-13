@@ -1,4 +1,11 @@
-# apollo-upload-client change log
+# apollo-upload-client changelog
+
+## Next
+
+* Updated dependencies. Fixes broken `core-js` imports due to
+  `@babel/polyfill@7.0.0-beta.32`.
+* Fixed an Apollo link in the readme.
+* Misc. readme and changelog typo fixes.
 
 ## 6.0.0
 
@@ -23,8 +30,8 @@
   [a bug](https://github.com/jaydenseric/apollo-upload-client/pull/37#issuecomment-343005839)
   that can cause the wrong `content-type: application/json` header to be used
   when uploading.
-* Updated change log Apollo documentation links.
-* Change log is now prettier.
+* Updated changelog Apollo documentation links.
+* changelog is now prettier.
 
 ## 6.0.0-beta.1
 
@@ -66,7 +73,7 @@
 * Fixed Rollup build warnings.
 * Fixed an npm v5 warning by using `prepublishOnly` instead of `prepublish`.
 * Refactored network interfaces; moved file extraction logic and
-  `ReactNativeFile` to a seperate
+  `ReactNativeFile` to a separate
   [`extract-files`](https://npm.im/extract-files) package.
 
 ## 5.0.0
@@ -138,7 +145,7 @@
 ## 4.0.4
 
 * Updated dependencies.
-* Added a change log.
+* Added a changelog.
 * Dropped Yarn in favor of npm@5. Removed `yarn.lock` and updated install
   instructions.
 * New ESLint config. Dropped [Standard Style](https://standardjs.com) and began

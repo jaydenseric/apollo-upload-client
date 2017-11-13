@@ -7,8 +7,8 @@
 [![Github issues](https://img.shields.io/github/issues/jaydenseric/apollo-upload-client.svg)](https://github.com/jaydenseric/apollo-upload-client/issues)
 [![Github stars](https://img.shields.io/github/stars/jaydenseric/apollo-upload-client.svg)](https://github.com/jaydenseric/apollo-upload-client/stargazers)
 
-Enhances [Apollo](http://apollodata.com) for intuitive file uploads via GraphQL
-mutations or queries. Use with
+Enhances [Apollo](https://apollographql.com) for intuitive file uploads via
+GraphQL mutations or queries. Use with
 [apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server).
 
 ## Setup
@@ -57,7 +57,7 @@ Use [`File`](https://developer.mozilla.org/en/docs/Web/API/File),
 [`ReactNativeFile`](#react-native) instances anywhere within mutation or query
 input variables. For server instructions see
 [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server).
-Checkout the
+See the
 [example API and client](https://github.com/jaydenseric/apollo-upload-examples).
 
 ### [`File`](https://developer.mozilla.org/en/docs/Web/API/File) example
