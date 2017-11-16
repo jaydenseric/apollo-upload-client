@@ -15,8 +15,16 @@ export const createUploadLink = (
   } = {}
 ) =>
   new ApolloLink(
-    ({ operationName, variables, query, extensions, getContext }) =>
+    operation =>
       new Observable(observer => {
+        const {
+          operationName,
+          variables,
+          query,
+          extensions,
+          getContext
+        } = operation
+
         const requestOperation = {
           operationName,
           variables,
@@ -66,6 +74,7 @@ export const createUploadLink = (
           .then(response => {
             if (!response.ok)
               throw new Error(`${response.status} (${response.statusText})`)
+            operation.setContext({ response })
             return response.json()
           })
           .then(result => {
