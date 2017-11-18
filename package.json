@@ -63,7 +63,7 @@
     "prepublishOnly": "npm run lint && npm run build"
   },
   "lint-staged": {
-    "*.js": "eslint"
+    "*.mjs": "eslint"
   },
   "eslintIgnore": [
     "lib"
