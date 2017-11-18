@@ -49,13 +49,23 @@ export const createUploadLink = (
         if (credentials) fetchOptions.credentials = credentials
 
         if (files.length) {
+          // See https://github.com/jaydenseric/graphql-multipart-request-spec
           fetchOptions.body = new FormData()
+
+          const filesMap = files.reduce((map, { path }, index) => {
+            map[`${index}`] = [path]
+            return map
+          }, {})
+
+          fetchOptions.body.append('files', JSON.stringify(filesMap))
+
           fetchOptions.body.append(
             'operations',
             JSON.stringify(requestOperation)
           )
-          files.forEach(({ path, file }) =>
-            fetchOptions.body.append(path, file)
+
+          files.forEach(({ file }, index) =>
+            fetchOptions.body.append(`${index}`, file)
           )
         } else {
           fetchOptions.headers['content-type'] = 'application/json'
