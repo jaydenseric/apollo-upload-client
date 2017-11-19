@@ -1,7 +1,8 @@
 # apollo-upload-client changelog
 
-## Next
+## 6.0.3
 
+* Response is set on the context, via [#40](https://github.com/jaydenseric/apollo-upload-client/pull/40).
 * Configured `lint-staged` for `.mjs`.
 
 ## 6.0.2
@@ -21,7 +22,7 @@
 * Updated `prettier`.
 * No longer publish the `src` directory.
 * Readme API documentation fixes:
-  * Corrected React Native example code import via [#39](https://github.com/jaydenseric/apollo-upload-client/pull/39).
+  * Corrected React Native example code import, via [#39](https://github.com/jaydenseric/apollo-upload-client/pull/39).
   * Updated `createUploadLink` options.
 
 ## 6.0.0-beta.3
