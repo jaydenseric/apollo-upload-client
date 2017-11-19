@@ -1,5 +1,10 @@
 # apollo-upload-client changelog
 
+## Next
+
+* Conform to the [GraphQL multipart request spec v2.0.0-alpha.2](https://github.com/jaydenseric/graphql-multipart-request-spec/releases/tag/v2.0.0-alpha.2).
+* Don’t set empty request `operationName` or `variables`.
+
 ## 6.0.3
 
 * Response is set on the context, via [#40](https://github.com/jaydenseric/apollo-upload-client/pull/40).
