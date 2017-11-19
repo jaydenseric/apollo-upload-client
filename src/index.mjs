@@ -70,7 +70,7 @@ export const createUploadLink = (
           )
 
           files.forEach(({ file }, index) =>
-            fetchOptions.body.append(`${index}`, file)
+            fetchOptions.body.append(index, file)
           )
         } else {
           fetchOptions.headers['content-type'] = 'application/json'
