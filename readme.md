@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/apollo-upload-client.svg)](https://npm.im/apollo-upload-client) ![Licence](https://img.shields.io/npm/l/apollo-upload-client.svg) [![Github issues](https://img.shields.io/github/issues/jaydenseric/apollo-upload-client.svg)](https://github.com/jaydenseric/apollo-upload-client/issues) [![Github stars](https://img.shields.io/github/stars/jaydenseric/apollo-upload-client.svg)](https://github.com/jaydenseric/apollo-upload-client/stargazers)
 
-Enhances [Apollo](https://apollographql.com) for intuitive file uploads via GraphQL mutations or queries. Use with [apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server).
+Enhances [Apollo](https://apollographql.com) for intuitive file uploads via GraphQL queries or mutations. Use with [apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server).
 
 ## Setup
 
@@ -19,9 +19,7 @@ Initialize Apollo Client with this terminating link:
 ```js
 import { createUploadLink } from 'apollo-upload-client'
 
-const link = createUploadLink({
-  // Options…
-})
+const link = createUploadLink(/* Options */)
 ```
 
 See also the [setup instructions](https://github.com/jaydenseric/apollo-upload-server#setup) for the [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server) middleware.
@@ -30,16 +28,16 @@ See also the [setup instructions](https://github.com/jaydenseric/apollo-upload-s
 
 `createUploadLink` options match [`createHttpLink` options](https://www.apollographql.com/docs/link/links/http.html#Options):
 
-* `includeExtensions`: Toggles sending `extensions` fields to the GraphQL server. Default is `false`.
-* `uri`: GraphQL endpoint URI. Default is `/graphql`.
-* `credentials`: Overrides `fetchOptions.credentials`.
-* `headers`: Merges with and overrides `fetchOptions.headers`.
-* `fetchOptions`: [`fetch` init object](https://developer.mozilla.org/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters). Overridden by upload requirements.
-* `fetch`: Default is global `fetch`.
+* `includeExtensions` (boolean): Toggles sending `extensions` fields to the GraphQL server. (default: `false`).
+* `uri` (string): GraphQL endpoint URI (default: `/graphql`).
+* `credentials` (string): Overrides `fetchOptions.credentials`.
+* `headers` (object): Merges with and overrides `fetchOptions.headers`.
+* `fetchOptions` (object): [`fetch` init](https://developer.mozilla.org/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters); overridden by upload requirements.
+* `fetch` (function): [Fetch API](https://fetch.spec.whatwg.org) to use (default: Global `fetch`).
 
 ## Usage
 
-Use [`File`](https://developer.mozilla.org/en/docs/Web/API/File), [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList) or [`ReactNativeFile`](#react-native) instances anywhere within mutation or query input variables. For server instructions see [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server). See the [example API and client](https://github.com/jaydenseric/apollo-upload-examples).
+Use [`File`](https://developer.mozilla.org/en/docs/Web/API/File), [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList) or [`ReactNativeFile`](#react-native) instances anywhere within query or mutation input variables. For server instructions see [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server). See the [example API and client](https://github.com/jaydenseric/apollo-upload-examples).
 
 ### [`File`](https://developer.mozilla.org/en/docs/Web/API/File) example
 
