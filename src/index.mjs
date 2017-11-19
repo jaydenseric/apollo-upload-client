@@ -17,13 +17,13 @@ export const createUploadLink = (
   new ApolloLink(
     ({ operationName, variables, query, extensions, getContext, setContext }) =>
       new Observable(observer => {
-        const requestOperation = {
-          operationName,
-          variables,
-          query: print(query)
-        }
+        const requestOperation = { query: print(query) }
 
-        if (includeExtensions) requestOperation.extensions = extensions
+        if (operationName) requestOperation.operationName = operationName
+        if (Object.keys(variables).length)
+          requestOperation.variables = variables
+        if (extensions && includeExtensions)
+          requestOperation.extensions = extensions
 
         const files = extractFiles(requestOperation)
 
@@ -49,13 +49,28 @@ export const createUploadLink = (
         if (credentials) fetchOptions.credentials = credentials
 
         if (files.length) {
+          // GraphQL multipart request spec:
+          // https://github.com/jaydenseric/graphql-multipart-request-spec
+
           fetchOptions.body = new FormData()
+
           fetchOptions.body.append(
             'operations',
             JSON.stringify(requestOperation)
           )
-          files.forEach(({ path, file }) =>
-            fetchOptions.body.append(path, file)
+
+          fetchOptions.body.append(
+            'map',
+            JSON.stringify(
+              files.reduce((map, { path }, index) => {
+                map[`${index}`] = [path]
+                return map
+              }, {})
+            )
+          )
+
+          files.forEach(({ file }, index) =>
+            fetchOptions.body.append(index, file)
           )
         } else {
           fetchOptions.headers['content-type'] = 'application/json'
