@@ -1,6 +1,6 @@
 # apollo-upload-client changelog
 
-## Next
+## 7.0.0-alpha.1
 
 * Conform to the [GraphQL multipart request spec v2.0.0-alpha.2](https://github.com/jaydenseric/graphql-multipart-request-spec/releases/tag/v2.0.0-alpha.2).
 * Don’t set empty request `operationName` or `variables`.
