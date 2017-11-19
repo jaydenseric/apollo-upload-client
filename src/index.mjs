@@ -15,7 +15,7 @@ export const createUploadLink = (
   } = {}
 ) =>
   new ApolloLink(
-    ({ operationName, variables, query, extensions, getContext }) =>
+    ({ operationName, variables, query, extensions, getContext, setContext }) =>
       new Observable(observer => {
         const requestOperation = {
           operationName,
@@ -64,6 +64,7 @@ export const createUploadLink = (
 
         linkFetch(uri, fetchOptions)
           .then(response => {
+            setContext({ response })
             if (!response.ok)
               throw new Error(`${response.status} (${response.statusText})`)
             return response.json()
