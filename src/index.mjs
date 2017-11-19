@@ -72,9 +72,9 @@ export const createUploadLink = (
 
         linkFetch(uri, fetchOptions)
           .then(response => {
+            operation.setContext({ response })
             if (!response.ok)
               throw new Error(`${response.status} (${response.statusText})`)
-            operation.setContext({ response })
             return response.json()
           })
           .then(result => {
