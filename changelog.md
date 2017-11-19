@@ -1,6 +1,6 @@
 # apollo-upload-client changelog
 
-## Next
+## 6.0.3
 
 * Response is set on the context, via [#40](https://github.com/jaydenseric/apollo-upload-client/pull/40).
 * Configured `lint-staged` for `.mjs`.
