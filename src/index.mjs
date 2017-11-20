@@ -2,12 +2,9 @@ import { ApolloLink, Observable } from 'apollo-link'
 import { print } from 'graphql/language/printer'
 import { extractFiles } from 'extract-files'
 
-export { ReactNativeFile } from 'extract-files'
+import root from 'window-or-global'
 
-const root =
-  (typeof self === 'object' && self.self === self && self) ||
-  (typeof global === 'object' && global.global === global && global) ||
-  this
+export { ReactNativeFile } from 'extract-files'
 
 export const createUploadLink = (
   {
