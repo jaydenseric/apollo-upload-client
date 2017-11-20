@@ -4,6 +4,11 @@ import { extractFiles } from 'extract-files'
 
 export { ReactNativeFile } from 'extract-files'
 
+const root =
+  (typeof self === 'object' && self.self === self && self) ||
+  (typeof global === 'object' && global.global === global && global) ||
+  this
+
 export const createUploadLink = (
   {
     includeExtensions,
@@ -11,7 +16,7 @@ export const createUploadLink = (
     credentials: linkCredentials,
     headers: linkHeaders,
     fetchOptions: linkFetchOptions = {},
-    fetch: linkFetch = fetch
+    fetch: linkFetch = root.fetch
   } = {}
 ) =>
   new ApolloLink(
