@@ -80,9 +80,19 @@ export const createUploadLink = (
         linkFetch(uri, fetchOptions)
           .then(response => {
             setContext({ response })
-            if (!response.ok)
+            
+            if (response.hasOwnProperty('ok')){
+              if (!response.ok)
+                throw new Error(`${response.status} (${response.statusText})`)
+              return response.json()
+            }else if(Object.prototype.toString.call(response) === '[object XMLHttpRequest]'){
+              if (!response.statusText === 'OK')
+                throw new Error(`${response.status} (${response.statusText})`)
+              return JSON.parse(response.response);
+            }else{
               throw new Error(`${response.status} (${response.statusText})`)
-            return response.json()
+            }
+
           })
           .then(result => {
             observer.next(result)
