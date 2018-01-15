@@ -4,6 +4,12 @@
 
 * Updated dependencies.
 * Updated peer dependencies to support `graphql@0.12`.
+* Added a clean step to builds.
+* Smarter Babel config with `.babelrc.js`.
+* Modular project structure that works better for native ESM.
+* Target Node.js v6.10+ for transpilation and polyfills via `package.json` `engines`, matching the version supported by [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server).
+* Support [browsers with >1% global usage](http://browserl.ist/?q=%3E1%25) (was >2%).
+* Updated the readme support section.
 
 ## 7.0.0-alpha.1
 

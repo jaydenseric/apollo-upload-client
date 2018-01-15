@@ -28,11 +28,13 @@
   "files": [
     "lib"
   ],
-  "main": "lib/main/index.js",
-  "module": "lib/module/index.mjs",
-  "browserslist": "> 2%",
+  "main": "lib",
+  "module": "lib/index.mjs",
+  "engines": {
+    "node": ">=6.10"
+  },
+  "browserslist": ">1%",
   "dependencies": {
-    "@babel/polyfill": "^7.0.0-beta.37",
     "@babel/runtime": "^7.0.0-beta.37",
     "extract-files": "^2.0.1"
   },
@@ -51,12 +53,13 @@
     "graphql": "^0.12.3",
     "husky": "^0.14.3",
     "lint-staged": "^6.0.0",
-    "prettier": "^1.10.2"
+    "prettier": "^1.10.2",
+    "rimraf": "^2.6.2"
   },
   "scripts": {
-    "build": "npm run build:main && npm run build:module && prettier --write 'lib/**/*.{js,mjs}'",
-    "build:main": "babel src --out-dir lib/main --config-file ./babelrc.main.json",
-    "build:module": "babel src --out-dir lib/module --config-file ./babelrc.module.json --keep-file-extension",
+    "build": "rimraf lib && npm run build:js && npm run build:mjs && prettier --write 'lib/**/*.{js,mjs}'",
+    "build:js": "babel src --out-dir lib",
+    "build:mjs": "MODULE=true babel src --out-dir lib --keep-file-extension",
     "lint": "eslint . --ext js,mjs",
     "fix": "npm run lint -- --fix && prettier --write '**/*.md'",
     "precommit": "lint-staged",
@@ -66,6 +69,7 @@
     "*.mjs": "eslint"
   },
   "eslintIgnore": [
+    "!.babelrc.js",
     "lib"
   ],
   "eslintConfig": {
