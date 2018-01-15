@@ -32,8 +32,8 @@
   "module": "lib/module/index.mjs",
   "browserslist": "> 2%",
   "dependencies": {
-    "@babel/polyfill": "^7.0.0-beta.32",
-    "@babel/runtime": "^7.0.0-beta.32",
+    "@babel/polyfill": "^7.0.0-beta.37",
+    "@babel/runtime": "^7.0.0-beta.37",
     "extract-files": "^2.0.1"
   },
   "peerDependencies": {
@@ -41,17 +41,17 @@
     "graphql": "^0.11.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.32",
-    "@babel/core": "^7.0.0-beta.32",
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.32",
-    "@babel/preset-env": "^7.0.0-beta.32",
-    "apollo-link": "^1.0.1",
-    "eslint": "^4.11.0",
-    "eslint-plugin-prettier": "^2.3.1",
-    "graphql": "^0.11.7",
+    "@babel/cli": "^7.0.0-beta.37",
+    "@babel/core": "^7.0.0-beta.37",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.37",
+    "@babel/preset-env": "^7.0.0-beta.37",
+    "apollo-link": "^1.0.7",
+    "eslint": "^4.15.0",
+    "eslint-plugin-prettier": "^2.4.0",
+    "graphql": "^0.12.3",
     "husky": "^0.14.3",
-    "lint-staged": "^5.0.0",
-    "prettier": "^1.8.2"
+    "lint-staged": "^6.0.0",
+    "prettier": "^1.10.2"
   },
   "scripts": {
     "build": "npm run build:main && npm run build:module && prettier --write 'lib/**/*.{js,mjs}'",
