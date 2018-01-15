@@ -96,8 +96,8 @@
     }
   },
   "prettier": {
+    "proseWrap": "never",
     "semi": false,
-    "singleQuote": true,
-    "proseWrap": false
+    "singleQuote": true
   }
 }

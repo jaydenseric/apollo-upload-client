@@ -4,16 +4,14 @@ import { extractFiles } from 'extract-files'
 
 export { ReactNativeFile } from 'extract-files'
 
-export const createUploadLink = (
-  {
-    includeExtensions,
-    uri: linkUri = '/graphql',
-    credentials: linkCredentials,
-    headers: linkHeaders,
-    fetchOptions: linkFetchOptions = {},
-    fetch: linkFetch = fetch
-  } = {}
-) =>
+export const createUploadLink = ({
+  includeExtensions,
+  uri: linkUri = '/graphql',
+  credentials: linkCredentials,
+  headers: linkHeaders,
+  fetchOptions: linkFetchOptions = {},
+  fetch: linkFetch = fetch
+} = {}) =>
   new ApolloLink(
     ({ operationName, variables, query, extensions, getContext, setContext }) =>
       new Observable(observer => {
