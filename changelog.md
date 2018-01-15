@@ -1,6 +1,6 @@
 # apollo-upload-client changelog
 
-## Next
+## 7.0.0-alpha.2
 
 * Updated dependencies.
 * Updated peer dependencies to support `graphql@0.12`.
