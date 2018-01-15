@@ -3,6 +3,7 @@
 ## Next
 
 * Updated dependencies.
+* Updated peer dependencies to support `graphql@0.12`.
 
 ## 7.0.0-alpha.1
 

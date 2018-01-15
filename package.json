@@ -38,7 +38,7 @@
   },
   "peerDependencies": {
     "apollo-link": "^1.0.0",
-    "graphql": "^0.11.0"
+    "graphql": "0.11 - 0.12"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.37",
