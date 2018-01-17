@@ -1,5 +1,10 @@
 # apollo-upload-client changelog
 
+## Next
+
+* Updated dependencies.
+  * [`extract-files` v3](https://github.com/jaydenseric/extract-files/releases/tag/v3.0.0) replaces files extracted from properties with `null` instead of deleting the property; see [jaydenseric/extract-files#4](https://github.com/jaydenseric/extract-files/issues/4). This improves compliance with the [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec). It’s not a breaking change for `apollo-upload-server`, but it might be for other implementations.
+
 ## 7.0.0-alpha.2
 
 * Updated dependencies.
