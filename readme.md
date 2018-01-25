@@ -37,7 +37,7 @@ See also the [setup instructions](https://github.com/jaydenseric/apollo-upload-s
 
 ## Usage
 
-Use [`File`](https://developer.mozilla.org/en/docs/Web/API/File), [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList) or [`ReactNativeFile`](#react-native) instances anywhere within query or mutation input variables. For server instructions see [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server). See the [example API and client](https://github.com/jaydenseric/apollo-upload-examples).
+Use [`File`](https://developer.mozilla.org/en/docs/Web/API/File), [`Blob`](https://developer.mozilla.org/en/docs/Web/API/Blob), [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList) or [`ReactNativeFile`](#react-native) instances anywhere within query or mutation input variables. For server instructions see [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server). See the [example API and client](https://github.com/jaydenseric/apollo-upload-examples).
 
 ### [`File`](https://developer.mozilla.org/en/docs/Web/API/File) example
 
@@ -60,6 +60,37 @@ export default graphql(gql`
     }
   />
 ))
+```
+
+### [`Blob`](https://developer.mozilla.org/en/docs/Web/API/Blob) example
+
+```jsx
+import gql from 'graphql-tag'
+import { graphql } from 'react-apollo'
+
+export default graphql(gql`
+  mutation($file: Upload!) {
+    uploadFile(file: $file) {
+      id
+    }
+  }
+`)(({ mutate }) => (
+  const myBlobFile = /* ... */
+  mutate({ variables: { file: myBlobFile } })
+))
+```
+
+**Note when using [`Blob`](https://developer.mozilla.org/en/docs/Web/API/Blob)**
+
+If you've converted a [`File`](https://developer.mozilla.org/en/docs/Web/API/File) to a [`Blob`](https://developer.mozilla.org/en/docs/Web/API/Blob) it will not contain the original filename by default. Sending a mutation like this will result in an empty `filename` in the `Upload` scalar received by [apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server). It's up to your server to handle the naming process there.
+If instead you want Apollo Client to include the original `filename` in the mutation, make sure you've appended the filename to the [`Blob`](https://developer.mozilla.org/en/docs/Web/API/Blob) after creating it.
+
+```js
+// ...
+const myBlobFile = /* ... */
+myBlobFile.name = 'IMG_4017.jpg'; // <-- Now Apollo Client will handle the filename
+
+mutate({ variables: { file: myBlobFile } })
 ```
 
 ### [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList) example

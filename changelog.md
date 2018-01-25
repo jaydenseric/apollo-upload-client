@@ -1,5 +1,9 @@
 # apollo-upload-client changelog
 
+## 7.0.0-alpha.4
+
+* Added support for [`Blob`](https://developer.mozilla.org/en/docs/Web/API/Blob) types.
+
 ## 7.0.0-alpha.3
 
 * Updated dependencies.
