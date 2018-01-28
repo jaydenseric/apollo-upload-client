@@ -2,6 +2,7 @@
 
 ## Next
 
+* Updated dependencies.
 * Added support for [`Blob`](https://developer.mozilla.org/en/docs/Web/API/Blob) types, via [#58](https://github.com/jaydenseric/apollo-upload-client/pull/58).
 
 ## 7.0.0-alpha.3

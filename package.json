@@ -35,7 +35,7 @@
   },
   "browserslist": ">1%",
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.37",
+    "@babel/runtime": "^7.0.0-beta.38",
     "extract-files": "^3.1.0"
   },
   "peerDependencies": {
@@ -43,16 +43,16 @@
     "graphql": "0.11 - 0.12"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.37",
-    "@babel/core": "^7.0.0-beta.37",
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.37",
-    "@babel/preset-env": "^7.0.0-beta.37",
+    "@babel/cli": "^7.0.0-beta.38",
+    "@babel/core": "^7.0.0-beta.38",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.38",
+    "@babel/preset-env": "^7.0.0-beta.38",
     "apollo-link": "^1.0.7",
-    "eslint": "^4.15.0",
+    "eslint": "^4.16.0",
     "eslint-plugin-prettier": "^2.5.0",
     "graphql": "^0.12.3",
     "husky": "^0.14.3",
-    "lint-staged": "^6.0.0",
+    "lint-staged": "^6.1.0",
     "prettier": "^1.10.2",
     "rimraf": "^2.6.2"
   },
