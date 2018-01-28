@@ -37,32 +37,9 @@ See also the [setup instructions](https://github.com/jaydenseric/apollo-upload-s
 
 ## Usage
 
-Use [`File`](https://developer.mozilla.org/en/docs/Web/API/File), [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList) or [`ReactNativeFile`](#react-native) instances anywhere within query or mutation input variables. For server instructions see [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server). See the [example API and client](https://github.com/jaydenseric/apollo-upload-examples).
+Use [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en/docs/Web/API/File), [`Blob`](https://developer.mozilla.org/en/docs/Web/API/Blob) or [`ReactNativeFile`](#react-native) instances anywhere within query or mutation input variables. See also [`apollo-upload-server` usage](https://github.com/jaydenseric/apollo-upload-server#usage) and the [example API and client](https://github.com/jaydenseric/apollo-upload-examples).
 
-### [`File`](https://developer.mozilla.org/en/docs/Web/API/File) example
-
-```jsx
-import gql from 'graphql-tag'
-import { graphql } from 'react-apollo'
-
-export default graphql(gql`
-  mutation($file: Upload!) {
-    uploadFile(file: $file) {
-      id
-    }
-  }
-`)(({ mutate }) => (
-  <input
-    type="file"
-    required
-    onChange={({ target }) =>
-      target.validity.valid && mutate({ variables: { file: target.files[0] } })
-    }
-  />
-))
-```
-
-### [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList) example
+### [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList)
 
 ```jsx
 import gql from 'graphql-tag'
@@ -79,11 +56,59 @@ export default graphql(gql`
     type="file"
     multiple
     required
-    onChange={({ target }) =>
-      target.validity.valid && mutate({ variables: { files: target.files } })
+    onChange={({ target: { validity, files } }) =>
+      validity.valid && mutate({ variables: { files } })
     }
   />
 ))
+```
+
+### [`File`](https://developer.mozilla.org/en/docs/Web/API/File)
+
+```jsx
+import gql from 'graphql-tag'
+import { graphql } from 'react-apollo'
+
+export default graphql(gql`
+  mutation($file: Upload!) {
+    uploadFile(file: $file) {
+      id
+    }
+  }
+`)(({ mutate }) => (
+  <input
+    type="file"
+    required
+    onChange={({ target: { validity, files: [file] } }) =>
+      validity.valid && mutate({ variables: { file } })
+    }
+  />
+))
+```
+
+### [`Blob`](https://developer.mozilla.org/en/docs/Web/API/Blob)
+
+```jsx
+import gql from 'graphql-tag'
+
+// Apollo Client instance
+import client from './apollo'
+
+const file = new Blob(['Foo.'], { type: 'text/plain' })
+
+// Optional, defaults to `blob`
+file.name = 'bar.txt'
+
+client.mutate({
+  mutation: gql`
+    mutation($file: Upload!) {
+      uploadFile(file: $file) {
+        id
+      }
+    }
+  `,
+  variables: { file }
+})
 ```
 
 ### React Native
