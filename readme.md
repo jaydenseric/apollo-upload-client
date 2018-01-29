@@ -22,8 +22,6 @@ import { createUploadLink } from 'apollo-upload-client'
 const link = createUploadLink(/* Options */)
 ```
 
-See also the [`apollo-upload-server` middleware setup](https://github.com/jaydenseric/apollo-upload-server#setup).
-
 ### Options
 
 `createUploadLink` options match [`createHttpLink` options](https://www.apollographql.com/docs/link/links/http.html#Options):
@@ -37,7 +35,7 @@ See also the [`apollo-upload-server` middleware setup](https://github.com/jayden
 
 ## Usage
 
-Use [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en/docs/Web/API/File), [`Blob`](https://developer.mozilla.org/en/docs/Web/API/Blob) or [`ReactNativeFile`](#react-native) instances anywhere within query or mutation input variables. See also [`apollo-upload-server` usage](https://github.com/jaydenseric/apollo-upload-server#usage) and the [example API and client](https://github.com/jaydenseric/apollo-upload-examples).
+Use [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en/docs/Web/API/File), [`Blob`](https://developer.mozilla.org/en/docs/Web/API/Blob) or [`ReactNativeFile`](#react-native) instances anywhere within query or mutation input variables to send a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec). See also [apollo-upload-server usage](https://github.com/jaydenseric/apollo-upload-server#usage) and the [example API and client](https://github.com/jaydenseric/apollo-upload-examples).
 
 ### [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList)
 

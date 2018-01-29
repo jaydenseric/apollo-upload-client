@@ -4,7 +4,9 @@
 
 * Updated dependencies.
 * Added support for [`Blob`](https://developer.mozilla.org/en/docs/Web/API/Blob) types, via [#58](https://github.com/jaydenseric/apollo-upload-client/pull/58).
-* Added a [GraphQL multipart request spec server implementation list](https://github.com/jaydenseric/graphql-multipart-request-spec#server) link to the readme intro.
+* Readme updates:
+  * Added a [GraphQL multipart request spec server implementation list](https://github.com/jaydenseric/graphql-multipart-request-spec#server) link to the intro.
+  * Misc. tweaks.
 
 ## 7.0.0-alpha.3
 
