@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/apollo-upload-client.svg)](https://npm.im/apollo-upload-client) ![Licence](https://img.shields.io/npm/l/apollo-upload-client.svg) [![Github issues](https://img.shields.io/github/issues/jaydenseric/apollo-upload-client.svg)](https://github.com/jaydenseric/apollo-upload-client/issues) [![Github stars](https://img.shields.io/github/stars/jaydenseric/apollo-upload-client.svg)](https://github.com/jaydenseric/apollo-upload-client/stargazers)
 
-Enhances [Apollo](https://apollographql.com) for intuitive file uploads via GraphQL queries or mutations. Use with [apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server) or [apollo_upload_server-ruby](https://github.com/jetruby/apollo_upload_server-ruby).
+Enhances [Apollo](https://apollographql.com) for intuitive file uploads via GraphQL queries or mutations. Use with a [GraphQL multipart request spec server implementation](https://github.com/jaydenseric/graphql-multipart-request-spec#server) such as [apollo-upload-server](https://github.com/jaydenseric/apollo-upload-server).
 
 ## Setup
 
@@ -22,7 +22,7 @@ import { createUploadLink } from 'apollo-upload-client'
 const link = createUploadLink(/* Options */)
 ```
 
-See also the [setup instructions](https://github.com/jaydenseric/apollo-upload-server#setup) for the [`apollo-upload-server`](https://github.com/jaydenseric/apollo-upload-server) middleware.
+See also the [`apollo-upload-server` middleware setup](https://github.com/jaydenseric/apollo-upload-server#setup).
 
 ### Options
 
