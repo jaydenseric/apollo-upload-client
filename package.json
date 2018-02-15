@@ -35,22 +35,22 @@
   },
   "browserslist": ">1%",
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.38",
+    "@babel/runtime": "^7.0.0-beta.40",
     "extract-files": "^3.1.0"
   },
   "peerDependencies": {
     "apollo-link": "^1.0.0",
-    "graphql": "0.11 - 0.12"
+    "graphql": "0.11 - 0.13"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.38",
-    "@babel/core": "^7.0.0-beta.38",
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.38",
-    "@babel/preset-env": "^7.0.0-beta.38",
-    "apollo-link": "^1.0.7",
-    "eslint": "^4.16.0",
-    "eslint-plugin-prettier": "^2.5.0",
-    "graphql": "^0.12.3",
+    "@babel/cli": "^7.0.0-beta.40",
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.40",
+    "@babel/preset-env": "^7.0.0-beta.40",
+    "apollo-link": "^1.1.0",
+    "eslint": "^4.17.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "graphql": "^0.13.0",
     "husky": "^0.14.3",
     "lint-staged": "^6.1.0",
     "prettier": "^1.10.2",
