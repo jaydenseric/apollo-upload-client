@@ -2,7 +2,11 @@
 
 ## Next
 
-* Updated dependencies, `graphql` peer dependency range updated for v0.13.0.
+* Updated dependencies.
+* Using [`apollo-link-utilities`](https://npm.im/apollo-link-utilities) for commonality with the official HTTP links:
+  * Removed `graphql` peer dependency.
+  * Aborting `fetch` supported.
+  * Fixes [#47](https://github.com/jaydenseric/apollo-upload-client/issues/47) and [#61](https://github.com/jaydenseric/apollo-upload-client/issues/61).
 * More robust npm scripts.
 * HTTPS `package.json` author URL.
 

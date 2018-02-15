@@ -11,7 +11,7 @@ Enhances [Apollo](https://apollographql.com) for intuitive file uploads via Grap
 Install with peer dependencies using [npm](https://npmjs.com):
 
 ```shell
-npm install apollo-upload-client apollo-link graphql
+npm install apollo-upload-client apollo-link
 ```
 
 Initialize Apollo Client with this terminating link:
