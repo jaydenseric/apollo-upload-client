@@ -1,5 +1,9 @@
 # apollo-upload-client changelog
 
+## Next
+
+* HTTPS `package.json` author URL.
+
 ## 7.0.0-alpha.4
 
 * Updated dependencies.
