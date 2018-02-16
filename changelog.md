@@ -1,6 +1,6 @@
 # apollo-upload-client changelog
 
-## Next
+## 7.1.0-alpha.1
 
 * Updated dependencies.
 * Using [`apollo-link-http-common`](https://npm.im/apollo-link-http-common) for commonality with the official HTTP links:
