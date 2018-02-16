@@ -1,91 +1,102 @@
 import { ApolloLink, Observable } from 'apollo-link'
-import { print } from 'graphql/language/printer'
+import {
+  fallbackHttpConfig,
+  selectURI,
+  selectHttpOptionsAndBody,
+  serializeFetchBody,
+  parseAndCheckHttpResponse,
+  createSignalIfSupported
+} from 'apollo-link-http-common'
 import extractFiles from 'extract-files'
 
 export { ReactNativeFile } from 'extract-files'
 
 export const createUploadLink = ({
-  includeExtensions,
-  uri: linkUri = '/graphql',
-  credentials: linkCredentials,
-  headers: linkHeaders,
-  fetchOptions: linkFetchOptions = {},
-  fetch: linkFetch = fetch
-} = {}) =>
-  new ApolloLink(
-    ({ operationName, variables, query, extensions, getContext, setContext }) =>
-      new Observable(observer => {
-        const requestOperation = { query: print(query) }
+  uri: fetchUri = '/graphql',
+  fetch: linkFetch = fetch,
+  fetchOptions,
+  credentials,
+  headers,
+  includeExtensions
+} = {}) => {
+  const linkConfig = {
+    http: { includeExtensions },
+    options: fetchOptions,
+    credentials,
+    headers
+  }
 
-        if (operationName) requestOperation.operationName = operationName
-        if (Object.keys(variables).length)
-          requestOperation.variables = variables
-        if (extensions && includeExtensions)
-          requestOperation.extensions = extensions
+  return new ApolloLink(operation => {
+    const uri = selectURI(operation, fetchUri)
+    const context = operation.getContext()
+    const contextConfig = {
+      http: context.http,
+      options: context.fetchOptions,
+      credentials: context.credentials,
+      headers: context.headers
+    }
 
-        const files = extractFiles(requestOperation)
+    const { options, body } = selectHttpOptionsAndBody(
+      operation,
+      fallbackHttpConfig,
+      linkConfig,
+      contextConfig
+    )
 
-        const {
-          uri = linkUri,
-          credentials = linkCredentials,
-          headers: contextHeaders,
-          fetchOptions: contextFetchOptions = {}
-        } = getContext()
+    const files = extractFiles(body)
 
-        const fetchOptions = {
-          ...linkFetchOptions,
-          ...contextFetchOptions,
-          headers: {
-            ...linkFetchOptions.headers,
-            ...contextFetchOptions.headers,
-            ...linkHeaders,
-            ...contextHeaders
-          },
-          method: 'POST'
-        }
+    if (files.length) {
+      // Automatically set by fetch when the body is a FormData instance.
+      delete options.headers['content-type']
 
-        if (credentials) fetchOptions.credentials = credentials
+      // GraphQL multipart request spec:
+      // https://github.com/jaydenseric/graphql-multipart-request-spec
+      options.body = new FormData()
+      options.body.append('operations', serializeFetchBody(body))
+      options.body.append(
+        'map',
+        JSON.stringify(
+          files.reduce((map, { path }, index) => {
+            map[`${index}`] = [path]
+            return map
+          }, {})
+        )
+      )
+      files.forEach(({ file }, index) =>
+        options.body.append(index, file, file.name)
+      )
+    } else options.body = serializeFetchBody(body)
 
-        if (files.length) {
-          // GraphQL multipart request spec:
-          // https://github.com/jaydenseric/graphql-multipart-request-spec
+    return new Observable(observer => {
+      // Allow aborting fetch, if supported.
+      const { controller, signal } = createSignalIfSupported()
+      if (controller) options.signal = signal
 
-          fetchOptions.body = new FormData()
+      linkFetch(uri, options)
+        .then(response => {
+          // Forward the response on the context.
+          operation.setContext({ response })
+          return response
+        })
+        .then(parseAndCheckHttpResponse(operation))
+        .then(result => {
+          observer.next(result)
+          observer.complete()
+        })
+        .catch(error => {
+          if (error.name === 'AbortError')
+            // Fetch was aborted.
+            return
 
-          fetchOptions.body.append(
-            'operations',
-            JSON.stringify(requestOperation)
-          )
+          if (error.result && error.result.errors)
+            // There is a GraphQL result to forward.
+            observer.next(error.result)
 
-          fetchOptions.body.append(
-            'map',
-            JSON.stringify(
-              files.reduce((map, { path }, index) => {
-                map[`${index}`] = [path]
-                return map
-              }, {})
-            )
-          )
+          observer.error(error)
+        })
 
-          files.forEach(({ file }, index) =>
-            fetchOptions.body.append(index, file, file.name)
-          )
-        } else {
-          fetchOptions.headers['content-type'] = 'application/json'
-          fetchOptions.body = JSON.stringify(requestOperation)
-        }
-
-        linkFetch(uri, fetchOptions)
-          .then(response => {
-            setContext({ response })
-            if (!response.ok)
-              throw new Error(`${response.status} (${response.statusText})`)
-            return response.json()
-          })
-          .then(result => {
-            observer.next(result)
-            observer.complete()
-          })
-          .catch(error => observer.error(error))
-      })
-  )
+      // Abort fetch as the optional cleanup function.
+      if (controller) return controller.abort
+    })
+  })
+}
