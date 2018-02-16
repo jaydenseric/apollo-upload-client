@@ -1,12 +1,12 @@
 import { ApolloLink, Observable } from 'apollo-link'
 import {
+  fallbackHttpConfig,
   selectURI,
-  selectOptionsAndBody,
-  serializeBody,
-  parseAndCheckResponse,
-  createSignalIfSupported,
-  LinkUtils
-} from 'apollo-link-utilities'
+  selectHttpOptionsAndBody,
+  serializeFetchBody,
+  parseAndCheckHttpResponse,
+  createSignalIfSupported
+} from 'apollo-link-http-common'
 import extractFiles from 'extract-files'
 
 export { ReactNativeFile } from 'extract-files'
@@ -36,9 +36,9 @@ export const createUploadLink = ({
       headers: context.headers
     }
 
-    const { options, body } = selectOptionsAndBody(
+    const { options, body } = selectHttpOptionsAndBody(
       operation,
-      LinkUtils.fallbackConfig,
+      fallbackHttpConfig,
       linkConfig,
       contextConfig
     )
@@ -52,7 +52,7 @@ export const createUploadLink = ({
       // GraphQL multipart request spec:
       // https://github.com/jaydenseric/graphql-multipart-request-spec
       options.body = new FormData()
-      options.body.append('operations', serializeBody(body))
+      options.body.append('operations', serializeFetchBody(body))
       options.body.append(
         'map',
         JSON.stringify(
@@ -65,7 +65,7 @@ export const createUploadLink = ({
       files.forEach(({ file }, index) =>
         options.body.append(index, file, file.name)
       )
-    } else options.body = serializeBody(body)
+    } else options.body = serializeFetchBody(body)
 
     return new Observable(observer => {
       // Allow aborting fetch, if supported.
@@ -78,7 +78,7 @@ export const createUploadLink = ({
           operation.setContext({ response })
           return response
         })
-        .then(parseAndCheckResponse(operation))
+        .then(parseAndCheckHttpResponse(operation))
         .then(result => {
           observer.next(result)
           observer.complete()

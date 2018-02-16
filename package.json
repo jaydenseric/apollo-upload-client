@@ -35,7 +35,7 @@
   "browserslist": ">1%",
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.40",
-    "apollo-link-utilities": "0.0.0",
+    "apollo-link-http-common": "0.0.0",
     "extract-files": "^3.1.0"
   },
   "peerDependencies": {

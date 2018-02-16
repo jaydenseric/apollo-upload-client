@@ -3,7 +3,7 @@
 ## Next
 
 * Updated dependencies.
-* Using [`apollo-link-utilities`](https://npm.im/apollo-link-utilities) for commonality with the official HTTP links:
+* Using [`apollo-link-http-common`](https://npm.im/apollo-link-http-common) for commonality with the official HTTP links:
   * Removed `graphql` peer dependency.
   * Aborting `fetch` supported.
   * Fixes [#47](https://github.com/jaydenseric/apollo-upload-client/issues/47) and [#61](https://github.com/jaydenseric/apollo-upload-client/issues/61).
