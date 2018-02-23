@@ -96,8 +96,11 @@ export const createUploadLink = ({
           observer.error(error)
         })
 
-      // Abort fetch as the optional cleanup function.
-      if (controller) return controller.abort
+      // Cleanup function.
+      return () => {
+        // Abort fetch.
+        if (controller) controller.abort()
+      }
     })
   })
 }

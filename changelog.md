@@ -4,6 +4,7 @@
 
 * Updated dependencies.
 * Using new `apollo-link-http-common` API.
+* Corrected aborting fetch, fixing [#70](https://github.com/jaydenseric/apollo-upload-client/issues/70).
 
 ## 7.1.0-alpha.1
 
