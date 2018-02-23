@@ -1,5 +1,10 @@
 # apollo-upload-client changelog
 
+## Next
+
+* Updated dependencies.
+* Using new `apollo-link-http-common` API.
+
 ## 7.1.0-alpha.1
 
 * Updated dependencies.

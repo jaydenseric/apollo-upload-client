@@ -3,7 +3,7 @@ import {
   fallbackHttpConfig,
   selectURI,
   selectHttpOptionsAndBody,
-  serializeFetchBody,
+  serializeFetchParameter,
   parseAndCheckHttpResponse,
   createSignalIfSupported
 } from 'apollo-link-http-common'
@@ -44,6 +44,7 @@ export const createUploadLink = ({
     )
 
     const files = extractFiles(body)
+    const payload = serializeFetchParameter(body, 'Payload')
 
     if (files.length) {
       // Automatically set by fetch when the body is a FormData instance.
@@ -52,7 +53,7 @@ export const createUploadLink = ({
       // GraphQL multipart request spec:
       // https://github.com/jaydenseric/graphql-multipart-request-spec
       options.body = new FormData()
-      options.body.append('operations', serializeFetchBody(body))
+      options.body.append('operations', payload)
       options.body.append(
         'map',
         JSON.stringify(
@@ -65,7 +66,7 @@ export const createUploadLink = ({
       files.forEach(({ file }, index) =>
         options.body.append(index, file, file.name)
       )
-    } else options.body = serializeFetchBody(body)
+    } else options.body = payload
 
     return new Observable(observer => {
       // Allow aborting fetch, if supported.
