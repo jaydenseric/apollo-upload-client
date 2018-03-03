@@ -89,7 +89,7 @@ export const createUploadLink = ({
             // Fetch was aborted.
             return
 
-          if (error.result && error.result.errors)
+          if (error.result && error.result.errors && error.result.data)
             // There is a GraphQL result to forward.
             observer.next(error.result)
 

@@ -3,6 +3,7 @@
 ## Next
 
 * Updated dependencies.
+* Match an [error handling tweak](https://github.com/apollographql/apollo-link/pull/524/files#diff-f34b7d587510bfca51f1dd1dd03dfc98R130) in the official HTTP links.
 
 ## 7.1.0-alpha.2
 
