@@ -1,5 +1,9 @@
 # apollo-upload-client changelog
 
+## Next
+
+* Updated dependencies.
+
 ## 7.1.0-alpha.2
 
 * Updated dependencies.
