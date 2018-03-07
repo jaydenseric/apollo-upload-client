@@ -1,5 +1,9 @@
 # apollo-upload-client changelog
 
+## Next
+
+* New readme logo URL that does’t need to be updated every version.
+
 ## 7.1.0
 
 * Updated dependencies.
