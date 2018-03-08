@@ -27,8 +27,8 @@
     "native"
   ],
   "files": ["lib"],
-  "main": "lib",
-  "module": "lib/index.mjs",
+  "main": "lib/main",
+  "module": "lib/module",
   "engines": {
     "node": ">=6.10"
   },
@@ -61,22 +61,22 @@
     "clean": "rimraf lib",
     "prebuild": "npm run clean",
     "build": "run-p build:*",
-    "build:js": "babel src -d lib",
-    "build:mjs": "cross-env MODULE=true babel src -d lib --keep-file-extension",
-    "postbuild": "prettier 'lib/**/*.{mjs,js}' --write",
+    "build:main": "babel src -d lib/main",
+    "build:module": "cross-env MODULE=true babel src -d lib/module",
+    "postbuild": "prettier 'lib/**/*.js' --write",
     "prewatch": "npm run clean",
     "watch": "run-p 'build:* -- --watch'",
     "lint": "run-p lint:*",
-    "lint:eslint": "eslint . --ext mjs,js",
+    "lint:eslint": "eslint .",
     "lint:prettier": "prettier '**/*.{json,md}' -l",
     "fix": "run-p fix:*",
-    "fix:eslint": "eslint . --ext mjs,js --fix",
+    "fix:eslint": "eslint . --fix",
     "fix:prettier": "prettier '**/*.{json,md}' --write",
     "precommit": "lint-staged",
     "prepublishOnly": "run-p lint build"
   },
   "lint-staged": {
-    "*.{mjs,js}": "eslint",
+    "*.js": "eslint",
     "*.{json,md}": "prettier -l"
   },
   "eslintIgnore": ["!.*", "node_modules", "lib"],

@@ -2,6 +2,7 @@
 
 ## Next
 
+* Abandon `.mjs` [until Apollo provides native ESM](https://github.com/apollographql/apollo-link/issues/537), fixing [#72](https://github.com/jaydenseric/apollo-upload-client/issues/72).
 * New readme logo URL that does’t need to be updated every version.
 
 ## 7.1.0
