@@ -7,7 +7,7 @@ import {
   createSignalIfSupported,
   parseAndCheckHttpResponse
 } from 'apollo-link-http-common'
-import extractFiles from 'extract-files'
+import { extractFilesOrStreams, isStream } from './extract-streams'
 
 export { ReactNativeFile } from 'extract-files'
 
@@ -17,7 +17,8 @@ export const createUploadLink = ({
   fetchOptions,
   credentials,
   headers,
-  includeExtensions
+  includeExtensions,
+  customFormData
 } = {}) => {
   const linkConfig = {
     http: { includeExtensions },
@@ -43,16 +44,15 @@ export const createUploadLink = ({
       contextConfig
     )
 
-    const files = extractFiles(body)
+    const files = extractFilesOrStreams(body)
     const payload = serializeFetchParameter(body, 'Payload')
-
     if (files.length) {
       // Automatically set by fetch when the body is a FormData instance.
       delete options.headers['content-type']
 
       // GraphQL multipart request spec:
       // https://github.com/jaydenseric/graphql-multipart-request-spec
-      options.body = new FormData()
+      options.body = customFormData ? new customFormData() : new FormData()
       options.body.append('operations', payload)
       options.body.append(
         'map',
@@ -63,16 +63,25 @@ export const createUploadLink = ({
           }, {})
         )
       )
-      files.forEach(({ file }, index) =>
-        options.body.append(index, file, file.name)
-      )
+      files.forEach(({ file }, index) => {
+        //read stream
+        if (isStream(file)) options.body.append(index, file)
+        else if (isStream(file.stream)) {
+          //busboy stream type
+          const { filename, mimetype: contentType } = file
+          let chunk = null
+          while ((chunk = file.stream.read()))
+            options.body.append(index, chunk, {
+              filename,
+              contentType
+            })
+        } else options.body.append(index, file, file.name)
+      })
     } else options.body = payload
-
     return new Observable(observer => {
       // Allow aborting fetch, if supported.
       const { controller, signal } = createSignalIfSupported()
       if (controller) options.signal = signal
-
       linkFetch(uri, options)
         .then(response => {
           // Forward the response on the context.
