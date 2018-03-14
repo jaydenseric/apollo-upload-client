@@ -2,7 +2,6 @@ import extractFiles, { isObject } from 'extract-files'
 
 export const isStream = obj => {
   return (
-    //check busboy FileStream format
     obj &&
     typeof obj.pipe === 'function' &&
     typeof obj._read === 'function' &&
@@ -13,6 +12,7 @@ export const isStream = obj => {
 
 export const extractFilesOrStreams = (tree, treePath) => {
   try {
+    //if FormData exists we're in browser env
     if (FormData !== void 0) return extractFiles(tree)
   } catch (e) {
     if (treePath === void 0) treePath = ''
@@ -21,8 +21,7 @@ export const extractFilesOrStreams = (tree, treePath) => {
       Object.keys(node).forEach(function(key) {
         if (!isObject(node[key])) return
         var path = '' + nodePath + key
-
-        // get streams
+        // get streams and ajdust to busboy obj.stream format
         if (isStream(node[key]) || isStream(node[key].stream)) {
           files.push({
             path: path,

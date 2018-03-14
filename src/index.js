@@ -7,7 +7,7 @@ import {
   createSignalIfSupported,
   parseAndCheckHttpResponse
 } from 'apollo-link-http-common'
-import { extractFilesOrStreams, isStream } from './extract-streams'
+import { extractFilesOrStreams, isStream } from './extract-streams-files'
 
 export { ReactNativeFile } from 'extract-files'
 
@@ -18,7 +18,7 @@ export const createUploadLink = ({
   credentials,
   headers,
   includeExtensions,
-  customFormData
+  serverFormData
 } = {}) => {
   const linkConfig = {
     http: { includeExtensions },
@@ -52,7 +52,7 @@ export const createUploadLink = ({
 
       // GraphQL multipart request spec:
       // https://github.com/jaydenseric/graphql-multipart-request-spec
-      options.body = customFormData ? new customFormData() : new FormData()
+      options.body = serverFormData ? new serverFormData() : new FormData()
       options.body.append('operations', payload)
       options.body.append(
         'map',
