@@ -70,6 +70,7 @@ export const createUploadLink = ({
           //busboy stream type
           const { filename, mimetype: contentType } = file
           // busboy fix add name and httpVersion
+          // issue: https://github.com/form-data/form-data/issues/356
           file.stream.name = filename
           file.stream.httpVersion = '1.0' // doesn't really matter, but has to be a valid one
           options.body.append(index, file.stream, {
