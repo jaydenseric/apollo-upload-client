@@ -69,12 +69,13 @@ export const createUploadLink = ({
         else if (isStream(file.stream)) {
           //busboy stream type
           const { filename, mimetype: contentType } = file
-          let chunk = null
-          while ((chunk = file.stream.read()))
-            options.body.append(index, chunk, {
-              filename,
-              contentType
-            })
+          // busboy fix add name and httpVersion
+          file.stream.name = filename
+          file.stream.httpVersion = '1.0' // doesn't really matter, but has to be a valid one
+          options.body.append(index, file.stream, {
+            filename,
+            contentType
+          })
         } else options.body.append(index, file, file.name)
       })
     } else options.body = payload
