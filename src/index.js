@@ -73,9 +73,11 @@ export const createUploadLink = ({
           // issue: https://github.com/form-data/form-data/issues/356
           file.stream.name = filename
           file.stream.httpVersion = '1.0' // doesn't really matter, but has to be a valid one
+          file.stream.headers = { 'content-length': 0 }
           options.body.append(index, file.stream, {
             filename,
-            contentType
+            contentType,
+            knownLength: 0
           })
         } else options.body.append(index, file, file.name)
       })

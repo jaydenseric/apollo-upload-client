@@ -1,8 +1,7 @@
 {
   "name": "apollo-upload-client",
   "version": "8.0.0",
-  "description":
-    "Enhances Apollo Client for intuitive file uploads via GraphQL mutations.",
+  "description": "Enhances Apollo Client for intuitive file uploads via GraphQL mutations.",
   "license": "MIT",
   "author": {
     "name": "Jayden Seric",
@@ -26,7 +25,9 @@
     "react",
     "native"
   ],
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "main": "lib/main",
   "module": "lib/module",
   "engines": {
@@ -79,7 +80,11 @@
     "*.js": "eslint",
     "*.{json,md}": "prettier -l"
   },
-  "eslintIgnore": ["!.*", "node_modules", "lib"],
+  "eslintIgnore": [
+    "!.*",
+    "node_modules",
+    "lib"
+  ],
   "eslintConfig": {
     "parserOptions": {
       "sourceType": "module",
@@ -93,10 +98,17 @@
       "node": true,
       "browser": true
     },
-    "extends": ["eslint:recommended"],
-    "plugins": ["prettier"],
+    "extends": [
+      "eslint:recommended"
+    ],
+    "plugins": [
+      "prettier"
+    ],
     "rules": {
-      "curly": ["error", "multi"],
+      "curly": [
+        "error",
+        "multi"
+      ],
       "prettier/prettier": "error"
     }
   },
