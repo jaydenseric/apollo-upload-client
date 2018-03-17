@@ -142,13 +142,14 @@ const files = ReactNativeFile.list([
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { createUploadLink } from 'apollo-upload-client'
-import { createReadStream } from 'fs'
+import gql from 'graphql-tag'
+import fs from 'fs'
 import fetch from 'node-fetch'
 import FormData from 'form-data'
 
 const client = new ApolloClient({
   link: createUploadLink({
-    uri: 'https://example.server.com',
+    uri: 'https://example.server.com/graphql',
     serverFormData: FormData,
     fetch
   }),
@@ -156,7 +157,7 @@ const client = new ApolloClient({
 })
 
 const variables = {
-  file: createReadStream('/path/to/file')
+  file: fs.createReadStream('/path/to/file')
 }
 
 const mutation = gql`
@@ -178,6 +179,7 @@ import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { createUploadLink } from 'apollo-upload-client'
 import { mergeSchemas } from 'graphql-tools'
+import gql from 'graphql-tag'
 import fetch from 'node-fetch'
 import FormData from 'form-data'
 
@@ -191,7 +193,7 @@ mergeSchemas({
 
         const client = new ApolloClient({
           link: createUploadLink({
-            uri: 'https://book.microservice.com',
+            uri: 'https://book.microservice.com/graphql',
             serverFormData: FormData,
             fetch
           }),
