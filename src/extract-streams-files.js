@@ -1,5 +1,18 @@
 import extractFiles, { isObject } from 'extract-files'
 
+export function NoFormDataException(message) {
+  this.message = message
+  this.name = 'NoFormDataException'
+}
+
+export const isBrowser = new Function(`
+  try{
+    return (this === window)
+  }catch(e){
+    return false
+  }
+`)()
+
 export const isStream = obj => {
   return (
     obj &&
@@ -11,10 +24,8 @@ export const isStream = obj => {
 }
 
 export const extractFilesOrStreams = (tree, treePath) => {
-  try {
-    //if FormData exists we're in browser env
-    if (FormData !== void 0) return extractFiles(tree)
-  } catch (e) {
+  if (isBrowser) return extractFiles(tree)
+  else {
     if (treePath === void 0) treePath = ''
     var files = []
     var recurse = function recurse(node, nodePath) {

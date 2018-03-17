@@ -7,7 +7,12 @@ import {
   createSignalIfSupported,
   parseAndCheckHttpResponse
 } from 'apollo-link-http-common'
-import { extractFilesOrStreams, isStream } from './extract-streams-files'
+import {
+  extractFilesOrStreams,
+  isStream,
+  isBrowser,
+  NoFormDataException
+} from './extract-streams-files'
 
 export { ReactNativeFile } from 'extract-files'
 
@@ -52,7 +57,15 @@ export const createUploadLink = ({
 
       // GraphQL multipart request spec:
       // https://github.com/jaydenseric/graphql-multipart-request-spec
-      options.body = serverFormData ? new serverFormData() : new FormData()
+      if (isBrowser) options.body = new FormData()
+      else if (serverFormData)
+        // on the server - expecting to receive a FormData object following the same
+        // specs as browser's FormData - tested with 'form-data' npm package only
+        options.body = new serverFormData()
+      else
+        throw new NoFormDataException(`FormData function doesn't exist on this server version. \
+We suggest you to install 'form-data' via npm and pass it as \
+as an argument in 'createUploadLink' function : '{ serverFormData: FormData }'`)
       options.body.append('operations', payload)
       options.body.append(
         'map',
@@ -64,20 +77,22 @@ export const createUploadLink = ({
         )
       )
       files.forEach(({ file }, index) => {
-        //read stream
-        if (isStream(file)) options.body.append(index, file)
+        if (isStream(file))
+          // stream from a 'fs.createReadStream' call
+          options.body.append(index, file)
         else if (isStream(file.stream)) {
-          //busboy stream type
+          //busboy FileStream type - supporting apollo-upload-server
+
+          // Incoming stream, to avoid form-data from calling getLengthSync we've to
+          // overwrite the function that evalutes if it should be called
+          // a public method was added to the form-data API
+          // https://github.com/form-data/form-data/issues/196
+          options.body.hasKnownLength = () => false
+
           const { filename, mimetype: contentType } = file
-          // busboy fix add name and httpVersion
-          // issue: https://github.com/form-data/form-data/issues/356
-          file.stream.name = filename
-          file.stream.httpVersion = '1.0' // doesn't really matter, but has to be a valid one
-          file.stream.headers = { 'content-length': 0 }
           options.body.append(index, file.stream, {
             filename,
-            contentType,
-            knownLength: 0
+            contentType
           })
         } else options.body.append(index, file, file.name)
       })
