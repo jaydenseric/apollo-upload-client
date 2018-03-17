@@ -10,7 +10,7 @@ import {
 import {
   extractFilesOrStreams,
   isStream,
-  isBrowser,
+  isBrowserOrNative,
   NoFormDataException
 } from './extract-streams-files'
 
@@ -57,14 +57,14 @@ export const createUploadLink = ({
 
       // GraphQL multipart request spec:
       // https://github.com/jaydenseric/graphql-multipart-request-spec
-      if (isBrowser) options.body = new FormData()
+      if (isBrowserOrNative) options.body = new FormData()
       else if (serverFormData)
         // on the server - expecting to receive a FormData object following the same
         // specs as browser's FormData - tested with 'form-data' npm package only
         options.body = new serverFormData()
       else
         throw new NoFormDataException(`FormData function doesn't exist on this server version. \
-We suggest you to install 'form-data' via npm and pass it as \
+We suggest you installing 'form-data' via npm and pass it as \
 as an argument in 'createUploadLink' function : '{ serverFormData: FormData }'`)
       options.body.append('operations', payload)
       options.body.append(

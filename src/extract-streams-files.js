@@ -5,13 +5,13 @@ export function NoFormDataException(message) {
   this.name = 'NoFormDataException'
 }
 
-export const isBrowser = new Function(`
-  try{
-    return (this === window)
-  }catch(e){
+export const isBrowserOrNative = (function() {
+  try {
+    if (FormData) return true
+  } catch (e) {
     return false
   }
-`)()
+})()
 
 export const isStream = obj => {
   return (
@@ -24,7 +24,7 @@ export const isStream = obj => {
 }
 
 export const extractFilesOrStreams = (tree, treePath) => {
-  if (isBrowser) return extractFiles(tree)
+  if (isBrowserOrNative) return extractFiles(tree)
   else {
     if (treePath === void 0) treePath = ''
     var files = []
