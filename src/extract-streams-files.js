@@ -33,7 +33,7 @@ export const extractFilesOrStreams = (tree, treePath) => {
         if (!isObject(node[key])) return
         var path = '' + nodePath + key
         // get streams and ajdust to busboy obj.stream format
-        if (isStream(node[key]) || isStream(node[key].stream)) {
+        if (isStream(node[key]) || node[key] instanceof Promise) {
           files.push({
             path: path,
             file: node[key]

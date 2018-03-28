@@ -190,8 +190,6 @@ mergeSchemas({
   resolvers: mergeInfo => ({
     Mutation: {
       async uploadBook(parent, args, context, info){
-        const file = await args.upload
-        args.upload = file
 
         const client = new ApolloClient({
           link: createUploadLink({

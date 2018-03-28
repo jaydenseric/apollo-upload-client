@@ -51,6 +51,9 @@ export const createUploadLink = ({
 
     const files = extractFilesOrStreams(body)
     const payload = serializeFetchParameter(body, 'Payload')
+
+    // hold files promises (will only have items for server2server uploads)
+    const promises = []
     if (files.length) {
       // Automatically set by fetch when the body is a FormData instance.
       delete options.headers['content-type']
@@ -80,48 +83,68 @@ as an argument in 'createUploadLink' function : '{ serverFormData: FormData }'`)
         if (isStream(file))
           // stream from a 'fs.createReadStream' call
           options.body.append(index, file)
-        else if (isStream(file.stream)) {
-          //busboy FileStream type - supporting apollo-upload-server
-
-          // Incoming stream, to avoid form-data from calling getLengthSync we've to
-          // overwrite the function that evalutes if it should be called
-          // a public method was added to the form-data API
-          // https://github.com/form-data/form-data/issues/196
-          options.body.hasKnownLength = () => false
-
-          const { filename, mimetype: contentType } = file
-          options.body.append(index, file.stream, {
-            filename,
-            contentType
-          })
-        } else options.body.append(index, file, file.name)
+        else if (file instanceof Promise)
+          // cover the apollo-upload-server files wrapped in Promises
+          promises.push(
+            new Promise((resolve, reject) => {
+              file
+                .then(file => {
+                  const { filename, mimetype: contentType } = file
+                  const bufs = []
+                  file.stream.on('data', function(buf) {
+                    bufs.push(buf)
+                  })
+                  file.stream.on('end', function() {
+                    const buffer = Buffer.concat(bufs)
+                    const knownLength = buffer.byteLength
+                    options.body.append(index, buffer, {
+                      filename: filename,
+                      contentType,
+                      knownLength
+                    })
+                    resolve()
+                  })
+                  file.stream.on('error', reject)
+                })
+                .catch(reject)
+            })
+          )
+        else options.body.append(index, file, file.name)
       })
     } else options.body = payload
     return new Observable(observer => {
       // Allow aborting fetch, if supported.
       const { controller, signal } = createSignalIfSupported()
       if (controller) options.signal = signal
-      linkFetch(uri, options)
-        .then(response => {
-          // Forward the response on the context.
-          operation.setContext({ response })
-          return response
-        })
-        .then(parseAndCheckHttpResponse(operation))
-        .then(result => {
-          observer.next(result)
-          observer.complete()
-        })
-        .catch(error => {
-          if (error.name === 'AbortError')
-            // Fetch was aborted.
-            return
 
-          if (error.result && error.result.errors && error.result.data)
-            // There is a GraphQL result to forward.
-            observer.next(error.result)
+      // process all FileStream (if any) and submit request
+      Promise.all(promises)
+        .then(() => {
+          linkFetch(uri, options)
+            .then(response => {
+              // Forward the response on the context.
+              operation.setContext({ response })
+              return response
+            })
+            .then(parseAndCheckHttpResponse(operation))
+            .then(result => {
+              observer.next(result)
+              observer.complete()
+            })
+            .catch(error => {
+              if (error.name === 'AbortError')
+                // Fetch was aborted.
+                return
 
-          observer.error(error)
+              if (error.result && error.result.errors && error.result.data)
+                // There is a GraphQL result to forward.
+                observer.next(error.result)
+
+              observer.error(error)
+            })
+        })
+        .catch(e => {
+          throw { message: 'Error while draining stream.', error: e }
         })
 
       // Cleanup function.
