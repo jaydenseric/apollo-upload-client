@@ -1,6 +1,6 @@
 import { ApolloLink } from "apollo-link";
 import { HttpOptions } from "apollo-link-http-common";
 
-export function createUploadLink(linkOptions?: HttpOptions): ApolloLink;
+export { ReactNativeFile } from "extract-files";
 
-export * from "extract-files";
+export const createUploadLink = (linkOptions?: HttpOptions) => ApolloLink;
