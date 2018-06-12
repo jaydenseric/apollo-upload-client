@@ -26,6 +26,7 @@
     "react",
     "native"
   ],
+  "types": "./index.d.ts",
   "files": ["lib"],
   "main": "lib/main",
   "module": "lib/module",
