@@ -14,6 +14,10 @@
   - Removed `watch` and `fix` scripts.
 - Compact package `repository` field.
 - Setup Travis CI.
+- Readme badge changes to deal with [shields.io](https://shields.io) unreliability:
+  - Removed the licence badge. The licence can be found in `package.json` and rarely changes.
+  - Removed the Github issues and stars badges. The readme is most viewed on Github anyway.
+  - Added the more reliable build status badge provided by Travis and placed it first as it loads the quickest.
 
 ## 8.0.0
 
