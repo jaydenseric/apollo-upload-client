@@ -3,6 +3,7 @@
 ## Next
 
 * Updated dependencies.
+* Use `.prettierignore` to defer `package.json` formatting to npm.
 
 ## 8.0.0
 
