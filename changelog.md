@@ -13,6 +13,7 @@
   - Remove `rimraf` and `cross-env` dev dependencies. Only \*nix environments will be supported for contributing.
   - Removed `watch` and `fix` scripts.
 - Compact package `repository` field.
+- Setup Travis CI.
 
 ## 8.0.0
 
