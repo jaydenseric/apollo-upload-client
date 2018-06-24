@@ -1,5 +1,9 @@
 # apollo-upload-client changelog
 
+## Next
+
+* Updated dependencies.
+
 ## 8.0.0
 
 * Abandon `.mjs` [until Apollo provides native ESM](https://github.com/apollographql/apollo-link/issues/537), fixing [#72](https://github.com/jaydenseric/apollo-upload-client/issues/72).
