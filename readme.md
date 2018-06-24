@@ -26,12 +26,12 @@ const link = createUploadLink(/* Options */)
 
 `createUploadLink` options match [`createHttpLink` options](https://www.apollographql.com/docs/link/links/http.html#Options):
 
-* `includeExtensions` (boolean): Toggles sending `extensions` fields to the GraphQL server. (default: `false`).
-* `uri` (string): GraphQL endpoint URI (default: `/graphql`).
-* `credentials` (string): Overrides `fetchOptions.credentials`.
-* `headers` (object): Merges with and overrides `fetchOptions.headers`.
-* `fetchOptions` (object): [`fetch` init](https://developer.mozilla.org/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters); overridden by upload requirements.
-* `fetch` (function): [Fetch API](https://fetch.spec.whatwg.org) to use (default: Global `fetch`).
+- `includeExtensions` (boolean): Toggles sending `extensions` fields to the GraphQL server. (default: `false`).
+- `uri` (string): GraphQL endpoint URI (default: `/graphql`).
+- `credentials` (string): Overrides `fetchOptions.credentials`.
+- `headers` (object): Merges with and overrides `fetchOptions.headers`.
+- `fetchOptions` (object): [`fetch` init](https://developer.mozilla.org/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters); overridden by upload requirements.
+- `fetch` (function): [Fetch API](https://fetch.spec.whatwg.org) to use (default: Global `fetch`).
 
 ## Usage
 
@@ -77,9 +77,12 @@ export default graphql(gql`
   <input
     type="file"
     required
-    onChange={({ target: { validity, files: [file] } }) =>
-      validity.valid && mutate({ variables: { file } })
-    }
+    onChange={({
+      target: {
+        validity,
+        files: [file]
+      }
+    }) => validity.valid && mutate({ variables: { file } })}
   />
 ))
 ```
@@ -138,6 +141,6 @@ const files = ReactNativeFile.list([
 
 ## Support
 
-* Node.js v6.10+, see `package.json` `engines`.
-* [Browsers >1% usage](http://browserl.ist/?q=%3E1%25), see `package.json` `browserslist`.
-* React Native.
+- Node.js v6.10+, see `package.json` `engines`.
+- [Browsers >1% usage](http://browserl.ist/?q=%3E1%25), see `package.json` `browserslist`.
+- React Native.
