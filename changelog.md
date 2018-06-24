@@ -6,6 +6,7 @@
 - Use `.prettierignore` to defer `package.json` formatting to npm.
 - Renamed `.babelrc.js` to `babel.config.js` and simplified ESLint ignore config.
 - Improved linting with [`eslint-config-env`](https://npm.im/eslint-config-env).
+- Use the `.mjs` extension for source.
 - Added JSDoc comments to source.
 - Refactored package scripts:
   - Use `prepare` to support installation via Git (e.g. `npm install jaydenseric/apollo-upload-client`).
