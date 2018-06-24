@@ -141,6 +141,6 @@ const files = ReactNativeFile.list([
 
 ## Support
 
-- Node.js v6.10+, see `package.json` `engines`.
-- [Browsers >1% usage](http://browserl.ist/?q=%3E1%25), see `package.json` `browserslist`.
+- Node.js v6.10+.
+- Browsers [>1% usage](http://browserl.ist/?q=%3E1%25).
 - React Native.
