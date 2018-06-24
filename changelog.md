@@ -4,6 +4,7 @@
 
 - Updated dependencies.
 - Use `.prettierignore` to defer `package.json` formatting to npm.
+- Compact package `repository` field.
 
 ## 8.0.0
 
