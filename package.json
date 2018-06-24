@@ -45,67 +45,45 @@
     "@babel/plugin-transform-runtime": "^7.0.0-beta.51",
     "@babel/preset-env": "^7.0.0-beta.51",
     "apollo-link": "^1.2.2",
-    "cross-env": "^5.2.0",
+    "babel-eslint": "^8.2.5",
     "eslint": "^4.19.1",
+    "eslint-config-env": "^0.2.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-prettier": "^2.6.1",
     "graphql": "^0.13.2",
     "husky": "^0.14.3",
     "lint-staged": "^7.2.0",
     "npm-run-all": "^4.1.3",
-    "prettier": "^1.13.5",
-    "rimraf": "^2.6.2"
+    "prettier": "^1.13.5"
   },
   "scripts": {
-    "clean": "rimraf lib",
-    "prebuild": "npm run clean",
-    "build": "run-p build:*",
-    "build:main": "babel src -d lib/main",
-    "build:module": "cross-env MODULE=true babel src -d lib/module",
-    "postbuild": "prettier 'lib/**/*.js' --write",
-    "prewatch": "npm run clean",
-    "watch": "run-p 'build:* -- --watch'",
-    "lint": "run-p lint:*",
-    "lint:eslint": "eslint .",
-    "lint:prettier": "prettier '**/*.{json,md}' -l",
-    "fix": "run-p fix:*",
-    "fix:eslint": "eslint . --fix",
-    "fix:prettier": "prettier '**/*.{json,md}' --write",
-    "precommit": "lint-staged",
-    "prepublishOnly": "run-p lint build"
+    "prepare": "FORCE_COLOR=1 npm-run-all prepare:clean -p prepare:main prepare:module -s prepare:prettier --aggregate-output",
+    "prepare:clean": "rm -r lib; mkdir lib lib/main lib/module",
+    "prepare:main": "babel src -d lib/main",
+    "prepare:module": "MODULE=1 babel src -d lib/module",
+    "prepare:prettier": "prettier 'lib/**/*.js' --write",
+    "test": "FORCE_COLOR=1 run-p test:* -c --aggregate-output",
+    "test:eslint": "eslint . --ext mjs,js",
+    "test:prettier": "prettier '**/*.{json,md}' -l",
+    "prepublishOnly": "run-s prepare test",
+    "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": "eslint",
+    "*.{mjs,js}": "eslint",
     "*.{json,md}": "prettier -l"
   },
   "eslintIgnore": [
     "lib"
   ],
   "eslintConfig": {
-    "parserOptions": {
-      "sourceType": "module",
-      "ecmaVersion": 2017,
-      "ecmaFeatures": {
-        "experimentalObjectRestSpread": true
-      }
-    },
     "env": {
-      "es6": true,
-      "node": true,
       "browser": true
     },
     "extends": [
-      "eslint:recommended"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "curly": [
-        "error",
-        "multi"
-      ],
-      "prettier/prettier": "error"
-    }
+      "env"
+    ]
   },
   "prettier": {
     "proseWrap": "never",

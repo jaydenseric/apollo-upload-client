@@ -11,6 +11,31 @@ import extractFiles from 'extract-files'
 
 export { ReactNativeFile } from 'extract-files'
 
+/**
+ * GraphQL request `fetch` options.
+ * @kind typedef
+ * @name FetchOptions
+ * @type {Object}
+ * @see {@link https://github.github.io/fetch/#options polyfillable fetch options}
+ * @prop {Object} headers HTTP request headers.
+ * @prop {string} [credentials] Authentication credentials mode.
+ */
+
+/**
+ * Creates a file upload terminating `ApolloLink` instance. Options match [`createHttpLink`](https://www.apollographql.com/docs/link/links/http.html#options).
+ * @see {@link https://github.com/jaydenseric/graphql-multipart-request-spec GraphQL multipart request spec}
+ * @see {@link https://github.com/apollographql/apollo-link apollo-link on Github}
+ * @kind function
+ * @name createUploadLink
+ * @param {Object} options Options.
+ * @param {string} [options.uri=/graphql] GraphQL endpoint URI.
+ * @param {function} [options.fetch] [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global.
+ * @param {FetchOptions} [options.fetchOptions] `fetch` options; overridden by upload requirements.
+ * @param {string} [options.credentials] Overrides `fetchOptions.credentials`.
+ * @param {Object} [options.headers] Merges with and overrides `fetchOptions.headers`.
+ * @param {boolean} [options.includeExtensions=false] Toggles sending `extensions` fields to the GraphQL server.
+ * @returns {ApolloLink} File upload terminating Apollo link.
+ */
 export const createUploadLink = ({
   uri: fetchUri = '/graphql',
   fetch: linkFetch = fetch,

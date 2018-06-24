@@ -5,6 +5,12 @@
 - Updated dependencies.
 - Use `.prettierignore` to defer `package.json` formatting to npm.
 - Renamed `.babelrc.js` to `babel.config.js` and simplified ESLint ignore config.
+- Improved linting with [`eslint-config-env`](https://npm.im/eslint-config-env).
+- Added JSDoc comments to source.
+- Refactored package scripts:
+  - Use `prepare` to support installation via Git (e.g. `npm install jaydenseric/apollo-upload-client`).
+  - Remove `rimraf` and `cross-env` dev dependencies. Only \*nix environments will be supported for contributing.
+  - Removed `watch` and `fix` scripts.
 - Compact package `repository` field.
 
 ## 8.0.0
