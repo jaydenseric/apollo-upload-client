@@ -11,8 +11,8 @@ module.exports = {
         targets: {
           node: node.substring(2) // Strip `>=`
         },
-        shippedProposals: true,
         modules: process.env.MODULE ? false : 'commonjs',
+        shippedProposals: true,
         useBuiltIns: 'usage'
       }
     ]

@@ -78,8 +78,6 @@
     "*.{json,md}": "prettier -l"
   },
   "eslintIgnore": [
-    "!.*",
-    "node_modules",
     "lib"
   ],
   "eslintConfig": {

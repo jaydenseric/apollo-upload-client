@@ -4,6 +4,7 @@
 
 - Updated dependencies.
 - Use `.prettierignore` to defer `package.json` formatting to npm.
+- Renamed `.babelrc.js` to `babel.config.js` and simplified ESLint ignore config.
 - Compact package `repository` field.
 
 ## 8.0.0
