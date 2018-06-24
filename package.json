@@ -31,13 +31,13 @@
     "node": ">=6.10"
   },
   "browserslist": ">1%",
+  "peerDependencies": {
+    "apollo-link": "^1.0.0"
+  },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.51",
     "apollo-link-http-common": "^0.2.4",
     "extract-files": "^3.1.0"
-  },
-  "peerDependencies": {
-    "apollo-link": "^1.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.51",
