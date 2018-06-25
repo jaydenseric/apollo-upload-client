@@ -1,6 +1,6 @@
 # apollo-upload-client changelog
 
-## Next
+## 8.1.0
 
 - Updated dependencies.
 - Use `.prettierignore` to defer `package.json` formatting to npm.
