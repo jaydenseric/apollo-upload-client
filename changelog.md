@@ -1,5 +1,11 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Patch
+
+- Ensure the readme Travis build status badge only tracks `master` branch.
+
 ## 8.1.0
 
 - Updated dependencies.
