@@ -6,7 +6,7 @@
 
 - Updated dev dependencies.
 - Ensure the readme Travis build status badge only tracks `master` branch.
-- Use [Badgen](https://badgen.now.sh) for the readme npm version badge.
+- Use [Badgen](https://badgen.net) for the readme npm version badge.
 
 ## 8.1.0
 
