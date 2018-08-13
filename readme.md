@@ -8,10 +8,10 @@ Enhances [Apollo](https://apollographql.com) for intuitive file uploads via Grap
 
 ## Setup
 
-Install with peer dependencies using [npm](https://npmjs.com):
+Install with [npm](https://npmjs.com):
 
 ```shell
-npm install apollo-upload-client apollo-link
+npm install apollo-upload-client
 ```
 
 Initialize Apollo Client with this terminating link:

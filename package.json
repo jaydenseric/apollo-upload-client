@@ -32,10 +32,8 @@
     "node": ">=6.10"
   },
   "browserslist": ">1%",
-  "peerDependencies": {
-    "apollo-link": "^1.0.0"
-  },
   "dependencies": {
+    "apollo-link": "^1.2.2",
     "apollo-link-http-common": "^0.2.4",
     "extract-files": "^3.1.0"
   },

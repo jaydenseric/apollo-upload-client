@@ -2,6 +2,10 @@
 
 ## Next
 
+### Major
+
+- Made [`apollo-link`](https://npm.im/apollo-link) a dependency, instead of a peer dependency.
+
 ### Minor
 
 - Updated Babel, removing the `@babel/runtime` dependency.
