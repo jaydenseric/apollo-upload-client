@@ -7,9 +7,8 @@ import {
   createSignalIfSupported,
   parseAndCheckHttpResponse
 } from 'apollo-link-http-common'
-import extractFiles from 'extract-files'
+import { extractFiles, ReactNativeFile } from 'extract-files'
 
-export { ReactNativeFile } from 'extract-files'
 
 /**
  * GraphQL request `fetch` options.

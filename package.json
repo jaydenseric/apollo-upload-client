@@ -35,7 +35,7 @@
   "dependencies": {
     "apollo-link": "^1.2.2",
     "apollo-link-http-common": "^0.2.4",
-    "extract-files": "^3.1.0"
+    "extract-files": "^4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-rc.1",
