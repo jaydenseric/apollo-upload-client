@@ -5,6 +5,7 @@
 ### Major
 
 - Made [`apollo-link`](https://npm.im/apollo-link) a dependency, instead of a peer dependency.
+- Ship `.mjs` files again for ESM. This time, there are no named imports from CJS dependencies, following the Node.js `--experimental-modules` behavior.
 
 ### Minor
 
@@ -17,6 +18,8 @@
 - Use the new [`extract-files`](https://npm.im/extract-files) API.
 - Added a package `test:size` script, using [`size-limit`](https://npm.im/size-limit) to guarantee < 1 KB ESM and CJS bundle sizes.
 - Lint `.yml` files.
+- Refactored package scripts and removed the [`npm-run-all`](https://npm.im/npm-run-all) dev dependency.
+- Removed a temporary workaround for [a fixed Babel CLI bug](https://github.com/babel/babel/issues/8077).
 - Ensure the readme Travis build status badge only tracks `master` branch.
 - Use [Badgen](https://badgen.net) for the readme npm version badge.
 

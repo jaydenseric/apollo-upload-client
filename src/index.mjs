@@ -1,14 +1,10 @@
-import { ApolloLink, Observable } from 'apollo-link'
-import {
-  selectURI,
-  selectHttpOptionsAndBody,
-  fallbackHttpConfig,
-  serializeFetchParameter,
-  createSignalIfSupported,
-  parseAndCheckHttpResponse
-} from 'apollo-link-http-common'
 import { extractFiles, ReactNativeFile } from 'extract-files'
 
+// Apollo packages don’t provide real ESM named exports via .mjs.
+import apolloLink from 'apollo-link'
+import apolloLinkHttpCommon from 'apollo-link-http-common'
+
+export { ReactNativeFile }
 
 /**
  * GraphQL request `fetch` options.
@@ -50,8 +46,8 @@ export const createUploadLink = ({
     headers
   }
 
-  return new ApolloLink(operation => {
-    const uri = selectURI(operation, fetchUri)
+  return new apolloLink.ApolloLink(operation => {
+    const uri = apolloLinkHttpCommon.selectURI(operation, fetchUri)
     const context = operation.getContext()
     const contextConfig = {
       http: context.http,
@@ -60,15 +56,18 @@ export const createUploadLink = ({
       headers: context.headers
     }
 
-    const { options, body } = selectHttpOptionsAndBody(
+    const { options, body } = apolloLinkHttpCommon.selectHttpOptionsAndBody(
       operation,
-      fallbackHttpConfig,
+      apolloLinkHttpCommon.fallbackHttpConfig,
       linkConfig,
       contextConfig
     )
 
     const files = extractFiles(body)
-    const payload = serializeFetchParameter(body, 'Payload')
+    const payload = apolloLinkHttpCommon.serializeFetchParameter(
+      body,
+      'Payload'
+    )
 
     if (files.length) {
       // Automatically set by fetch when the body is a FormData instance.
@@ -92,9 +91,12 @@ export const createUploadLink = ({
       )
     } else options.body = payload
 
-    return new Observable(observer => {
+    return new apolloLink.Observable(observer => {
       // Allow aborting fetch, if supported.
-      const { controller, signal } = createSignalIfSupported()
+      const {
+        controller,
+        signal
+      } = apolloLinkHttpCommon.createSignalIfSupported()
       if (controller) options.signal = signal
 
       linkFetch(uri, options)
@@ -103,7 +105,7 @@ export const createUploadLink = ({
           operation.setContext({ response })
           return response
         })
-        .then(parseAndCheckHttpResponse(operation))
+        .then(apolloLinkHttpCommon.parseAndCheckHttpResponse(operation))
         .then(result => {
           observer.next(result)
           observer.complete()
