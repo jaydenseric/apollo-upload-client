@@ -16,6 +16,7 @@
 - Updated dependencies.
 - Use the new [`extract-files`](https://npm.im/extract-files) API.
 - Added a package `test:size` script, using [`size-limit`](https://npm.im/size-limit) to guarantee < 1 KB ESM and CJS bundle sizes.
+- Lint `.yml` files.
 - Ensure the readme Travis build status badge only tracks `master` branch.
 - Use [Badgen](https://badgen.net) for the readme npm version badge.
 

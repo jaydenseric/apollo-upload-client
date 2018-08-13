@@ -64,14 +64,14 @@
     "prepare:prettier": "prettier 'lib/**/*.js' --write",
     "test": "FORCE_COLOR=1 run-p test:* -c --aggregate-output",
     "test:eslint": "eslint . --ext mjs,js",
-    "test:prettier": "prettier '**/*.{json,md}' -l",
     "prepublishOnly": "run-s prepare test",
+    "test:prettier": "prettier '**/*.{json,yml,md}' -l",
     "test:size": "size-limit",
     "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.{mjs,js}": "eslint",
-    "*.{json,md}": "prettier -l"
+    "*.{json,yml,md}": "prettier -l"
   },
   "eslintIgnore": [
     "lib"
