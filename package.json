@@ -27,6 +27,7 @@
   ],
   "main": "lib/main",
   "module": "lib/module",
+  "sideEffects": false,
   "engines": {
     "node": ">=6.10"
   },

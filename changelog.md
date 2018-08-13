@@ -2,6 +2,10 @@
 
 ## Next
 
+### Minor
+
+- Package [marked side-effect free](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free) for bundlers and tree-shaking.
+
 ### Patch
 
 - Updated dev dependencies.
