@@ -4,6 +4,7 @@
 
 ### Minor
 
+- Updated Babel, removing the `@babel/runtime` dependency.
 - Package [marked side-effect free](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free) for bundlers and tree-shaking.
 
 ### Patch
