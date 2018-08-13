@@ -59,7 +59,7 @@
     "prepare:clean": "rm -rf lib",
     "prepare:mjs": "BABEL_ESM=1 babel src -d lib --keep-file-extension",
     "prepare:js": "babel src -d lib",
-    "prepare:prettier": "prettier 'lib/**/*.js' --write",
+    "prepare:prettier": "prettier 'lib/**/*.{mjs,js}' --write",
     "test": "npm run test:eslint && npm run test:prettier && npm run test:size",
     "test:eslint": "eslint . --ext mjs,js",
     "test:prettier": "prettier '**/*.{json,yml,md}' -l",
