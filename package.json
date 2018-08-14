@@ -1,7 +1,7 @@
 {
   "name": "apollo-upload-client",
   "version": "8.1.0",
-  "description": "Enhances Apollo Client for intuitive file uploads via GraphQL mutations.",
+  "description": "A terminating Apollo Link that allows FileList, File, Blob or ReactNativeFile instances to be used anywhere within query or mutation input variables to send a GraphQL multipart request.",
   "license": "MIT",
   "author": {
     "name": "Jayden Seric",
@@ -12,15 +12,18 @@
   "homepage": "https://github.com/jaydenseric/apollo-upload-client#readme",
   "bugs": "https://github.com/jaydenseric/apollo-upload-client/issues",
   "keywords": [
+    "graphql",
+    "multipart",
+    "request",
+    "file",
+    "upload",
     "apollo",
     "client",
     "link",
-    "graphql",
-    "file",
-    "upload",
-    "multipart",
     "react",
-    "native"
+    "native",
+    "esm",
+    "mjs"
   ],
   "files": [
     "lib"
@@ -44,22 +47,24 @@
     "babel-eslint": "^8.2.5",
     "eslint": "^5.3.0",
     "eslint-config-env": "^1.0.0",
-    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-prettier": "^3.0.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-prettier": "^2.6.1",
     "graphql": "^0.13.2",
     "husky": "^0.14.3",
+    "jsdoc-md": "^1.4.0",
     "lint-staged": "^7.2.2",
     "prettier": "^1.14.2",
     "size-limit": "^0.19.2"
   },
   "scripts": {
-    "prepare": "npm run prepare:clean && npm run prepare:mjs && npm run prepare:js && npm run prepare:prettier",
+    "prepare": "npm run prepare:clean && npm run prepare:mjs && npm run prepare:js && npm run prepare:jsdoc && npm run prepare:prettier",
     "prepare:clean": "rm -rf lib",
     "prepare:mjs": "BABEL_ESM=1 babel src -d lib --keep-file-extension",
     "prepare:js": "babel src -d lib",
-    "prepare:prettier": "prettier 'lib/**/*.{mjs,js}' --write",
+    "prepare:jsdoc": "jsdoc-md",
+    "prepare:prettier": "prettier 'lib/**/*.{mjs,js}' readme.md --write",
     "test": "npm run test:eslint && npm run test:prettier && npm run test:size",
     "test:eslint": "eslint . --ext mjs,js",
     "test:prettier": "prettier '**/*.{json,yml,md}' -l",

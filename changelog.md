@@ -16,6 +16,8 @@
 
 - Updated dependencies.
 - Use the new [`extract-files`](https://npm.im/extract-files) API.
+- Use [`jsdoc-md`](https://npm.im/jsdoc-md) to generate readme API docs from source JSDoc, which has been much improved.
+- Updated package description.
 - Added a package `test:size` script, using [`size-limit`](https://npm.im/size-limit) to guarantee < 1 KB ESM and CJS bundle sizes.
 - Lint `.yml` files.
 - Refactored package scripts and removed the [`npm-run-all`](https://npm.im/npm-run-all) dev dependency.
@@ -269,7 +271,7 @@
 
 ## 3.0.0
 
-- Support `apollo-upload-server` v2 and [query batching](https://apollographql.com/docs/apollo-server/requests.html#batching).
+- Support `apollo-upload-server` v2 and [query batching](https://apollographql.com/docs/apollo-server/requests#batching).
 - Removed the seemingly redundant `Accept` header from requests.
 - Clearer package description.
 
