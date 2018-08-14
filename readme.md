@@ -30,50 +30,62 @@ See also the [example API and client](https://github.com/jaydenseric/apollo-uplo
 
 ```jsx
 import gql from 'graphql-tag'
-import { graphql } from 'react-apollo'
+import { Mutation } from 'react-apollo'
 
-export default graphql(gql`
-  mutation($files: [Upload!]!) {
-    uploadFiles(files: $files) {
-      success
-    }
-  }
-`)(({ mutate }) => (
-  <input
-    type="file"
-    multiple
-    required
-    onChange={({ target: { validity, files } }) =>
-      validity.valid && mutate({ variables: { files } })
-    }
-  />
-))
+export default (
+  <Mutation
+    mutation={gql`
+      mutation($files: [Upload!]!) {
+        uploadFiles(files: $files) {
+          success
+        }
+      }
+    `}
+  >
+    {mutate => (
+      <input
+        type="file"
+        multiple
+        required
+        onChange={({ target: { validity, files } }) =>
+          validity.valid && mutate({ variables: { files } })
+        }
+      />
+    )}
+  </Mutation>
+)
 ```
 
 ### [`File`](https://developer.mozilla.org/docs/web/api/file)
 
 ```jsx
 import gql from 'graphql-tag'
-import { graphql } from 'react-apollo'
+import { Mutation } from 'react-apollo'
 
-export default graphql(gql`
-  mutation($file: Upload!) {
-    uploadFile(file: $file) {
-      success
-    }
-  }
-`)(({ mutate }) => (
-  <input
-    type="file"
-    required
-    onChange={({
-      target: {
-        validity,
-        files: [file]
+export default (
+  <Mutation
+    mutation={gql`
+      mutation($file: Upload!) {
+        uploadFile(file: $file) {
+          success
+        }
       }
-    }) => validity.valid && mutate({ variables: { file } })}
-  />
-))
+    `}
+  >
+    {mutate => (
+      <input
+        type="file"
+        required
+        onChange={({
+          target: {
+            validity,
+            files: [file]
+          }
+        }) => validity.valid && mutate({ variables: { file } })}
+      />
+    )}
+  </Mutation>
+)
 ```
 
 ### [`Blob`](https://developer.mozilla.org/docs/web/api/blob)

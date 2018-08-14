@@ -16,7 +16,8 @@
 
 - Updated dependencies.
 - Use the new [`extract-files`](https://npm.im/extract-files) API.
-- Use [`jsdoc-md`](https://npm.im/jsdoc-md) to generate readme API docs from source JSDoc, which has been much improved.
+- Use [`jsdoc-md`](https://npm.im/jsdoc-md) to generate readme API docs from source JSDoc, which has been improved.
+- Readme examples updated to use the [`react-apollo`](https://npm.im/react-apollo) `Mutation` component instead of the `graphql` decorator.
 - Updated package description.
 - Added a package `test:size` script, using [`size-limit`](https://npm.im/size-limit) to guarantee < 1 KB ESM and CJS bundle sizes.
 - Lint `.yml` files.
