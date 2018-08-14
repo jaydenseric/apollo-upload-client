@@ -16,18 +16,7 @@ npm install apollo-upload-client
 
 If you use [Apollo Boost](https://npm.im/apollo-boost), [migrate to a manual Apollo Client setup](https://apollographql.com/docs/react/advanced/boost-migration).
 
-Initialize Apollo Client with a terminating Apollo Link using [`createUploadLink`](#function-createuploadlink):
-
-```js
-import { ApolloClient } from 'apollo-client'
-import { InMemoryCache } from 'apollo-cache-inmemory'
-import { createUploadLink } from 'apollo-upload-client'
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: createUploadLink(/* Options */)
-})
-```
+Initialize [Apollo Client](https://apollographql.com/docs/link/#apollo-client) with a terminating [Apollo Link](https://apollographql.com/docs/link) using [`createUploadLink`](#function-createuploadlink).
 
 Also ensure the GraphQL server implements the [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec) and that uploads are handled correctly in resolvers.
 
@@ -126,11 +115,12 @@ client.mutate({
   - [Examples](#examples)
 - [function createUploadLink](#function-createuploadlink)
   - [See](#see)
+  - [Examples](#examples-1)
 - [type FetchOptions](#type-fetchoptions)
   - [See](#see-1)
 - [type ReactNativeFileSubstitute](#type-reactnativefilesubstitute)
   - [See](#see-2)
-  - [Examples](#examples-1)
+  - [Examples](#examples-2)
 
 ### class ReactNativeFile
 
@@ -156,7 +146,7 @@ _A React Native file that can be used in query or mutation variables._
 
 ### function createUploadLink
 
-Creates a terminating Apollo Link capable of file uploads. Options match [`createHttpLink`](https://apollographql.com/docs/link/links/http/#options).
+Creates a terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads. Options match [`createHttpLink`](https://apollographql.com/docs/link/links/http/#options).
 
 | Parameter                   | Type                                                                                             | Description                                                                                       |
 | :-------------------------- | :----------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
@@ -168,12 +158,27 @@ Creates a terminating Apollo Link capable of file uploads. Options match [`creat
 | `options.headers`           | [Object](https://developer.mozilla.org/javascript/reference/global_objects/object)?              | Merges with and overrides `options.fetchOptions.headers`.                                         |
 | `options.includeExtensions` | [boolean](https://developer.mozilla.org/javascript/reference/global_objects/boolean)? = `false`  | Toggles sending `extensions` fields to the GraphQL server.                                        |
 
-**Returns:** ApolloLink — File upload terminating Apollo link.
+**Returns:** ApolloLink — A terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads.
 
 #### See
 
 - [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec).
 - [apollo-link on GitHub](https://github.com/apollographql/apollo-link).
+
+#### Examples
+
+_A basic Apollo Client setup._
+
+> ```js
+> import { ApolloClient } from 'apollo-client'
+> import { InMemoryCache } from 'apollo-cache-inmemory'
+> import { createUploadLink } from 'apollo-upload-client'
+>
+> const client = new ApolloClient({
+>   cache: new InMemoryCache(),
+>   link: createUploadLink()
+> })
+> ```
 
 ### type FetchOptions
 

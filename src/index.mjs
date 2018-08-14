@@ -58,7 +58,8 @@ export { ReactNativeFile }
  */
 
 /**
- * Creates a terminating Apollo Link capable of file uploads. Options match [`createHttpLink`](https://apollographql.com/docs/link/links/http/#options).
+ * Creates a terminating [Apollo Link](https://apollographql.com/docs/link)
+ * capable of file uploads. Options match [`createHttpLink`](https://apollographql.com/docs/link/links/http/#options).
  * @see [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec).
  * @see [apollo-link on GitHub](https://github.com/apollographql/apollo-link).
  * @kind function
@@ -70,7 +71,18 @@ export { ReactNativeFile }
  * @param {string} [options.credentials] Overrides `options.fetchOptions.credentials`.
  * @param {Object} [options.headers] Merges with and overrides `options.fetchOptions.headers`.
  * @param {boolean} [options.includeExtensions=false] Toggles sending `extensions` fields to the GraphQL server.
- * @returns {ApolloLink} File upload terminating Apollo link.
+ * @returns {ApolloLink} A terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads.
+ * @example <caption>A basic Apollo Client setup.</caption>
+ * ```js
+ * import { ApolloClient } from 'apollo-client'
+ * import { InMemoryCache } from 'apollo-cache-inmemory'
+ * import { createUploadLink } from 'apollo-upload-client'
+ *
+ * const client = new ApolloClient({
+ *   cache: new InMemoryCache(),
+ *   link: createUploadLink()
+ * })
+ * ```
  */
 export const createUploadLink = ({
   uri: fetchUri = '/graphql',
