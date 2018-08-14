@@ -52,14 +52,14 @@ export { ReactNativeFile }
  * @kind typedef
  * @name FetchOptions
  * @type {Object}
- * @see [Polyfillable fetch options](https://github.github.io/fetch/#options).
+ * @see [Polyfillable fetch options](https://github.github.io/fetch#options).
  * @prop {Object} headers HTTP request headers.
  * @prop {string} [credentials] Authentication credentials mode.
  */
 
 /**
  * Creates a terminating [Apollo Link](https://apollographql.com/docs/link)
- * capable of file uploads. Options match [`createHttpLink`](https://apollographql.com/docs/link/links/http/#options).
+ * capable of file uploads. Options match [`createHttpLink`](https://apollographql.com/docs/link/links/http#options).
  * @see [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec).
  * @see [apollo-link on GitHub](https://github.com/apollographql/apollo-link).
  * @kind function
