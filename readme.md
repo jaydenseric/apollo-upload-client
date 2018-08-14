@@ -4,7 +4,7 @@
 
 [![npm version](https://badgen.net/npm/v/apollo-upload-client)](https://npm.im/apollo-upload-client) [![Build status](https://travis-ci.org/jaydenseric/apollo-upload-client.svg?branch=master)](https://travis-ci.org/jaydenseric/apollo-upload-client)
 
-A terminating [Apollo Link](https://apollographql.com/docs/link) for [Apollo Client](https://apollographql.com/docs/link/#apollo-client) that allows [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en/docs/Web/API/File), [`Blob`](https://developer.mozilla.org/en/docs/Web/API/Blob) or [`ReactNativeFile`](#class-reactnativefile) instances to be used anywhere within query or mutation input variables to send a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec).
+A terminating [Apollo Link](https://apollographql.com/docs/link) for [Apollo Client](https://apollographql.com/docs/link/#apollo-client) that allows [`FileList`](https://developer.mozilla.org/docs/web/api/filelist), [`File`](https://developer.mozilla.org/docs/web/api/file), [`Blob`](https://developer.mozilla.org/docs/web/api/blob) or [`ReactNativeFile`](#class-reactnativefile) instances to be used anywhere within query or mutation input variables to send a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec).
 
 ## Setup
 
@@ -33,11 +33,11 @@ Also ensure the GraphQL server implements the [GraphQL multipart request spec](h
 
 ## Usage
 
-Use [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en/docs/Web/API/File), [`Blob`](https://developer.mozilla.org/en/docs/Web/API/Blob) or [`ReactNativeFile`](#class-reactnativefile) instances anywhere within query or mutation input variables to send a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec).
+Use [`FileList`](https://developer.mozilla.org/docs/web/api/filelist), [`File`](https://developer.mozilla.org/docs/web/api/file), [`Blob`](https://developer.mozilla.org/docs/web/api/blob) or [`ReactNativeFile`](#class-reactnativefile) instances anywhere within query or mutation input variables to send a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec).
 
 See also the [example API and client](https://github.com/jaydenseric/apollo-upload-examples).
 
-### [`FileList`](https://developer.mozilla.org/en/docs/Web/API/FileList)
+### [`FileList`](https://developer.mozilla.org/docs/web/api/filelist)
 
 ```jsx
 import gql from 'graphql-tag'
@@ -61,7 +61,7 @@ export default graphql(gql`
 ))
 ```
 
-### [`File`](https://developer.mozilla.org/en/docs/Web/API/File)
+### [`File`](https://developer.mozilla.org/docs/web/api/file)
 
 ```jsx
 import gql from 'graphql-tag'
@@ -87,7 +87,7 @@ export default graphql(gql`
 ))
 ```
 
-### [`Blob`](https://developer.mozilla.org/en/docs/Web/API/Blob)
+### [`Blob`](https://developer.mozilla.org/docs/web/api/blob)
 
 ```jsx
 import gql from 'graphql-tag'
