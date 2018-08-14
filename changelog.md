@@ -19,6 +19,7 @@
 - Use [`jsdoc-md`](https://npm.im/jsdoc-md) to generate readme API docs from source JSDoc, which has been improved.
 - Readme examples updated to use the [`react-apollo`](https://npm.im/react-apollo) `Mutation` component instead of the `graphql` decorator.
 - Updated package description.
+- Added package tags.
 - Added a package `test:size` script, using [`size-limit`](https://npm.im/size-limit) to guarantee < 1 KB ESM and CJS bundle sizes.
 - Lint `.yml` files.
 - Refactored package scripts and removed the [`npm-run-all`](https://npm.im/npm-run-all) dev dependency.
