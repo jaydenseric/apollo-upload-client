@@ -21,15 +21,12 @@
     "client",
     "link",
     "react",
-    "native",
-    "esm",
-    "mjs"
+    "native"
   ],
   "files": [
     "lib"
   ],
   "main": "lib",
-  "module": "lib/index.mjs",
   "sideEffects": false,
   "engines": {
     "node": ">=6.10"
@@ -59,21 +56,20 @@
     "size-limit": "^0.20.0"
   },
   "scripts": {
-    "prepare": "npm run prepare:clean && npm run prepare:mjs && npm run prepare:js && npm run prepare:jsdoc && npm run prepare:prettier",
+    "prepare": "npm run prepare:clean && npm run prepare:js && npm run prepare:jsdoc && npm run prepare:prettier",
     "prepare:clean": "rm -rf lib",
-    "prepare:mjs": "BABEL_ESM=1 babel src -d lib --keep-file-extension",
     "prepare:js": "babel src -d lib",
     "prepare:jsdoc": "jsdoc-md",
-    "prepare:prettier": "prettier 'lib/**/*.{mjs,js}' readme.md --write",
+    "prepare:prettier": "prettier 'lib/**/*.js' readme.md --write",
     "test": "npm run test:eslint && npm run test:prettier && npm run test:size",
-    "test:eslint": "eslint . --ext mjs,js",
+    "test:eslint": "eslint .",
     "test:prettier": "prettier '**/*.{json,yml,md}' -l",
     "test:size": "size-limit",
     "prepublishOnly": "npm run prepare && npm test",
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{mjs,js}": "eslint",
+    "*.js": "eslint",
     "*.{json,yml,md}": "prettier -l"
   },
   "eslintIgnore": [
@@ -82,11 +78,7 @@
   "eslintConfig": {
     "extends": [
       "env"
-    ],
-    "rules": {
-      "import/default": "off",
-      "import/no-named-as-default-member": "off"
-    }
+    ]
   },
   "prettier": {
     "proseWrap": "never",
@@ -95,17 +87,7 @@
   },
   "size-limit": [
     {
-      "name": "ESM",
-      "path": "lib/index.mjs",
-      "limit": "1 KB",
-      "ignore": [
-        "apollo-link",
-        "apollo-link-http-common"
-      ]
-    },
-    {
       "name": "CJS",
-      "path": "lib/index.js",
       "limit": "1 KB",
       "ignore": [
         "apollo-link",

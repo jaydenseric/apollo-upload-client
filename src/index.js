@@ -1,8 +1,13 @@
-import { extractFiles, ReactNativeFile } from 'extract-files'
-
-// Apollo packages don’t provide real ESM named exports via .mjs.
-import apolloLink from 'apollo-link'
-import apolloLinkHttpCommon from 'apollo-link-http-common'
+const { ApolloLink, Observable } = require('apollo-link')
+const {
+  selectURI,
+  selectHttpOptionsAndBody,
+  fallbackHttpConfig,
+  serializeFetchParameter,
+  createSignalIfSupported,
+  parseAndCheckHttpResponse
+} = require('apollo-link-http-common')
+const { extractFiles, ReactNativeFile } = require('extract-files')
 
 /**
  * A React Native [`File`](https://developer.mozilla.org/docs/web/api/file)
@@ -36,7 +41,7 @@ import apolloLinkHttpCommon from 'apollo-link-http-common'
  * @param {ReactNativeFileSubstitute} file A React Native [`File`](https://developer.mozilla.org/docs/web/api/file) substitute.
  * @example <caption>A React Native file that can be used in query or mutation variables.</caption>
  * ```js
- * import { ReactNativeFile } from 'apollo-upload-client'
+ * const { ReactNativeFile } = require('apollo-upload-client')
  *
  * const file = new ReactNativeFile({
  *   uri: uriFromCameraRoll,
@@ -45,7 +50,7 @@ import apolloLinkHttpCommon from 'apollo-link-http-common'
  * })
  * ```
  */
-export { ReactNativeFile }
+exports.ReactNativeFile = ReactNativeFile
 
 /**
  * GraphQL request `fetch` options.
@@ -74,9 +79,9 @@ export { ReactNativeFile }
  * @returns {ApolloLink} A terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads.
  * @example <caption>A basic Apollo Client setup.</caption>
  * ```js
- * import { ApolloClient } from 'apollo-client'
- * import { InMemoryCache } from 'apollo-cache-inmemory'
- * import { createUploadLink } from 'apollo-upload-client'
+ * const { ApolloClient } = require('apollo-client')
+ * const { InMemoryCache } = require('apollo-cache-inmemory')
+ * const { createUploadLink } = require('apollo-upload-client')
  *
  * const client = new ApolloClient({
  *   cache: new InMemoryCache(),
@@ -84,7 +89,7 @@ export { ReactNativeFile }
  * })
  * ```
  */
-export const createUploadLink = ({
+exports.createUploadLink = ({
   uri: fetchUri = '/graphql',
   fetch: linkFetch = fetch,
   fetchOptions,
@@ -99,8 +104,8 @@ export const createUploadLink = ({
     headers
   }
 
-  return new apolloLink.ApolloLink(operation => {
-    const uri = apolloLinkHttpCommon.selectURI(operation, fetchUri)
+  return new ApolloLink(operation => {
+    const uri = selectURI(operation, fetchUri)
     const context = operation.getContext()
     const contextConfig = {
       http: context.http,
@@ -109,18 +114,15 @@ export const createUploadLink = ({
       headers: context.headers
     }
 
-    const { options, body } = apolloLinkHttpCommon.selectHttpOptionsAndBody(
+    const { options, body } = selectHttpOptionsAndBody(
       operation,
-      apolloLinkHttpCommon.fallbackHttpConfig,
+      fallbackHttpConfig,
       linkConfig,
       contextConfig
     )
 
     const files = extractFiles(body)
-    const payload = apolloLinkHttpCommon.serializeFetchParameter(
-      body,
-      'Payload'
-    )
+    const payload = serializeFetchParameter(body, 'Payload')
 
     if (files.length) {
       // Automatically set by fetch when the body is a FormData instance.
@@ -144,12 +146,9 @@ export const createUploadLink = ({
       )
     } else options.body = payload
 
-    return new apolloLink.Observable(observer => {
+    return new Observable(observer => {
       // Allow aborting fetch, if supported.
-      const {
-        controller,
-        signal
-      } = apolloLinkHttpCommon.createSignalIfSupported()
+      const { controller, signal } = createSignalIfSupported()
       if (controller) options.signal = signal
 
       linkFetch(uri, options)
@@ -158,7 +157,7 @@ export const createUploadLink = ({
           operation.setContext({ response })
           return response
         })
-        .then(apolloLinkHttpCommon.parseAndCheckHttpResponse(operation))
+        .then(parseAndCheckHttpResponse(operation))
         .then(result => {
           observer.next(result)
           observer.complete()

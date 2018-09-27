@@ -9,7 +9,6 @@ module.exports = {
       '@babel/env',
       {
         targets: { node: node.substring(2) }, // Strip `>=`
-        modules: process.env.BABEL_ESM ? false : 'commonjs',
         shippedProposals: true,
         loose: true
       }

@@ -29,10 +29,10 @@ See also the [example API and client](https://github.com/jaydenseric/apollo-uplo
 ### [`FileList`](https://developer.mozilla.org/docs/web/api/filelist)
 
 ```jsx
-import gql from 'graphql-tag'
-import { Mutation } from 'react-apollo'
+const gql = require('graphql-tag')
+const { Mutation } = require('react-apollo')
 
-export default (
+const UploadFiles = () => (
   <Mutation
     mutation={gql`
       mutation($files: [Upload!]!) {
@@ -59,10 +59,10 @@ export default (
 ### [`File`](https://developer.mozilla.org/docs/web/api/file)
 
 ```jsx
-import gql from 'graphql-tag'
-import { Mutation } from 'react-apollo'
+const gql = require('graphql-tag')
+const { Mutation } = require('react-apollo')
 
-export default (
+const UploadFile = () => (
   <Mutation
     mutation={gql`
       mutation($file: Upload!) {
@@ -91,10 +91,10 @@ export default (
 ### [`Blob`](https://developer.mozilla.org/docs/web/api/blob)
 
 ```jsx
-import gql from 'graphql-tag'
+const gql = require('graphql-tag')
 
 // Apollo Client instance.
-import client from './client'
+const client = require('./client')
 
 const file = new Blob(['Foo.'], { type: 'text/plain' })
 
@@ -147,7 +147,7 @@ Used to mark a [React Native `File` substitute](#type-reactnativefilesubstitute)
 _A React Native file that can be used in query or mutation variables._
 
 > ```js
-> import { ReactNativeFile } from 'apollo-upload-client'
+> const { ReactNativeFile } = require('apollo-upload-client')
 >
 > const file = new ReactNativeFile({
 >   uri: uriFromCameraRoll,
@@ -182,9 +182,9 @@ Creates a terminating [Apollo Link](https://apollographql.com/docs/link) capable
 _A basic Apollo Client setup._
 
 > ```js
-> import { ApolloClient } from 'apollo-client'
-> import { InMemoryCache } from 'apollo-cache-inmemory'
-> import { createUploadLink } from 'apollo-upload-client'
+> const { ApolloClient } = require('apollo-client')
+> const { InMemoryCache } = require('apollo-cache-inmemory')
+> const { createUploadLink } = require('apollo-upload-client')
 >
 > const client = new ApolloClient({
 >   cache: new InMemoryCache(),
