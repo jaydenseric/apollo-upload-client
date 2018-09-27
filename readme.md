@@ -160,15 +160,15 @@ _A React Native file that can be used in query or mutation variables._
 
 Creates a terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads. Options match [`createHttpLink`](https://apollographql.com/docs/link/links/http#options).
 
-| Parameter                   | Type                                                                                             | Description                                                                                       |
-| :-------------------------- | :----------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
-| `options`                   | [Object](https://developer.mozilla.org/javascript/reference/global_objects/object)               | Options.                                                                                          |
-| `options.uri`               | [string](https://developer.mozilla.org/javascript/reference/global_objects/string)? = `/graphql` | GraphQL endpoint URI.                                                                             |
-| `options.fetch`             | [function](https://developer.mozilla.org/javascript/reference/global_objects/function)?          | [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global. |
-| `options.fetchOptions`      | [FetchOptions](#type-fetchoptions)?                                                              | `fetch` options; overridden by upload requirements.                                               |
-| `options.credentials`       | [string](https://developer.mozilla.org/javascript/reference/global_objects/string)?              | Overrides `options.fetchOptions.credentials`.                                                     |
-| `options.headers`           | [Object](https://developer.mozilla.org/javascript/reference/global_objects/object)?              | Merges with and overrides `options.fetchOptions.headers`.                                         |
-| `options.includeExtensions` | [boolean](https://developer.mozilla.org/javascript/reference/global_objects/boolean)? = `false`  | Toggles sending `extensions` fields to the GraphQL server.                                        |
+| Parameter                   | Type                                          | Description                                                                                       |
+| :-------------------------- | :-------------------------------------------- | :------------------------------------------------------------------------------------------------ |
+| `options`                   | [Object](https://mdn.io/object)               | Options.                                                                                          |
+| `options.uri`               | [string](https://mdn.io/string)? = `/graphql` | GraphQL endpoint URI.                                                                             |
+| `options.fetch`             | [function](https://mdn.io/function)?          | [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global. |
+| `options.fetchOptions`      | [FetchOptions](#type-fetchoptions)?           | `fetch` options; overridden by upload requirements.                                               |
+| `options.credentials`       | [string](https://mdn.io/string)?              | Overrides `options.fetchOptions.credentials`.                                                     |
+| `options.headers`           | [Object](https://mdn.io/object)?              | Merges with and overrides `options.fetchOptions.headers`.                                         |
+| `options.includeExtensions` | [boolean](https://mdn.io/boolean)? = `false`  | Toggles sending `extensions` fields to the GraphQL server.                                        |
 
 **Returns:** ApolloLink — A terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads.
 
@@ -196,12 +196,12 @@ _A basic Apollo Client setup._
 
 GraphQL request `fetch` options.
 
-**Type:** [Object](https://developer.mozilla.org/javascript/reference/global_objects/object)
+**Type:** [Object](https://mdn.io/object)
 
-| Property      | Type                                                                                | Description                      |
-| :------------ | :---------------------------------------------------------------------------------- | :------------------------------- |
-| `headers`     | [Object](https://developer.mozilla.org/javascript/reference/global_objects/object)  | HTTP request headers.            |
-| `credentials` | [string](https://developer.mozilla.org/javascript/reference/global_objects/string)? | Authentication credentials mode. |
+| Property      | Type                             | Description                      |
+| :------------ | :------------------------------- | :------------------------------- |
+| `headers`     | [Object](https://mdn.io/object)  | HTTP request headers.            |
+| `credentials` | [string](https://mdn.io/string)? | Authentication credentials mode. |
 
 #### See
 
@@ -211,13 +211,13 @@ GraphQL request `fetch` options.
 
 A React Native [`File`](https://developer.mozilla.org/docs/web/api/file) substitute.
 
-**Type:** [Object](https://developer.mozilla.org/javascript/reference/global_objects/object)
+**Type:** [Object](https://mdn.io/object)
 
-| Property | Type                                                                                | Description        |
-| :------- | :---------------------------------------------------------------------------------- | :----------------- |
-| `uri`    | [String](https://developer.mozilla.org/javascript/reference/global_objects/string)  | Filesystem path.   |
-| `name`   | [String](https://developer.mozilla.org/javascript/reference/global_objects/string)? | File name.         |
-| `type`   | [String](https://developer.mozilla.org/javascript/reference/global_objects/string)? | File content type. |
+| Property | Type                             | Description        |
+| :------- | :------------------------------- | :----------------- |
+| `uri`    | [String](https://mdn.io/string)  | Filesystem path.   |
+| `name`   | [String](https://mdn.io/string)? | File name.         |
+| `type`   | [String](https://mdn.io/string)? | File content type. |
 
 #### See
 
