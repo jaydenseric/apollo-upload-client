@@ -1,5 +1,11 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Patch
+
+- Updated Node.js and browser support documentation in the readme.
+
 ## 9.1.0
 
 ### Minor
