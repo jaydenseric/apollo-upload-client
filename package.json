@@ -29,9 +29,9 @@
   "main": "lib",
   "sideEffects": false,
   "engines": {
-    "node": ">=6.10"
+    "node": ">=6"
   },
-  "browserslist": ">1%",
+  "browserslist": "> 0.5%, not dead, node 6",
   "dependencies": {
     "apollo-link": "^1.2.3",
     "apollo-link-http-common": "^0.2.5",
