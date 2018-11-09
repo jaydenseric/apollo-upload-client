@@ -97,6 +97,8 @@ exports.createUploadLink = ({
   headers,
   includeExtensions
 } = {}) => {
+  if (typeof headers === 'function') headers = headers()
+
   const linkConfig = {
     http: { includeExtensions },
     options: fetchOptions,
