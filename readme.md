@@ -167,7 +167,8 @@ Creates a terminating [Apollo Link](https://apollographql.com/docs/link) capable
 | `options.fetch`             | [function](https://mdn.io/function)?          | [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global. |
 | `options.fetchOptions`      | [FetchOptions](#type-fetchoptions)?           | `fetch` options; overridden by upload requirements.                                               |
 | `options.credentials`       | [string](https://mdn.io/string)?              | Overrides `options.fetchOptions.credentials`.                                                     |
-| `options.headers`           | [Object](https://mdn.io/object)? / [Function](https://mdn.io/function)?              | Merges with and overrides `options.fetchOptions.headers`.                                         |
+| `options.headers`           | [Object](https://mdn.io/object)?              | Merges with and overrides `options.fetchOptions.headers`.                                         |
+|                             | [function](https://mdn.io/function)?          |                                                                                                   |
 | `options.includeExtensions` | [boolean](https://mdn.io/boolean)? = `false`  | Toggles sending `extensions` fields to the GraphQL server.                                        |
 
 **Returns:** ApolloLink — A terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads.
