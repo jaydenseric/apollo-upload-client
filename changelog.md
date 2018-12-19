@@ -7,6 +7,7 @@
 - Updated dependencies.
 - Updated package scripts and config for the new [`husky`](https://npm.im/husky) version.
 - Updated Node.js and browser support documentation in the readme.
+- Use [jsDelivr](https://jsdelivr.com) for the readme logo instead of [RawGit](https://rawgit.com) as they are shutting down.
 
 ## 9.1.0
 
