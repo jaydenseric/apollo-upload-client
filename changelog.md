@@ -4,6 +4,7 @@
 
 ### Patch
 
+- Updated dependencies.
 - Updated Node.js and browser support documentation in the readme.
 
 ## 9.1.0
