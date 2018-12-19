@@ -5,6 +5,7 @@
 ### Patch
 
 - Updated dependencies.
+- Updated package scripts and config for the new [`husky`](https://npm.im/husky) version.
 - Updated Node.js and browser support documentation in the readme.
 
 ## 9.1.0

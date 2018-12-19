@@ -66,8 +66,12 @@
     "test:eslint": "eslint .",
     "test:prettier": "prettier '**/*.{json,yml,md}' -l",
     "test:size": "size-limit",
-    "prepublishOnly": "npm run prepare && npm test",
-    "precommit": "lint-staged"
+    "prepublishOnly": "npm run prepare && npm test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "*.js": "eslint",
