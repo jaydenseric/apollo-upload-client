@@ -156,6 +156,8 @@ _A React Native file that can be used in query or mutation variables._
 > })
 > ```
 
+> Note that `type` must be a valid mime type - using e.g. `ImageResult.type` from Expo will be just `image`, and thus not be valid. Also note that if you are inspecting network requests, normal RN `FormData` is replaced by `FormData` in the running instance of Chrome, which behaves differently.
+
 ### function createUploadLink
 
 Creates a terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads. Options match [`createHttpLink`](https://apollographql.com/docs/link/links/http#options).
