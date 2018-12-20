@@ -2,6 +2,12 @@
 
 ## Next
 
+### Major
+
+- Updated the [`extract-files`](https://npm.im/extract-files) dependency to v5:
+  - The original operation object is no longer modified when it contains files, fixing [#81](https://github.com/jaydenseric/apollo-upload-client/issues/81).
+  - If the same file is used in multiple locations of an operation it is only uploaded once.
+
 ### Patch
 
 - Updated dependencies.
