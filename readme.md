@@ -155,8 +155,6 @@ _A React Native file that can be used in query or mutation variables._
 >   type: 'image/jpeg'
 > })
 > ```
->
-> Note that `type` must be a valid mime type - using e.g. `ImageResult.type` from Expo will be just `image`, and thus not be valid. Also note that if you are inspecting network requests, normal RN `FormData` is replaced by `FormData` in the running instance of Chrome, which behaves differently.
 
 ### function createUploadLink
 
@@ -213,13 +211,15 @@ GraphQL request `fetch` options.
 
 A React Native [`File`](https://developer.mozilla.org/docs/web/api/file) substitute.
 
+Be aware that inspecting network requests with Chrome dev tools interferes with the React Native `FormData` implementation, causing network errors.
+
 **Type:** [Object](https://mdn.io/object)
 
-| Property | Type                             | Description        |
-| :------- | :------------------------------- | :----------------- |
-| `uri`    | [String](https://mdn.io/string)  | Filesystem path.   |
-| `name`   | [String](https://mdn.io/string)? | File name.         |
-| `type`   | [String](https://mdn.io/string)? | File content type. |
+| Property | Type                             | Description                                                                                                                                             |
+| :------- | :------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `uri`    | [String](https://mdn.io/string)  | Filesystem path.                                                                                                                                        |
+| `name`   | [String](https://mdn.io/string)? | File name.                                                                                                                                              |
+| `type`   | [String](https://mdn.io/string)? | File content type. Some environments (particularly Android) require a valid MIME type; Expo `ImageResult.type` is unreliable as it can be just `image`. |
 
 #### See
 
