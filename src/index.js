@@ -12,6 +12,9 @@ const { extractFiles, ReactNativeFile } = require('extract-files')
 /**
  * A React Native [`File`](https://developer.mozilla.org/docs/web/api/file)
  * substitute.
+ *
+ * Be aware that inspecting network requests with Chrome dev tools interferes
+ * with the React Native `FormData` implementation, causing network errors.
  * @kind typedef
  * @name ReactNativeFileSubstitute
  * @type {Object}
@@ -19,7 +22,7 @@ const { extractFiles, ReactNativeFile } = require('extract-files')
  * @see [React Native `FormData` polyfill source](https://github.com/facebook/react-native/blob/v0.45.1/Libraries/Network/FormData.js#L34).
  * @prop {String} uri Filesystem path.
  * @prop {String} [name] File name.
- * @prop {String} [type] File content type.
+ * @prop {String} [type] File content type. Some environments (particularly Android) require a valid MIME type; Expo `ImageResult.type` is unreliable as it can be just `image`.
  * @example <caption>A camera roll file.</caption>
  * ```js
  * {
