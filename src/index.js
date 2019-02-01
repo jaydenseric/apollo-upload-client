@@ -110,11 +110,27 @@ exports.createUploadLink = ({
   return new ApolloLink(operation => {
     const uri = selectURI(operation, fetchUri)
     const context = operation.getContext()
+
+    // Support clientAwareness for Apollo Enging
+    // https://www.apollographql.com/docs/platform/client-awareness.html#Setup
+    // code from:
+    // https://github.com/apollographql/apollo-link/blob/8e7f55882af459678d298c0ba0706e68eef998f0/packages/apollo-link-http/src/httpLink.ts
+    const clientAwarenessHeaders = {}
+    if (context.clientAwareness) {
+      const { name, version } = context.clientAwareness
+
+      if (name) clientAwarenessHeaders['apollographql-client-name'] = name
+      if (version)
+        clientAwarenessHeaders['apollographql-client-version'] = version
+    }
+
+    const contextHeaders = { ...clientAwarenessHeaders, ...context.headers }
+
     const contextConfig = {
       http: context.http,
       options: context.fetchOptions,
       credentials: context.credentials,
-      headers: context.headers
+      headers: contextHeaders
     }
 
     const { options, body } = selectHttpOptionsAndBody(
