@@ -170,7 +170,7 @@ exports.createUploadLink = ({
   }
 
   return new ApolloLink(operation => {
-    const uri = selectURI(operation, fetchUri)
+    let uri = selectURI(operation, fetchUri)
     const context = operation.getContext()
     const contextConfig = {
       http: context.http,
@@ -220,9 +220,9 @@ exports.createUploadLink = ({
       const method = options.method.toUpperCase()
       if (method === 'GET') {
         // Use query instead for GET method
-        const { newUri, parseError } = rewriteURIForGET(uri, body)
+        const { newURI, parseError } = rewriteURIForGET(uri, body)
         if (parseError) return fromError(parseError)
-        uri = newUri;
+        uri = newURI;
       } else options.body = payload
     }
 
