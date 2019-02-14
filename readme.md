@@ -16,7 +16,9 @@ npm install apollo-upload-client
 
 If you use [Apollo Boost](https://npm.im/apollo-boost), [migrate to a manual Apollo Client setup](https://apollographql.com/docs/react/advanced/boost-migration).
 
-Initialize [Apollo Client](https://apollographql.com/docs/link#apollo-client) with a terminating [Apollo Link](https://apollographql.com/docs/link) using [`createUploadLink`](#function-createuploadlink).
+Initialize [Apollo Client](https://apollographql.com/docs/link#apollo-client) with a terminating* [Apollo Link](https://apollographql.com/docs/link) using [`createUploadLink`](#function-createuploadlink). 
+
+*The **createUploadLink** replaces the terminating **HTTPLink** in the ApolloClient. [issue](https://github.com/jaydenseric/apollo-upload-client/issues/89#issuecomment-384923295)
 
 Also ensure the GraphQL server implements the [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec) and that uploads are handled correctly in resolvers.
 
