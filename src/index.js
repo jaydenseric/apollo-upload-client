@@ -151,7 +151,16 @@ exports.createUploadLink = ({
       })
 
       options.body = form
-    } else options.body = payload
+    } else {
+      // Apollo persisted query could be sent using GET method
+      // Request with GET/HEAD method cannot have body
+      // https://github.com/apollographql/apollo-link-persisted-queries#options
+      const method = options.method.toUpperCase()
+      if (method === 'GET' || method === 'HEAD') {
+        // Use query instead for GET/HEAD method
+        options.query = payload
+      } else options.body = payload
+    }
 
     return new Observable(observer => {
       // Allow aborting fetch, if supported.
