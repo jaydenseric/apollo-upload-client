@@ -1,4 +1,4 @@
-const { ApolloLink, Observable } = require('apollo-link')
+const { ApolloLink, Observable, fromError } = require('apollo-link')
 const {
   selectURI,
   selectHttpOptionsAndBody,
@@ -8,6 +8,68 @@ const {
   parseAndCheckHttpResponse
 } = require('apollo-link-http-common')
 const { extractFiles, ReactNativeFile } = require('extract-files')
+
+
+// reference: https://github.com/apollographql/apollo-link/blob/master/packages/apollo-link-http/src/httpLink.ts
+// For GET operations, returns the given URI rewritten with parameters, or a
+// parse error.
+function rewriteURIForGET(chosenURI, body) {
+  // Implement the standard HTTP GET serialization, plus 'extensions'. Note
+  // the extra level of JSON serialization!
+  const queryParams = [];
+  const addQueryParam = (key, value) => {
+    queryParams.push(`${key}=${encodeURIComponent(value)}`);
+  };
+
+  if ('query' in body) {
+    addQueryParam('query', body.query);
+  }
+  if (body.operationName) {
+    addQueryParam('operationName', body.operationName);
+  }
+  if (body.variables) {
+    let serializedVariables;
+    try {
+      serializedVariables = serializeFetchParameter(
+        body.variables,
+        'Variables map',
+      );
+    } catch (parseError) {
+      return { parseError };
+    }
+    addQueryParam('variables', serializedVariables);
+  }
+  if (body.extensions) {
+    let serializedExtensions;
+    try {
+      serializedExtensions = serializeFetchParameter(
+        body.extensions,
+        'Extensions map',
+      );
+    } catch (parseError) {
+      return { parseError };
+    }
+    addQueryParam('extensions', serializedExtensions);
+  }
+
+  // Reconstruct the URI with added query params.
+  // XXX This assumes that the URI is well-formed and that it doesn't
+  //     already contain any of these query params. We could instead use the
+  //     URL API and take a polyfill (whatwg-url@6) for older browsers that
+  //     don't support URLSearchParams. Note that some browsers (and
+  //     versions of whatwg-url) support URL but not URLSearchParams!
+  let fragment = '',
+    preFragment = chosenURI;
+  const fragmentStart = chosenURI.indexOf('#');
+  if (fragmentStart !== -1) {
+    fragment = chosenURI.substr(fragmentStart);
+    preFragment = chosenURI.substr(0, fragmentStart);
+  }
+  const queryParamsPrefix = preFragment.indexOf('?') === -1 ? '?' : '&';
+  const newURI =
+    preFragment + queryParamsPrefix + queryParams.join('&') + fragment;
+  return { newURI };
+}
 
 /**
  * A React Native [`File`](https://developer.mozilla.org/docs/web/api/file)
@@ -156,10 +218,12 @@ exports.createUploadLink = ({
       // Request with GET/HEAD method cannot have body
       // https://github.com/apollographql/apollo-link-persisted-queries#options
       const method = options.method.toUpperCase()
-      if (method === 'GET' || method === 'HEAD')
-        // Use query instead for GET/HEAD method
-        options.query = payload
-      else options.body = payload
+      if (method === 'GET') {
+        // Use query instead for GET method
+        const { newUri, parseError } = rewriteURIForGET(uri, body)
+        if (parseError) return fromError(parseError)
+        uri = newUri;
+      } else options.body = payload
     }
 
     return new Observable(observer => {
