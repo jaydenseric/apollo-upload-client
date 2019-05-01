@@ -66,6 +66,6 @@
     "test:eslint": "eslint .",
     "test:prettier": "prettier '**/*.{json,yml,md}' -l",
     "test:size": "size-limit",
-    "prepublishOnly": "npm run prepare && npm test"
+    "prepublishOnly": "npm test"
   }
 }
