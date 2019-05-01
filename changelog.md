@@ -5,6 +5,7 @@
 ### Patch
 
 - Updated dependencies.
+- Reduced the size of the published `package.json` by moving dev tool config to files. This also prevents editor extensions such as Prettier and ESLint from detecting config and attempting to operate when opening package files installed in `node_modules`.
 - Add tips for React Native gotchas, via [#135](https://github.com/jaydenseric/apollo-upload-client/pull/135).
 
 ## 10.0.0

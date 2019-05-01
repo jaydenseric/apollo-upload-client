@@ -67,37 +67,5 @@
     "test:prettier": "prettier '**/*.{json,yml,md}' -l",
     "test:size": "size-limit",
     "prepublishOnly": "npm run prepare && npm test"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": "eslint",
-    "*.{json,yml,md}": "prettier -l"
-  },
-  "eslintIgnore": [
-    "lib"
-  ],
-  "eslintConfig": {
-    "extends": [
-      "env"
-    ]
-  },
-  "prettier": {
-    "proseWrap": "never",
-    "singleQuote": true,
-    "semi": false
-  },
-  "size-limit": [
-    {
-      "name": "CJS",
-      "limit": "1 KB",
-      "ignore": [
-        "apollo-link",
-        "apollo-link-http-common"
-      ]
-    }
-  ]
+  }
 }
