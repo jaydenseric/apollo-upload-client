@@ -138,9 +138,9 @@ client.mutate({
 
 Used to mark a [React Native `File` substitute](#type-reactnativefilesubstitute). It’s too risky to assume all objects with `uri`, `type` and `name` properties are files to extract. Re-exported from [`extract-files`](https://npm.im/extract-files) for convenience.
 
-| Parameter | Type                                                         | Description                                                                          |
-| :-------- | :----------------------------------------------------------- | :----------------------------------------------------------------------------------- |
-| `file`    | [ReactNativeFileSubstitute](#type-reactnativefilesubstitute) | A React Native [`File`](https://developer.mozilla.org/docs/web/api/file) substitute. |
+| Parameter | Type | Description |
+| :-- | :-- | :-- |
+| `file` | [ReactNativeFileSubstitute](#type-reactnativefilesubstitute) | A React Native [`File`](https://developer.mozilla.org/docs/web/api/file) substitute. |
 
 #### Examples
 
@@ -156,19 +156,21 @@ _A React Native file that can be used in query or mutation variables._
 > })
 > ```
 
+---
+
 ### function createUploadLink
 
 Creates a terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads. Options match [`createHttpLink`](https://apollographql.com/docs/link/links/http#options).
 
-| Parameter                   | Type                                          | Description                                                                                       |
-| :-------------------------- | :-------------------------------------------- | :------------------------------------------------------------------------------------------------ |
-| `options`                   | [Object](https://mdn.io/object)               | Options.                                                                                          |
-| `options.uri`               | [string](https://mdn.io/string)? = `/graphql` | GraphQL endpoint URI.                                                                             |
-| `options.fetch`             | [function](https://mdn.io/function)?          | [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global. |
-| `options.fetchOptions`      | [FetchOptions](#type-fetchoptions)?           | `fetch` options; overridden by upload requirements.                                               |
-| `options.credentials`       | [string](https://mdn.io/string)?              | Overrides `options.fetchOptions.credentials`.                                                     |
-| `options.headers`           | [Object](https://mdn.io/object)?              | Merges with and overrides `options.fetchOptions.headers`.                                         |
-| `options.includeExtensions` | [boolean](https://mdn.io/boolean)? = `false`  | Toggles sending `extensions` fields to the GraphQL server.                                        |
+| Parameter | Type | Description |
+| :-- | :-- | :-- |
+| `options` | Object | Options. |
+| `options.uri` | string? = `/graphql` | GraphQL endpoint URI. |
+| `options.fetch` | function? | [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global. |
+| `options.fetchOptions` | [FetchOptions](#type-fetchoptions)? | `fetch` options; overridden by upload requirements. |
+| `options.credentials` | string? | Overrides `options.fetchOptions.credentials`. |
+| `options.headers` | Object? | Merges with and overrides `options.fetchOptions.headers`. |
+| `options.includeExtensions` | boolean? = `false` | Toggles sending `extensions` fields to the GraphQL server. |
 
 **Returns:** ApolloLink — A terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads.
 
@@ -192,20 +194,24 @@ _A basic Apollo Client setup._
 > })
 > ```
 
+---
+
 ### type FetchOptions
 
 GraphQL request `fetch` options.
 
-**Type:** [Object](https://mdn.io/object)
+**Type:** Object
 
-| Property      | Type                             | Description                      |
-| :------------ | :------------------------------- | :------------------------------- |
-| `headers`     | [Object](https://mdn.io/object)  | HTTP request headers.            |
-| `credentials` | [string](https://mdn.io/string)? | Authentication credentials mode. |
+| Property      | Type    | Description                      |
+| :------------ | :------ | :------------------------------- |
+| `headers`     | Object  | HTTP request headers.            |
+| `credentials` | string? | Authentication credentials mode. |
 
 #### See
 
 - [Polyfillable fetch options](https://github.github.io/fetch#options).
+
+---
 
 ### type ReactNativeFileSubstitute
 
@@ -213,13 +219,13 @@ A React Native [`File`](https://developer.mozilla.org/docs/web/api/file) substit
 
 Be aware that inspecting network requests with Chrome dev tools interferes with the React Native `FormData` implementation, causing network errors.
 
-**Type:** [Object](https://mdn.io/object)
+**Type:** Object
 
-| Property | Type                             | Description                                                                                                                                             |
-| :------- | :------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `uri`    | [String](https://mdn.io/string)  | Filesystem path.                                                                                                                                        |
-| `name`   | [String](https://mdn.io/string)? | File name.                                                                                                                                              |
-| `type`   | [String](https://mdn.io/string)? | File content type. Some environments (particularly Android) require a valid MIME type; Expo `ImageResult.type` is unreliable as it can be just `image`. |
+| Property | Type | Description |
+| :-- | :-- | :-- |
+| `uri` | String | Filesystem path. |
+| `name` | String? | File name. |
+| `type` | String? | File content type. Some environments (particularly Android) require a valid MIME type; Expo `ImageResult.type` is unreliable as it can be just `image`. |
 
 #### See
 
