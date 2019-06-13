@@ -1,6 +1,6 @@
 [
   {
-    "limit": "1 KB",
+    "limit": "1.3 KB",
     "ignore": ["apollo-link", "apollo-link-http-common"]
   }
 ]
