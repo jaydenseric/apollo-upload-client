@@ -4,7 +4,7 @@
 
 [![npm version](https://badgen.net/npm/v/apollo-upload-client)](https://npm.im/apollo-upload-client) [![Build status](https://travis-ci.org/jaydenseric/apollo-upload-client.svg?branch=master)](https://travis-ci.org/jaydenseric/apollo-upload-client)
 
-An [Apollo Link](https://apollographql.com/docs/link) for [Apollo Client](https://apollographql.com/docs/link#apollo-client) that allows [`FileList`](https://developer.mozilla.org/docs/web/api/filelist), [`File`](https://developer.mozilla.org/docs/web/api/file), [`Blob`](https://developer.mozilla.org/docs/web/api/blob) or [`ReactNativeFile`](#class-reactnativefile) instances within query or mutation variables and sends [GraphQL multipart requests](https://github.com/jaydenseric/graphql-multipart-request-spec).
+A terminating [Apollo Link](https://apollographql.com/docs/link) for [Apollo Client](https://apollographql.com/docs/link#apollo-client) that allows [`FileList`](https://developer.mozilla.org/docs/web/api/filelist), [`File`](https://developer.mozilla.org/docs/web/api/file), [`Blob`](https://developer.mozilla.org/docs/web/api/blob) or [`ReactNativeFile`](#class-reactnativefile) instances within query or mutation variables and sends [GraphQL multipart requests](https://github.com/jaydenseric/graphql-multipart-request-spec).
 
 ## Setup
 
@@ -14,9 +14,11 @@ Install with [npm](https://npmjs.com):
 npm install apollo-upload-client
 ```
 
-If you use [Apollo Boost](https://npm.im/apollo-boost), [migrate to a manual Apollo Client setup](https://apollographql.com/docs/react/advanced/boost-migration).
+[Apollo Boost](https://npm.im/apollo-boost) doesn’t allow link customization; if you are using it [migrate to a manual Apollo Client setup](https://apollographql.com/docs/react/advanced/boost-migration).
 
-Initialize [Apollo Client](https://apollographql.com/docs/link#apollo-client) with a terminating [Apollo Link](https://apollographql.com/docs/link) using [`createUploadLink`](#function-createuploadlink).
+[Apollo Client](https://apollographql.com/docs/link#apollo-client) can only have 1 “terminating” [Apollo Link](https://apollographql.com/docs/link) that sends the GraphQL requests; if one such as [`apollo-link-http`](https://apollographql.com/docs/link/links/http) is already setup, remove it.
+
+Initialize the client with a terminating link using [`createUploadLink`](#function-createuploadlink).
 
 Also ensure the GraphQL server implements the [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec) and that uploads are handled correctly in resolvers.
 
@@ -138,9 +140,9 @@ client.mutate({
 
 Used to mark a [React Native `File` substitute](#type-reactnativefilesubstitute). It’s too risky to assume all objects with `uri`, `type` and `name` properties are files to extract. Re-exported from [`extract-files`](https://npm.im/extract-files) for convenience.
 
-| Parameter | Type                                                         | Description                                                                          |
-| :-------- | :----------------------------------------------------------- | :----------------------------------------------------------------------------------- |
-| `file`    | [ReactNativeFileSubstitute](#type-reactnativefilesubstitute) | A React Native [`File`](https://developer.mozilla.org/docs/web/api/file) substitute. |
+| Parameter | Type | Description |
+| :-- | :-- | :-- |
+| `file` | [ReactNativeFileSubstitute](#type-reactnativefilesubstitute) | A React Native [`File`](https://developer.mozilla.org/docs/web/api/file) substitute. |
 
 #### Examples
 
@@ -156,19 +158,21 @@ _A React Native file that can be used in query or mutation variables._
 > })
 > ```
 
+---
+
 ### function createUploadLink
 
 Creates a terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads. Options match [`createHttpLink`](https://apollographql.com/docs/link/links/http#options).
 
-| Parameter                   | Type                                          | Description                                                                                       |
-| :-------------------------- | :-------------------------------------------- | :------------------------------------------------------------------------------------------------ |
-| `options`                   | [Object](https://mdn.io/object)               | Options.                                                                                          |
-| `options.uri`               | [string](https://mdn.io/string)? = `/graphql` | GraphQL endpoint URI.                                                                             |
-| `options.fetch`             | [function](https://mdn.io/function)?          | [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global. |
-| `options.fetchOptions`      | [FetchOptions](#type-fetchoptions)?           | `fetch` options; overridden by upload requirements.                                               |
-| `options.credentials`       | [string](https://mdn.io/string)?              | Overrides `options.fetchOptions.credentials`.                                                     |
-| `options.headers`           | [Object](https://mdn.io/object)?              | Merges with and overrides `options.fetchOptions.headers`.                                         |
-| `options.includeExtensions` | [boolean](https://mdn.io/boolean)? = `false`  | Toggles sending `extensions` fields to the GraphQL server.                                        |
+| Parameter | Type | Description |
+| :-- | :-- | :-- |
+| `options` | Object | Options. |
+| `options.uri` | string? = `/graphql` | GraphQL endpoint URI. |
+| `options.fetch` | function? | [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global. |
+| `options.fetchOptions` | [FetchOptions](#type-fetchoptions)? | `fetch` options; overridden by upload requirements. |
+| `options.credentials` | string? | Overrides `options.fetchOptions.credentials`. |
+| `options.headers` | Object? | Merges with and overrides `options.fetchOptions.headers`. |
+| `options.includeExtensions` | boolean? = `false` | Toggles sending `extensions` fields to the GraphQL server. |
 
 **Returns:** ApolloLink — A terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads.
 
@@ -192,20 +196,24 @@ _A basic Apollo Client setup._
 > })
 > ```
 
+---
+
 ### type FetchOptions
 
 GraphQL request `fetch` options.
 
-**Type:** [Object](https://mdn.io/object)
+**Type:** Object
 
-| Property      | Type                             | Description                      |
-| :------------ | :------------------------------- | :------------------------------- |
-| `headers`     | [Object](https://mdn.io/object)  | HTTP request headers.            |
-| `credentials` | [string](https://mdn.io/string)? | Authentication credentials mode. |
+| Property      | Type    | Description                      |
+| :------------ | :------ | :------------------------------- |
+| `headers`     | Object  | HTTP request headers.            |
+| `credentials` | string? | Authentication credentials mode. |
 
 #### See
 
 - [Polyfillable fetch options](https://github.github.io/fetch#options).
+
+---
 
 ### type ReactNativeFileSubstitute
 
@@ -213,13 +221,13 @@ A React Native [`File`](https://developer.mozilla.org/docs/web/api/file) substit
 
 Be aware that inspecting network requests with Chrome dev tools interferes with the React Native `FormData` implementation, causing network errors.
 
-**Type:** [Object](https://mdn.io/object)
+**Type:** Object
 
-| Property | Type                             | Description                                                                                                                                             |
-| :------- | :------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `uri`    | [String](https://mdn.io/string)  | Filesystem path.                                                                                                                                        |
-| `name`   | [String](https://mdn.io/string)? | File name.                                                                                                                                              |
-| `type`   | [String](https://mdn.io/string)? | File content type. Some environments (particularly Android) require a valid MIME type; Expo `ImageResult.type` is unreliable as it can be just `image`. |
+| Property | Type | Description |
+| :-- | :-- | :-- |
+| `uri` | String | Filesystem path. |
+| `name` | String? | File name. |
+| `type` | String? | File content type. Some environments (particularly Android) require a valid MIME type; Expo `ImageResult.type` is unreliable as it can be just `image`. |
 
 #### See
 

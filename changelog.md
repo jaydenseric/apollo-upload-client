@@ -4,7 +4,18 @@
 
 ### Patch
 
+- Updated dependencies.
+
+## 10.0.1
+
+### Patch
+
+- Updated dependencies.
+- Reduced the size of the published `package.json` by moving dev tool config to files. This also prevents editor extensions such as Prettier and ESLint from detecting config and attempting to operate when opening package files installed in `node_modules`.
+- Simplified the `prepublishOnly` script.
 - Add tips for React Native gotchas, via [#135](https://github.com/jaydenseric/apollo-upload-client/pull/135).
+- Updated the package description to mention that the upload link is terminating and clarified in the setup instructions that there can only be 1 terminating Apollo Link, via [#147](https://github.com/jaydenseric/apollo-upload-client/pull/147).
+- Improve setup instructions for Apollo Boost.
 
 ## 10.0.0
 
