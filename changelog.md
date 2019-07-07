@@ -2,9 +2,14 @@
 
 ## Next
 
+### Minor
+
+- Support [Apollo Engine client awareness](https://apollographql.com/docs/platform/client-awareness), via [#143](https://github.com/jaydenseric/apollo-upload-client/pull/143).
+
 ### Patch
 
 - Updated dependencies.
+- Ensure Babel helpers are imported and not inlined, using the [`@babel/runtime`](https://npm.im/@babel/runtime) dependency and [`@babel/plugin-transform-runtime`](https://npm.im/@babel/plugin-transform-runtime) dev dependency.
 
 ## 10.0.1
 
