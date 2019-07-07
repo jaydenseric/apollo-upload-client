@@ -2,6 +2,10 @@
 
 ## Next
 
+### Major
+
+- Updated Node.js support from v6+ to v8.5+.
+
 ### Minor
 
 - Support [Apollo Engine client awareness](https://apollographql.com/docs/platform/client-awareness), via [#143](https://github.com/jaydenseric/apollo-upload-client/pull/143).
@@ -10,6 +14,7 @@
 
 - Updated dependencies.
 - Ensure Babel helpers are imported and not inlined, using the [`@babel/runtime`](https://npm.im/@babel/runtime) dependency and [`@babel/plugin-transform-runtime`](https://npm.im/@babel/plugin-transform-runtime) dev dependency.
+- Nicer Browserslist syntax for supported Node.js versions.
 
 ## 10.0.1
 
