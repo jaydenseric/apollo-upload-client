@@ -2,9 +2,14 @@
 
 ## Next
 
+### Major
+
+- Updated Node.js support from v6+ to v8.5+.
+
 ### Patch
 
 - Updated dependencies.
+- Nicer Browserslist syntax for supported Node.js versions.
 
 ## 10.0.1
 
