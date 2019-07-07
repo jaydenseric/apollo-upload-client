@@ -1,5 +1,11 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Patch
+
+- Updated dependencies.
+
 ## 10.0.1
 
 ### Patch
