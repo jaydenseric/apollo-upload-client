@@ -1,6 +1,6 @@
 # apollo-upload-client changelog
 
-## Next
+## 11.0.0
 
 ### Major
 
