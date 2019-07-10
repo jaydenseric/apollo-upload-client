@@ -33,16 +33,16 @@
   },
   "browserslist": "> 0.5%, not dead, node >= 8.5",
   "dependencies": {
-    "@babel/runtime": "^7.5.1",
+    "@babel/runtime": "^7.5.4",
     "apollo-link": "^1.2.12",
     "apollo-link-http-common": "^0.2.14",
     "extract-files": "^5.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
-    "@babel/core": "^7.5.0",
+    "@babel/core": "^7.5.4",
     "@babel/plugin-transform-runtime": "^7.5.0",
-    "@babel/preset-env": "^7.5.0",
+    "@babel/preset-env": "^7.5.4",
     "babel-eslint": "^10.0.2",
     "eslint": "^6.0.1",
     "eslint-config-env": "^6.0.0",
