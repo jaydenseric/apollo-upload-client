@@ -110,11 +110,26 @@ exports.createUploadLink = ({
   return new ApolloLink(operation => {
     const uri = selectURI(operation, fetchUri)
     const context = operation.getContext()
+
+    // Apollo Engine client awareness:
+    // https://apollographql.com/docs/platform/client-awareness
+
+    const {
+      // From Apollo Client config.
+      clientAwareness: { name, version } = {},
+      headers
+    } = context
+
     const contextConfig = {
       http: context.http,
       options: context.fetchOptions,
       credentials: context.credentials,
-      headers: context.headers
+      headers: {
+        // Client awareness headers are context overridable.
+        ...(name && { 'apollographql-client-name': name }),
+        ...(version && { 'apollographql-client-version': version }),
+        ...headers
+      }
     }
 
     const { options, body } = selectHttpOptionsAndBody(

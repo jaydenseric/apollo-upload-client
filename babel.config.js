@@ -8,5 +8,6 @@ module.exports = {
         loose: true
       }
     ]
-  ]
+  ],
+  plugins: ['@babel/transform-runtime']
 }
