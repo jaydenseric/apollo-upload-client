@@ -170,8 +170,12 @@ exports.createUploadLink = ({
 
     return new Observable(observer => {
       // Allow aborting fetch, if supported.
-      const { controller, signal } = createSignalIfSupported()
-      if (controller) options.signal = signal
+      let controller
+      if (!options.signal) {
+        const { controller: _controller, signal } = createSignalIfSupported()
+        controller = _controller
+        if (controller) options.signal = signal
+      }
 
       linkFetch(uri, options)
         .then(response => {
