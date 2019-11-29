@@ -126,15 +126,9 @@ client.mutate({
 ### Table of contents
 
 - [class ReactNativeFile](#class-reactnativefile)
-  - [Examples](#examples)
 - [function createUploadLink](#function-createuploadlink)
-  - [See](#see)
-  - [Examples](#examples-1)
 - [type FetchOptions](#type-fetchoptions)
-  - [See](#see-1)
 - [type ReactNativeFileSubstitute](#type-reactnativefilesubstitute)
-  - [See](#see-2)
-  - [Examples](#examples-2)
 
 ### class ReactNativeFile
 
@@ -166,12 +160,12 @@ Creates a terminating [Apollo Link](https://apollographql.com/docs/link) capable
 
 | Parameter | Type | Description |
 | :-- | :-- | :-- |
-| `options` | Object | Options. |
-| `options.uri` | string? = `/graphql` | GraphQL endpoint URI. |
-| `options.fetch` | function? | [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global. |
+| `options` | object | Options. |
+| `options.uri` | string? = /graphql | GraphQL endpoint URI. |
+| `options.fetch` | Function? | [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global. |
 | `options.fetchOptions` | [FetchOptions](#type-fetchoptions)? | `fetch` options; overridden by upload requirements. |
 | `options.credentials` | string? | Overrides `options.fetchOptions.credentials`. |
-| `options.headers` | Object? | Merges with and overrides `options.fetchOptions.headers`. |
+| `options.headers` | object? | Merges with and overrides `options.fetchOptions.headers`. |
 | `options.includeExtensions` | boolean? = `false` | Toggles sending `extensions` fields to the GraphQL server. |
 
 **Returns:** ApolloLink — A terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads.
@@ -202,11 +196,11 @@ _A basic Apollo Client setup._
 
 GraphQL request `fetch` options.
 
-**Type:** Object
+**Type:** object
 
 | Property      | Type    | Description                      |
 | :------------ | :------ | :------------------------------- |
-| `headers`     | Object  | HTTP request headers.            |
+| `headers`     | object  | HTTP request headers.            |
 | `credentials` | string? | Authentication credentials mode. |
 
 #### See
@@ -221,13 +215,13 @@ A React Native [`File`](https://developer.mozilla.org/docs/web/api/file) substit
 
 Be aware that inspecting network requests with Chrome dev tools interferes with the React Native `FormData` implementation, causing network errors.
 
-**Type:** Object
+**Type:** object
 
 | Property | Type | Description |
 | :-- | :-- | :-- |
-| `uri` | String | Filesystem path. |
-| `name` | String? | File name. |
-| `type` | String? | File content type. Some environments (particularly Android) require a valid MIME type; Expo `ImageResult.type` is unreliable as it can be just `image`. |
+| `uri` | string | Filesystem path. |
+| `name` | string? | File name. |
+| `type` | string? | File content type. Some environments (particularly Android) require a valid MIME type; Expo `ImageResult.type` is unreliable as it can be just `image`. |
 
 #### See
 

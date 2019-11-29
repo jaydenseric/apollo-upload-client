@@ -1,5 +1,13 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Patch
+
+- Updated dev dependencies.
+- Added the [`eslint-plugin-jsdoc`](https://npm.im/eslint-plugin-jsdoc) dev dependency.
+- Replaced the [`size-limit`](https://npm.im/size-limit) dev dependency with [`@size-limit/preset-small-lib`](https://npm.im/@size-limit/preset-small-lib).
+
 ## 11.0.0
 
 ### Major
