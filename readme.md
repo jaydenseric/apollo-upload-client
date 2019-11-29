@@ -121,6 +121,12 @@ client.mutate({
 - Browsers [`> 0.5%, not OperaMini all, not dead`](https://browserl.ist/?q=%3E+0.5%25%2C+not+OperaMini+all%2C+not+dead)
 - React Native
 
+Consider polyfilling:
+
+- [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+- [`fetch`](https://developer.mozilla.org/docs/Web/API/Fetch_API)
+- [`FormData`](https://developer.mozilla.org/docs/Web/API/FormData)
+
 ## API
 
 ### Table of contents

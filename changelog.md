@@ -13,6 +13,7 @@
 - Replaced the [`size-limit`](https://npm.im/size-limit) dev dependency with [`@size-limit/preset-small-lib`](https://npm.im/@size-limit/preset-small-lib).
 - Use GitHub Actions instead of Travis for CI.
 - Clarified that Opera Mini isn’t supported in the Browserslist queries and readme “Support” section.
+- Documented polyfills to consider in the readme “Support” section.
 
 ## 11.0.0
 
