@@ -12,6 +12,7 @@
 - Added the [`eslint-plugin-jsdoc`](https://npm.im/eslint-plugin-jsdoc) dev dependency.
 - Replaced the [`size-limit`](https://npm.im/size-limit) dev dependency with [`@size-limit/preset-small-lib`](https://npm.im/@size-limit/preset-small-lib).
 - Use GitHub Actions instead of Travis for CI.
+- Clarified that Opera Mini isn’t supported in the Browserslist queries and readme “Support” section.
 
 ## 11.0.0
 
