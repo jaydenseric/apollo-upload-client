@@ -29,9 +29,9 @@
   "main": "lib",
   "sideEffects": false,
   "engines": {
-    "node": ">=8.5"
+    "node": ">=8.10"
   },
-  "browserslist": "> 0.5%, not dead, node >= 8.5",
+  "browserslist": "Node >= 8.10, > 0.5%, not dead",
   "dependencies": {
     "@babel/runtime": "^7.5.4",
     "apollo-link": "^1.2.12",
