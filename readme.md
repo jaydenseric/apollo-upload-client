@@ -31,63 +31,51 @@ See also the [example API and client](https://github.com/jaydenseric/apollo-uplo
 ### [`FileList`](https://developer.mozilla.org/docs/web/api/filelist)
 
 ```jsx
+const { useMutation } = require('@apollo/react-hooks')
 const gql = require('graphql-tag')
-const { Mutation } = require('react-apollo')
 
-const UploadFiles = () => (
-  <Mutation
-    mutation={gql`
-      mutation($files: [Upload!]!) {
-        uploadFiles(files: $files) {
-          success
-        }
-      }
-    `}
-  >
-    {mutate => (
-      <input
-        type="file"
-        multiple
-        required
-        onChange={({ target: { validity, files } }) =>
-          validity.valid && mutate({ variables: { files } })
-        }
-      />
-    )}
-  </Mutation>
-)
+const MUTATION = gql`
+  mutation($files: [Upload!]!) {
+    uploadFiles(files: $files) {
+      success
+    }
+  }
+`
+
+const UploadFile = () => {
+  const [mutate] = useMutation(MUTATION)
+  const onChange = ({ target: { validity, files } }) =>
+    validity.valid && mutate({ variables: { files } })
+
+  return <input type="file" multiple required onChange={onChange} />
+}
 ```
 
 ### [`File`](https://developer.mozilla.org/docs/web/api/file)
 
 ```jsx
+const { useMutation } = require('@apollo/react-hooks')
 const gql = require('graphql-tag')
-const { Mutation } = require('react-apollo')
 
-const UploadFile = () => (
-  <Mutation
-    mutation={gql`
-      mutation($file: Upload!) {
-        uploadFile(file: $file) {
-          success
-        }
-      }
-    `}
-  >
-    {mutate => (
-      <input
-        type="file"
-        required
-        onChange={({
-          target: {
-            validity,
-            files: [file]
-          }
-        }) => validity.valid && mutate({ variables: { file } })}
-      />
-    )}
-  </Mutation>
-)
+const MUTATION = gql`
+  mutation($file: Upload!) {
+    uploadFile(file: $file) {
+      success
+    }
+  }
+`
+
+const UploadFile = () => {
+  const [mutate] = useMutation(MUTATION)
+  const onChange = ({
+    target: {
+      validity,
+      files: [file]
+    }
+  }) => validity.valid && mutate({ variables: { file } })
+
+  return <input type="file" required onChange={onChange} />
+}
 ```
 
 ### [`Blob`](https://developer.mozilla.org/docs/web/api/blob)

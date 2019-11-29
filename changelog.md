@@ -14,6 +14,7 @@
 - Use GitHub Actions instead of Travis for CI.
 - Clarified that Opera Mini isn’t supported in the Browserslist queries and readme “Support” section.
 - Documented polyfills to consider in the readme “Support” section.
+- Updated examples to use [`@apollo/react-hooks`](https://npm.im/@apollo/react-hooks).
 
 ## 11.0.0
 
