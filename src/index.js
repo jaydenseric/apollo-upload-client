@@ -17,12 +17,12 @@ const { extractFiles, ReactNativeFile } = require('extract-files')
  * with the React Native `FormData` implementation, causing network errors.
  * @kind typedef
  * @name ReactNativeFileSubstitute
- * @type {Object}
+ * @type {object}
  * @see [`extract-files` docs](https://github.com/jaydenseric/extract-files#type-reactnativefilesubstitute).
  * @see [React Native `FormData` polyfill source](https://github.com/facebook/react-native/blob/v0.45.1/Libraries/Network/FormData.js#L34).
- * @prop {String} uri Filesystem path.
- * @prop {String} [name] File name.
- * @prop {String} [type] File content type. Some environments (particularly Android) require a valid MIME type; Expo `ImageResult.type` is unreliable as it can be just `image`.
+ * @prop {string} uri Filesystem path.
+ * @prop {string} [name] File name.
+ * @prop {string} [type] File content type. Some environments (particularly Android) require a valid MIME type; Expo `ImageResult.type` is unreliable as it can be just `image`.
  * @example <caption>A camera roll file.</caption>
  * ```js
  * {
@@ -59,9 +59,9 @@ exports.ReactNativeFile = ReactNativeFile
  * GraphQL request `fetch` options.
  * @kind typedef
  * @name FetchOptions
- * @type {Object}
+ * @type {object}
  * @see [Polyfillable fetch options](https://github.github.io/fetch#options).
- * @prop {Object} headers HTTP request headers.
+ * @prop {object} headers HTTP request headers.
  * @prop {string} [credentials] Authentication credentials mode.
  */
 
@@ -72,12 +72,12 @@ exports.ReactNativeFile = ReactNativeFile
  * @see [apollo-link on GitHub](https://github.com/apollographql/apollo-link).
  * @kind function
  * @name createUploadLink
- * @param {Object} options Options.
+ * @param {object} options Options.
  * @param {string} [options.uri=/graphql] GraphQL endpoint URI.
- * @param {function} [options.fetch] [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global.
+ * @param {Function} [options.fetch] [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global.
  * @param {FetchOptions} [options.fetchOptions] `fetch` options; overridden by upload requirements.
  * @param {string} [options.credentials] Overrides `options.fetchOptions.credentials`.
- * @param {Object} [options.headers] Merges with and overrides `options.fetchOptions.headers`.
+ * @param {object} [options.headers] Merges with and overrides `options.fetchOptions.headers`.
  * @param {boolean} [options.includeExtensions=false] Toggles sending `extensions` fields to the GraphQL server.
  * @returns {ApolloLink} A terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads.
  * @example <caption>A basic Apollo Client setup.</caption>

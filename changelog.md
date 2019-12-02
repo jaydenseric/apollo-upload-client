@@ -1,5 +1,21 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Major
+
+- Updated Node.js support from v8.5+ to v8.10+, to match what the [`eslint`](https://npm.im/eslint) dev dependency now supports. This is unlikely to be a breaking change for the published package.
+
+### Patch
+
+- Updated dev dependencies.
+- Added the [`eslint-plugin-jsdoc`](https://npm.im/eslint-plugin-jsdoc) dev dependency.
+- Replaced the [`size-limit`](https://npm.im/size-limit) dev dependency with [`@size-limit/preset-small-lib`](https://npm.im/@size-limit/preset-small-lib).
+- Use GitHub Actions instead of Travis for CI.
+- Clarified that Opera Mini isn’t supported in the Browserslist queries and readme “Support” section.
+- Documented polyfills to consider in the readme “Support” section.
+- Updated examples to use [`@apollo/react-hooks`](https://npm.im/@apollo/react-hooks).
+
 ## 11.0.0
 
 ### Major
