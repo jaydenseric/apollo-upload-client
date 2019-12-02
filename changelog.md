@@ -11,6 +11,7 @@
 - Updated dev dependencies.
 - Added the [`eslint-plugin-jsdoc`](https://npm.im/eslint-plugin-jsdoc) dev dependency.
 - Replaced the [`size-limit`](https://npm.im/size-limit) dev dependency with [`@size-limit/preset-small-lib`](https://npm.im/@size-limit/preset-small-lib).
+- Only create a default [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) instance if `signal` is not already set in fetch options, fixing [#162](https://github.com/jaydenseric/apollo-upload-client/issues/162) via [#169](https://github.com/jaydenseric/apollo-upload-client/pull/169).
 - Use GitHub Actions instead of Travis for CI.
 - Clarified that Opera Mini isn’t supported in the Browserslist queries and readme “Support” section.
 - Documented polyfills to consider in the readme “Support” section.

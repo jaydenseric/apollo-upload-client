@@ -169,9 +169,17 @@ exports.createUploadLink = ({
     } else options.body = payload
 
     return new Observable(observer => {
-      // Allow aborting fetch, if supported.
-      const { controller, signal } = createSignalIfSupported()
-      if (controller) options.signal = signal
+      // If no abort controller signal was provided in fetch options, and the
+      // environment supports the AbortController interface, create and use a
+      // default abort controller.
+      let abortController
+      if (!options.signal) {
+        const { controller } = createSignalIfSupported()
+        if (controller) {
+          abortController = controller
+          options.signal = abortController.signal
+        }
+      }
 
       linkFetch(uri, options)
         .then(response => {
@@ -198,8 +206,9 @@ exports.createUploadLink = ({
 
       // Cleanup function.
       return () => {
-        // Abort fetch.
-        if (controller) controller.abort()
+        if (abortController)
+          // Abort fetch.
+          abortController.abort()
       }
     })
   })
