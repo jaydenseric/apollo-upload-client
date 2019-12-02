@@ -79,12 +79,12 @@ function rewriteURIForGET(chosenURI, body) {
  * with the React Native `FormData` implementation, causing network errors.
  * @kind typedef
  * @name ReactNativeFileSubstitute
- * @type {Object}
+ * @type {object}
  * @see [`extract-files` docs](https://github.com/jaydenseric/extract-files#type-reactnativefilesubstitute).
  * @see [React Native `FormData` polyfill source](https://github.com/facebook/react-native/blob/v0.45.1/Libraries/Network/FormData.js#L34).
- * @prop {String} uri Filesystem path.
- * @prop {String} [name] File name.
- * @prop {String} [type] File content type. Some environments (particularly Android) require a valid MIME type; Expo `ImageResult.type` is unreliable as it can be just `image`.
+ * @prop {string} uri Filesystem path.
+ * @prop {string} [name] File name.
+ * @prop {string} [type] File content type. Some environments (particularly Android) require a valid MIME type; Expo `ImageResult.type` is unreliable as it can be just `image`.
  * @example <caption>A camera roll file.</caption>
  * ```js
  * {
@@ -121,9 +121,9 @@ exports.ReactNativeFile = ReactNativeFile
  * GraphQL request `fetch` options.
  * @kind typedef
  * @name FetchOptions
- * @type {Object}
+ * @type {object}
  * @see [Polyfillable fetch options](https://github.github.io/fetch#options).
- * @prop {Object} headers HTTP request headers.
+ * @prop {object} headers HTTP request headers.
  * @prop {string} [credentials] Authentication credentials mode.
  */
 
@@ -134,12 +134,12 @@ exports.ReactNativeFile = ReactNativeFile
  * @see [apollo-link on GitHub](https://github.com/apollographql/apollo-link).
  * @kind function
  * @name createUploadLink
- * @param {Object} options Options.
+ * @param {object} options Options.
  * @param {string} [options.uri=/graphql] GraphQL endpoint URI.
- * @param {function} [options.fetch] [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global.
+ * @param {Function} [options.fetch] [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global.
  * @param {FetchOptions} [options.fetchOptions] `fetch` options; overridden by upload requirements.
  * @param {string} [options.credentials] Overrides `options.fetchOptions.credentials`.
- * @param {Object} [options.headers] Merges with and overrides `options.fetchOptions.headers`.
+ * @param {object} [options.headers] Merges with and overrides `options.fetchOptions.headers`.
  * @param {boolean} [options.includeExtensions=false] Toggles sending `extensions` fields to the GraphQL server.
  * @returns {ApolloLink} A terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads.
  * @example <caption>A basic Apollo Client setup.</caption>
@@ -172,11 +172,26 @@ exports.createUploadLink = ({
   return new ApolloLink(operation => {
     let uri = selectURI(operation, fetchUri)
     const context = operation.getContext()
+
+    // Apollo Engine client awareness:
+    // https://apollographql.com/docs/platform/client-awareness
+
+    const {
+      // From Apollo Client config.
+      clientAwareness: { name, version } = {},
+      headers
+    } = context
+
     const contextConfig = {
       http: context.http,
       options: context.fetchOptions,
       credentials: context.credentials,
-      headers: context.headers
+      headers: {
+        // Client awareness headers are context overridable.
+        ...(name && { 'apollographql-client-name': name }),
+        ...(version && { 'apollographql-client-version': version }),
+        ...headers
+      }
     }
 
     const { options, body } = selectHttpOptionsAndBody(
@@ -227,9 +242,17 @@ exports.createUploadLink = ({
     }
 
     return new Observable(observer => {
-      // Allow aborting fetch, if supported.
-      const { controller, signal } = createSignalIfSupported()
-      if (controller) options.signal = signal
+      // If no abort controller signal was provided in fetch options, and the
+      // environment supports the AbortController interface, create and use a
+      // default abort controller.
+      let abortController
+      if (!options.signal) {
+        const { controller } = createSignalIfSupported()
+        if (controller) {
+          abortController = controller
+          options.signal = abortController.signal
+        }
+      }
 
       linkFetch(uri, options)
         .then(response => {
@@ -256,8 +279,9 @@ exports.createUploadLink = ({
 
       // Cleanup function.
       return () => {
-        // Abort fetch.
-        if (controller) controller.abort()
+        if (abortController)
+          // Abort fetch.
+          abortController.abort()
       }
     })
   })

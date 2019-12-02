@@ -1,10 +1,48 @@
 # apollo-upload-client changelog
 
-## Next
+## 12.0.0
+
+### Major
+
+- Updated Node.js support from v8.5+ to v8.10+, to match what the [`eslint`](https://npm.im/eslint) dev dependency now supports. This is unlikely to be a breaking change for the published package.
 
 ### Patch
 
+- Updated dev dependencies.
+- Added the [`eslint-plugin-jsdoc`](https://npm.im/eslint-plugin-jsdoc) dev dependency.
+- Replaced the [`size-limit`](https://npm.im/size-limit) dev dependency with [`@size-limit/preset-small-lib`](https://npm.im/@size-limit/preset-small-lib).
+- Only create a default [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) instance if `signal` is not already set in fetch options, fixing [#162](https://github.com/jaydenseric/apollo-upload-client/issues/162) via [#169](https://github.com/jaydenseric/apollo-upload-client/pull/169).
+- Use GitHub Actions instead of Travis for CI.
+- Clarified that Opera Mini isn’t supported in the Browserslist queries and readme “Support” section.
+- Documented polyfills to consider in the readme “Support” section.
+- Updated examples to use [`@apollo/react-hooks`](https://npm.im/@apollo/react-hooks).
+
+## 11.0.0
+
+### Major
+
+- Updated Node.js support from v6+ to v8.5+.
+
+### Minor
+
+- Support [Apollo Engine client awareness](https://apollographql.com/docs/platform/client-awareness), via [#143](https://github.com/jaydenseric/apollo-upload-client/pull/143).
+
+### Patch
+
+- Updated dependencies.
+- Ensure Babel helpers are imported and not inlined, using the [`@babel/runtime`](https://npm.im/@babel/runtime) dependency and [`@babel/plugin-transform-runtime`](https://npm.im/@babel/plugin-transform-runtime) dev dependency.
+- Nicer Browserslist syntax for supported Node.js versions.
+
+## 10.0.1
+
+### Patch
+
+- Updated dependencies.
+- Reduced the size of the published `package.json` by moving dev tool config to files. This also prevents editor extensions such as Prettier and ESLint from detecting config and attempting to operate when opening package files installed in `node_modules`.
+- Simplified the `prepublishOnly` script.
 - Add tips for React Native gotchas, via [#135](https://github.com/jaydenseric/apollo-upload-client/pull/135).
+- Updated the package description to mention that the upload link is terminating and clarified in the setup instructions that there can only be 1 terminating Apollo Link, via [#147](https://github.com/jaydenseric/apollo-upload-client/pull/147).
+- Improve setup instructions for Apollo Boost.
 
 ## 10.0.0
 
