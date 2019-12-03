@@ -11,6 +11,7 @@
   "repository": "github:jaydenseric/apollo-upload-client",
   "homepage": "https://github.com/jaydenseric/apollo-upload-client#readme",
   "bugs": "https://github.com/jaydenseric/apollo-upload-client/issues",
+  "funding": "https://github.com/sponsors/jaydenseric",
   "keywords": [
     "graphql",
     "multipart",
