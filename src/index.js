@@ -195,10 +195,10 @@ exports.createUploadLink = ({
       // default abort controller.
       let abortController
       if (!options.signal) {
-        const { controller } = createSignalIfSupported()
+        const { controller, signal } = createSignalIfSupported()
         if (controller) {
           abortController = controller
-          options.signal = abortController.signal
+          if (controller) options.signal = signal
         }
       }
 
