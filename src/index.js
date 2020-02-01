@@ -6,8 +6,12 @@ const {
   fallbackHttpConfig,
   serializeFetchParameter,
   createSignalIfSupported,
-  parseAndCheckHttpResponse
+  parseAndCheckHttpResponse,
+  fromError
 } = require('@apollo/client')
+const {
+  rewriteURIForGET
+} = require('@apollo/client/link/http/rewriteURIForGET')
 const { extractFiles, ReactNativeFile } = require('extract-files')
 
 /**
@@ -99,7 +103,8 @@ exports.createUploadLink = ({
   fetchOptions,
   credentials,
   headers,
-  includeExtensions
+  includeExtensions,
+  useGETForQueries
 } = {}) => {
   const linkConfig = {
     http: { includeExtensions },
@@ -109,7 +114,7 @@ exports.createUploadLink = ({
   }
 
   return new ApolloLink(operation => {
-    const uri = selectURI(operation, fetchUri)
+    let uri = selectURI(operation, fetchUri)
     const context = operation.getContext()
 
     // Apollo Engine client awareness:
@@ -167,7 +172,22 @@ exports.createUploadLink = ({
       })
 
       options.body = form
-    } else options.body = payload
+    } else {
+      // If requested, set method to GET if there are no mutations.
+      const definitionIsMutation = d =>
+        d.kind === 'OperationDefinition' && d.operation === 'mutation'
+      if (
+        useGETForQueries &&
+        !operation.query.definitions.some(definitionIsMutation)
+      )
+        options.method = 'GET'
+
+      if (options.method === 'GET') {
+        const { newURI, parseError } = rewriteURIForGET(uri, body)
+        if (parseError) return fromError(parseError)
+        uri = newURI
+      } else options.body = payload
+    }
 
     return new Observable(observer => {
       // If no abort controller signal was provided in fetch options, and the
