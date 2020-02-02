@@ -196,10 +196,8 @@ exports.createUploadLink = ({
       let abortController
       if (!options.signal) {
         const { controller, signal } = createSignalIfSupported()
-        if (controller) {
-          abortController = controller
-          if (controller) options.signal = signal
-        }
+        abortController = controller
+        if (controller) options.signal = signal
       }
 
       linkFetch(uri, options)
