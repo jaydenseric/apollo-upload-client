@@ -174,11 +174,13 @@ exports.createUploadLink = ({
       options.body = form
     } else {
       // If requested, set method to GET if there are no mutations.
-      const definitionIsMutation = d =>
-        d.kind === 'OperationDefinition' && d.operation === 'mutation'
       if (
         useGETForQueries &&
-        !operation.query.definitions.some(definitionIsMutation)
+        !operation.query.definitions.some(
+          definition =>
+            definition.kind === 'OperationDefinition' &&
+            definition.operation === 'mutation'
+        )
       )
         options.method = 'GET'
 
