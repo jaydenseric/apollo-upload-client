@@ -37,7 +37,7 @@
     "@babel/runtime": "^7.5.4",
     "apollo-link": "^1.2.12",
     "apollo-link-http-common": "^0.2.14",
-    "extract-files": "^5.0.1"
+    "extract-files": "^7.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",

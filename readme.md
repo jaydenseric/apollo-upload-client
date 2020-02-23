@@ -121,6 +121,7 @@ Consider polyfilling:
 
 - [class ReactNativeFile](#class-reactnativefile)
 - [function createUploadLink](#function-createuploadlink)
+- [function defaultAppendFile](#function-defaultappendfile)
 - [type FetchOptions](#type-fetchoptions)
 - [type ReactNativeFileSubstitute](#type-reactnativefilesubstitute)
 
@@ -156,6 +157,9 @@ Creates a terminating [Apollo Link](https://apollographql.com/docs/link) capable
 | :-- | :-- | :-- |
 | `options` | object | Options. |
 | `options.uri` | string? = /graphql | GraphQL endpoint URI. |
+| `options.FormData` | class? | [`FormData`](https://xhr.spec.whatwg.org/#interface-formdata) implementation to use, defaulting to the `FormData` global. |
+| `options.appendFile` | Function? | A function responsible for appending a file to an existing FormData object, defaulting to the exported `defaultAppendFile` function. |
+| `options.isExtractableFile` | Function? | A function to pass to [`extractFiles`](https://github.com/jaydenseric/extract-files#function-isextractablefile) to customize checking if a value is an extractable file. |
 | `options.fetch` | Function? | [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global. |
 | `options.fetchOptions` | [FetchOptions](#type-fetchoptions)? | `fetch` options; overridden by upload requirements. |
 | `options.credentials` | string? | Overrides `options.fetchOptions.credentials`. |
@@ -181,6 +185,31 @@ _A basic Apollo Client setup._
 > const client = new ApolloClient({
 >   cache: new InMemoryCache(),
 >   link: createUploadLink()
+> })
+> ```
+
+---
+
+### function defaultAppendFile
+
+Adds a file to an existing multipart request. By default, simply appends the passed file without any special processing. The `name` property of the `file` object is used as the file name.
+
+| Parameter | Type   | Description                                            |
+| :-------- | :----- | :----------------------------------------------------- |
+| `form`    | object | FormData object to which to append the specified file. |
+| `name`    | string | The name under which the file should be appended.      |
+| `file`    | object | The file to be appended.                               |
+
+**Returns:** void
+
+#### Examples
+
+_Default appendFile function._
+
+> ```js
+> i = 0
+> files.forEach((paths, file) => {
+>   defaultAppendFile(form, ++i, file)
 > })
 > ```
 

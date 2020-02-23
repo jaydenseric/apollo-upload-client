@@ -7,7 +7,11 @@ const {
   createSignalIfSupported,
   parseAndCheckHttpResponse
 } = require('apollo-link-http-common')
-const { extractFiles, ReactNativeFile } = require('extract-files')
+const {
+  extractFiles,
+  isExtractableFile,
+  ReactNativeFile
+} = require('extract-files')
 
 /**
  * A React Native [`File`](https://developer.mozilla.org/docs/web/api/file)
@@ -74,6 +78,9 @@ exports.ReactNativeFile = ReactNativeFile
  * @name createUploadLink
  * @param {object} options Options.
  * @param {string} [options.uri=/graphql] GraphQL endpoint URI.
+ * @param {class} [options.FormData] [`FormData`](https://xhr.spec.whatwg.org/#interface-formdata) implementation to use, defaulting to the `FormData` global.
+ * @param {Function} [options.appendFile] A function responsible for appending a file to an existing FormData object, defaulting to the exported `defaultAppendFile` function.
+ * @param {Function} [options.isExtractableFile] A function to pass to [`extractFiles`](https://github.com/jaydenseric/extract-files#function-isextractablefile) to customize checking if a value is an extractable file.
  * @param {Function} [options.fetch] [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global.
  * @param {FetchOptions} [options.fetchOptions] `fetch` options; overridden by upload requirements.
  * @param {string} [options.credentials] Overrides `options.fetchOptions.credentials`.
@@ -94,7 +101,10 @@ exports.ReactNativeFile = ReactNativeFile
  */
 exports.createUploadLink = ({
   uri: fetchUri = '/graphql',
-  fetch: linkFetch = fetch,
+  FormData: CustomFormData = FormData,
+  appendFile: customAppendFile = defaultAppendFile,
+  isExtractableFile: customIsExtractableFile = isExtractableFile,
+  fetch: customFetch = fetch,
   fetchOptions,
   credentials,
   headers,
@@ -139,7 +149,7 @@ exports.createUploadLink = ({
       contextConfig
     )
 
-    const { clone, files } = extractFiles(body)
+    const { clone, files } = extractFiles(body, '', customIsExtractableFile)
     const payload = serializeFetchParameter(clone, 'Payload')
 
     if (files.size) {
@@ -149,7 +159,7 @@ exports.createUploadLink = ({
       // GraphQL multipart request spec:
       // https://github.com/jaydenseric/graphql-multipart-request-spec
 
-      const form = new FormData()
+      const form = new CustomFormData()
 
       form.append('operations', payload)
 
@@ -162,7 +172,7 @@ exports.createUploadLink = ({
 
       i = 0
       files.forEach((paths, file) => {
-        form.append(++i, file, file.name)
+        customAppendFile(form, ++i, file)
       })
 
       options.body = form
@@ -181,7 +191,7 @@ exports.createUploadLink = ({
         }
       }
 
-      linkFetch(uri, options)
+      customFetch(uri, options)
         .then(response => {
           // Forward the response on the context.
           operation.setContext({ response })
@@ -213,3 +223,24 @@ exports.createUploadLink = ({
     })
   })
 }
+
+/**
+ * Adds a file to an existing multipart request. By default, simply appends the passed file without any special processing. The `name` property of the `file` object is used as the file name.
+ * @kind function
+ * @name defaultAppendFile
+ * @param {object} form FormData object to which to append the specified file.
+ * @param {string} name The name under which the file should be appended.
+ * @param {object} file The file to be appended.
+ * @returns {void}
+ * @example <caption>Default appendFile function.</caption>
+ * ```js
+ * i = 0
+ * files.forEach((paths, file) => {
+ *   defaultAppendFile(form, ++i, file)
+ * })
+ * ```
+ */
+function defaultAppendFile(form, name, file) {
+  form.append(name, file, file.name)
+}
+exports.defaultAppendFile = defaultAppendFile
