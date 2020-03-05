@@ -15,6 +15,7 @@
 - Stop using [`husky`](https://npm.im/husky) and [`lint-staged`](https://npm.im/lint-staged).
 - Ensure GitHub Actions CI runs for pull requests.
 - Use strict mode for scripts.
+- Removed `package-lock.json` from `.gitignore` and `.prettierignore` as it’s disabled in `.npmrc` anyway.
 
 ## 12.1.0
 
