@@ -1,5 +1,22 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Major
+
+- Updated Node.js support from v8.10+ to v10+.
+- Updated dev dependencies, some of which require Node.js v10+.
+
+### Patch
+
+- Updated dependencies.
+- Removed the now redundant [`eslint-plugin-import-order-alphabetical`](https://npm.im/eslint-plugin-import-order-alphabetical) dev dependency.
+- Added a [`size-limit`](https://npm.im/size-limit) dev dependency.
+- Stop using [`husky`](https://npm.im/husky) and [`lint-staged`](https://npm.im/lint-staged).
+- Ensure GitHub Actions CI runs for pull requests.
+- Use strict mode for scripts.
+- Removed `package-lock.json` from `.gitignore` and `.prettierignore` as it’s disabled in `.npmrc` anyway.
+
 ## 12.1.0
 
 ### Minor
