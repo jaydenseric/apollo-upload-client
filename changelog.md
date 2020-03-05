@@ -13,6 +13,7 @@
 - Removed the now redundant [`eslint-plugin-import-order-alphabetical`](https://npm.im/eslint-plugin-import-order-alphabetical) dev dependency.
 - Added a [`size-limit`](https://npm.im/size-limit) dev dependency.
 - Stop using [`husky`](https://npm.im/husky) and [`lint-staged`](https://npm.im/lint-staged).
+- Ensure GitHub Actions CI runs for pull requests.
 - Use strict mode for scripts.
 
 ## 12.1.0
