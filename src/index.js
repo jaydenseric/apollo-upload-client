@@ -1,3 +1,5 @@
+'use strict'
+
 const { ApolloLink, Observable } = require('apollo-link')
 const {
   selectURI,
