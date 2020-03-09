@@ -5,11 +5,10 @@
 ### Major
 
 - Updated Node.js support from v8.10+ to v10+.
-- Updated dev dependencies, some of which require Node.js v10+.
+- Updated dependencies, some of which require Node.js v10+.
 
 ### Patch
 
-- Updated dependencies.
 - Removed the now redundant [`eslint-plugin-import-order-alphabetical`](https://npm.im/eslint-plugin-import-order-alphabetical) dev dependency.
 - Added a [`size-limit`](https://npm.im/size-limit) dev dependency.
 - Stop using [`husky`](https://npm.im/husky) and [`lint-staged`](https://npm.im/lint-staged).
