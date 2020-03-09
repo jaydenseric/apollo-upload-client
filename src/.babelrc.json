@@ -1,0 +1,13 @@
+{
+  "comments": false,
+  "plugins": ["@babel/transform-runtime"],
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "shippedProposals": true,
+        "loose": true
+      }
+    ]
+  ]
+}
