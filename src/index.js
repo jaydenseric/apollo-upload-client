@@ -142,7 +142,7 @@ exports.formDataAppendFile = formDataAppendFile
  * `options.body` to make a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec),
  * otherwise it sends a regular POST request.
  *
- * Some of the options are similar to the [`createHttpLink` options](https://www.apollographql.com/docs/link/links/http/#options).
+ * Some of the options are similar to the [`createHttpLink` options](https://apollographql.com/docs/link/links/http/#options).
  * @see [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec).
  * @see [apollo-link on GitHub](https://github.com/apollographql/apollo-link).
  * @kind function
@@ -193,7 +193,7 @@ exports.createUploadLink = ({
     const context = operation.getContext()
 
     // Apollo Engine client awareness:
-    // https://apollographql.com/docs/platform/client-awareness
+    // https://apollographql.com/docs/graph-manager/client-awareness
 
     const {
       // From Apollo Client config.
