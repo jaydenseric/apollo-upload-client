@@ -7,6 +7,17 @@
 - Updated Node.js support from v8.10+ to v10+.
 - Updated dependencies, some of which require Node.js v10+.
 
+### Minor
+
+- Support uploading files from a server environment, fixing [#172](https://github.com/jaydenseric/apollo-upload-client/issues/172) via [#179](https://github.com/jaydenseric/apollo-upload-client/pull/179).
+  - Added `createUploadLink` options:
+    - `isExtractableFile`
+    - `FormData`
+    - `formDataAppendFile`
+  - Added exports for the new `createUploadLink` option defaults:
+    - `isExtractableFile`
+    - `formDataAppendFile`
+
 ### Patch
 
 - Removed the now redundant [`eslint-plugin-import-order-alphabetical`](https://npm.im/eslint-plugin-import-order-alphabetical) dev dependency.
