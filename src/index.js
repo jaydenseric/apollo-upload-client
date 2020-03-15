@@ -144,7 +144,7 @@ exports.formDataAppendFile = formDataAppendFile
  *
  * Some of the options are similar to the [`createHttpLink` options](https://apollographql.com/docs/link/links/http/#options).
  * @see [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec).
- * @see [apollo-link on GitHub](https://github.com/apollographql/apollo-link).
+ * @see [`apollo-link` on GitHub](https://github.com/apollographql/apollo-link).
  * @kind function
  * @name createUploadLink
  * @param {object} options Options.

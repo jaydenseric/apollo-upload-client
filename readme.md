@@ -42,7 +42,7 @@ const MUTATION = gql`
   }
 `
 
-function UploadFile() {
+function UploadFiles() {
   const [mutate] = useMutation(MUTATION)
 
   function onChange({ target: { validity, files } }) {
@@ -194,7 +194,7 @@ Some of the options are similar to the [`createHttpLink` options](https://apollo
 #### See
 
 - [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec).
-- [apollo-link on GitHub](https://github.com/apollographql/apollo-link).
+- [`apollo-link` on GitHub](https://github.com/apollographql/apollo-link).
 
 #### Examples
 
