@@ -42,10 +42,12 @@ const MUTATION = gql`
   }
 `
 
-const UploadFile = () => {
+function UploadFile() {
   const [mutate] = useMutation(MUTATION)
-  const onChange = ({ target: { validity, files } }) =>
-    validity.valid && mutate({ variables: { files } })
+
+  function onChange({ target: { validity, files } }) {
+    if (validity.valid) mutate({ variables: { files } })
+  }
 
   return <input type="file" multiple required onChange={onChange} />
 }
@@ -65,14 +67,17 @@ const MUTATION = gql`
   }
 `
 
-const UploadFile = () => {
+function UploadFile() {
   const [mutate] = useMutation(MUTATION)
-  const onChange = ({
+
+  function onChange({
     target: {
       validity,
       files: [file]
     }
-  }) => validity.valid && mutate({ variables: { file } })
+  }) {
+    if (validity.valid) mutate({ variables: { file } })
+  }
 
   return <input type="file" required onChange={onChange} />
 }
@@ -81,26 +86,33 @@ const UploadFile = () => {
 ### [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)
 
 ```jsx
+const { useMutation } = require('@apollo/react-hooks')
 const gql = require('graphql-tag')
 
-// Apollo Client instance.
-const client = require('./client')
-
-const file = new Blob(['Foo.'], { type: 'text/plain' })
-
-// Optional, defaults to `blob`.
-file.name = 'bar.txt'
-
-client.mutate({
-  mutation: gql`
-    mutation($file: Upload!) {
-      uploadFile(file: $file) {
-        success
-      }
+const MUTATION = gql`
+  mutation($file: Upload!) {
+    uploadFile(file: $file) {
+      success
     }
-  `,
-  variables: { file }
-})
+  }
+`
+
+function UploadFile() {
+  const [mutate] = useMutation(MUTATION)
+
+  function onChange({ target: { validity, value } }) {
+    if (validity.valid) {
+      const file = new Blob([value], { type: 'text/plain' })
+
+      // Optional, defaults to `blob`.
+      file.name = 'text.txt'
+
+      mutate({ variables: { file } })
+    }
+  }
+
+  return <input type="text" required onChange={onChange} />
+}
 ```
 
 ## Support

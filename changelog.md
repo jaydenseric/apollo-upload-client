@@ -29,6 +29,7 @@
 - Removed `package-lock.json` from `.gitignore` and `.prettierignore` as it’s disabled in `.npmrc` anyway.
 - Updated external documentation link URLs.
 - Replaced “Apollo Engine” with “Apollo Graph Manager” in comments.
+- Improved the examples in the readme.
 
 ## 12.1.0
 
