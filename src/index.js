@@ -192,7 +192,7 @@ exports.createUploadLink = ({
     const uri = selectURI(operation, fetchUri)
     const context = operation.getContext()
 
-    // Apollo Engine client awareness:
+    // Apollo Graph Manager client awareness:
     // https://apollographql.com/docs/graph-manager/client-awareness
 
     const {
