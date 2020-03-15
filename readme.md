@@ -121,17 +121,24 @@ Consider polyfilling:
 
 - [class ReactNativeFile](#class-reactnativefile)
 - [function createUploadLink](#function-createuploadlink)
-- [function defaultAppendFile](#function-defaultappendfile)
+- [function formDataAppendFile](#function-formdataappendfile)
+- [function isExtractableFile](#function-isextractablefile)
+- [type ExtractableFileMatcher](#type-extractablefilematcher)
 - [type FetchOptions](#type-fetchoptions)
+- [type FormDataFileAppender](#type-formdatafileappender)
 - [type ReactNativeFileSubstitute](#type-reactnativefilesubstitute)
 
 ### class ReactNativeFile
 
-Used to mark a [React Native `File` substitute](#type-reactnativefilesubstitute). It’s too risky to assume all objects with `uri`, `type` and `name` properties are files to extract. Re-exported from [`extract-files`](https://npm.im/extract-files) for convenience.
+Used to mark [React Native `File` substitutes](#type-reactnativefilesubstitute) as it’s too risky to assume all objects with `uri`, `type` and `name` properties are extractable files.
 
 | Parameter | Type | Description |
 | :-- | :-- | :-- |
-| `file` | [ReactNativeFileSubstitute](#type-reactnativefilesubstitute) | A React Native [`File`](https://developer.mozilla.org/docs/web/api/file) substitute. |
+| `file` | [ReactNativeFileSubstitute](#type-reactnativefilesubstitute) | A React Native [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) substitute. |
+
+#### See
+
+- [`extract-files` `ReactNativeFile` docs](https://github.com/jaydenseric/extract-files#class-reactnativefile).
 
 #### Examples
 
@@ -151,17 +158,21 @@ _A React Native file that can be used in query or mutation variables._
 
 ### function createUploadLink
 
-Creates a terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads. Options match [`createHttpLink`](https://apollographql.com/docs/link/links/http#options).
+Creates a terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads.
+
+The link matches and extracts files in the GraphQL operation. If there are files it uses a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance as the [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch) `options.body` to make a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec), otherwise it sends a regular POST request.
+
+Some of the options are similar to the [`createHttpLink` options](https://www.apollographql.com/docs/link/links/http/#options).
 
 | Parameter | Type | Description |
 | :-- | :-- | :-- |
 | `options` | object | Options. |
 | `options.uri` | string? = /graphql | GraphQL endpoint URI. |
-| `options.FormData` | class? | [`FormData`](https://xhr.spec.whatwg.org/#interface-formdata) implementation to use, defaulting to the `FormData` global. |
-| `options.appendFile` | Function? | A function responsible for appending a file to an existing FormData object, defaulting to the exported `defaultAppendFile` function. |
-| `options.isExtractableFile` | Function? | A function to pass to [`extractFiles`](https://github.com/jaydenseric/extract-files#function-isextractablefile) to customize checking if a value is an extractable file. |
-| `options.fetch` | Function? | [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the `fetch` global. |
-| `options.fetchOptions` | [FetchOptions](#type-fetchoptions)? | `fetch` options; overridden by upload requirements. |
+| `options.isExtractableFile` | [ExtractableFileMatcher](#type-extractablefilematcher)? = [isExtractableFile](#function-isextractablefile) | Customizes how files are matched in the GraphQL operation for extraction. |
+| `options.FormData` | class? | [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) implementation to use, defaulting to the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) global. |
+| `options.formDataAppendFile` | [FormDataFileAppender](#type-formdatafileappender)? = [formDataAppendFile](#function-formdataappendfile) | Customizes how extracted files are appended to the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance. |
+| `options.fetch` | Function? | [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch) global. |
+| `options.fetchOptions` | [FetchOptions](#type-fetchoptions)? | [`fetch` options](#type-fetchoptions); overridden by upload requirements. |
 | `options.credentials` | string? | Overrides `options.fetchOptions.credentials`. |
 | `options.headers` | object? | Merges with and overrides `options.fetchOptions.headers`. |
 | `options.includeExtensions` | boolean? = `false` | Toggles sending `extensions` fields to the GraphQL server. |
@@ -190,27 +201,64 @@ _A basic Apollo Client setup._
 
 ---
 
-### function defaultAppendFile
+### function formDataAppendFile
 
-Adds a file to an existing multipart request. By default, simply appends the passed file without any special processing. The `name` property of the `file` object is used as the file name.
+The default implementation for [`createUploadLink`](#function-createuploadlink) `options.formDataAppendFile` that uses the standard [`FormData.append`](https://developer.mozilla.org/en-US/docs/Web/API/FormData/append) method.
 
-| Parameter | Type   | Description                                            |
-| :-------- | :----- | :----------------------------------------------------- |
-| `form`    | object | FormData object to which to append the specified file. |
-| `name`    | string | The name under which the file should be appended.      |
-| `file`    | object | The file to be appended.                               |
+**Type:** [FormDataFileAppender](#type-formdatafileappender)
 
-**Returns:** void
+| Parameter | Type | Description |
+| :-- | :-- | :-- |
+| `formData` | FormData | [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to append the specified file to. |
+| `fieldName` | string | Field name for the file. |
+| `file` | \* | File to append. |
+
+---
+
+### function isExtractableFile
+
+The default implementation for [`createUploadLink`](#function-createuploadlink) `options.isExtractableFile`.
+
+**Type:** [ExtractableFileMatcher](#type-extractablefilematcher)
+
+| Parameter | Type | Description     |
+| :-------- | :--- | :-------------- |
+| `value`   | \*   | Value to check. |
+
+**Returns:** boolean — Is the value an extractable file.
+
+#### See
+
+- [`extract-files` `isExtractableFile` docs](https://github.com/jaydenseric/extract-files#function-isextractablefile).
+
+---
+
+### type ExtractableFileMatcher
+
+A function that checks if a value is an extractable file.
+
+**Type:** Function
+
+| Parameter | Type | Description     |
+| :-------- | :--- | :-------------- |
+| `value`   | \*   | Value to check. |
+
+**Returns:** boolean — Is the value an extractable file.
+
+#### See
+
+- [`isExtractableFile`](#function-isextractablefile) has this type.
 
 #### Examples
 
-_Default appendFile function._
+_How to check for the default exactable files, as well as a custom type of file._
 
 > ```js
-> i = 0
-> files.forEach((paths, file) => {
->   defaultAppendFile(form, ++i, file)
-> })
+> const { isExtractableFile } = require('apollo-upload-client')
+>
+> const isExtractableFileEnhanced = value =>
+>   isExtractableFile(value) ||
+>   (typeof CustomFile !== 'undefined' && value instanceof CustomFile)
 > ```
 
 ---
@@ -232,9 +280,26 @@ GraphQL request `fetch` options.
 
 ---
 
+### type FormDataFileAppender
+
+Appends a file extracted from the GraphQL operation to the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance used as the [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch) `options.body` for the [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec).
+
+| Parameter | Type | Description |
+| :-- | :-- | :-- |
+| `formData` | FormData | [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to append the specified file to. |
+| `fieldName` | string | Field name for the file. |
+| `file` | \* | File to append. The file type depends on what the [`ExtractableFileMatcher`](#type-extractablefilematcher) extracts. |
+
+#### See
+
+- [`formDataAppendFile`](#function-formdataappendfile) has this type.
+- [`createUploadLink`](#function-createuploadlink) accepts this type in `options.formDataAppendFile`.
+
+---
+
 ### type ReactNativeFileSubstitute
 
-A React Native [`File`](https://developer.mozilla.org/docs/web/api/file) substitute.
+A React Native [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) substitute.
 
 Be aware that inspecting network requests with Chrome dev tools interferes with the React Native `FormData` implementation, causing network errors.
 
@@ -248,7 +313,7 @@ Be aware that inspecting network requests with Chrome dev tools interferes with 
 
 #### See
 
-- [`extract-files` docs](https://github.com/jaydenseric/extract-files#type-reactnativefilesubstitute).
+- [`extract-files` `ReactNativeFileSubstitute` docs](https://github.com/jaydenseric/extract-files#type-reactnativefilesubstitute).
 - [React Native `FormData` polyfill source](https://github.com/facebook/react-native/blob/v0.45.1/Libraries/Network/FormData.js#L34).
 
 #### Examples
