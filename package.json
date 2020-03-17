@@ -56,11 +56,12 @@
     "graphql": "^14.6.0",
     "jsdoc-md": "^5.0.1",
     "prettier": "^1.18.2",
+    "rimraf": "^3.0.2",
     "size-limit": "^4.3.1"
   },
   "scripts": {
     "prepare": "npm run prepare:clean && npm run prepare:js && npm run prepare:jsdoc && npm run prepare:prettier",
-    "prepare:clean": "rm -rf lib",
+    "prepare:clean": "rimraf lib",
     "prepare:js": "babel src -d lib",
     "prepare:jsdoc": "jsdoc-md",
     "prepare:prettier": "prettier 'lib/**/*.js' readme.md --write",
