@@ -31,8 +31,8 @@ See also the [example API and client](https://github.com/jaydenseric/apollo-uplo
 ### [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList)
 
 ```jsx
-const { useMutation } = require('@apollo/react-hooks')
-const gql = require('graphql-tag')
+const { useMutation } = require('@apollo/react-hooks');
+const gql = require('graphql-tag');
 
 const MUTATION = gql`
   mutation($files: [Upload!]!) {
@@ -40,24 +40,24 @@ const MUTATION = gql`
       success
     }
   }
-`
+`;
 
 function UploadFiles() {
-  const [mutate] = useMutation(MUTATION)
+  const [mutate] = useMutation(MUTATION);
 
   function onChange({ target: { validity, files } }) {
-    if (validity.valid) mutate({ variables: { files } })
+    if (validity.valid) mutate({ variables: { files } });
   }
 
-  return <input type="file" multiple required onChange={onChange} />
+  return <input type="file" multiple required onChange={onChange} />;
 }
 ```
 
 ### [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File)
 
 ```jsx
-const { useMutation } = require('@apollo/react-hooks')
-const gql = require('graphql-tag')
+const { useMutation } = require('@apollo/react-hooks');
+const gql = require('graphql-tag');
 
 const MUTATION = gql`
   mutation($file: Upload!) {
@@ -65,10 +65,10 @@ const MUTATION = gql`
       success
     }
   }
-`
+`;
 
 function UploadFile() {
-  const [mutate] = useMutation(MUTATION)
+  const [mutate] = useMutation(MUTATION);
 
   function onChange({
     target: {
@@ -76,18 +76,18 @@ function UploadFile() {
       files: [file],
     },
   }) {
-    if (validity.valid) mutate({ variables: { file } })
+    if (validity.valid) mutate({ variables: { file } });
   }
 
-  return <input type="file" required onChange={onChange} />
+  return <input type="file" required onChange={onChange} />;
 }
 ```
 
 ### [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)
 
 ```jsx
-const { useMutation } = require('@apollo/react-hooks')
-const gql = require('graphql-tag')
+const { useMutation } = require('@apollo/react-hooks');
+const gql = require('graphql-tag');
 
 const MUTATION = gql`
   mutation($file: Upload!) {
@@ -95,23 +95,23 @@ const MUTATION = gql`
       success
     }
   }
-`
+`;
 
 function UploadFile() {
-  const [mutate] = useMutation(MUTATION)
+  const [mutate] = useMutation(MUTATION);
 
   function onChange({ target: { validity, value } }) {
     if (validity.valid) {
-      const file = new Blob([value], { type: 'text/plain' })
+      const file = new Blob([value], { type: 'text/plain' });
 
       // Optional, defaults to `blob`.
-      file.name = 'text.txt'
+      file.name = 'text.txt';
 
-      mutate({ variables: { file } })
+      mutate({ variables: { file } });
     }
   }
 
-  return <input type="text" required onChange={onChange} />
+  return <input type="text" required onChange={onChange} />;
 }
 ```
 
@@ -157,13 +157,13 @@ Used to mark [React Native `File` substitutes](#type-reactnativefilesubstitute) 
 _A React Native file that can be used in query or mutation variables._
 
 > ```js
-> const { ReactNativeFile } = require('apollo-upload-client')
+> const { ReactNativeFile } = require('apollo-upload-client');
 >
 > const file = new ReactNativeFile({
 >   uri: uriFromCameraRoll,
 >   name: 'a.jpg',
 >   type: 'image/jpeg',
-> })
+> });
 > ```
 
 ---
@@ -201,14 +201,14 @@ Some of the options are similar to the [`createHttpLink` options](https://apollo
 _A basic Apollo Client setup._
 
 > ```js
-> const { ApolloClient } = require('apollo-client')
-> const { InMemoryCache } = require('apollo-cache-inmemory')
-> const { createUploadLink } = require('apollo-upload-client')
+> const { ApolloClient } = require('apollo-client');
+> const { InMemoryCache } = require('apollo-cache-inmemory');
+> const { createUploadLink } = require('apollo-upload-client');
 >
 > const client = new ApolloClient({
 >   cache: new InMemoryCache(),
 >   link: createUploadLink(),
-> })
+> });
 > ```
 
 ---
@@ -266,11 +266,11 @@ A function that checks if a value is an extractable file.
 _How to check for the default exactable files, as well as a custom type of file._
 
 > ```js
-> const { isExtractableFile } = require('apollo-upload-client')
+> const { isExtractableFile } = require('apollo-upload-client');
 >
 > const isExtractableFileEnhanced = (value) =>
 >   isExtractableFile(value) ||
->   (typeof CustomFile !== 'undefined' && value instanceof CustomFile)
+>   (typeof CustomFile !== 'undefined' && value instanceof CustomFile);
 > ```
 
 ---

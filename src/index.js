@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const { ApolloLink, Observable } = require('apollo-link')
+const { ApolloLink, Observable } = require('apollo-link');
 const {
   selectURI,
   selectHttpOptionsAndBody,
@@ -8,12 +8,12 @@ const {
   serializeFetchParameter,
   createSignalIfSupported,
   parseAndCheckHttpResponse,
-} = require('apollo-link-http-common')
+} = require('apollo-link-http-common');
 const {
   extractFiles,
   isExtractableFile,
   ReactNativeFile,
-} = require('extract-files')
+} = require('extract-files');
 
 /**
  * A React Native [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File)
@@ -58,7 +58,7 @@ const {
  * })
  * ```
  */
-exports.ReactNativeFile = ReactNativeFile
+exports.ReactNativeFile = ReactNativeFile;
 
 /**
  * GraphQL request `fetch` options.
@@ -98,7 +98,7 @@ exports.ReactNativeFile = ReactNativeFile
  * @returns {boolean} Is the value an extractable file.
  * @see [`extract-files` `isExtractableFile` docs](https://github.com/jaydenseric/extract-files#function-isextractablefile).
  */
-exports.isExtractableFile = isExtractableFile
+exports.isExtractableFile = isExtractableFile;
 
 /**
  * Appends a file extracted from the GraphQL operation to the
@@ -127,10 +127,10 @@ exports.isExtractableFile = isExtractableFile
  * @param {*} file File to append.
  */
 function formDataAppendFile(formData, fieldName, file) {
-  formData.append(fieldName, file, file.name)
+  formData.append(fieldName, file, file.name);
 }
 
-exports.formDataAppendFile = formDataAppendFile
+exports.formDataAppendFile = formDataAppendFile;
 
 /**
  * Creates a terminating [Apollo Link](https://apollographql.com/docs/link)
@@ -186,11 +186,11 @@ exports.createUploadLink = ({
     options: fetchOptions,
     credentials,
     headers,
-  }
+  };
 
   return new ApolloLink((operation) => {
-    const uri = selectURI(operation, fetchUri)
-    const context = operation.getContext()
+    const uri = selectURI(operation, fetchUri);
+    const context = operation.getContext();
 
     // Apollo Graph Manager client awareness:
     // https://apollographql.com/docs/graph-manager/client-awareness
@@ -199,7 +199,7 @@ exports.createUploadLink = ({
       // From Apollo Client config.
       clientAwareness: { name, version } = {},
       headers,
-    } = context
+    } = context;
 
     const contextConfig = {
       http: context.http,
@@ -211,90 +211,90 @@ exports.createUploadLink = ({
         ...(version && { 'apollographql-client-version': version }),
         ...headers,
       },
-    }
+    };
 
     const { options, body } = selectHttpOptionsAndBody(
       operation,
       fallbackHttpConfig,
       linkConfig,
       contextConfig
-    )
+    );
 
-    const { clone, files } = extractFiles(body, '', customIsExtractableFile)
-    const payload = serializeFetchParameter(clone, 'Payload')
+    const { clone, files } = extractFiles(body, '', customIsExtractableFile);
+    const payload = serializeFetchParameter(clone, 'Payload');
 
     if (files.size) {
       // Automatically set by fetch when the body is a FormData instance.
-      delete options.headers['content-type']
+      delete options.headers['content-type'];
 
       // GraphQL multipart request spec:
       // https://github.com/jaydenseric/graphql-multipart-request-spec
 
-      const RuntimeFormData = CustomFormData || FormData
+      const RuntimeFormData = CustomFormData || FormData;
 
-      const form = new RuntimeFormData()
+      const form = new RuntimeFormData();
 
-      form.append('operations', payload)
+      form.append('operations', payload);
 
-      const map = {}
-      let i = 0
+      const map = {};
+      let i = 0;
       files.forEach((paths) => {
-        map[++i] = paths
-      })
-      form.append('map', JSON.stringify(map))
+        map[++i] = paths;
+      });
+      form.append('map', JSON.stringify(map));
 
-      i = 0
+      i = 0;
       files.forEach((paths, file) => {
-        customFormDataAppendFile(form, ++i, file)
-      })
+        customFormDataAppendFile(form, ++i, file);
+      });
 
-      options.body = form
-    } else options.body = payload
+      options.body = form;
+    } else options.body = payload;
 
     return new Observable((observer) => {
       // If no abort controller signal was provided in fetch options, and the
       // environment supports the AbortController interface, create and use a
       // default abort controller.
-      let abortController
+      let abortController;
       if (!options.signal) {
-        const { controller } = createSignalIfSupported()
+        const { controller } = createSignalIfSupported();
         if (controller) {
-          abortController = controller
-          options.signal = abortController.signal
+          abortController = controller;
+          options.signal = abortController.signal;
         }
       }
 
-      const runtimeFetch = customFetch || fetch
+      const runtimeFetch = customFetch || fetch;
 
       runtimeFetch(uri, options)
         .then((response) => {
           // Forward the response on the context.
-          operation.setContext({ response })
-          return response
+          operation.setContext({ response });
+          return response;
         })
         .then(parseAndCheckHttpResponse(operation))
         .then((result) => {
-          observer.next(result)
-          observer.complete()
+          observer.next(result);
+          observer.complete();
         })
         .catch((error) => {
           if (error.name === 'AbortError')
             // Fetch was aborted.
-            return
+            return;
 
           if (error.result && error.result.errors && error.result.data)
             // There is a GraphQL result to forward.
-            observer.next(error.result)
+            observer.next(error.result);
 
-          observer.error(error)
-        })
+          observer.error(error);
+        });
 
       // Cleanup function.
       return () => {
         if (abortController)
           // Abort fetch.
-          abortController.abort()
-      }
-    })
-  })
-}
+          abortController.abort();
+      };
+    });
+  });
+};

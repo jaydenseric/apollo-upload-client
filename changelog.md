@@ -27,6 +27,7 @@
 - Use strict mode for scripts.
 - Move Babel config from `babel.config.js` to `src/.babelrc.json`.
 - Improved the package `prepare:prettier` and `test:prettier` scripts.
+- Configured Prettier option `semi` to the default, `true`.
 - Removed `package-lock.json` from `.gitignore` and `.prettierignore` as it’s disabled in `.npmrc` anyway.
 - Updated external documentation link URLs.
 - Replaced “Apollo Engine” with “Apollo Graph Manager” in comments.
