@@ -173,9 +173,9 @@ exports.formDataAppendFile = formDataAppendFile
 exports.createUploadLink = ({
   uri: fetchUri = '/graphql',
   isExtractableFile: customIsExtractableFile = isExtractableFile,
-  FormData: CustomFormData = FormData,
+  FormData: CustomFormData,
   formDataAppendFile: customFormDataAppendFile = formDataAppendFile,
-  fetch: customFetch = fetch,
+  fetch: customFetch,
   fetchOptions,
   credentials,
   headers,
@@ -230,7 +230,9 @@ exports.createUploadLink = ({
       // GraphQL multipart request spec:
       // https://github.com/jaydenseric/graphql-multipart-request-spec
 
-      const form = new CustomFormData()
+      const RuntimeFormData = CustomFormData || FormData
+
+      const form = new RuntimeFormData()
 
       form.append('operations', payload)
 
@@ -262,7 +264,9 @@ exports.createUploadLink = ({
         }
       }
 
-      customFetch(uri, options)
+      const runtimeFetch = customFetch || fetch
+
+      runtimeFetch(uri, options)
         .then(response => {
           // Forward the response on the context.
           operation.setContext({ response })
