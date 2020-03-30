@@ -63,10 +63,10 @@
     "prepare:clean": "rm -rf lib",
     "prepare:js": "babel src -d lib",
     "prepare:jsdoc": "jsdoc-md",
-    "prepare:prettier": "prettier 'lib/**/*.js' readme.md --write",
+    "prepare:prettier": "prettier --write lib readme.md",
     "test": "npm run test:eslint && npm run test:prettier && npm run test:size",
     "test:eslint": "eslint .",
-    "test:prettier": "prettier '**/*.{json,yml,md}' -l",
+    "test:prettier": "prettier -c .",
     "test:size": "size-limit",
     "prepublishOnly": "npm test"
   }

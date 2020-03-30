@@ -26,6 +26,7 @@
 - Ensure GitHub Actions CI runs for pull requests.
 - Use strict mode for scripts.
 - Move Babel config from `babel.config.js` to `src/.babelrc.json`.
+- Improved the package `prepare:prettier` and `test:prettier` scripts.
 - Removed `package-lock.json` from `.gitignore` and `.prettierignore` as it’s disabled in `.npmrc` anyway.
 - Updated external documentation link URLs.
 - Replaced “Apollo Engine” with “Apollo Graph Manager” in comments.
