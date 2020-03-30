@@ -7,12 +7,12 @@ const {
   fallbackHttpConfig,
   serializeFetchParameter,
   createSignalIfSupported,
-  parseAndCheckHttpResponse
+  parseAndCheckHttpResponse,
 } = require('apollo-link-http-common')
 const {
   extractFiles,
   isExtractableFile,
-  ReactNativeFile
+  ReactNativeFile,
 } = require('extract-files')
 
 /**
@@ -179,16 +179,16 @@ exports.createUploadLink = ({
   fetchOptions,
   credentials,
   headers,
-  includeExtensions
+  includeExtensions,
 } = {}) => {
   const linkConfig = {
     http: { includeExtensions },
     options: fetchOptions,
     credentials,
-    headers
+    headers,
   }
 
-  return new ApolloLink(operation => {
+  return new ApolloLink((operation) => {
     const uri = selectURI(operation, fetchUri)
     const context = operation.getContext()
 
@@ -198,7 +198,7 @@ exports.createUploadLink = ({
     const {
       // From Apollo Client config.
       clientAwareness: { name, version } = {},
-      headers
+      headers,
     } = context
 
     const contextConfig = {
@@ -209,8 +209,8 @@ exports.createUploadLink = ({
         // Client awareness headers are context overridable.
         ...(name && { 'apollographql-client-name': name }),
         ...(version && { 'apollographql-client-version': version }),
-        ...headers
-      }
+        ...headers,
+      },
     }
 
     const { options, body } = selectHttpOptionsAndBody(
@@ -238,7 +238,7 @@ exports.createUploadLink = ({
 
       const map = {}
       let i = 0
-      files.forEach(paths => {
+      files.forEach((paths) => {
         map[++i] = paths
       })
       form.append('map', JSON.stringify(map))
@@ -251,7 +251,7 @@ exports.createUploadLink = ({
       options.body = form
     } else options.body = payload
 
-    return new Observable(observer => {
+    return new Observable((observer) => {
       // If no abort controller signal was provided in fetch options, and the
       // environment supports the AbortController interface, create and use a
       // default abort controller.
@@ -267,17 +267,17 @@ exports.createUploadLink = ({
       const runtimeFetch = customFetch || fetch
 
       runtimeFetch(uri, options)
-        .then(response => {
+        .then((response) => {
           // Forward the response on the context.
           operation.setContext({ response })
           return response
         })
         .then(parseAndCheckHttpResponse(operation))
-        .then(result => {
+        .then((result) => {
           observer.next(result)
           observer.complete()
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.name === 'AbortError')
             // Fetch was aborted.
             return

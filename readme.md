@@ -73,8 +73,8 @@ function UploadFile() {
   function onChange({
     target: {
       validity,
-      files: [file]
-    }
+      files: [file],
+    },
   }) {
     if (validity.valid) mutate({ variables: { file } })
   }
@@ -162,7 +162,7 @@ _A React Native file that can be used in query or mutation variables._
 > const file = new ReactNativeFile({
 >   uri: uriFromCameraRoll,
 >   name: 'a.jpg',
->   type: 'image/jpeg'
+>   type: 'image/jpeg',
 > })
 > ```
 
@@ -207,7 +207,7 @@ _A basic Apollo Client setup._
 >
 > const client = new ApolloClient({
 >   cache: new InMemoryCache(),
->   link: createUploadLink()
+>   link: createUploadLink(),
 > })
 > ```
 
@@ -268,7 +268,7 @@ _How to check for the default exactable files, as well as a custom type of file.
 > ```js
 > const { isExtractableFile } = require('apollo-upload-client')
 >
-> const isExtractableFileEnhanced = value =>
+> const isExtractableFileEnhanced = (value) =>
 >   isExtractableFile(value) ||
 >   (typeof CustomFile !== 'undefined' && value instanceof CustomFile)
 > ```
