@@ -9,7 +9,7 @@
 
 ### Minor
 
-- Support uploading files from a server environment, fixing [#172](https://github.com/jaydenseric/apollo-upload-client/issues/172) via [#179](https://github.com/jaydenseric/apollo-upload-client/pull/179).
+- Support uploading files from a server environment, fixing [#172](https://github.com/jaydenseric/apollo-upload-client/issues/172) via [#179](https://github.com/jaydenseric/apollo-upload-client/pull/179) and [#184](https://github.com/jaydenseric/apollo-upload-client/pull/184).
   - Added `createUploadLink` options:
     - `isExtractableFile`
     - `FormData`
