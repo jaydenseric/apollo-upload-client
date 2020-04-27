@@ -1,6 +1,6 @@
 {
   "name": "apollo-upload-client",
-  "version": "12.1.0",
+  "version": "13.0.0",
   "description": "A terminating Apollo Link for Apollo Client that allows FileList, File, Blob or ReactNativeFile instances within query or mutation variables and sends GraphQL multipart requests.",
   "license": "MIT",
   "author": {
@@ -30,46 +30,44 @@
   "main": "lib",
   "sideEffects": false,
   "engines": {
-    "node": ">=8.10"
+    "node": ">=10"
   },
-  "browserslist": "Node >= 8.10, > 0.5%, not OperaMini all, not dead",
-  "peerDependencies": {
-    "@apollo/client": "^3.0.0"
-  },
+  "browserslist": "Node >= 10, > 0.5%, not OperaMini all, not dead",
   "dependencies": {
-    "@babel/runtime": "^7.5.4",
-    "extract-files": "^5.0.1"
+    "@babel/runtime": "^7.9.2",
+    "extract-files": "^8.0.0"
   },
+  "peerDependencies: {
+    "@apollo/client": "^3.0.0-beta.31"
+  }
   "devDependencies": {
-    "@apollo/client": "^3.0.0-beta.31",
-    "@babel/cli": "^7.5.0",
-    "@babel/core": "^7.5.4",
-    "@babel/plugin-transform-runtime": "^7.5.0",
-    "@babel/preset-env": "^7.5.4",
-    "@size-limit/preset-small-lib": "^2.2.1",
-    "babel-eslint": "^10.0.2",
-    "eslint": "^6.0.1",
-    "eslint-config-env": "^11.0.1",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-import": "^2.18.0",
-    "eslint-plugin-import-order-alphabetical": "^1.0.0",
-    "eslint-plugin-jsdoc": "^18.1.5",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "husky": "^3.0.0",
-    "jsdoc-md": "^4.0.1",
-    "lint-staged": "^9.1.0",
-    "prettier": "^1.18.2"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@size-limit/preset-small-lib": "^4.4.2",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-env": "^13.0.4",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsdoc": "^22.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "graphql": "^14.6.0",
+    "jsdoc-md": "^5.0.1",
+    "prettier": "^2.0.2",
+    "size-limit": "^4.4.2"
   },
   "scripts": {
     "prepare": "npm run prepare:clean && npm run prepare:js && npm run prepare:jsdoc && npm run prepare:prettier",
     "prepare:clean": "rm -rf lib",
     "prepare:js": "babel src -d lib",
     "prepare:jsdoc": "jsdoc-md",
-    "prepare:prettier": "prettier 'lib/**/*.js' readme.md --write",
+    "prepare:prettier": "prettier --write lib readme.md",
     "test": "npm run test:eslint && npm run test:prettier && npm run test:size",
     "test:eslint": "eslint .",
-    "test:prettier": "prettier '**/*.{json,yml,md}' -l",
+    "test:prettier": "prettier -c .",
     "test:size": "size-limit",
     "prepublishOnly": "npm test"
   }
