@@ -8,11 +8,11 @@ const {
   serializeFetchParameter,
   createSignalIfSupported,
   parseAndCheckHttpResponse,
-  fromError
-} = require('@apollo/client')
+  fromError,
+} = require('@apollo/client');
 const {
-  rewriteURIForGET
-} = require('@apollo/client/link/http/rewriteURIForGET')
+  rewriteURIForGET,
+} = require('@apollo/client/link/http/rewriteURIForGET');
 const {
   extractFiles,
   isExtractableFile,
@@ -183,7 +183,7 @@ exports.createUploadLink = ({
   credentials,
   headers,
   includeExtensions,
-  useGETForQueries
+  useGETForQueries,
 } = {}) => {
   const linkConfig = {
     http: { includeExtensions },
@@ -192,9 +192,9 @@ exports.createUploadLink = ({
     headers,
   };
 
-  return new ApolloLink(operation => {
-    let uri = selectURI(operation, fetchUri)
-    const context = operation.getContext()
+  return new ApolloLink((operation) => {
+    let uri = selectURI(operation, fetchUri);
+    const context = operation.getContext();
 
     // Apollo Graph Manager client awareness:
     // https://apollographql.com/docs/graph-manager/client-awareness
@@ -252,24 +252,24 @@ exports.createUploadLink = ({
         customFormDataAppendFile(form, ++i, file);
       });
 
-      options.body = form
+      options.body = form;
     } else {
       // If requested, set method to GET if there are no mutations.
       if (
         useGETForQueries &&
         !operation.query.definitions.some(
-          definition =>
+          (definition) =>
             definition.kind === 'OperationDefinition' &&
             definition.operation === 'mutation'
         )
       )
-        options.method = 'GET'
+        options.method = 'GET';
 
       if (options.method === 'GET') {
-        const { newURI, parseError } = rewriteURIForGET(uri, body)
-        if (parseError) return fromError(parseError)
-        uri = newURI
-      } else options.body = payload
+        const { newURI, parseError } = rewriteURIForGET(uri, body);
+        if (parseError) return fromError(parseError);
+        uri = newURI;
+      } else options.body = payload;
     }
 
     return new Observable((observer) => {
