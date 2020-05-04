@@ -311,9 +311,10 @@ Appends a file extracted from the GraphQL operation to the [`FormData`](https://
 
 ### type ReactNativeFileSubstitute
 
-A React Native [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) substitute.
+A React Native [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) substitute. Be aware that inspecting network requests with dev tools (eg: Chrome DevTools, Flipper ) interferes with the React Native `FormData` implementation, causing network errors. Note: [React Native 0.12](https://github.com/facebook/react-native/releases/tag/v0.62.0) or [later](https://github.com/facebook/react-native/releases) Edit `android/app/src/debug/java/com/[APP Name]/app/drivers/ReactNativeFlipper.java`
 
-Be aware that inspecting network requests with Chrome dev tools interferes with the React Native `FormData` implementation, causing network errors.
+     // Comment this line:
+     builder.addNetworkInterceptor(new FlipperOkhttpInterceptor(networkFlipperPlugin));
 
 **Type:** object
 
