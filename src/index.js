@@ -9,10 +9,8 @@ const {
   createSignalIfSupported,
   parseAndCheckHttpResponse,
   fromError,
-} = require('@apollo/client');
-const {
   rewriteURIForGET,
-} = require('@apollo/client/link/http/rewriteURIForGET');
+} = require('@apollo/client');
 const {
   extractFiles,
   isExtractableFile,
