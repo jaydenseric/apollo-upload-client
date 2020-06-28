@@ -2,6 +2,11 @@
 
 ## Next
 
+### Major
+
+- Updated Node.js support to `^10.17.0 || ^12.0.0 || >= 13.7.0`.
+- Updated dependencies, some of which (only dev dependencies) require newer Node.js versions than previously supported.
+
 ### Patch
 
 - Added the [`graphql`](https://npm.im/graphql) peer dependency to support a wider range of package managers, via [#196](https://github.com/jaydenseric/apollo-upload-client/pull/196).

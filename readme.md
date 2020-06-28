@@ -117,7 +117,7 @@ function UploadFile() {
 
 ## Support
 
-- Node.js v10+
+- Node.js `^10.17.0 || ^12.0.0 || >= 13.7.0`
 - Browsers [`> 0.5%, not OperaMini all, not dead`](https://browserl.ist/?q=%3E+0.5%25%2C+not+OperaMini+all%2C+not+dead)
 - React Native
 
