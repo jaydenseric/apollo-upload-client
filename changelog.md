@@ -5,6 +5,7 @@
 ### Patch
 
 - Added the [`graphql`](https://npm.im/graphql) peer dependency to support a wider range of package managers, via [#196](https://github.com/jaydenseric/apollo-upload-client/pull/196).
+- Removed Node.js v13 and added v14 to the versions tested in GitHub Actions.
 
 ## 13.0.0
 
