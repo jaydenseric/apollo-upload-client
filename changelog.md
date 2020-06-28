@@ -13,6 +13,7 @@
 - Removed Node.js v13 and added v14 to the versions tested in GitHub Actions.
 - Prettier code examples in source JSDoc.
 - Improved the type `ReactNativeFileSubstitute` code example.
+- Updated EditorConfig.
 
 ## 13.0.0
 
