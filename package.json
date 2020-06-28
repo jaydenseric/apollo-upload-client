@@ -33,14 +33,14 @@
     "node": ">=10"
   },
   "browserslist": "Node >= 10, > 0.5%, not OperaMini all, not dead",
+  "peerDependencies": {
+    "graphql": "^0.11.3 || ^0.12.3 || ^0.13.0 || ^14.0.0 || ^15.0.0"
+  },
   "dependencies": {
     "@babel/runtime": "^7.9.2",
     "apollo-link": "^1.2.12",
     "apollo-link-http-common": "^0.2.14",
     "extract-files": "^8.0.0"
-  },
-  "peerDependencies": {
-    "graphql": "^0.11.3 || ^0.12.3 || ^0.13.0 || ^14.0.0 || ^15.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
