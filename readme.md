@@ -333,9 +333,9 @@ Be aware that inspecting network requests with Chrome dev tools interferes with 
 _A camera roll file._
 
 > ```js
-> {
+> const fileSubstitute = {
 >   uri: uriFromCameraRoll,
 >   name: 'a.jpg',
->   type: 'image/jpeg'
-> }
+>   type: 'image/jpeg',
+> };
 > ```

@@ -31,11 +31,11 @@ const {
  * @prop {string} [type] File content type. Some environments (particularly Android) require a valid MIME type; Expo `ImageResult.type` is unreliable as it can be just `image`.
  * @example <caption>A camera roll file.</caption>
  * ```js
- * {
+ * const fileSubstitute = {
  *   uri: uriFromCameraRoll,
  *   name: 'a.jpg',
- *   type: 'image/jpeg'
- * }
+ *   type: 'image/jpeg',
+ * };
  * ```
  */
 
@@ -49,13 +49,13 @@ const {
  * @see [`extract-files` `ReactNativeFile` docs](https://github.com/jaydenseric/extract-files#class-reactnativefile).
  * @example <caption>A React Native file that can be used in query or mutation variables.</caption>
  * ```js
- * const { ReactNativeFile } = require('apollo-upload-client')
+ * const { ReactNativeFile } = require('apollo-upload-client');
  *
  * const file = new ReactNativeFile({
  *   uri: uriFromCameraRoll,
  *   name: 'a.jpg',
- *   type: 'image/jpeg'
- * })
+ *   type: 'image/jpeg',
+ * });
  * ```
  */
 exports.ReactNativeFile = ReactNativeFile;
@@ -80,11 +80,11 @@ exports.ReactNativeFile = ReactNativeFile;
  * @see [`isExtractableFile`]{@link isExtractableFile} has this type.
  * @example <caption>How to check for the default exactable files, as well as a custom type of file.</caption>
  * ```js
- * const { isExtractableFile } = require('apollo-upload-client')
+ * const { isExtractableFile } = require('apollo-upload-client');
  *
- * const isExtractableFileEnhanced = value =>
+ * const isExtractableFileEnhanced = (value) =>
  *   isExtractableFile(value) ||
- *   (typeof CustomFile !== 'undefined' && value instanceof CustomFile)
+ *   (typeof CustomFile !== 'undefined' && value instanceof CustomFile);
  * ```
  */
 
@@ -160,14 +160,14 @@ exports.formDataAppendFile = formDataAppendFile;
  * @returns {ApolloLink} A terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads.
  * @example <caption>A basic Apollo Client setup.</caption>
  * ```js
- * const { ApolloClient } = require('apollo-client')
- * const { InMemoryCache } = require('apollo-cache-inmemory')
- * const { createUploadLink } = require('apollo-upload-client')
+ * const { ApolloClient } = require('apollo-client');
+ * const { InMemoryCache } = require('apollo-cache-inmemory');
+ * const { createUploadLink } = require('apollo-upload-client');
  *
  * const client = new ApolloClient({
  *   cache: new InMemoryCache(),
- *   link: createUploadLink()
- * })
+ *   link: createUploadLink(),
+ * });
  * ```
  */
 exports.createUploadLink = ({
