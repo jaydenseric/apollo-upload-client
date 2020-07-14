@@ -6,6 +6,7 @@
 
 - Updated Node.js support to `^10.17.0 || ^12.0.0 || >= 13.7.0`.
 - Updated dependencies, some of which (only dev dependencies) require newer Node.js versions than previously supported.
+- Support [`@apollo/client`](https://npm.im/@apollo/client) v3, fixing [#174](https://github.com/jaydenseric/apollo-upload-client/issues/174) via [#175](https://github.com/jaydenseric/apollo-upload-client/pull/175/files).
 
 ### Patch
 
