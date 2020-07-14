@@ -14,7 +14,7 @@ Install with [npm](https://npmjs.com):
 npm install apollo-upload-client
 ```
 
-[Apollo Client](https://www.apollographql.com/docs/react/) can only have 1 [terminating link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link) that sends the GraphQL requests; if one such as [`apollo-link-http`](https://apollographql.com/docs/link/links/http) is already setup, remove it.
+[Apollo Client](https://www.apollographql.com/docs/react/) can only have 1 [terminating link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link) that sends the GraphQL requests; if one such as `HttpLink` is already setup, remove it. Instead of adding the options `uri`, `headers` and `credentials` in the `ApolloClient` constructor, do so in [`createUploadLink`](#function-createuploadlink).
 
 Initialize the client with a terminating link using [`createUploadLink`](#function-createuploadlink).
 
