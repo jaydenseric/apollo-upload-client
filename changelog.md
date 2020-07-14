@@ -1,5 +1,11 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Patch
+
+- Improved the documentation about gotchas when inspecting network requests in React Native, via [#193](https://github.com/jaydenseric/apollo-upload-client/pull/193).
+
 ## 13.0.0
 
 ### Major
