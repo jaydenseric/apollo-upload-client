@@ -311,10 +311,9 @@ Appends a file extracted from the GraphQL operation to the [`FormData`](https://
 
 ### type ReactNativeFileSubstitute
 
-A React Native [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) substitute. Be aware that inspecting network requests with dev tools (eg: Chrome DevTools, Flipper ) interferes with the React Native `FormData` implementation, causing network errors. Note: [React Native 0.12](https://github.com/facebook/react-native/releases/tag/v0.62.0) or [later](https://github.com/facebook/react-native/releases) Edit `android/app/src/debug/java/com/[APP Name]/app/drivers/ReactNativeFlipper.java`
+A React Native [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) substitute.
 
-     // Comment this line:
-     builder.addNetworkInterceptor(new FlipperOkhttpInterceptor(networkFlipperPlugin));
+Be aware that inspecting network traffic with buggy versions of dev tools such as [Flipper](https://fbflipper.com) can interfere with the React Native `FormData` implementation, causing multipart requests to have network errors.
 
 **Type:** object
 
@@ -335,8 +334,8 @@ _A camera roll file._
 
 > ```js
 > {
->   uri: uriFromCameraRoll,
->   name: 'a.jpg',
->   type: 'image/jpeg'
+> uri: uriFromCameraRoll,
+> name: 'a.jpg',
+> type: 'image/jpeg'
 > }
 > ```
