@@ -55,6 +55,7 @@
     "graphql": "^14.6.0",
     "jsdoc-md": "^5.0.1",
     "prettier": "^2.0.2",
+    "react": "^16.13.1",
     "size-limit": "^4.4.2"
   },
   "scripts": {
