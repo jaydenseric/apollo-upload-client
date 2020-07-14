@@ -34,7 +34,9 @@
   },
   "browserslist": "Node 10.17 - 11 and Node < 11, Node 12 - 13 and Node < 13, Node >= 13.7, > 0.5%, not OperaMini all, not dead",
   "peerDependencies": {
-    "graphql": "^0.11.3 || ^0.12.3 || ^0.13.0 || ^14.0.0 || ^15.0.0"
+    "graphql": "14 - 15",
+    "react": "^16.8.0",
+    "subscriptions-transport-ws": "^0.9.0"
   },
   "dependencies": {
     "@apollo/client": "^3.0.0-rc.13",
