@@ -1,4 +1,5 @@
 'use strict';
+
 const {
   ApolloLink,
   Observable,
