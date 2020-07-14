@@ -4,7 +4,7 @@
 
 [![npm version](https://badgen.net/npm/v/apollo-upload-client)](https://npm.im/apollo-upload-client) [![CI status](https://github.com/jaydenseric/apollo-upload-client/workflows/CI/badge.svg)](https://github.com/jaydenseric/apollo-upload-client/actions)
 
-A terminating [Apollo Link](https://apollographql.com/docs/link) for [Apollo Client](https://apollographql.com/docs/link/#apollo-client) that allows [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) or [`ReactNativeFile`](#class-reactnativefile) instances within query or mutation variables and sends [GraphQL multipart requests](https://github.com/jaydenseric/graphql-multipart-request-spec).
+A terminating [Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/) for [Apollo Client](https://www.apollographql.com/docs/react/) that allows [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) or [`ReactNativeFile`](#class-reactnativefile) instances within query or mutation variables and sends [GraphQL multipart requests](https://github.com/jaydenseric/graphql-multipart-request-spec).
 
 ## Setup
 
@@ -14,9 +14,7 @@ Install with [npm](https://npmjs.com):
 npm install apollo-upload-client
 ```
 
-[Apollo Boost](https://npm.im/apollo-boost) doesn’t allow link customization; if you are using it [migrate to a manual Apollo Client setup](https://apollographql.com/docs/react/migrating/boost-migration).
-
-[Apollo Client](https://apollographql.com/docs/link/#apollo-client) can only have 1 “terminating” [Apollo Link](https://apollographql.com/docs/link) that sends the GraphQL requests; if one such as [`apollo-link-http`](https://apollographql.com/docs/link/links/http) is already setup, remove it.
+[Apollo Client](https://www.apollographql.com/docs/react/) can only have 1 [terminating link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link) that sends the GraphQL requests; if one such as [`apollo-link-http`](https://apollographql.com/docs/link/links/http) is already setup, remove it.
 
 Initialize the client with a terminating link using [`createUploadLink`](#function-createuploadlink).
 
@@ -31,8 +29,7 @@ See also the [example API and client](https://github.com/jaydenseric/apollo-uplo
 ### [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList)
 
 ```jsx
-const { useMutation } = require('@apollo/react-hooks');
-const gql = require('graphql-tag');
+const { gql, useMutation } = require('@apollo/client');
 
 const MUTATION = gql`
   mutation($files: [Upload!]!) {
@@ -56,8 +53,7 @@ function UploadFiles() {
 ### [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File)
 
 ```jsx
-const { useMutation } = require('@apollo/react-hooks');
-const gql = require('graphql-tag');
+const { gql, useMutation } = require('@apollo/client');
 
 const MUTATION = gql`
   mutation($file: Upload!) {
@@ -86,8 +82,7 @@ function UploadFile() {
 ### [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)
 
 ```jsx
-const { useMutation } = require('@apollo/react-hooks');
-const gql = require('graphql-tag');
+const { gql, useMutation } = require('@apollo/client');
 
 const MUTATION = gql`
   mutation($file: Upload!) {
@@ -201,8 +196,7 @@ Some of the options are similar to the [`createHttpLink` options](https://apollo
 _A basic Apollo Client setup._
 
 > ```js
-> const { ApolloClient } = require('apollo-client');
-> const { InMemoryCache } = require('apollo-cache-inmemory');
+> const { ApolloClient, InMemoryCache  } = require('@apollo/client');
 > const { createUploadLink } = require('apollo-upload-client');
 >
 > const client = new ApolloClient({
