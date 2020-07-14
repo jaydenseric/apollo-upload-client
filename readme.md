@@ -117,7 +117,7 @@ function UploadFile() {
 
 ## Support
 
-- Node.js v10+
+- Node.js `^10.17.0 || ^12.0.0 || >= 13.7.0`
 - Browsers [`> 0.5%, not OperaMini all, not dead`](https://browserl.ist/?q=%3E+0.5%25%2C+not+OperaMini+all%2C+not+dead)
 - React Native
 
@@ -313,7 +313,7 @@ Appends a file extracted from the GraphQL operation to the [`FormData`](https://
 
 A React Native [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) substitute.
 
-Be aware that inspecting network requests with Chrome dev tools interferes with the React Native `FormData` implementation, causing network errors.
+Be aware that inspecting network traffic with buggy versions of dev tools such as [Flipper](https://fbflipper.com) can interfere with the React Native `FormData` implementation, causing multipart requests to have network errors.
 
 **Type:** object
 
@@ -333,9 +333,9 @@ Be aware that inspecting network requests with Chrome dev tools interferes with 
 _A camera roll file._
 
 > ```js
-> {
+> const fileSubstitute = {
 >   uri: uriFromCameraRoll,
 >   name: 'a.jpg',
->   type: 'image/jpeg'
-> }
+>   type: 'image/jpeg',
+> };
 > ```

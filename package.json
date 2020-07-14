@@ -30,33 +30,36 @@
   "main": "lib",
   "sideEffects": false,
   "engines": {
-    "node": ">=10"
+    "node": "^10.17.0 || ^12.0.0 || >= 13.7.0"
   },
-  "browserslist": "Node >= 10, > 0.5%, not OperaMini all, not dead",
+  "browserslist": "Node 10.17 - 11 and Node < 11, Node 12 - 13 and Node < 13, Node >= 13.7, > 0.5%, not OperaMini all, not dead",
+  "peerDependencies": {
+    "graphql": "^0.11.3 || ^0.12.3 || ^0.13.0 || ^14.0.0 || ^15.0.0"
+  },
   "dependencies": {
     "@apollo/client": "^3.0.0-rc.13",
-    "@babel/runtime": "^7.9.2",
-    "extract-files": "^8.0.0"
+    "@babel/runtime": "^7.10.3",
+    "extract-files": "^8.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-transform-runtime": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
-    "@size-limit/preset-small-lib": "^4.4.2",
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/plugin-transform-runtime": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "@size-limit/preset-small-lib": "^4.5.2",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.8.0",
-    "eslint-config-env": "^13.0.4",
-    "eslint-config-prettier": "^6.10.1",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jsdoc": "^22.1.0",
+    "eslint": "^7.3.1",
+    "eslint-config-env": "^14.0.4",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsdoc": "^28.5.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "graphql": "^14.6.0",
-    "jsdoc-md": "^5.0.1",
-    "prettier": "^2.0.2",
+    "eslint-plugin-prettier": "^3.1.4",
+    "graphql": "^15.1.0",
+    "jsdoc-md": "^7.0.0",
+    "prettier": "^2.0.5",
     "react": "^16.13.1",
-    "size-limit": "^4.4.2"
+    "size-limit": "^4.5.2"
   },
   "scripts": {
     "prepare": "npm run prepare:clean && npm run prepare:js && npm run prepare:jsdoc && npm run prepare:prettier",

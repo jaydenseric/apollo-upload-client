@@ -1,5 +1,21 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Major
+
+- Updated Node.js support to `^10.17.0 || ^12.0.0 || >= 13.7.0`.
+- Updated dependencies, some of which (only dev dependencies) require newer Node.js versions than previously supported.
+
+### Patch
+
+- Added the [`graphql`](https://npm.im/graphql) peer dependency to support a wider range of package managers, via [#196](https://github.com/jaydenseric/apollo-upload-client/pull/196).
+- Removed Node.js v13 and added v14 to the versions tested in GitHub Actions.
+- Prettier code examples in source JSDoc.
+- Improved the type `ReactNativeFileSubstitute` code example.
+- Updated EditorConfig.
+- Improved the documentation about gotchas when inspecting network requests in React Native, via [#193](https://github.com/jaydenseric/apollo-upload-client/pull/193).
+
 ## 13.0.0
 
 ### Major
