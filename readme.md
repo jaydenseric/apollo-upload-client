@@ -313,7 +313,7 @@ Appends a file extracted from the GraphQL operation to the [`FormData`](https://
 
 A React Native [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) substitute.
 
-Be aware that inspecting network requests with Chrome dev tools interferes with the React Native `FormData` implementation, causing network errors.
+Be aware that inspecting network traffic with buggy versions of dev tools such as [Flipper](https://fbflipper.com) can interfere with the React Native `FormData` implementation, causing multipart requests to have network errors.
 
 **Type:** object
 
