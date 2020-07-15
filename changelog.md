@@ -402,7 +402,7 @@
 
 ## 3.0.0
 
-- Support `apollo-upload-server` v2 and [query batching](https://apollographql.com/docs/apollo-server/requests#batching).
+- Support `apollo-upload-server` v2 and [query batching](https://apollographql.com/docs/apollo-server/requests/#batching).
 - Removed the seemingly redundant `Accept` header from requests.
 - Clearer package description.
 
