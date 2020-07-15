@@ -9,5 +9,11 @@
         "loose": true
       }
     ]
+  ],
+  "overrides": [
+    {
+      "test": "**/*.js",
+      "sourceType": "script"
+    }
   ]
 }
