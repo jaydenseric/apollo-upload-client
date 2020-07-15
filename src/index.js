@@ -1,14 +1,15 @@
 'use strict';
 
-const { ApolloLink, Observable } = require('apollo-link');
 const {
+  ApolloLink,
+  Observable,
   selectURI,
   selectHttpOptionsAndBody,
   fallbackHttpConfig,
   serializeFetchParameter,
   createSignalIfSupported,
   parseAndCheckHttpResponse,
-} = require('apollo-link-http-common');
+} = require('@apollo/client');
 const {
   extractFiles,
   isExtractableFile,
@@ -134,7 +135,7 @@ function formDataAppendFile(formData, fieldName, file) {
 exports.formDataAppendFile = formDataAppendFile;
 
 /**
- * Creates a terminating [Apollo Link](https://apollographql.com/docs/link)
+ * Creates a [terminating Apollo Link](https://apollographql.com/docs/link/overview/#terminating-links)
  * capable of file uploads.
  *
  * The link matches and extracts files in the GraphQL operation. If there are
@@ -158,11 +159,10 @@ exports.formDataAppendFile = formDataAppendFile;
  * @param {string} [options.credentials] Overrides `options.fetchOptions.credentials`.
  * @param {object} [options.headers] Merges with and overrides `options.fetchOptions.headers`.
  * @param {boolean} [options.includeExtensions=false] Toggles sending `extensions` fields to the GraphQL server.
- * @returns {ApolloLink} A terminating [Apollo Link](https://apollographql.com/docs/link) capable of file uploads.
+ * @returns {ApolloLink} A [terminating Apollo Link](https://apollographql.com/docs/link/overview/#terminating-links) capable of file uploads.
  * @example <caption>A basic Apollo Client setup.</caption>
  * ```js
- * const { ApolloClient } = require('apollo-client');
- * const { InMemoryCache } = require('apollo-cache-inmemory');
+ * const { ApolloClient, InMemoryCache } = require('@apollo/client');
  * const { createUploadLink } = require('apollo-upload-client');
  *
  * const client = new ApolloClient({
