@@ -5,6 +5,7 @@
     [
       "@babel/env",
       {
+        "modules": false,
         "shippedProposals": true,
         "loose": true
       }

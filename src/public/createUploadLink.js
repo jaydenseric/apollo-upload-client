@@ -10,129 +10,9 @@ const {
   createSignalIfSupported,
   parseAndCheckHttpResponse,
 } = require('@apollo/client');
-const {
-  extractFiles,
-  isExtractableFile,
-  ReactNativeFile,
-} = require('extract-files');
-
-/**
- * A React Native [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File)
- * substitute.
- *
- * Be aware that inspecting network traffic with buggy versions of dev tools
- * such as [Flipper](https://fbflipper.com) can interfere with the React Native
- * `FormData` implementation, causing multipart requests to have network errors.
- * @kind typedef
- * @name ReactNativeFileSubstitute
- * @type {object}
- * @see [`extract-files` `ReactNativeFileSubstitute` docs](https://github.com/jaydenseric/extract-files#type-reactnativefilesubstitute).
- * @see [React Native `FormData` polyfill source](https://github.com/facebook/react-native/blob/v0.45.1/Libraries/Network/FormData.js#L34).
- * @prop {string} uri Filesystem path.
- * @prop {string} [name] File name.
- * @prop {string} [type] File content type. Some environments (particularly Android) require a valid MIME type; Expo `ImageResult.type` is unreliable as it can be just `image`.
- * @example <caption>A camera roll file.</caption>
- * ```js
- * const fileSubstitute = {
- *   uri: uriFromCameraRoll,
- *   name: 'a.jpg',
- *   type: 'image/jpeg',
- * };
- * ```
- */
-
-/**
- * Used to mark [React Native `File` substitutes]{@link ReactNativeFileSubstitute}
- * as it’s too risky to assume all objects with `uri`, `type` and `name`
- * properties are extractable files.
- * @kind class
- * @name ReactNativeFile
- * @param {ReactNativeFileSubstitute} file A React Native [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) substitute.
- * @see [`extract-files` `ReactNativeFile` docs](https://github.com/jaydenseric/extract-files#class-reactnativefile).
- * @example <caption>A React Native file that can be used in query or mutation variables.</caption>
- * ```js
- * const { ReactNativeFile } = require('apollo-upload-client');
- *
- * const file = new ReactNativeFile({
- *   uri: uriFromCameraRoll,
- *   name: 'a.jpg',
- *   type: 'image/jpeg',
- * });
- * ```
- */
-exports.ReactNativeFile = ReactNativeFile;
-
-/**
- * GraphQL request `fetch` options.
- * @kind typedef
- * @name FetchOptions
- * @type {object}
- * @see [Polyfillable fetch options](https://github.github.io/fetch#options).
- * @prop {object} headers HTTP request headers.
- * @prop {string} [credentials] Authentication credentials mode.
- */
-
-/**
- * A function that checks if a value is an extractable file.
- * @kind typedef
- * @name ExtractableFileMatcher
- * @type {Function}
- * @param {*} value Value to check.
- * @returns {boolean} Is the value an extractable file.
- * @see [`isExtractableFile`]{@link isExtractableFile} has this type.
- * @example <caption>How to check for the default exactable files, as well as a custom type of file.</caption>
- * ```js
- * const { isExtractableFile } = require('apollo-upload-client');
- *
- * const isExtractableFileEnhanced = (value) =>
- *   isExtractableFile(value) ||
- *   (typeof CustomFile !== 'undefined' && value instanceof CustomFile);
- * ```
- */
-
-/**
- * The default implementation for [`createUploadLink`]{@link createUploadLink}
- * `options.isExtractableFile`.
- * @kind function
- * @name isExtractableFile
- * @type {ExtractableFileMatcher}
- * @param {*} value Value to check.
- * @returns {boolean} Is the value an extractable file.
- * @see [`extract-files` `isExtractableFile` docs](https://github.com/jaydenseric/extract-files#function-isextractablefile).
- */
-exports.isExtractableFile = isExtractableFile;
-
-/**
- * Appends a file extracted from the GraphQL operation to the
- * [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
- * instance used as the [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch)
- * `options.body` for the [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec).
- * @kind typedef
- * @name FormDataFileAppender
- * @param {FormData} formData [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to append the specified file to.
- * @param {string} fieldName Field name for the file.
- * @param {*} file File to append. The file type depends on what the [`ExtractableFileMatcher`]{@link ExtractableFileMatcher} extracts.
- * @see [`formDataAppendFile`]{@link formDataAppendFile} has this type.
- * @see [`createUploadLink`]{@link createUploadLink} accepts this type in `options.formDataAppendFile`.
- */
-
-/**
- * The default implementation for [`createUploadLink`]{@link createUploadLink}
- * `options.formDataAppendFile` that uses the standard
- * [`FormData.append`](https://developer.mozilla.org/en-US/docs/Web/API/FormData/append)
- * method.
- * @kind function
- * @name formDataAppendFile
- * @type {FormDataFileAppender}
- * @param {FormData} formData [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to append the specified file to.
- * @param {string} fieldName Field name for the file.
- * @param {*} file File to append.
- */
-function formDataAppendFile(formData, fieldName, file) {
-  formData.append(fieldName, file, file.name);
-}
-
-exports.formDataAppendFile = formDataAppendFile;
+const extractFiles = require('extract-files/lib/extractFiles');
+const formDataAppendFile = require('./formDataAppendFile');
+const isExtractableFile = require('./isExtractableFile');
 
 /**
  * Creates a [terminating Apollo Link](https://apollographql.com/docs/link/overview/#terminating-links)
@@ -160,10 +40,26 @@ exports.formDataAppendFile = formDataAppendFile;
  * @param {object} [options.headers] Merges with and overrides `options.fetchOptions.headers`.
  * @param {boolean} [options.includeExtensions=false] Toggles sending `extensions` fields to the GraphQL server.
  * @returns {ApolloLink} A [terminating Apollo Link](https://apollographql.com/docs/link/overview/#terminating-links) capable of file uploads.
+ * @example <caption>Ways to `import`.</caption>
+ * ```js
+ * import { createUploadLink } from 'apollo-upload-client';
+ * ```
+ *
+ * ```js
+ * import createUploadLink from 'apollo-upload-client/public/createUploadLink.js';
+ * ```
+ * @example <caption>Ways to `require`.</caption>
+ * ```js
+ * const { createUploadLink } = require('apollo-upload-client');
+ * ```
+ *
+ * ```js
+ * const createUploadLink = require('apollo-upload-client/public/createUploadLink');
+ * ```
  * @example <caption>A basic Apollo Client setup.</caption>
  * ```js
- * const { ApolloClient, InMemoryCache } = require('@apollo/client');
- * const { createUploadLink } = require('apollo-upload-client');
+ * import { ApolloClient, InMemoryCache } from '@apollo/client';
+ * import { createUploadLink } from 'apollo-upload-client';
  *
  * const client = new ApolloClient({
  *   cache: new InMemoryCache(),
@@ -171,7 +67,7 @@ exports.formDataAppendFile = formDataAppendFile;
  * });
  * ```
  */
-exports.createUploadLink = ({
+module.exports = function createUploadLink({
   uri: fetchUri = '/graphql',
   isExtractableFile: customIsExtractableFile = isExtractableFile,
   FormData: CustomFormData,
@@ -181,7 +77,7 @@ exports.createUploadLink = ({
   credentials,
   headers,
   includeExtensions,
-} = {}) => {
+} = {}) {
   const linkConfig = {
     http: { includeExtensions },
     options: fetchOptions,

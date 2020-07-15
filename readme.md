@@ -151,10 +151,30 @@ Used to mark [React Native `File` substitutes](#type-reactnativefilesubstitute) 
 
 #### Examples
 
-_A React Native file that can be used in query or mutation variables._
+_Ways to `import`._
+
+> ```js
+> import { ReactNativeFile } from 'apollo-upload-client';
+> ```
+>
+> ```js
+> import ReactNativeFile from 'apollo-upload-client/public/ReactNativeFile.js';
+> ```
+
+_Ways to `require`._
 
 > ```js
 > const { ReactNativeFile } = require('apollo-upload-client');
+> ```
+>
+> ```js
+> const ReactNativeFile = require('apollo-upload-client/public/ReactNativeFile');
+> ```
+
+_A React Native file that can be used in query or mutation variables._
+
+> ```js
+> import { ReactNativeFile } from 'apollo-upload-client';
 >
 > const file = new ReactNativeFile({
 >   uri: uriFromCameraRoll,
@@ -195,11 +215,31 @@ Some of the options are similar to the [`createHttpLink` options](https://apollo
 
 #### Examples
 
+_Ways to `import`._
+
+> ```js
+> import { createUploadLink } from 'apollo-upload-client';
+> ```
+>
+> ```js
+> import createUploadLink from 'apollo-upload-client/public/createUploadLink.js';
+> ```
+
+_Ways to `require`._
+
+> ```js
+> const { createUploadLink } = require('apollo-upload-client');
+> ```
+>
+> ```js
+> const createUploadLink = require('apollo-upload-client/public/createUploadLink');
+> ```
+
 _A basic Apollo Client setup._
 
 > ```js
-> const { ApolloClient, InMemoryCache } = require('@apollo/client');
-> const { createUploadLink } = require('apollo-upload-client');
+> import { ApolloClient, InMemoryCache } from '@apollo/client';
+> import { createUploadLink } from 'apollo-upload-client';
 >
 > const client = new ApolloClient({
 >   cache: new InMemoryCache(),
@@ -221,6 +261,28 @@ The default implementation for [`createUploadLink`](#function-createuploadlink) 
 | `fieldName` | string | Field name for the file. |
 | `file` | \* | File to append. |
 
+#### Examples
+
+_Ways to `import`._
+
+> ```js
+> import { formDataAppendFile } from 'apollo-upload-client';
+> ```
+>
+> ```js
+> import formDataAppendFile from 'apollo-upload-client/public/formDataAppendFile.js';
+> ```
+
+_Ways to `require`._
+
+> ```js
+> const { formDataAppendFile } = require('apollo-upload-client');
+> ```
+>
+> ```js
+> const formDataAppendFile = require('apollo-upload-client/public/formDataAppendFile');
+> ```
+
 ---
 
 ### function isExtractableFile
@@ -238,6 +300,28 @@ The default implementation for [`createUploadLink`](#function-createuploadlink) 
 #### See
 
 - [`extract-files` `isExtractableFile` docs](https://github.com/jaydenseric/extract-files#function-isextractablefile).
+
+#### Examples
+
+_Ways to `import`._
+
+> ```js
+> import { isExtractableFile } from 'apollo-upload-client';
+> ```
+>
+> ```js
+> import isExtractableFile from 'apollo-upload-client/public/isExtractableFile.js';
+> ```
+
+_Ways to `require`._
+
+> ```js
+> const { isExtractableFile } = require('apollo-upload-client');
+> ```
+>
+> ```js
+> const isExtractableFile = require('apollo-upload-client/public/isExtractableFile');
+> ```
 
 ---
 
@@ -262,7 +346,7 @@ A function that checks if a value is an extractable file.
 _How to check for the default exactable files, as well as a custom type of file._
 
 > ```js
-> const { isExtractableFile } = require('apollo-upload-client');
+> import { isExtractableFile } from 'apollo-upload-client';
 >
 > const isExtractableFileEnhanced = (value) =>
 >   isExtractableFile(value) ||

@@ -22,13 +22,24 @@
     "client",
     "link",
     "react",
-    "native"
+    "native",
+    "esm",
+    "mjs"
   ],
   "files": [
-    "lib"
+    "public"
   ],
-  "main": "lib",
   "sideEffects": false,
+  "main": "public",
+  "exports": {
+    ".": {
+      "import": "./public/index.mjs",
+      "require": "./public/index.js"
+    },
+    "./public/": "./public/",
+    "./package": "./package.json",
+    "./package.json": "./package.json"
+  },
   "engines": {
     "node": "^10.17.0 || ^12.0.0 || >= 13.7.0"
   },
@@ -62,13 +73,13 @@
     "size-limit": "^4.5.2"
   },
   "scripts": {
-    "prepare": "npm run prepare:clean && npm run prepare:js && npm run prepare:jsdoc && npm run prepare:prettier",
-    "prepare:clean": "rm -rf lib",
-    "prepare:js": "babel src -d lib",
+    "prepare": "npm run prepare:clean && npm run prepare:babel && npm run prepare:jsdoc && npm run prepare:prettier",
+    "prepare:clean": "rm -rf public",
+    "prepare:babel": "babel src -d . --keep-file-extension",
     "prepare:jsdoc": "jsdoc-md",
-    "prepare:prettier": "prettier --write lib readme.md",
+    "prepare:prettier": "prettier --write public readme.md",
     "test": "npm run test:eslint && npm run test:prettier && npm run test:size",
-    "test:eslint": "eslint .",
+    "test:eslint": "eslint --ext mjs,js .",
     "test:prettier": "prettier -c .",
     "test:size": "size-limit",
     "prepublishOnly": "npm test"
