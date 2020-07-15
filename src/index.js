@@ -162,7 +162,7 @@ exports.formDataAppendFile = formDataAppendFile;
  * @returns {ApolloLink} A [terminating Apollo Link](https://apollographql.com/docs/link/overview/#terminating-links) capable of file uploads.
  * @example <caption>A basic Apollo Client setup.</caption>
  * ```js
- * const { ApolloClient, InMemoryCache  } = require('@apollo/client');
+ * const { ApolloClient, InMemoryCache } = require('@apollo/client');
  * const { createUploadLink } = require('apollo-upload-client');
  *
  * const client = new ApolloClient({
