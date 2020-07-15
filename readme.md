@@ -31,7 +31,7 @@ See also the [example API and client](https://github.com/jaydenseric/apollo-uplo
 ### [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList)
 
 ```jsx
-const { gql, useMutation } = require('@apollo/client');
+import { gql, useMutation } from '@apollo/client';
 
 const MUTATION = gql`
   mutation($files: [Upload!]!) {
@@ -55,7 +55,7 @@ function UploadFiles() {
 ### [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File)
 
 ```jsx
-const { gql, useMutation } = require('@apollo/client');
+import { gql, useMutation } from '@apollo/client';
 
 const MUTATION = gql`
   mutation($file: Upload!) {
@@ -84,7 +84,7 @@ function UploadFile() {
 ### [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)
 
 ```jsx
-const { gql, useMutation } = require('@apollo/client');
+import { gql, useMutation } from '@apollo/client';
 
 const MUTATION = gql`
   mutation($file: Upload!) {

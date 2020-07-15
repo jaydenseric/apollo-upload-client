@@ -19,6 +19,7 @@
 - Improved the type `ReactNativeFileSubstitute` code example.
 - Updated EditorConfig.
 - Improved the documentation about gotchas when inspecting network requests in React Native, via [#193](https://github.com/jaydenseric/apollo-upload-client/pull/193).
+- Changed code examples to use `import` instead of `require`.
 
 ## 13.0.0
 
