@@ -1,5 +1,11 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Patch
+
+- Use deep [`@apollo/client`](https://npm.im/@apollo/client) imports to support non React projects, fixing [#207](https://github.com/jaydenseric/apollo-upload-client/issues/207).
+
 ## 14.0.0
 
 ### Major

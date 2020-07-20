@@ -1,15 +1,14 @@
 'use strict';
 
+const { ApolloLink, Observable } = require('@apollo/client/core');
 const {
-  ApolloLink,
-  Observable,
   selectURI,
   selectHttpOptionsAndBody,
   fallbackHttpConfig,
   serializeFetchParameter,
   createSignalIfSupported,
   parseAndCheckHttpResponse,
-} = require('@apollo/client');
+} = require('@apollo/client/link/http');
 const extractFiles = require('extract-files/lib/extractFiles');
 const formDataAppendFile = require('./formDataAppendFile');
 const isExtractableFile = require('./isExtractableFile');
