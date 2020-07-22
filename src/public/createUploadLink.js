@@ -91,7 +91,7 @@ module.exports = function createUploadLink({
     const {
       // Apollo Studio client awareness `name` and `version` can be configured
       // via `ApolloClient` constructor options:
-      // https://www.apollographql.com/docs/studio/client-awareness/#using-apollo-server-and-apollo-client
+      // https://apollographql.com/docs/studio/client-awareness/#using-apollo-server-and-apollo-client
       clientAwareness: { name, version },
       headers,
     } = context;

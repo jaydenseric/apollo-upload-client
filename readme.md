@@ -8,13 +8,13 @@ A [terminating Apollo Link](https://apollographql.com/docs/link/overview/#termin
 
 ## Setup
 
-Install with [npm](https://npmjs.com):
+Install with [npm](https://npmjs.com/get-npm):
 
 ```shell
 npm install apollo-upload-client
 ```
 
-Remove any `uri`, `credentials`, or `headers` options from the [`ApolloClient` constructor](https://www.apollographql.com/docs/react/api/core/ApolloClient/#the-apolloclient-constructor).
+Remove any `uri`, `credentials`, or `headers` options from the [`ApolloClient` constructor](https://apollographql.com/docs/react/api/core/ApolloClient/#the-apolloclient-constructor).
 
 [Apollo Client](https://apollographql.com/docs/react) can only have 1 [terminating Apollo Link](https://apollographql.com/docs/link/overview/#terminating-links) that sends the GraphQL requests; if one such as [`HttpLink`](https://apollographql.com/docs/link/links/http) is already setup, remove it.
 

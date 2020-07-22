@@ -13,6 +13,7 @@
   - Fixed the JSDoc default value type for `options.uri`.
   - Improved code comments.
 - Replaced references to “Apollo Graph Manager” with “Apollo Studio” and updated related URLs.
+- Better npm link in the readme setup instructions.
 
 ## 14.0.1
 
