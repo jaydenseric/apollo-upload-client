@@ -123,12 +123,7 @@ module.exports = (tests) => {
         deepStrictEqual(JSON.parse(formDataEntries[1][1]), {
           '1': ['variables.a'],
         });
-        strictEqual(
-          // Due to a bug the field name must be coerced to a string, see:
-          // https://github.com/octet-stream/form-data/issues/22
-          String(formDataEntries[2][0]),
-          '1'
-        );
+        strictEqual(formDataEntries[2][0], '1');
         // A FormData field value can be either a string or a File instance.
         // Due to a bug an `instanceof Blob` check won’t work here, see:
         // https://github.com/octet-stream/form-data/issues/14
@@ -405,12 +400,7 @@ module.exports = (tests) => {
       deepStrictEqual(JSON.parse(formDataEntries[1][1]), {
         '1': ['variables.a'],
       });
-      strictEqual(
-        // Due to a bug the field name must be coerced to a string, see:
-        // https://github.com/octet-stream/form-data/issues/22
-        String(formDataEntries[2][0]),
-        '1'
-      );
+      strictEqual(formDataEntries[2][0], '1');
       // A FormData field value can be either a string or a File instance.
       // Due to a bug an `instanceof Blob` check won’t work here, see:
       // https://github.com/octet-stream/form-data/issues/14
