@@ -2,12 +2,12 @@
 
 const { ApolloLink, Observable } = require('@apollo/client/core');
 const {
-  selectURI,
-  selectHttpOptionsAndBody,
-  fallbackHttpConfig,
-  serializeFetchParameter,
   createSignalIfSupported,
+  fallbackHttpConfig,
   parseAndCheckHttpResponse,
+  selectHttpOptionsAndBody,
+  selectURI,
+  serializeFetchParameter,
 } = require('@apollo/client/link/http');
 const extractFiles = require('extract-files/lib/extractFiles');
 const formDataAppendFile = require('./formDataAppendFile');
