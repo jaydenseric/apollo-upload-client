@@ -51,7 +51,7 @@
   "dependencies": {
     "@apollo/client": "^3.0.2",
     "@babel/runtime": "^7.10.5",
-    "extract-files": "^8.1.0"
+    "extract-files": "^9.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",

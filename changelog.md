@@ -4,6 +4,7 @@
 
 ### Patch
 
+- Updated the [`extract-files`](https://npm.im/extract-files) dependency to v9, updating relevant deep require paths.
 - Added API tests, fixing [#204](https://github.com/jaydenseric/apollo-upload-client/issues/204).
 - Properly support the `signal` fetch option, fixing [#209](https://github.com/jaydenseric/apollo-upload-client/issues/209).
 - Updated `createUploadLink`:
