@@ -119,7 +119,7 @@ module.exports = function createUploadLink({
     const payload = serializeFetchParameter(clone, 'Payload');
 
     if (files.size) {
-      // Automatically set by fetch when the body is a FormData instance.
+      // Automatically set by `fetch` when the `body` is a `FormData` instance.
       delete options.headers['content-type'];
 
       // GraphQL multipart request spec:

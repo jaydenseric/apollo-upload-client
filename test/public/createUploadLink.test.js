@@ -124,7 +124,7 @@ module.exports = (tests) => {
           '1': ['variables.a'],
         });
         strictEqual(formDataEntries[2][0], '1');
-        // A FormData field value can be either a string or a File instance.
+        // A `FormData` field value can be either a string or a `File` instance.
         // Due to a bug an `instanceof Blob` check won’t work here, see:
         // https://github.com/octet-stream/form-data/issues/14
         strictEqual(typeof formDataEntries[2][1], 'object');
@@ -401,7 +401,7 @@ module.exports = (tests) => {
         '1': ['variables.a'],
       });
       strictEqual(formDataEntries[2][0], '1');
-      // A FormData field value can be either a string or a File instance.
+      // A `FormData` field value can be either a string or a `File` instance.
       // Due to a bug an `instanceof Blob` check won’t work here, see:
       // https://github.com/octet-stream/form-data/issues/14
       strictEqual(typeof formDataEntries[2][1], 'object');
