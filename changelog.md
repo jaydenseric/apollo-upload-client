@@ -6,10 +6,11 @@
 
 - Added API tests, fixing [#204](https://github.com/jaydenseric/apollo-upload-client/issues/204).
 - Properly support the `signal` fetch option, fixing [#209](https://github.com/jaydenseric/apollo-upload-client/issues/209).
-- Refactored `createUploadLink`:
+- Updated `createUploadLink`:
   - Alphabetically sorted destructured imports.
   - Removed a redundant fallback value when destructuring `clientAwareness` from context. It was an obstacle to 100% code coverage because `ApolloClient` defaults it to an empty object.
   - Unnested some code from the `Observable` function scope.
+  - Fixed the JSDoc default value type for `options.uri`.
   - Improved code comments.
 - Replaced references to “Apollo Graph Manager” with “Apollo Studio” and updated related URLs.
 

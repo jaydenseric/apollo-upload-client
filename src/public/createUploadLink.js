@@ -29,7 +29,7 @@ const isExtractableFile = require('./isExtractableFile');
  * @kind function
  * @name createUploadLink
  * @param {object} options Options.
- * @param {string} [options.uri=/graphql] GraphQL endpoint URI.
+ * @param {string} [options.uri='/graphql'] GraphQL endpoint URI.
  * @param {ExtractableFileMatcher} [options.isExtractableFile=isExtractableFile] Customizes how files are matched in the GraphQL operation for extraction.
  * @param {class} [options.FormData] [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) implementation to use, defaulting to the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) global.
  * @param {FormDataFileAppender} [options.formDataAppendFile=formDataAppendFile] Customizes how extracted files are appended to the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
