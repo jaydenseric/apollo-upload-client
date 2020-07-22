@@ -197,6 +197,7 @@ Some of the options are similar to the [`createHttpLink` options](https://apollo
 | :-- | :-- | :-- |
 | `options` | object | Options. |
 | `options.uri` | string? = `/graphql` | GraphQL endpoint URI. |
+| `options.useGETForQueries` | boolean? | Should GET be used to fetch queries, if there are no files to upload. |
 | `options.isExtractableFile` | [ExtractableFileMatcher](#type-extractablefilematcher)? = [isExtractableFile](#function-isextractablefile) | Customizes how files are matched in the GraphQL operation for extraction. |
 | `options.FormData` | class? | [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) implementation to use, defaulting to the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) global. |
 | `options.formDataAppendFile` | [FormDataFileAppender](#type-formdatafileappender)? = [formDataAppendFile](#function-formdataappendfile) | Customizes how extracted files are appended to the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance. |

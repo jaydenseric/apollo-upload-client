@@ -2,6 +2,10 @@
 
 ## Next
 
+### Minor
+
+- Support GET requests, fixing [#151](https://github.com/jaydenseric/apollo-upload-client/issues/151).
+
 ### Patch
 
 - Updated the [`extract-files`](https://npm.im/extract-files) dependency to v9, updating relevant deep require paths.

@@ -5,6 +5,7 @@ const {
   createSignalIfSupported,
   fallbackHttpConfig,
   parseAndCheckHttpResponse,
+  rewriteURIForGET,
   selectHttpOptionsAndBody,
   selectURI,
   serializeFetchParameter,
@@ -30,6 +31,7 @@ const isExtractableFile = require('./isExtractableFile');
  * @name createUploadLink
  * @param {object} options Options.
  * @param {string} [options.uri='/graphql'] GraphQL endpoint URI.
+ * @param {boolean} [options.useGETForQueries] Should GET be used to fetch queries, if there are no files to upload.
  * @param {ExtractableFileMatcher} [options.isExtractableFile=isExtractableFile] Customizes how files are matched in the GraphQL operation for extraction.
  * @param {class} [options.FormData] [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) implementation to use, defaulting to the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) global.
  * @param {FormDataFileAppender} [options.formDataAppendFile=formDataAppendFile] Customizes how extracted files are appended to the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
@@ -68,6 +70,7 @@ const isExtractableFile = require('./isExtractableFile');
  */
 module.exports = function createUploadLink({
   uri: fetchUri = '/graphql',
+  useGETForQueries,
   isExtractableFile: customIsExtractableFile = isExtractableFile,
   FormData: CustomFormData,
   formDataAppendFile: customFormDataAppendFile = formDataAppendFile,
@@ -85,9 +88,7 @@ module.exports = function createUploadLink({
   };
 
   return new ApolloLink((operation) => {
-    const uri = selectURI(operation, fetchUri);
     const context = operation.getContext();
-
     const {
       // Apollo Studio client awareness `name` and `version` can be configured
       // via `ApolloClient` constructor options:
@@ -116,7 +117,8 @@ module.exports = function createUploadLink({
     );
 
     const { clone, files } = extractFiles(body, '', customIsExtractableFile);
-    const payload = serializeFetchParameter(clone, 'Payload');
+
+    let uri = selectURI(operation, fetchUri);
 
     if (files.size) {
       // Automatically set by `fetch` when the `body` is a `FormData` instance.
@@ -129,7 +131,7 @@ module.exports = function createUploadLink({
 
       const form = new RuntimeFormData();
 
-      form.append('operations', payload);
+      form.append('operations', serializeFetchParameter(clone, 'Payload'));
 
       const map = {};
       let i = 0;
@@ -144,7 +146,29 @@ module.exports = function createUploadLink({
       });
 
       options.body = form;
-    } else options.body = payload;
+    } else {
+      if (
+        useGETForQueries &&
+        // If the operation contains some mutations GET shouldn’t be used.
+        !operation.query.definitions.some(
+          (definition) =>
+            definition.kind === 'OperationDefinition' &&
+            definition.operation === 'mutation'
+        )
+      )
+        options.method = 'GET';
+
+      if (options.method === 'GET') {
+        const { newURI, parseError } = rewriteURIForGET(uri, body);
+        if (parseError)
+          // Apollo’s `HttpLink` uses `fromError` for this, but it's not
+          // exported from `@apollo/client/link/http`.
+          return new Observable((observer) => {
+            observer.error(parseError);
+          });
+        uri = newURI;
+      } else options.body = serializeFetchParameter(clone, 'Payload');
+    }
 
     const { controller } = createSignalIfSupported();
 

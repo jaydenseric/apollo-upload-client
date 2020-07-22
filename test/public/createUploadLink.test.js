@@ -220,6 +220,264 @@ module.exports = (tests) => {
     });
   });
 
+  tests.add(
+    '`createUploadLink` with option `fetchOptions.method`, query, no files.',
+    async () => {
+      let fetchUri;
+      let fetchOptions;
+
+      const apolloClient = new ApolloClient({
+        cache: new InMemoryCache(),
+        link: createUploadLink({
+          fetchOptions: {
+            method: 'GET',
+          },
+          async fetch(uri, options) {
+            fetchUri = uri;
+            fetchOptions = options;
+
+            return new Response(
+              JSON.stringify({ data: { a: true } }),
+              graphqlResponseOptionsOk
+            );
+          },
+        }),
+      });
+      const result = await apolloClient.query({
+        query: gql`
+          {
+            a
+          }
+        `,
+      });
+
+      deepStrictEqual(result, {
+        data: { a: true },
+        loading: false,
+        networkStatus: 7,
+      });
+      strictEqual(
+        fetchUri,
+        `${defaultUri}?query=%7B%0A%20%20a%0A%7D%0A&variables=%7B%7D`
+      );
+      strictEqual(fetchOptions.method, 'GET');
+      strictEqual('body' in fetchOptions, false);
+    }
+  );
+
+  tests.add(
+    '`createUploadLink` with option `useGETForQueries`, query, no files.',
+    async () => {
+      let fetchUri;
+      let fetchOptions;
+
+      const apolloClient = new ApolloClient({
+        cache: new InMemoryCache(),
+        link: createUploadLink({
+          useGETForQueries: true,
+          async fetch(uri, options) {
+            fetchUri = uri;
+            fetchOptions = options;
+
+            return new Response(
+              JSON.stringify({ data: { a: true } }),
+              graphqlResponseOptionsOk
+            );
+          },
+        }),
+      });
+      const result = await apolloClient.query({
+        query: gql`
+          {
+            a
+          }
+        `,
+      });
+
+      deepStrictEqual(result, {
+        data: { a: true },
+        loading: false,
+        networkStatus: 7,
+      });
+      strictEqual(
+        fetchUri,
+        `${defaultUri}?query=%7B%0A%20%20a%0A%7D%0A&variables=%7B%7D`
+      );
+      strictEqual(fetchOptions.method, 'GET');
+      strictEqual('body' in fetchOptions, false);
+    }
+  );
+
+  tests.add(
+    '`createUploadLink` with option `useGETForQueries`, query, files.',
+    async () => {
+      const revertPolyfills = revertablePolyfills({ Blob });
+
+      try {
+        let fetchUri;
+        let fetchOptions;
+
+        const apolloClient = new ApolloClient({
+          cache: new InMemoryCache(),
+          link: createUploadLink({
+            useGETForQueries: true,
+            FormData,
+            async fetch(uri, options) {
+              fetchUri = uri;
+              fetchOptions = options;
+
+              return new Response(
+                JSON.stringify({ data: { a: true } }),
+                graphqlResponseOptionsOk
+              );
+            },
+          }),
+        });
+        const query = 'query ($a: Upload!) {\n  a(a: $a)\n}\n';
+        const filetype = 'text/plain';
+        const result = await apolloClient.query({
+          query: gql(query),
+          variables: {
+            a: new Blob(['a'], { type: filetype }),
+          },
+        });
+
+        deepStrictEqual(result, {
+          data: { a: true },
+          loading: false,
+          networkStatus: 7,
+        });
+        strictEqual(fetchUri, defaultUri);
+        strictEqual(fetchOptions.method, 'POST');
+        strictEqual(fetchOptions.body instanceof FormData, true);
+
+        const formDataEntries = Array.from(fetchOptions.body.entries());
+
+        strictEqual(formDataEntries.length, 3);
+        strictEqual(formDataEntries[0][0], 'operations');
+        deepStrictEqual(JSON.parse(formDataEntries[0][1]), {
+          query,
+          variables: { a: null },
+        });
+        strictEqual(formDataEntries[1][0], 'map');
+        deepStrictEqual(JSON.parse(formDataEntries[1][1]), {
+          '1': ['variables.a'],
+        });
+        strictEqual(
+          // Due to a bug the field name must be coerced to a string, see:
+          // https://github.com/octet-stream/form-data/issues/22
+          String(formDataEntries[2][0]),
+          '1'
+        );
+        // A `FormData` field value can be either a string or a `File` instance.
+        // Due to a bug an `instanceof Blob` check won’t work here, see:
+        // https://github.com/octet-stream/form-data/issues/14
+        strictEqual(typeof formDataEntries[2][1], 'object');
+        strictEqual(formDataEntries[2][1].name, 'blob');
+        strictEqual(formDataEntries[2][1].type, filetype);
+      } finally {
+        revertPolyfills();
+      }
+    }
+  );
+
+  tests.add(
+    '`createUploadLink` with option `useGETForQueries`, query, no files, unserializable variables.',
+    async () => {
+      let fetched = false;
+
+      const apolloClient = new ApolloClient({
+        // Necessary to avoid `ApolloClient` internals attempting
+        // `JSON.stringify` on the variables and crashing before the link has a
+        // chance to work.
+        queryDeduplication: false,
+        cache: new InMemoryCache(),
+        link: createUploadLink({
+          useGETForQueries: true,
+          async fetch() {
+            fetched = true;
+
+            return new Response(
+              JSON.stringify({ data: { a: true } }),
+              graphqlResponseOptionsOk
+            );
+          },
+        }),
+      });
+      const parseErrorMessage = 'Unserializable.';
+
+      await rejects(
+        apolloClient.query({
+          // Necessary to avoid `ApolloClient` internals attempting
+          // `JSON.stringify` on the variables and crashing before the link has
+          // a chance to work.
+          fetchPolicy: 'network-only',
+          query: gql`
+            query($a: Boolean) {
+              a(a: $a)
+            }
+          `,
+          variables: {
+            // A circular reference would be a more realistic way to cause a
+            // `JSON.stringify` error, but unfortunately that triggers an
+            // `extractFiles` bug:
+            // https://github.com/jaydenseric/extract-files/issues/14
+            toJSON() {
+              throw new Error(parseErrorMessage);
+            },
+          },
+        }),
+        (error) => {
+          strictEqual(error instanceof ApolloError, true);
+          strictEqual('networkError' in error, true);
+          strictEqual('parseError' in error.networkError, true);
+          strictEqual(error.networkError.parseError.message, parseErrorMessage);
+          return true;
+        }
+      );
+
+      strictEqual(fetched, false);
+    }
+  );
+
+  tests.add(
+    '`createUploadLink` with option `useGETForQueries`, mutation, no files.',
+    async () => {
+      let fetchUri;
+      let fetchOptions;
+
+      const apolloClient = new ApolloClient({
+        cache: new InMemoryCache(),
+        link: createUploadLink({
+          useGETForQueries: true,
+          async fetch(uri, options) {
+            fetchUri = uri;
+            fetchOptions = options;
+
+            return new Response(
+              JSON.stringify({ data: { a: true } }),
+              graphqlResponseOptionsOk
+            );
+          },
+        }),
+      });
+      const query = 'mutation {\n  a\n}\n';
+      const result = await apolloClient.mutate({
+        mutation: gql(query),
+      });
+
+      deepStrictEqual(result, {
+        data: { a: true },
+      });
+      strictEqual(fetchUri, defaultUri);
+      strictEqual(fetchOptions.method, 'POST');
+      deepStrictEqual(JSON.parse(fetchOptions.body), {
+        query,
+        variables: {},
+      });
+    }
+  );
+
   tests.add('`createUploadLink` with client awareness.', async () => {
     let fetchUri;
     let fetchOptions;
