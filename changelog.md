@@ -1,5 +1,17 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Patch
+
+- Added API tests, fixing [#204](https://github.com/jaydenseric/apollo-upload-client/issues/204).
+- Properly support the `signal` fetch option, fixing [#209](https://github.com/jaydenseric/apollo-upload-client/issues/209).
+- Refactored `createUploadLink`:
+  - Removed a redundant fallback value when destructuring `clientAwareness` from context. It was an obstacle to 100% code coverage because `ApolloClient` defaults it to an empty object.
+  - Unnested some code from the `Observable` function scope.
+  - Improved code comments.
+- Replaced references to “Apollo Graph Manager” with “Apollo Studio” and updated related URLs.
+
 ## 14.0.1
 
 ### Patch
@@ -93,7 +105,7 @@
 
 ### Minor
 
-- Support [Apollo Engine client awareness](https://apollographql.com/docs/platform/client-awareness), via [#143](https://github.com/jaydenseric/apollo-upload-client/pull/143).
+- Support [Apollo Studio client awareness](https://apollographql.com/docs/studio/client-awareness), via [#143](https://github.com/jaydenseric/apollo-upload-client/pull/143).
 
 ### Patch
 

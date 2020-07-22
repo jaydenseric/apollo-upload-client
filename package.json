@@ -59,7 +59,9 @@
     "@babel/plugin-transform-runtime": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
     "@size-limit/preset-small-lib": "^4.5.5",
+    "abort-controller": "^3.0.0",
     "babel-eslint": "^10.1.0",
+    "coverage-node": "^3.0.0",
     "eslint": "^7.5.0",
     "eslint-config-env": "^15.0.1",
     "eslint-config-prettier": "^6.11.0",
@@ -67,10 +69,15 @@
     "eslint-plugin-jsdoc": "^30.0.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "fetch-blob": "^2.0.1",
+    "formdata-node": "^2.2.1",
     "graphql": "^15.1.0",
+    "hard-rejection": "^2.1.0",
     "jsdoc-md": "^7.0.0",
+    "node-fetch": "^3.0.0-beta.7",
     "prettier": "^2.0.5",
-    "size-limit": "^4.5.5"
+    "size-limit": "^4.5.5",
+    "test-director": "^4.0.1"
   },
   "scripts": {
     "prepare": "npm run prepare:clean && npm run prepare:babel && npm run prepare:jsdoc && npm run prepare:prettier",
@@ -78,9 +85,10 @@
     "prepare:babel": "babel src -d . --keep-file-extension",
     "prepare:jsdoc": "jsdoc-md",
     "prepare:prettier": "prettier --write public readme.md",
-    "test": "npm run test:eslint && npm run test:prettier && npm run test:size",
+    "test": "npm run test:eslint && npm run test:prettier && npm run test:api && npm run test:size",
     "test:eslint": "eslint --ext mjs,js .",
     "test:prettier": "prettier -c .",
+    "test:api": "coverage-node -r hard-rejection/register test",
     "test:size": "size-limit",
     "prepublishOnly": "npm test"
   }

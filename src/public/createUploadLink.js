@@ -88,12 +88,11 @@ module.exports = function createUploadLink({
     const uri = selectURI(operation, fetchUri);
     const context = operation.getContext();
 
-    // Apollo Graph Manager client awareness:
-    // https://apollographql.com/docs/graph-manager/client-awareness
-
     const {
-      // From Apollo Client config.
-      clientAwareness: { name, version } = {},
+      // Apollo Studio client awareness `name` and `version` can be configured
+      // via `ApolloClient` constructor options:
+      // https://www.apollographql.com/docs/studio/client-awareness/#using-apollo-server-and-apollo-client
+      clientAwareness: { name, version },
       headers,
     } = context;
 
@@ -102,7 +101,7 @@ module.exports = function createUploadLink({
       options: context.fetchOptions,
       credentials: context.credentials,
       headers: {
-        // Client awareness headers are context overridable.
+        // Client awareness headers can be overridden by context `headers`.
         ...(name && { 'apollographql-client-name': name }),
         ...(version && { 'apollographql-client-version': version }),
         ...headers,
@@ -147,20 +146,23 @@ module.exports = function createUploadLink({
       options.body = form;
     } else options.body = payload;
 
-    return new Observable((observer) => {
-      // If no abort controller signal was provided in fetch options, and the
-      // environment supports the AbortController interface, create and use a
-      // default abort controller.
-      let abortController;
-      if (!options.signal) {
-        const { controller } = createSignalIfSupported();
-        if (controller) {
-          abortController = controller;
-          options.signal = abortController.signal;
-        }
-      }
+    const { controller } = createSignalIfSupported();
 
-      const runtimeFetch = customFetch || fetch;
+    if (controller) {
+      if (options.signal)
+        // Respect the user configured abort controller signal.
+        options.signal.addEventListener('abort', () => {
+          controller.abort();
+        });
+
+      options.signal = controller.signal;
+    }
+
+    const runtimeFetch = customFetch || fetch;
+
+    return new Observable((observer) => {
+      // Used to track if the observable is being cleaned up.
+      let cleaningUp;
 
       runtimeFetch(uri, options)
         .then((response) => {
@@ -174,22 +176,26 @@ module.exports = function createUploadLink({
           observer.complete();
         })
         .catch((error) => {
-          if (error.name === 'AbortError')
-            // Fetch was aborted.
-            return;
-
-          if (error.result && error.result.errors && error.result.data)
-            // There is a GraphQL result to forward.
-            observer.next(error.result);
-
-          observer.error(error);
+          // If the observable is being cleaned up, there is no need to call
+          // next or error because there are no more subscribers. An error after
+          // cleanup begins is likely from the cleanup function aborting the
+          // fetch.
+          if (!cleaningUp)
+            error.result && error.result.errors && error.result.data
+              ? // There is a GraphQL result with errors and data to forward.
+                observer.next(error.result)
+              : // Some sort of network or server error, e.g. an invalid fetch
+                // URI or an `AbortError` from a user configured abort controller
+                // signal.
+                observer.error(error);
         });
 
       // Cleanup function.
       return () => {
-        if (abortController)
-          // Abort fetch.
-          abortController.abort();
+        cleaningUp = true;
+
+        // Abort fetch. It’s ok to signal an abort even when not fetching.
+        if (controller) controller.abort();
       };
     });
   });
