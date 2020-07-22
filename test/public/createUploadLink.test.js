@@ -50,12 +50,9 @@ module.exports = (tests) => {
           cache: new InMemoryCache(),
           link: createUploadLink(),
         });
+        const query = '{\n  a\n}\n';
         const result = await apolloClient.query({
-          query: gql`
-            {
-              a
-            }
-          `,
+          query: gql(query),
         });
 
         deepStrictEqual(result, {
@@ -66,7 +63,7 @@ module.exports = (tests) => {
         strictEqual(fetchUri, defaultUri);
         strictEqual(fetchOptions.method, 'POST');
         deepStrictEqual(JSON.parse(fetchOptions.body), {
-          query: '{\n  a\n}\n',
+          query,
           variables: {},
         });
       } finally {
@@ -144,7 +141,7 @@ module.exports = (tests) => {
     }
   );
 
-  tests.add('`createUploadLink` option `uri`.', async () => {
+  tests.add('`createUploadLink` with option `uri`.', async () => {
     let fetchUri;
     let fetchOptions;
 
@@ -164,12 +161,9 @@ module.exports = (tests) => {
         },
       }),
     });
+    const query = '{\n  a\n}\n';
     const result = await apolloClient.query({
-      query: gql`
-        {
-          a
-        }
-      `,
+      query: gql(query),
     });
 
     deepStrictEqual(result, {
@@ -180,12 +174,12 @@ module.exports = (tests) => {
     strictEqual(fetchUri, uri);
     strictEqual(fetchOptions.method, 'POST');
     deepStrictEqual(JSON.parse(fetchOptions.body), {
-      query: '{\n  a\n}\n',
+      query,
       variables: {},
     });
   });
 
-  tests.add('`createUploadLink` option `includeExtensions`.', async () => {
+  tests.add('`createUploadLink` with option `includeExtensions`.', async () => {
     let fetchUri;
     let fetchOptions;
 
@@ -210,12 +204,9 @@ module.exports = (tests) => {
         })
       ),
     });
+    const query = '{\n  a\n}\n';
     const result = await apolloClient.query({
-      query: gql`
-        {
-          a
-        }
-      `,
+      query: gql(query),
     });
 
     deepStrictEqual(result, {
@@ -226,7 +217,7 @@ module.exports = (tests) => {
     strictEqual(fetchUri, defaultUri);
     strictEqual(fetchOptions.method, 'POST');
     deepStrictEqual(JSON.parse(fetchOptions.body), {
-      query: '{\n  a\n}\n',
+      query,
       variables: {},
       extensions: {
         a: true,
@@ -259,12 +250,9 @@ module.exports = (tests) => {
         },
       }),
     });
+    const query = '{\n  a\n}\n';
     const result = await apolloClient.query({
-      query: gql`
-        {
-          a
-        }
-      `,
+      query: gql(query),
     });
 
     deepStrictEqual(result, {
@@ -283,7 +271,7 @@ module.exports = (tests) => {
       clientAwareness.version
     );
     deepStrictEqual(JSON.parse(fetchOptions.body), {
-      query: '{\n  a\n}\n',
+      query,
       variables: {},
     });
   });
@@ -327,12 +315,9 @@ module.exports = (tests) => {
           })
         ),
       });
+      const query = '{\n  a\n}\n';
       const result = await apolloClient.query({
-        query: gql`
-          {
-            a
-          }
-        `,
+        query: gql(query),
       });
 
       deepStrictEqual(result, {
@@ -351,7 +336,7 @@ module.exports = (tests) => {
         clientAwareness.version
       );
       deepStrictEqual(JSON.parse(fetchOptions.body), {
-        query: '{\n  a\n}\n',
+        query,
         variables: {},
       });
     }
@@ -462,15 +447,11 @@ module.exports = (tests) => {
         },
       }),
     });
+    const query = '{\n  a\n  b\n}\n';
 
     await rejects(
       apolloClient.query({
-        query: gql`
-          {
-            a
-            b
-          }
-        `,
+        query: gql(query),
       }),
       new ApolloError({ graphQLErrors })
     );
@@ -478,7 +459,7 @@ module.exports = (tests) => {
     strictEqual(fetchUri, defaultUri);
     strictEqual(fetchOptions.method, 'POST');
     deepStrictEqual(JSON.parse(fetchOptions.body), {
-      query: '{\n  a\n  b\n}\n',
+      query,
       variables: {},
     });
   });
@@ -504,14 +485,11 @@ module.exports = (tests) => {
         },
       }),
     });
+    const query = '{\n  a\n}\n';
 
     await rejects(
       apolloClient.query({
-        query: gql`
-          {
-            a
-          }
-        `,
+        query: gql(query),
       }),
       (error) => {
         try {
@@ -531,7 +509,7 @@ module.exports = (tests) => {
     strictEqual(fetchUri, defaultUri);
     strictEqual(fetchOptions.method, 'POST');
     deepStrictEqual(JSON.parse(fetchOptions.body), {
-      query: '{\n  a\n}\n',
+      query,
       variables: {},
     });
   });
@@ -579,12 +557,9 @@ module.exports = (tests) => {
             },
           }),
         });
+        const query = '{\n  a\n}\n';
         const resultPromise = apolloClient.query({
-          query: gql`
-            {
-              a
-            }
-          `,
+          query: gql(query),
         });
 
         controller.abort();
@@ -599,7 +574,7 @@ module.exports = (tests) => {
         strictEqual(fetchUri, defaultUri);
         strictEqual(fetchOptions.method, 'POST');
         deepStrictEqual(JSON.parse(fetchOptions.body), {
-          query: '{\n  a\n}\n',
+          query,
           variables: {},
         });
       } finally {
