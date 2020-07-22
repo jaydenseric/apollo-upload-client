@@ -482,17 +482,13 @@ module.exports = (tests) => {
         query: gql(query),
       }),
       (error) => {
-        try {
-          strictEqual(error instanceof ApolloError, true);
-          strictEqual('networkError' in error, true);
-          strictEqual(error.networkError.name, 'ServerError');
-          strictEqual(error.networkError.statusCode, 401);
-          strictEqual(error.networkError.response, fetchResponse);
-          deepStrictEqual(error.networkError.result, payload);
-          return true;
-        } catch (error) {
-          return false;
-        }
+        strictEqual(error instanceof ApolloError, true);
+        strictEqual('networkError' in error, true);
+        strictEqual(error.networkError.name, 'ServerError');
+        strictEqual(error.networkError.statusCode, 401);
+        strictEqual(error.networkError.response, fetchResponse);
+        deepStrictEqual(error.networkError.result, payload);
+        return true;
       }
     );
 
