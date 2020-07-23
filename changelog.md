@@ -1,5 +1,11 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Patch
+
+- Removed no longer necessary [`formdata-node`](https://npm.im/formdata-node) workarounds in tests.
+
 ## 14.1.0
 
 ### Minor
