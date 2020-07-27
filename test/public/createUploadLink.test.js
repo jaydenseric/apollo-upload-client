@@ -13,8 +13,8 @@ const { AbortController, AbortSignal } = require('abort-controller');
 const Blob = require('fetch-blob');
 const FormData = require('formdata-node');
 const { AbortError, Response } = require('node-fetch');
+const revertableGlobals = require('revertable-globals');
 const createUploadLink = require('../../public/createUploadLink');
-const revertablePolyfills = require('../revertablePolyfills');
 
 const standardAbortErrorMessage = 'The operation was aborted.';
 const defaultUri = '/graphql';
@@ -33,7 +33,7 @@ module.exports = (tests) => {
       let fetchUri;
       let fetchOptions;
 
-      const revertPolyfills = revertablePolyfills({
+      const revertGlobals = revertableGlobals({
         async fetch(uri, options) {
           fetchUri = uri;
           fetchOptions = options;
@@ -67,7 +67,7 @@ module.exports = (tests) => {
           variables: {},
         });
       } finally {
-        revertPolyfills();
+        revertGlobals();
       }
     }
   );
@@ -78,7 +78,7 @@ module.exports = (tests) => {
       let fetchUri;
       let fetchOptions;
 
-      const revertPolyfills = revertablePolyfills({
+      const revertGlobals = revertableGlobals({
         Blob,
         FormData,
         async fetch(uri, options) {
@@ -128,7 +128,7 @@ module.exports = (tests) => {
         strictEqual(formDataEntries[2][1].name, 'blob');
         strictEqual(formDataEntries[2][1].type, filetype);
       } finally {
-        revertPolyfills();
+        revertGlobals();
       }
     }
   );
@@ -308,7 +308,7 @@ module.exports = (tests) => {
   tests.add(
     '`createUploadLink` with option `useGETForQueries`, query, files.',
     async () => {
-      const revertPolyfills = revertablePolyfills({ Blob });
+      const revertGlobals = revertableGlobals({ Blob });
 
       try {
         let fetchUri;
@@ -365,7 +365,7 @@ module.exports = (tests) => {
         strictEqual(formDataEntries[2][1].name, 'blob');
         strictEqual(formDataEntries[2][1].type, filetype);
       } finally {
-        revertPolyfills();
+        revertGlobals();
       }
     }
   );
@@ -751,7 +751,7 @@ module.exports = (tests) => {
       let fetchOptions;
 
       const controller = new AbortController();
-      const revertPolyfills = revertablePolyfills({
+      const revertGlobals = revertableGlobals({
         AbortController,
         AbortSignal,
       });
@@ -808,7 +808,7 @@ module.exports = (tests) => {
           variables: {},
         });
       } finally {
-        revertPolyfills();
+        revertGlobals();
       }
     }
   );

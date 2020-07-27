@@ -4,6 +4,7 @@
 
 ### Patch
 
+- Use [`revertable-globals`](https://npm.im/revertable-globals) for tests.
 - Removed no longer necessary [`formdata-node`](https://npm.im/formdata-node) workarounds in tests.
 
 ## 14.1.0
