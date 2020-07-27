@@ -6,6 +6,7 @@
 
 - Use [`revertable-globals`](https://npm.im/revertable-globals) for tests.
 - Removed no longer necessary [`formdata-node`](https://npm.im/formdata-node) workarounds in tests.
+- Removed `npm-debug.log` from the `.gitignore` file as npm [v4.2.0](https://github.com/npm/npm/releases/tag/v4.2.0)+ doesn’t create it in the current working directory.
 
 ## 14.1.0
 
