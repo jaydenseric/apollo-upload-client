@@ -6,8 +6,10 @@ const {
   ApolloError,
   ApolloLink,
   concat,
+  execute,
   gql,
   InMemoryCache,
+  toPromise,
 } = require('@apollo/client/core');
 const { AbortController, AbortSignal } = require('abort-controller');
 const Blob = require('fetch-blob');
@@ -653,6 +655,35 @@ module.exports = (tests) => {
       strictEqual(formDataEntries[2][1].type, filetype);
     }
   );
+
+  tests.add('`createUploadLink` with `execute`.', async () => {
+    let fetchUri;
+    let fetchOptions;
+
+    const link = createUploadLink({
+      async fetch(uri, options) {
+        fetchUri = uri;
+        fetchOptions = options;
+
+        return new Response(
+          JSON.stringify({ data: { a: true } }),
+          graphqlResponseOptionsOk
+        );
+      },
+    });
+    const query = '{\n  a\n}\n';
+    const result = await toPromise(execute(link, { query: gql(query) }));
+
+    deepStrictEqual(result, {
+      data: { a: true },
+    });
+    strictEqual(fetchUri, defaultUri);
+    strictEqual(fetchOptions.method, 'POST');
+    deepStrictEqual(JSON.parse(fetchOptions.body), {
+      query,
+      variables: {},
+    });
+  });
 
   tests.add('`createUploadLink` with errors, data.', async () => {
     let fetchUri;
