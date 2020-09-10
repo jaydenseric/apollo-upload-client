@@ -1,5 +1,12 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Patch
+
+- Updated dependencies.
+- Lint fixes for updated Prettier.
+
 ## 14.1.1
 
 ### Patch

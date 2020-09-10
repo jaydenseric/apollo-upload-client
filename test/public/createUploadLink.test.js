@@ -123,7 +123,7 @@ module.exports = (tests) => {
         });
         strictEqual(formDataEntries[1][0], 'map');
         deepStrictEqual(JSON.parse(formDataEntries[1][1]), {
-          '1': ['variables.a'],
+          1: ['variables.a'],
         });
         strictEqual(formDataEntries[2][0], '1');
         strictEqual(formDataEntries[2][1] instanceof Blob, true);
@@ -360,7 +360,7 @@ module.exports = (tests) => {
         });
         strictEqual(formDataEntries[1][0], 'map');
         deepStrictEqual(JSON.parse(formDataEntries[1][1]), {
-          '1': ['variables.a'],
+          1: ['variables.a'],
         });
         strictEqual(formDataEntries[2][0], '1');
         strictEqual(formDataEntries[2][1] instanceof Blob, true);
@@ -647,7 +647,7 @@ module.exports = (tests) => {
       });
       strictEqual(formDataEntries[1][0], 'map');
       deepStrictEqual(JSON.parse(formDataEntries[1][1]), {
-        '1': ['variables.a'],
+        1: ['variables.a'],
       });
       strictEqual(formDataEntries[2][0], '1');
       strictEqual(formDataEntries[2][1] instanceof Blob, true);
