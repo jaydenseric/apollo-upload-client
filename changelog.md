@@ -6,6 +6,7 @@
 
 - Updated dependencies.
 - Lint fixes for updated Prettier.
+- Rewrote the tests to use `execute` from [`apollo-link`](https://npm.im/apollo-link) instead of `ApolloClient` `query` and `mutate` methods.
 
 ## 14.1.1
 
