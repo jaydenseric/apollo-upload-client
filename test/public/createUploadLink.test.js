@@ -9,7 +9,7 @@ const { AbortError, Response } = require('node-fetch');
 const revertableGlobals = require('revertable-globals');
 const createUploadLink = require('../../public/createUploadLink');
 const createUnexpectedCallError = require('../createUnexpectedCallError');
-const timeoutPromise = require('../timeoutPromise');
+const timeLimitPromise = require('../timeLimitPromise');
 
 const defaultUri = '/graphql';
 const graphqlResponseOptions = {
@@ -39,21 +39,23 @@ module.exports = (tests) => {
       });
 
       try {
-        await timeoutPromise((resolve, reject) => {
-          execute(createUploadLink(), {
-            query: gql(query),
-          }).subscribe({
-            next(data) {
-              nextData = data;
-            },
-            error() {
-              reject(createUnexpectedCallError());
-            },
-            complete() {
-              resolve();
-            },
-          });
-        });
+        await timeLimitPromise(
+          new Promise((resolve, reject) => {
+            execute(createUploadLink(), {
+              query: gql(query),
+            }).subscribe({
+              next(data) {
+                nextData = data;
+              },
+              error() {
+                reject(createUnexpectedCallError());
+              },
+              complete() {
+                resolve();
+              },
+            });
+          })
+        );
 
         strictEqual(fetchUri, defaultUri);
         deepStrictEqual(fetchOptions, {
@@ -91,24 +93,26 @@ module.exports = (tests) => {
       });
 
       try {
-        await timeoutPromise((resolve, reject) => {
-          execute(createUploadLink(), {
-            query: gql(query),
-            variables: {
-              a: new Blob(['a'], { type: filetype }),
-            },
-          }).subscribe({
-            next(data) {
-              nextData = data;
-            },
-            error() {
-              reject(createUnexpectedCallError());
-            },
-            complete() {
-              resolve();
-            },
-          });
-        });
+        await timeLimitPromise(
+          new Promise((resolve, reject) => {
+            execute(createUploadLink(), {
+              query: gql(query),
+              variables: {
+                a: new Blob(['a'], { type: filetype }),
+              },
+            }).subscribe({
+              next(data) {
+                nextData = data;
+              },
+              error() {
+                reject(createUnexpectedCallError());
+              },
+              complete() {
+                resolve();
+              },
+            });
+          })
+        );
 
         strictEqual(fetchUri, defaultUri);
         strictEqual(typeof fetchOptions, 'object');
@@ -154,35 +158,37 @@ module.exports = (tests) => {
     const query = '{\n  a\n}\n';
     const payload = { data: { a: true } };
 
-    await timeoutPromise((resolve, reject) => {
-      execute(
-        createUploadLink({
-          uri,
-          async fetch(uri, options) {
-            fetchUri = uri;
-            fetchOptions = options;
+    await timeLimitPromise(
+      new Promise((resolve, reject) => {
+        execute(
+          createUploadLink({
+            uri,
+            async fetch(uri, options) {
+              fetchUri = uri;
+              fetchOptions = options;
 
-            return new Response(
-              JSON.stringify(payload),
-              graphqlResponseOptions
-            );
+              return new Response(
+                JSON.stringify(payload),
+                graphqlResponseOptions
+              );
+            },
+          }),
+          {
+            query: gql(query),
+          }
+        ).subscribe({
+          next(data) {
+            nextData = data;
           },
-        }),
-        {
-          query: gql(query),
-        }
-      ).subscribe({
-        next(data) {
-          nextData = data;
-        },
-        error() {
-          reject(createUnexpectedCallError());
-        },
-        complete() {
-          resolve();
-        },
-      });
-    });
+          error() {
+            reject(createUnexpectedCallError());
+          },
+          complete() {
+            resolve();
+          },
+        });
+      })
+    );
 
     strictEqual(fetchUri, uri);
     deepStrictEqual(fetchOptions, {
@@ -202,41 +208,43 @@ module.exports = (tests) => {
     const query = '{\n  a\n}\n';
     const payload = { data: { a: true } };
 
-    await timeoutPromise((resolve, reject) => {
-      execute(
-        concat(
-          new ApolloLink((operation, forward) => {
-            operation.extensions.a = true;
-            return forward(operation);
-          }),
-          createUploadLink({
-            includeExtensions: true,
-            async fetch(uri, options) {
-              fetchUri = uri;
-              fetchOptions = options;
+    await timeLimitPromise(
+      new Promise((resolve, reject) => {
+        execute(
+          concat(
+            new ApolloLink((operation, forward) => {
+              operation.extensions.a = true;
+              return forward(operation);
+            }),
+            createUploadLink({
+              includeExtensions: true,
+              async fetch(uri, options) {
+                fetchUri = uri;
+                fetchOptions = options;
 
-              return new Response(
-                JSON.stringify(payload),
-                graphqlResponseOptions
-              );
-            },
-          })
-        ),
-        {
-          query: gql(query),
-        }
-      ).subscribe({
-        next(data) {
-          nextData = data;
-        },
-        error() {
-          reject(createUnexpectedCallError());
-        },
-        complete() {
-          resolve();
-        },
-      });
-    });
+                return new Response(
+                  JSON.stringify(payload),
+                  graphqlResponseOptions
+                );
+              },
+            })
+          ),
+          {
+            query: gql(query),
+          }
+        ).subscribe({
+          next(data) {
+            nextData = data;
+          },
+          error() {
+            reject(createUnexpectedCallError());
+          },
+          complete() {
+            resolve();
+          },
+        });
+      })
+    );
 
     strictEqual(fetchUri, defaultUri);
     deepStrictEqual(fetchOptions, {
@@ -264,35 +272,37 @@ module.exports = (tests) => {
       const query = '{\n  a\n}\n';
       const payload = { data: { a: true } };
 
-      await timeoutPromise((resolve, reject) => {
-        execute(
-          createUploadLink({
-            fetchOptions: { method: 'GET' },
-            async fetch(uri, options) {
-              fetchUri = uri;
-              fetchOptions = options;
+      await timeLimitPromise(
+        new Promise((resolve, reject) => {
+          execute(
+            createUploadLink({
+              fetchOptions: { method: 'GET' },
+              async fetch(uri, options) {
+                fetchUri = uri;
+                fetchOptions = options;
 
-              return new Response(
-                JSON.stringify(payload),
-                graphqlResponseOptions
-              );
+                return new Response(
+                  JSON.stringify(payload),
+                  graphqlResponseOptions
+                );
+              },
+            }),
+            {
+              query: gql(query),
+            }
+          ).subscribe({
+            next(data) {
+              nextData = data;
             },
-          }),
-          {
-            query: gql(query),
-          }
-        ).subscribe({
-          next(data) {
-            nextData = data;
-          },
-          error() {
-            reject(createUnexpectedCallError());
-          },
-          complete() {
-            resolve();
-          },
-        });
-      });
+            error() {
+              reject(createUnexpectedCallError());
+            },
+            complete() {
+              resolve();
+            },
+          });
+        })
+      );
 
       strictEqual(
         fetchUri,
@@ -317,35 +327,37 @@ module.exports = (tests) => {
       const query = '{\n  a\n}\n';
       const payload = { data: { a: true } };
 
-      await timeoutPromise((resolve, reject) => {
-        execute(
-          createUploadLink({
-            useGETForQueries: true,
-            async fetch(uri, options) {
-              fetchUri = uri;
-              fetchOptions = options;
+      await timeLimitPromise(
+        new Promise((resolve, reject) => {
+          execute(
+            createUploadLink({
+              useGETForQueries: true,
+              async fetch(uri, options) {
+                fetchUri = uri;
+                fetchOptions = options;
 
-              return new Response(
-                JSON.stringify(payload),
-                graphqlResponseOptions
-              );
+                return new Response(
+                  JSON.stringify(payload),
+                  graphqlResponseOptions
+                );
+              },
+            }),
+            {
+              query: gql(query),
+            }
+          ).subscribe({
+            next(data) {
+              nextData = data;
             },
-          }),
-          {
-            query: gql(query),
-          }
-        ).subscribe({
-          next(data) {
-            nextData = data;
-          },
-          error() {
-            reject(createUnexpectedCallError());
-          },
-          complete() {
-            resolve();
-          },
-        });
-      });
+            error() {
+              reject(createUnexpectedCallError());
+            },
+            complete() {
+              resolve();
+            },
+          });
+        })
+      );
 
       strictEqual(
         fetchUri,
@@ -373,39 +385,41 @@ module.exports = (tests) => {
       const revertGlobals = revertableGlobals({ Blob });
 
       try {
-        await timeoutPromise((resolve, reject) => {
-          execute(
-            createUploadLink({
-              useGETForQueries: true,
-              FormData,
-              async fetch(uri, options) {
-                fetchUri = uri;
-                fetchOptions = options;
+        await timeLimitPromise(
+          new Promise((resolve, reject) => {
+            execute(
+              createUploadLink({
+                useGETForQueries: true,
+                FormData,
+                async fetch(uri, options) {
+                  fetchUri = uri;
+                  fetchOptions = options;
 
-                return new Response(
-                  JSON.stringify(payload),
-                  graphqlResponseOptions
-                );
+                  return new Response(
+                    JSON.stringify(payload),
+                    graphqlResponseOptions
+                  );
+                },
+              }),
+              {
+                query: gql(query),
+                variables: {
+                  a: new Blob(['a'], { type: filetype }),
+                },
+              }
+            ).subscribe({
+              next(data) {
+                nextData = data;
               },
-            }),
-            {
-              query: gql(query),
-              variables: {
-                a: new Blob(['a'], { type: filetype }),
+              error() {
+                reject(createUnexpectedCallError());
               },
-            }
-          ).subscribe({
-            next(data) {
-              nextData = data;
-            },
-            error() {
-              reject(createUnexpectedCallError());
-            },
-            complete() {
-              resolve();
-            },
-          });
-        });
+              complete() {
+                resolve();
+              },
+            });
+          })
+        );
 
         strictEqual(fetchUri, defaultUri);
         strictEqual(typeof fetchOptions, 'object');
@@ -450,43 +464,45 @@ module.exports = (tests) => {
       const query = 'query($a: Boolean) {\n  a(a: $a)\n}\n';
       const payload = { data: { a: true } };
       const parseError = new Error('Unserializable.');
-      const observerError = await timeoutPromise((resolve, reject) => {
-        execute(
-          createUploadLink({
-            useGETForQueries: true,
-            async fetch() {
-              fetched = true;
+      const observerError = await timeLimitPromise(
+        new Promise((resolve, reject) => {
+          execute(
+            createUploadLink({
+              useGETForQueries: true,
+              async fetch() {
+                fetched = true;
 
-              return new Response(
-                JSON.stringify(payload),
-                graphqlResponseOptions
-              );
-            },
-          }),
-          {
-            query: gql(query),
-            variables: {
-              // A circular reference would be a more realistic way to cause a
-              // `JSON.stringify` error, but unfortunately that triggers an
-              // `extractFiles` bug:
-              // https://github.com/jaydenseric/extract-files/issues/14
-              toJSON() {
-                throw parseError;
+                return new Response(
+                  JSON.stringify(payload),
+                  graphqlResponseOptions
+                );
               },
+            }),
+            {
+              query: gql(query),
+              variables: {
+                // A circular reference would be a more realistic way to cause a
+                // `JSON.stringify` error, but unfortunately that triggers an
+                // `extractFiles` bug:
+                // https://github.com/jaydenseric/extract-files/issues/14
+                toJSON() {
+                  throw parseError;
+                },
+              },
+            }
+          ).subscribe({
+            next() {
+              reject(createUnexpectedCallError());
             },
-          }
-        ).subscribe({
-          next() {
-            reject(createUnexpectedCallError());
-          },
-          error(error) {
-            resolve(error);
-          },
-          complete() {
-            reject(createUnexpectedCallError());
-          },
-        });
-      });
+            error(error) {
+              resolve(error);
+            },
+            complete() {
+              reject(createUnexpectedCallError());
+            },
+          });
+        })
+      );
 
       strictEqual(fetched, false);
       strictEqual(typeof observerError, 'object');
@@ -505,35 +521,37 @@ module.exports = (tests) => {
       const query = 'mutation {\n  a\n}\n';
       const payload = { data: { a: true } };
 
-      await timeoutPromise((resolve, reject) => {
-        execute(
-          createUploadLink({
-            useGETForQueries: true,
-            async fetch(uri, options) {
-              fetchUri = uri;
-              fetchOptions = options;
+      await timeLimitPromise(
+        new Promise((resolve, reject) => {
+          execute(
+            createUploadLink({
+              useGETForQueries: true,
+              async fetch(uri, options) {
+                fetchUri = uri;
+                fetchOptions = options;
 
-              return new Response(
-                JSON.stringify(payload),
-                graphqlResponseOptions
-              );
+                return new Response(
+                  JSON.stringify(payload),
+                  graphqlResponseOptions
+                );
+              },
+            }),
+            {
+              query: gql(query),
+            }
+          ).subscribe({
+            next(data) {
+              nextData = data;
             },
-          }),
-          {
-            query: gql(query),
-          }
-        ).subscribe({
-          next(data) {
-            nextData = data;
-          },
-          error() {
-            reject(createUnexpectedCallError());
-          },
-          complete() {
-            resolve();
-          },
-        });
-      });
+            error() {
+              reject(createUnexpectedCallError());
+            },
+            complete() {
+              resolve();
+            },
+          });
+        })
+      );
 
       strictEqual(fetchUri, defaultUri);
       deepStrictEqual(fetchOptions, {
@@ -555,80 +573,12 @@ module.exports = (tests) => {
     const query = '{\n  a\n}\n';
     const payload = { data: { a: true } };
 
-    await timeoutPromise((resolve, reject) => {
-      execute(
-        concat(
-          new ApolloLink((operation, forward) => {
-            operation.setContext({ clientAwareness });
-            return forward(operation);
-          }),
-          createUploadLink({
-            async fetch(uri, options) {
-              fetchUri = uri;
-              fetchOptions = options;
-
-              return new Response(
-                JSON.stringify(payload),
-                graphqlResponseOptions
-              );
-            },
-          })
-        ),
-        {
-          query: gql(query),
-        }
-      ).subscribe({
-        next(data) {
-          nextData = data;
-        },
-        error() {
-          reject(createUnexpectedCallError());
-        },
-        complete() {
-          resolve();
-        },
-      });
-    });
-
-    strictEqual(fetchUri, defaultUri);
-    deepStrictEqual(fetchOptions, {
-      method: 'POST',
-      headers: {
-        accept: '*/*',
-        'content-type': 'application/json',
-        'apollographql-client-name': clientAwareness.name,
-        'apollographql-client-version': clientAwareness.version,
-      },
-      credentials: undefined,
-      body: JSON.stringify({ variables: {}, query }),
-    });
-    deepStrictEqual(nextData, payload);
-  });
-
-  tests.add(
-    '`createUploadLink` with context `clientAwareness`, overridden by context `headers`.',
-    async () => {
-      let fetchUri;
-      let fetchOptions;
-      let nextData;
-
-      const clientAwarenessOriginal = { name: 'a', version: '1.0.0' };
-      const clientAwarenessOverride = { name: 'b', version: '2.0.0' };
-      const query = '{\n  a\n}\n';
-      const payload = { data: { a: true } };
-
-      await timeoutPromise((resolve, reject) => {
+    await timeLimitPromise(
+      new Promise((resolve, reject) => {
         execute(
           concat(
             new ApolloLink((operation, forward) => {
-              operation.setContext({
-                clientAwareness: clientAwarenessOriginal,
-                headers: {
-                  'apollographql-client-name': clientAwarenessOverride.name,
-                  'apollographql-client-version':
-                    clientAwarenessOverride.version,
-                },
-              });
+              operation.setContext({ clientAwareness });
               return forward(operation);
             }),
             createUploadLink({
@@ -657,7 +607,79 @@ module.exports = (tests) => {
             resolve();
           },
         });
-      });
+      })
+    );
+
+    strictEqual(fetchUri, defaultUri);
+    deepStrictEqual(fetchOptions, {
+      method: 'POST',
+      headers: {
+        accept: '*/*',
+        'content-type': 'application/json',
+        'apollographql-client-name': clientAwareness.name,
+        'apollographql-client-version': clientAwareness.version,
+      },
+      credentials: undefined,
+      body: JSON.stringify({ variables: {}, query }),
+    });
+    deepStrictEqual(nextData, payload);
+  });
+
+  tests.add(
+    '`createUploadLink` with context `clientAwareness`, overridden by context `headers`.',
+    async () => {
+      let fetchUri;
+      let fetchOptions;
+      let nextData;
+
+      const clientAwarenessOriginal = { name: 'a', version: '1.0.0' };
+      const clientAwarenessOverride = { name: 'b', version: '2.0.0' };
+      const query = '{\n  a\n}\n';
+      const payload = { data: { a: true } };
+
+      await timeLimitPromise(
+        new Promise((resolve, reject) => {
+          execute(
+            concat(
+              new ApolloLink((operation, forward) => {
+                operation.setContext({
+                  clientAwareness: clientAwarenessOriginal,
+                  headers: {
+                    'apollographql-client-name': clientAwarenessOverride.name,
+                    'apollographql-client-version':
+                      clientAwarenessOverride.version,
+                  },
+                });
+                return forward(operation);
+              }),
+              createUploadLink({
+                async fetch(uri, options) {
+                  fetchUri = uri;
+                  fetchOptions = options;
+
+                  return new Response(
+                    JSON.stringify(payload),
+                    graphqlResponseOptions
+                  );
+                },
+              })
+            ),
+            {
+              query: gql(query),
+            }
+          ).subscribe({
+            next(data) {
+              nextData = data;
+            },
+            error() {
+              reject(createUnexpectedCallError());
+            },
+            complete() {
+              resolve();
+            },
+          });
+        })
+      );
 
       strictEqual(fetchUri, defaultUri);
       deepStrictEqual(fetchOptions, {
@@ -692,47 +714,49 @@ module.exports = (tests) => {
         }
       }
 
-      await timeoutPromise((resolve, reject) => {
-        execute(
-          createUploadLink({
-            isExtractableFile(value) {
-              return value instanceof TextFile;
-            },
-            formDataAppendFile(formData, fieldName, file) {
-              formData.append(
-                fieldName,
-                file instanceof TextFile ? file.blob : file
-              );
-            },
-            FormData,
-            async fetch(uri, options) {
-              fetchUri = uri;
-              fetchOptions = options;
+      await timeLimitPromise(
+        new Promise((resolve, reject) => {
+          execute(
+            createUploadLink({
+              isExtractableFile(value) {
+                return value instanceof TextFile;
+              },
+              formDataAppendFile(formData, fieldName, file) {
+                formData.append(
+                  fieldName,
+                  file instanceof TextFile ? file.blob : file
+                );
+              },
+              FormData,
+              async fetch(uri, options) {
+                fetchUri = uri;
+                fetchOptions = options;
 
-              return new Response(
-                JSON.stringify(payload),
-                graphqlResponseOptions
-              );
+                return new Response(
+                  JSON.stringify(payload),
+                  graphqlResponseOptions
+                );
+              },
+            }),
+            {
+              query: gql(query),
+              variables: {
+                a: new TextFile('a'),
+              },
+            }
+          ).subscribe({
+            next(data) {
+              nextData = data;
             },
-          }),
-          {
-            query: gql(query),
-            variables: {
-              a: new TextFile('a'),
+            error() {
+              reject(createUnexpectedCallError());
             },
-          }
-        ).subscribe({
-          next(data) {
-            nextData = data;
-          },
-          error() {
-            reject(createUnexpectedCallError());
-          },
-          complete() {
-            resolve();
-          },
-        });
-      });
+            complete() {
+              resolve();
+            },
+          });
+        })
+      );
 
       strictEqual(fetchUri, defaultUri);
       strictEqual(typeof fetchOptions, 'object');
@@ -779,31 +803,33 @@ module.exports = (tests) => {
       ],
       data: { a: true },
     };
-    const observerError = await timeoutPromise((resolve, reject) => {
-      execute(
-        createUploadLink({
-          async fetch() {
-            return (fetchResponse = new Response(JSON.stringify(payload), {
-              ...graphqlResponseOptions,
-              status: 400,
-            }));
+    const observerError = await timeLimitPromise(
+      new Promise((resolve, reject) => {
+        execute(
+          createUploadLink({
+            async fetch() {
+              return (fetchResponse = new Response(JSON.stringify(payload), {
+                ...graphqlResponseOptions,
+                status: 400,
+              }));
+            },
+          }),
+          {
+            query: gql('{ a b }'),
+          }
+        ).subscribe({
+          next(data) {
+            nextData = data;
           },
-        }),
-        {
-          query: gql('{ a b }'),
-        }
-      ).subscribe({
-        next(data) {
-          nextData = data;
-        },
-        error(error) {
-          resolve(error);
-        },
-        complete() {
-          reject(createUnexpectedCallError());
-        },
-      });
-    });
+          error(error) {
+            resolve(error);
+          },
+          complete() {
+            reject(createUnexpectedCallError());
+          },
+        });
+      })
+    );
 
     strictEqual(observerError.name, 'ServerError');
     strictEqual(observerError.statusCode, 400);
@@ -816,31 +842,33 @@ module.exports = (tests) => {
     let fetchResponse;
 
     const payload = { errors: [{ message: 'Unauthorized.' }] };
-    const observerError = await timeoutPromise((resolve, reject) => {
-      execute(
-        createUploadLink({
-          async fetch() {
-            return (fetchResponse = new Response(JSON.stringify(payload), {
-              ...graphqlResponseOptions,
-              status: 401,
-            }));
+    const observerError = await timeLimitPromise(
+      new Promise((resolve, reject) => {
+        execute(
+          createUploadLink({
+            async fetch() {
+              return (fetchResponse = new Response(JSON.stringify(payload), {
+                ...graphqlResponseOptions,
+                status: 401,
+              }));
+            },
+          }),
+          {
+            query: gql('{ a }'),
+          }
+        ).subscribe({
+          next() {
+            reject(createUnexpectedCallError());
           },
-        }),
-        {
-          query: gql('{ a }'),
-        }
-      ).subscribe({
-        next() {
-          reject(createUnexpectedCallError());
-        },
-        error(error) {
-          resolve(error);
-        },
-        complete() {
-          reject(createUnexpectedCallError());
-        },
-      });
-    });
+          error(error) {
+            resolve(error);
+          },
+          complete() {
+            reject(createUnexpectedCallError());
+          },
+        });
+      })
+    );
 
     strictEqual(observerError.name, 'ServerError');
     strictEqual(observerError.statusCode, 401);
@@ -850,28 +878,30 @@ module.exports = (tests) => {
 
   tests.add('`createUploadLink` with a fetch error.', async () => {
     const fetchError = new Error('Expected.');
-    const observerError = await timeoutPromise((resolve, reject) => {
-      execute(
-        createUploadLink({
-          async fetch() {
-            throw fetchError;
+    const observerError = await timeLimitPromise(
+      new Promise((resolve, reject) => {
+        execute(
+          createUploadLink({
+            async fetch() {
+              throw fetchError;
+            },
+          }),
+          {
+            query: gql('{ a }'),
+          }
+        ).subscribe({
+          next() {
+            reject(createUnexpectedCallError());
           },
-        }),
-        {
-          query: gql('{ a }'),
-        }
-      ).subscribe({
-        next() {
-          reject(createUnexpectedCallError());
-        },
-        error(error) {
-          resolve(error);
-        },
-        complete() {
-          reject(createUnexpectedCallError());
-        },
-      });
-    });
+          error(error) {
+            resolve(error);
+          },
+          complete() {
+            reject(createUnexpectedCallError());
+          },
+        });
+      })
+    );
 
     strictEqual(observerError, fetchError);
   });
@@ -889,49 +919,51 @@ module.exports = (tests) => {
       const revertGlobals = revertableGlobals({ AbortController, AbortSignal });
 
       try {
-        const observerErrorPromise = timeoutPromise((resolve, reject) => {
-          execute(
-            createUploadLink({
-              fetchOptions: { signal: controller.signal },
-              fetch(uri, options) {
-                fetchUri = uri;
-                fetchOptions = options;
+        const observerErrorPromise = timeLimitPromise(
+          new Promise((resolve, reject) => {
+            execute(
+              createUploadLink({
+                fetchOptions: { signal: controller.signal },
+                fetch(uri, options) {
+                  fetchUri = uri;
+                  fetchOptions = options;
 
-                return new Promise((resolve, reject) => {
-                  // Sleep a few seconds to simulate a slow request and
-                  // response. In this test the fetch should be aborted before
-                  // the timeout.
-                  const timeout = setTimeout(() => {
-                    resolve(
-                      new Response(
-                        JSON.stringify(payload),
-                        graphqlResponseOptions
-                      )
-                    );
-                  }, 4000);
+                  return new Promise((resolve, reject) => {
+                    // Sleep a few seconds to simulate a slow request and
+                    // response. In this test the fetch should be aborted before
+                    // the timeout.
+                    const timeout = setTimeout(() => {
+                      resolve(
+                        new Response(
+                          JSON.stringify(payload),
+                          graphqlResponseOptions
+                        )
+                      );
+                    }, 4000);
 
-                  options.signal.addEventListener('abort', () => {
-                    clearTimeout(timeout);
-                    reject(fetchError);
+                    options.signal.addEventListener('abort', () => {
+                      clearTimeout(timeout);
+                      reject(fetchError);
+                    });
                   });
-                });
+                },
+              }),
+              {
+                query: gql(query),
+              }
+            ).subscribe({
+              next() {
+                reject(createUnexpectedCallError());
               },
-            }),
-            {
-              query: gql(query),
-            }
-          ).subscribe({
-            next() {
-              reject(createUnexpectedCallError());
-            },
-            error(error) {
-              resolve(error);
-            },
-            complete() {
-              reject(createUnexpectedCallError());
-            },
-          });
-        });
+              error(error) {
+                resolve(error);
+              },
+              complete() {
+                reject(createUnexpectedCallError());
+              },
+            });
+          })
+        );
 
         controller.abort();
 
