@@ -204,14 +204,14 @@ module.exports = function createUploadLink({
           // next or error because there are no more subscribers. An error after
           // cleanup begins is likely from the cleanup function aborting the
           // fetch.
-          if (!cleaningUp)
-            error.result && error.result.errors && error.result.data
-              ? // There is a GraphQL result with errors and data to forward.
-                observer.next(error.result)
-              : // Some sort of network or server error, e.g. an invalid fetch
-                // URI or an `AbortError` from a user configured abort controller
-                // signal.
-                observer.error(error);
+          if (!cleaningUp) {
+            // For errors such as an invalid fetch URI there will be no GraphQL
+            // result with errors or data to forward.
+            if (error.result && error.result.errors && error.result.data)
+              observer.next(error.result);
+
+            observer.error(error);
+          }
         });
 
       // Cleanup function.

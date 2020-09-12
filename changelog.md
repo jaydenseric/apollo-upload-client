@@ -7,6 +7,7 @@
 - Updated dependencies.
 - Lint fixes for updated Prettier.
 - Rewrote the tests to use `execute` from [`apollo-link`](https://npm.im/apollo-link) instead of `ApolloClient` `query` and `mutate` methods.
+- Ensure the Apollo Link observable terminates with an error when there are both errors and data, fixing [#222](https://github.com/jaydenseric/apollo-upload-client/issues/222).
 
 ## 14.1.1
 
