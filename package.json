@@ -1,6 +1,6 @@
 {
   "name": "apollo-upload-client",
-  "version": "14.1.1",
+  "version": "14.1.2",
   "description": "A terminating Apollo Link for Apollo Client that allows FileList, File, Blob or ReactNativeFile instances within query or mutation variables and sends GraphQL multipart requests.",
   "license": "MIT",
   "author": {
