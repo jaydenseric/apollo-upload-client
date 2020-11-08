@@ -5,6 +5,7 @@
 ### Patch
 
 - Removed the [`subscriptions-transport-ws`](https://npm.im/subscriptions-transport-ws) peer dependency, via [#235](https://github.com/jaydenseric/apollo-upload-client/pull/235).
+- Updated dependencies.
 
 ## 14.1.2
 
