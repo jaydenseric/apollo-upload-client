@@ -1,6 +1,6 @@
 # apollo-upload-client changelog
 
-## Next
+## 14.1.3
 
 ### Patch
 
