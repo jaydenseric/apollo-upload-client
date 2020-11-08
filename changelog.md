@@ -7,6 +7,7 @@
 - Removed the [`subscriptions-transport-ws`](https://npm.im/subscriptions-transport-ws) peer dependency, via [#235](https://github.com/jaydenseric/apollo-upload-client/pull/235).
 - Updated dependencies.
 - Also run GitHub Actions with Node.js v15.
+- Updated tests to account for the `AbortController` global being defined in Node.js v15+.
 
 ## 14.1.2
 

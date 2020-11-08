@@ -58,7 +58,17 @@ module.exports = (tests) => {
         );
 
         strictEqual(fetchUri, defaultUri);
-        deepStrictEqual(fetchOptions, {
+
+        const {
+          signal: fetchOptionsSignal,
+          ...fetchOptionsRest
+        } = fetchOptions;
+
+        // Defined in Node.js v15+.
+        if (global.AbortSignal)
+          strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
+
+        deepStrictEqual(fetchOptionsRest, {
           method: 'POST',
           headers: { accept: '*/*', 'content-type': 'application/json' },
           credentials: undefined,
@@ -117,16 +127,19 @@ module.exports = (tests) => {
         strictEqual(fetchUri, defaultUri);
         strictEqual(typeof fetchOptions, 'object');
 
-        const { body, ...fetchOptionsWithoutBody } = fetchOptions;
+        const {
+          signal: fetchOptionsSignal,
+          body: fetchOptionsBody,
+          ...fetchOptionsRest
+        } = fetchOptions;
 
-        deepStrictEqual(fetchOptionsWithoutBody, {
-          method: 'POST',
-          headers: { accept: '*/*' },
-          credentials: undefined,
-        });
-        strictEqual(body instanceof FormData, true);
+        // Defined in Node.js v15+.
+        if (global.AbortSignal)
+          strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
 
-        const formDataEntries = Array.from(body.entries());
+        strictEqual(fetchOptionsBody instanceof FormData, true);
+
+        const formDataEntries = Array.from(fetchOptionsBody.entries());
 
         strictEqual(formDataEntries.length, 3);
         strictEqual(formDataEntries[0][0], 'operations');
@@ -142,6 +155,11 @@ module.exports = (tests) => {
         strictEqual(formDataEntries[2][1] instanceof Blob, true);
         strictEqual(formDataEntries[2][1].name, 'blob');
         strictEqual(formDataEntries[2][1].type, filetype);
+        deepStrictEqual(fetchOptionsRest, {
+          method: 'POST',
+          headers: { accept: '*/*' },
+          credentials: undefined,
+        });
         deepStrictEqual(nextData, payload);
       } finally {
         revertGlobals();
@@ -191,7 +209,14 @@ module.exports = (tests) => {
     );
 
     strictEqual(fetchUri, uri);
-    deepStrictEqual(fetchOptions, {
+
+    const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
+
+    // Defined in Node.js v15+.
+    if (global.AbortSignal)
+      strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
+
+    deepStrictEqual(fetchOptionsRest, {
       method: 'POST',
       headers: { accept: '*/*', 'content-type': 'application/json' },
       credentials: undefined,
@@ -247,7 +272,14 @@ module.exports = (tests) => {
     );
 
     strictEqual(fetchUri, defaultUri);
-    deepStrictEqual(fetchOptions, {
+
+    const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
+
+    // Defined in Node.js v15+.
+    if (global.AbortSignal)
+      strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
+
+    deepStrictEqual(fetchOptionsRest, {
       method: 'POST',
       headers: { accept: '*/*', 'content-type': 'application/json' },
       credentials: undefined,
@@ -308,7 +340,14 @@ module.exports = (tests) => {
         fetchUri,
         `${defaultUri}?query=%7B%0A%20%20a%0A%7D%0A&variables=%7B%7D`
       );
-      deepStrictEqual(fetchOptions, {
+
+      const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
+
+      // Defined in Node.js v15+.
+      if (global.AbortSignal)
+        strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
+
+      deepStrictEqual(fetchOptionsRest, {
         method: 'GET',
         headers: { accept: '*/*', 'content-type': 'application/json' },
         credentials: undefined,
@@ -363,7 +402,14 @@ module.exports = (tests) => {
         fetchUri,
         `${defaultUri}?query=%7B%0A%20%20a%0A%7D%0A&variables=%7B%7D`
       );
-      deepStrictEqual(fetchOptions, {
+
+      const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
+
+      // Defined in Node.js v15+.
+      if (global.AbortSignal)
+        strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
+
+      deepStrictEqual(fetchOptionsRest, {
         method: 'GET',
         headers: { accept: '*/*', 'content-type': 'application/json' },
         credentials: undefined,
@@ -424,16 +470,19 @@ module.exports = (tests) => {
         strictEqual(fetchUri, defaultUri);
         strictEqual(typeof fetchOptions, 'object');
 
-        const { body, ...fetchOptionsWithoutBody } = fetchOptions;
+        const {
+          signal: fetchOptionsSignal,
+          body: fetchOptionsBody,
+          ...fetchOptionsRest
+        } = fetchOptions;
 
-        deepStrictEqual(fetchOptionsWithoutBody, {
-          method: 'POST',
-          headers: { accept: '*/*' },
-          credentials: undefined,
-        });
-        strictEqual(body instanceof FormData, true);
+        // Defined in Node.js v15+.
+        if (global.AbortSignal)
+          strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
 
-        const formDataEntries = Array.from(body.entries());
+        strictEqual(fetchOptionsBody instanceof FormData, true);
+
+        const formDataEntries = Array.from(fetchOptionsBody.entries());
 
         strictEqual(formDataEntries.length, 3);
         strictEqual(formDataEntries[0][0], 'operations');
@@ -449,6 +498,11 @@ module.exports = (tests) => {
         strictEqual(formDataEntries[2][1] instanceof Blob, true);
         strictEqual(formDataEntries[2][1].name, 'blob');
         strictEqual(formDataEntries[2][1].type, filetype);
+        deepStrictEqual(fetchOptionsRest, {
+          method: 'POST',
+          headers: { accept: '*/*' },
+          credentials: undefined,
+        });
         deepStrictEqual(nextData, payload);
       } finally {
         revertGlobals();
@@ -554,7 +608,14 @@ module.exports = (tests) => {
       );
 
       strictEqual(fetchUri, defaultUri);
-      deepStrictEqual(fetchOptions, {
+
+      const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
+
+      // Defined in Node.js v15+.
+      if (global.AbortSignal)
+        strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
+
+      deepStrictEqual(fetchOptionsRest, {
         method: 'POST',
         headers: { accept: '*/*', 'content-type': 'application/json' },
         credentials: undefined,
@@ -611,7 +672,14 @@ module.exports = (tests) => {
     );
 
     strictEqual(fetchUri, defaultUri);
-    deepStrictEqual(fetchOptions, {
+
+    const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
+
+    // Defined in Node.js v15+.
+    if (global.AbortSignal)
+      strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
+
+    deepStrictEqual(fetchOptionsRest, {
       method: 'POST',
       headers: {
         accept: '*/*',
@@ -682,7 +750,14 @@ module.exports = (tests) => {
       );
 
       strictEqual(fetchUri, defaultUri);
-      deepStrictEqual(fetchOptions, {
+
+      const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
+
+      // Defined in Node.js v15+.
+      if (global.AbortSignal)
+        strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
+
+      deepStrictEqual(fetchOptionsRest, {
         method: 'POST',
         headers: {
           accept: '*/*',
@@ -761,16 +836,19 @@ module.exports = (tests) => {
       strictEqual(fetchUri, defaultUri);
       strictEqual(typeof fetchOptions, 'object');
 
-      const { body, ...fetchOptionsWithoutBody } = fetchOptions;
+      const {
+        signal: fetchOptionsSignal,
+        body: fetchOptionsBody,
+        ...fetchOptionsRest
+      } = fetchOptions;
 
-      deepStrictEqual(fetchOptionsWithoutBody, {
-        method: 'POST',
-        headers: { accept: '*/*' },
-        credentials: undefined,
-      });
-      strictEqual(body instanceof FormData, true);
+      // Defined in Node.js v15+.
+      if (global.AbortSignal)
+        strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
 
-      const formDataEntries = Array.from(body.entries());
+      strictEqual(fetchOptionsBody instanceof FormData, true);
+
+      const formDataEntries = Array.from(fetchOptionsBody.entries());
 
       strictEqual(formDataEntries.length, 3);
       strictEqual(formDataEntries[0][0], 'operations');
@@ -786,6 +864,11 @@ module.exports = (tests) => {
       strictEqual(formDataEntries[2][1] instanceof Blob, true);
       strictEqual(formDataEntries[2][1].name, 'blob');
       strictEqual(formDataEntries[2][1].type, filetype);
+      deepStrictEqual(fetchOptionsRest, {
+        method: 'POST',
+        headers: { accept: '*/*' },
+        credentials: undefined,
+      });
       deepStrictEqual(nextData, payload);
     }
   );
