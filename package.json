@@ -45,14 +45,15 @@
   },
   "browserslist": "Node 10.17 - 11 and Node < 11, Node 12 - 13 and Node < 13, Node >= 13.7, > 0.5%, not OperaMini all, not dead",
   "peerDependencies": {
+    "@apollo/client": "^3",
     "graphql": "14 - 15"
   },
   "dependencies": {
-    "@apollo/client": "^3.2.5",
     "@babel/runtime": "^7.12.5",
     "extract-files": "^9.0.0"
   },
   "devDependencies": {
+    "@apollo/client": "^3.2.5",
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "@babel/plugin-transform-runtime": "^7.12.1",
