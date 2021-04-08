@@ -18,13 +18,13 @@ Remove any `uri`, `credentials`, or `headers` options from the [`ApolloClient` c
 
 [Apollo Client](https://apollographql.com/docs/react) can only have 1 [terminating Apollo Link](https://apollographql.com/docs/link/overview/#terminating-links) that sends the GraphQL requests; if one such as [`HttpLink`](https://apollographql.com/docs/link/links/http) is already setup, remove it.
 
-## Initialize the client with a [terminating Apollo Link](https://apollographql.com/docs/link/overview/#terminating-links) using [`createUploadLink`](#function-createuploadlink).
+### Initialize the client with a [terminating Apollo Link](https://apollographql.com/docs/link/overview/#terminating-links) using [`createUploadLink`](#function-createuploadlink).
 
 Also ensure the GraphQL server implements the [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec) and that uploads are handled correctly in resolvers.
 
-## For React Native for correctly work on the Android if you are using Flipper check FlipperVersion!
-
-go to the `android/gradle.properties`
+## For React Native 
+For correctly work on the Android if you are using Flipper check FlipperVersion!
+Go to the `android/gradle.properties`
 and check that:
 ```
 Version of flipper SDK to use with React Native
