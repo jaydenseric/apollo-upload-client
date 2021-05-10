@@ -6,8 +6,8 @@ exports.isExtractableFile = require('./isExtractableFile');
 exports.ReactNativeFile = require('./ReactNativeFile');
 
 /**
- * A React Native [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File)
- * substitute.
+ * A React Native
+ * [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) substitute.
  *
  * Be aware that inspecting network traffic with buggy versions of dev tools
  * such as [Flipper](https://fbflipper.com) can interfere with the React Native
