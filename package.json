@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.16",
-    "extract-files": "^9.0.0"
+    "extract-files": "^10.0.0"
   },
   "devDependencies": {
     "abort-controller": "^3.0.0",
@@ -60,7 +60,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-compat": "^3.9.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsdoc": "^33.1.1",
+    "eslint-plugin-jsdoc": "^33.3.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
     "fetch-blob": "^2.1.2",
