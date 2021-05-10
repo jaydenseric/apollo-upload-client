@@ -14,6 +14,7 @@
 ### Patch
 
 - Stop using [`hard-rejection`](https://npm.im/hard-rejection) to detect unhandled `Promise` rejections in tests, as Node.js v15+ does this natively.
+- Test the bundle size manually using [`esbuild`](https://npm.im/esbuild) and [`gzip-size`](https://npm.im/gzip-size), removing [`size-limit`](https://npm.im/size-limit) related dev dependencies, config, and scripts.
 - Updated GitHub Actions CI config:
   - Run tests with Node.js v12, v14, v16.
   - Updated `actions/checkout` to v2.
