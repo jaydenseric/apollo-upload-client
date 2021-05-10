@@ -5,6 +5,7 @@
 ### Major
 
 - Updated Node.js support to `^12.20 || >= 14.13`.
+- Stopped supporting Internet Explorer.
 
 ### Patch
 
@@ -14,6 +15,7 @@
   - Updated `actions/setup-node` to v2.
   - Don’t specify the `CI` environment variable as it’s set by default.
 - Updated a URL in the changelog entry for v14.0.0.
+- Documentation updates.
 
 ## 14.1.3
 

@@ -114,9 +114,9 @@ function UploadFile() {
 
 ## Support
 
-- Node.js `^12.20 || >= 14.13`
-- Browsers [`> 0.5%, not OperaMini all, not dead`](https://browserl.ist/?q=%3E+0.5%25%2C+not+OperaMini+all%2C+not+dead)
-- React Native
+- [Node.js](https://nodejs.org): `^12.20 || >= 14.13`
+- [Browsers](https://npm.im/browserslist): `> 0.5%, not OperaMini all, not IE > 0, not dead`
+- [React Native](https://reactnative.dev)
 
 Consider polyfilling:
 
