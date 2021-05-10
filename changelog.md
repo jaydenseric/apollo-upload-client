@@ -6,6 +6,8 @@
 
 - Updated Node.js support to `^12.20 || >= 14.13`.
 - Stopped supporting Internet Explorer.
+- Updated dev dependencies, some of which require newer Node.js versions than previously supported.
+- The tests are now ESM in `.mjs` files instead of CJS in `.js` files.
 
 ### Patch
 
