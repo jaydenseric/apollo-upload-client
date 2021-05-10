@@ -26,4 +26,4 @@
  * const isExtractableFile = require('apollo-upload-client/public/isExtractableFile.js');
  * ```
  */
-module.exports = require('extract-files/public/isExtractableFile');
+module.exports = require('extract-files/public/isExtractableFile.js');

@@ -1,9 +1,9 @@
 'use strict';
 
-exports.createUploadLink = require('./createUploadLink');
-exports.formDataAppendFile = require('./formDataAppendFile');
-exports.isExtractableFile = require('./isExtractableFile');
-exports.ReactNativeFile = require('./ReactNativeFile');
+exports.createUploadLink = require('./createUploadLink.js');
+exports.formDataAppendFile = require('./formDataAppendFile.js');
+exports.isExtractableFile = require('./isExtractableFile.js');
+exports.ReactNativeFile = require('./ReactNativeFile.js');
 
 /**
  * A React Native

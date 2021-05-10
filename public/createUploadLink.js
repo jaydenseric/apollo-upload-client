@@ -10,9 +10,9 @@ const {
   selectURI,
   serializeFetchParameter,
 } = require('@apollo/client/link/http');
-const extractFiles = require('extract-files/public/extractFiles');
-const formDataAppendFile = require('./formDataAppendFile');
-const isExtractableFile = require('./isExtractableFile');
+const extractFiles = require('extract-files/public/extractFiles.js');
+const formDataAppendFile = require('./formDataAppendFile.js');
+const isExtractableFile = require('./isExtractableFile.js');
 
 /**
  * Creates a

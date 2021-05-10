@@ -34,4 +34,4 @@
  * });
  * ```
  */
-module.exports = require('extract-files/public/ReactNativeFile');
+module.exports = require('extract-files/public/ReactNativeFile.js');
