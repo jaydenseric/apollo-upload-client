@@ -55,7 +55,7 @@ const isExtractableFile = require('./isExtractableFile');
  * ```
  *
  * ```js
- * const createUploadLink = require('apollo-upload-client/public/createUploadLink');
+ * const createUploadLink = require('apollo-upload-client/public/createUploadLink.js');
  * ```
  * @example <caption>A basic Apollo Client setup.</caption>
  * ```js

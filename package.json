@@ -36,7 +36,7 @@
       "import": "./public/index.mjs",
       "require": "./public/index.js"
     },
-    "./public/": "./public/",
+    "./public/*": "./public/*",
     "./package": "./package.json",
     "./package.json": "./package.json"
   },

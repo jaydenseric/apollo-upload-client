@@ -22,7 +22,7 @@
  * ```
  *
  * ```js
- * const ReactNativeFile = require('apollo-upload-client/public/ReactNativeFile');
+ * const ReactNativeFile = require('apollo-upload-client/public/ReactNativeFile.js');
  * ```
  * @example <caption>A React Native file that can be used in query or mutation variables.</caption>
  * ```js

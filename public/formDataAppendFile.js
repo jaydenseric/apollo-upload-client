@@ -25,7 +25,7 @@
  * ```
  *
  * ```js
- * const formDataAppendFile = require('apollo-upload-client/public/formDataAppendFile');
+ * const formDataAppendFile = require('apollo-upload-client/public/formDataAppendFile.js');
  * ```
  */
 module.exports = function formDataAppendFile(formData, fieldName, file) {

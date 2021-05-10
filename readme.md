@@ -168,7 +168,7 @@ _Ways to `require`._
 > ```
 >
 > ```js
-> const ReactNativeFile = require('apollo-upload-client/public/ReactNativeFile');
+> const ReactNativeFile = require('apollo-upload-client/public/ReactNativeFile.js');
 > ```
 
 _A React Native file that can be used in query or mutation variables._
@@ -233,7 +233,7 @@ _Ways to `require`._
 > ```
 >
 > ```js
-> const createUploadLink = require('apollo-upload-client/public/createUploadLink');
+> const createUploadLink = require('apollo-upload-client/public/createUploadLink.js');
 > ```
 
 _A basic Apollo Client setup._
@@ -281,7 +281,7 @@ _Ways to `require`._
 > ```
 >
 > ```js
-> const formDataAppendFile = require('apollo-upload-client/public/formDataAppendFile');
+> const formDataAppendFile = require('apollo-upload-client/public/formDataAppendFile.js');
 > ```
 
 ---
@@ -321,7 +321,7 @@ _Ways to `require`._
 > ```
 >
 > ```js
-> const isExtractableFile = require('apollo-upload-client/public/isExtractableFile');
+> const isExtractableFile = require('apollo-upload-client/public/isExtractableFile.js');
 > ```
 
 ---
