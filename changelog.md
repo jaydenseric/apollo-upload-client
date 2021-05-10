@@ -7,6 +7,8 @@
 - Updated Node.js support to `^12.20 || >= 14.13`.
 - Stopped supporting Internet Explorer.
 - Updated dev dependencies, some of which require newer Node.js versions than previously supported.
+- Removed Babel related dependencies, config, and scripts. Published modules now contain more modern ES syntax.
+- Published modules now contain JSDoc comments, which might affect TypeScript projects.
 - The tests are now ESM in `.mjs` files instead of CJS in `.js` files.
 
 ### Patch
@@ -17,6 +19,8 @@
   - Updated `actions/checkout` to v2.
   - Updated `actions/setup-node` to v2.
   - Don’t specify the `CI` environment variable as it’s set by default.
+- Simplified JSDoc related package scripts now that [`jsdoc-md`](https://npm.im/jsdoc-md) v10 automatically generates a Prettier formatted readme.
+- Added a package `test:jsdoc` script that checks the readme API docs are up to date with the source JSDoc.
 - Updated a URL in the changelog entry for v14.0.0.
 - Documentation updates.
 

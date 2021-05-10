@@ -49,21 +49,16 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.16",
-    "@babel/runtime": "^7.14.0",
     "extract-files": "^9.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.13.16",
-    "@babel/core": "^7.14.0",
-    "@babel/eslint-parser": "^7.13.14",
-    "@babel/plugin-transform-runtime": "^7.13.15",
-    "@babel/preset-env": "^7.14.1",
     "@size-limit/preset-small-lib": "^4.10.2",
     "abort-controller": "^3.0.0",
     "coverage-node": "^5.0.1",
     "eslint": "^7.26.0",
     "eslint-config-env": "^19.0.2",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-compat": "^3.9.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsdoc": "^33.1.1",
     "eslint-plugin-node": "^11.1.0",
@@ -79,14 +74,11 @@
     "test-director": "^6.0.0"
   },
   "scripts": {
-    "prepare": "npm run prepare:clean && npm run prepare:babel && npm run prepare:jsdoc && npm run prepare:prettier",
-    "prepare:clean": "rm -rf public",
-    "prepare:babel": "babel src -d . --keep-file-extension",
-    "prepare:jsdoc": "jsdoc-md",
-    "prepare:prettier": "prettier --write public readme.md",
-    "test": "npm run test:eslint && npm run test:prettier && npm run test:api && npm run test:size",
+    "jsdoc": "jsdoc-md",
+    "test": "npm run test:eslint && npm run test:prettier && npm run test:jsdoc && npm run test:api && npm run test:size",
     "test:eslint": "eslint --ext mjs,js .",
     "test:prettier": "prettier -c .",
+    "test:jsdoc": "jsdoc-md -c",
     "test:api": "coverage-node test/index.mjs",
     "test:size": "size-limit",
     "prepublishOnly": "npm test"
