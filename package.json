@@ -71,7 +71,6 @@
     "fetch-blob": "^2.1.2",
     "formdata-node": "^3.3.1",
     "graphql": "^15.1.0",
-    "hard-rejection": "^2.1.0",
     "jsdoc-md": "^10.1.0",
     "node-fetch": "^3.0.0-beta.9",
     "prettier": "^2.3.0",
@@ -88,7 +87,7 @@
     "test": "npm run test:eslint && npm run test:prettier && npm run test:api && npm run test:size",
     "test:eslint": "eslint --ext mjs,js .",
     "test:prettier": "prettier -c .",
-    "test:api": "coverage-node -r hard-rejection/register test/index.mjs",
+    "test:api": "coverage-node test/index.mjs",
     "test:size": "size-limit",
     "prepublishOnly": "npm test"
   }
