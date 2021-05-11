@@ -10,21 +10,26 @@ const {
   selectURI,
   serializeFetchParameter,
 } = require('@apollo/client/link/http');
-const extractFiles = require('extract-files/public/extractFiles');
-const formDataAppendFile = require('./formDataAppendFile');
-const isExtractableFile = require('./isExtractableFile');
+const extractFiles = require('extract-files/public/extractFiles.js');
+const formDataAppendFile = require('./formDataAppendFile.js');
+const isExtractableFile = require('./isExtractableFile.js');
 
 /**
- * Creates a [terminating Apollo Link](https://apollographql.com/docs/link/overview/#terminating-links)
+ * Creates a
+ * [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link)
  * capable of file uploads.
  *
  * The link matches and extracts files in the GraphQL operation. If there are
- * files it uses a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
- * instance as the [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch)
- * `options.body` to make a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec),
+ * files it uses a
+ * [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
+ * instance as the
+ * [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch)
+ * `options.body` to make a
+ * [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec),
  * otherwise it sends a regular POST request.
  *
- * Some of the options are similar to the [`createHttpLink` options](https://apollographql.com/docs/link/links/http/#options).
+ * Some of the options are similar to the
+ * [`createHttpLink` options](https://apollographql.com/docs/react/api/link/apollo-link-http/#httplink-constructor-options).
  * @see [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec).
  * @see [`apollo-link` on GitHub](https://github.com/apollographql/apollo-link).
  * @kind function
@@ -40,7 +45,7 @@ const isExtractableFile = require('./isExtractableFile');
  * @param {string} [options.credentials] Overrides `options.fetchOptions.credentials`.
  * @param {object} [options.headers] Merges with and overrides `options.fetchOptions.headers`.
  * @param {boolean} [options.includeExtensions=false] Toggles sending `extensions` fields to the GraphQL server.
- * @returns {ApolloLink} A [terminating Apollo Link](https://apollographql.com/docs/link/overview/#terminating-links) capable of file uploads.
+ * @returns {ApolloLink} A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link) capable of file uploads.
  * @example <caption>Ways to `import`.</caption>
  * ```js
  * import { createUploadLink } from 'apollo-upload-client';
@@ -55,7 +60,7 @@ const isExtractableFile = require('./isExtractableFile');
  * ```
  *
  * ```js
- * const createUploadLink = require('apollo-upload-client/public/createUploadLink');
+ * const createUploadLink = require('apollo-upload-client/public/createUploadLink.js');
  * ```
  * @example <caption>A basic Apollo Client setup.</caption>
  * ```js

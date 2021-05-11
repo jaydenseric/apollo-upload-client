@@ -30,67 +30,57 @@
     "public"
   ],
   "sideEffects": false,
-  "main": "public",
+  "main": "./public/index.js",
   "exports": {
     ".": {
       "import": "./public/index.mjs",
       "require": "./public/index.js"
     },
-    "./public/": "./public/",
+    "./public/*": "./public/*",
     "./package": "./package.json",
     "./package.json": "./package.json"
   },
   "engines": {
-    "node": "^10.17.0 || ^12.0.0 || >= 13.7.0"
+    "node": "^12.20 || >= 14.13"
   },
-  "browserslist": "Node 10.17 - 11 and Node < 11, Node 12 - 13 and Node < 13, Node >= 13.7, > 0.5%, not OperaMini all, not dead",
+  "browserslist": "Node 12.20 - 13 and Node < 13, Node >= 14.13, > 0.5%, not OperaMini all, not IE > 0, not dead",
   "peerDependencies": {
     "@apollo/client": "^3",
     "graphql": "14 - 15"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
-    "extract-files": "^9.0.0"
+    "extract-files": "^10.0.0"
   },
   "devDependencies": {
-    "@apollo/client": "^3.2.5",
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "@babel/plugin-transform-runtime": "^7.12.1",
-    "@babel/preset-env": "^7.12.1",
-    "@size-limit/preset-small-lib": "^4.7.0",
+    "@apollo/client": "^3.3.16",
     "abort-controller": "^3.0.0",
-    "babel-eslint": "^10.1.0",
-    "coverage-node": "^3.0.0",
-    "eslint": "^7.13.0",
-    "eslint-config-env": "^15.0.1",
-    "eslint-config-prettier": "^6.15.0",
+    "coverage-node": "^5.0.1",
+    "esbuild": "^0.11.20",
+    "eslint": "^7.26.0",
+    "eslint-config-env": "^19.0.2",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-compat": "^3.9.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsdoc": "^30.7.7",
+    "eslint-plugin-jsdoc": "^33.3.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "fetch-blob": "^2.1.1",
-    "formdata-node": "^2.4.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "fetch-blob": "^2.1.2",
+    "formdata-node": "^3.3.1",
     "graphql": "^15.1.0",
-    "hard-rejection": "^2.1.0",
-    "jsdoc-md": "^7.0.0",
+    "gzip-size": "^6.0.0",
+    "jsdoc-md": "^10.1.0",
     "node-fetch": "^3.0.0-beta.9",
-    "prettier": "^2.1.2",
-    "revertable-globals": "^1.0.1",
-    "size-limit": "^4.7.0",
-    "test-director": "^4.0.1"
+    "prettier": "^2.3.0",
+    "revertable-globals": "^2.0.0",
+    "test-director": "^6.0.0"
   },
   "scripts": {
-    "prepare": "npm run prepare:clean && npm run prepare:babel && npm run prepare:jsdoc && npm run prepare:prettier",
-    "prepare:clean": "rm -rf public",
-    "prepare:babel": "babel src -d . --keep-file-extension",
-    "prepare:jsdoc": "jsdoc-md",
-    "prepare:prettier": "prettier --write public readme.md",
-    "test": "npm run test:eslint && npm run test:prettier && npm run test:api && npm run test:size",
+    "jsdoc": "jsdoc-md",
+    "test": "npm run test:eslint && npm run test:prettier && npm run test:jsdoc && npm run test:api",
     "test:eslint": "eslint --ext mjs,js .",
     "test:prettier": "prettier -c .",
-    "test:api": "coverage-node -r hard-rejection/register test",
-    "test:size": "size-limit",
+    "test:jsdoc": "jsdoc-md -c",
+    "test:api": "coverage-node test/index.mjs",
     "prepublishOnly": "npm test"
   }
 }

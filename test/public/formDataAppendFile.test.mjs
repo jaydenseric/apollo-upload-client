@@ -1,11 +1,9 @@
-'use strict';
+import { strictEqual } from 'assert';
+import Blob from 'fetch-blob';
+import { FormData } from 'formdata-node';
+import formDataAppendFile from '../../public/formDataAppendFile.js';
 
-const { strictEqual } = require('assert');
-const Blob = require('fetch-blob');
-const FormData = require('formdata-node');
-const formDataAppendFile = require('../../public/formDataAppendFile');
-
-module.exports = (tests) => {
+export default (tests) => {
   tests.add('`formDataAppendFile`.', () => {
     const formData = new FormData();
     const fieldName = 'a';

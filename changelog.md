@@ -1,5 +1,33 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Major
+
+- Updated Node.js support to `^12.20 || >= 14.13`.
+- Stopped supporting Internet Explorer.
+- Updated dependencies, some of which require newer Node.js versions than previously supported.
+- Replaced the the `package.json` `exports` field public [subpath folder mapping](https://nodejs.org/api/packages.html#packages_subpath_folder_mappings) (deprecated by Node.js) with a [subpath pattern](https://nodejs.org/api/packages.html#packages_subpath_patterns). Deep `require` paths within `apollo-upload-client/public/` must now include the `.js` file extension.
+- Removed Babel related dependencies, config, and scripts. Published modules now contain more modern ES syntax.
+- Published modules now contain JSDoc comments, which might affect TypeScript projects.
+- The tests are now ESM in `.mjs` files instead of CJS in `.js` files.
+
+### Patch
+
+- Stop using [`hard-rejection`](https://npm.im/hard-rejection) to detect unhandled `Promise` rejections in tests, as Node.js v15+ does this natively.
+- Test the bundle size manually using [`esbuild`](https://npm.im/esbuild) and [`gzip-size`](https://npm.im/gzip-size), removing [`size-limit`](https://npm.im/size-limit) related dev dependencies, config, and scripts.
+- Updated GitHub Actions CI config:
+  - Run tests with Node.js v12, v14, v16.
+  - Updated `actions/checkout` to v2.
+  - Updated `actions/setup-node` to v2.
+  - Don’t specify the `CI` environment variable as it’s set by default.
+- More specific package `main` field path.
+- Simplified JSDoc related package scripts now that [`jsdoc-md`](https://npm.im/jsdoc-md) v10 automatically generates a Prettier formatted readme.
+- Added a package `test:jsdoc` script that checks the readme API docs are up to date with the source JSDoc.
+- Use the `.js` file extension in internal `require` paths.
+- Updated a URL in the changelog entry for v14.0.0.
+- Documentation updates.
+
 ## 14.1.3
 
 ### Patch
@@ -66,7 +94,7 @@
 
 - Added the [`graphql`](https://npm.im/graphql) peer dependency to support a wider range of package managers, via [#196](https://github.com/jaydenseric/apollo-upload-client/pull/196).
 - Removed Node.js v13 and added v14 to the versions tested in GitHub Actions.
-- Simplified the GitHub Actions CI config with the [`npm install-test`](https://docs.npmjs.com/cli/install-test.html) command.
+- Simplified the GitHub Actions CI config with the [`npm install-test`](https://docs.npmjs.com/cli/v7/commands/npm-install-test) command.
 - Use Babel config `overrides` to ensure `.js` files are parsed as scripts, eliminating Babel `interopRequireDefault` helpers from transpilation output.
 - Prettier code examples in source JSDoc.
 - Improved the type `ReactNativeFileSubstitute` code example.

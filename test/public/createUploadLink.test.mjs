@@ -1,15 +1,18 @@
-'use strict';
-
-const { deepStrictEqual, strictEqual } = require('assert');
-const { ApolloLink, concat, execute, gql } = require('@apollo/client/core');
-const { AbortController, AbortSignal } = require('abort-controller');
-const Blob = require('fetch-blob');
-const FormData = require('formdata-node');
-const { AbortError, Response } = require('node-fetch');
-const revertableGlobals = require('revertable-globals');
-const createUploadLink = require('../../public/createUploadLink');
-const createUnexpectedCallError = require('../createUnexpectedCallError');
-const timeLimitPromise = require('../timeLimitPromise');
+import { deepStrictEqual, strictEqual } from 'assert';
+import {
+  ApolloLink,
+  concat,
+  execute,
+  gql,
+} from '@apollo/client/core/core.cjs.js';
+import { AbortController, AbortSignal } from 'abort-controller';
+import Blob from 'fetch-blob';
+import { FormData } from 'formdata-node';
+import { AbortError, Response } from 'node-fetch';
+import revertableGlobals from 'revertable-globals';
+import createUploadLink from '../../public/createUploadLink.js';
+import createUnexpectedCallError from '../createUnexpectedCallError.mjs';
+import timeLimitPromise from '../timeLimitPromise.mjs';
 
 const defaultUri = '/graphql';
 const graphqlResponseOptions = {
@@ -19,7 +22,7 @@ const graphqlResponseOptions = {
   },
 };
 
-module.exports = (tests) => {
+export default (tests) => {
   tests.add(
     '`createUploadLink` with default options, a query, no files.',
     async () => {
@@ -59,10 +62,8 @@ module.exports = (tests) => {
 
         strictEqual(fetchUri, defaultUri);
 
-        const {
-          signal: fetchOptionsSignal,
-          ...fetchOptionsRest
-        } = fetchOptions;
+        const { signal: fetchOptionsSignal, ...fetchOptionsRest } =
+          fetchOptions;
 
         // Defined in Node.js v15+.
         if (global.AbortSignal)

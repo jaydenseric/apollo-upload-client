@@ -1,6 +1,4 @@
-'use strict';
-
-const { AssertionError } = require('assert');
+import { AssertionError } from 'assert';
 
 /**
  * Time limits a promise. It will reject with an assertion error if it doesn’t
@@ -15,7 +13,7 @@ const { AssertionError } = require('assert');
  * @returns {Promise} Time limited promise.
  * @ignore
  */
-module.exports = async function timeLimitPromise(promise, msTimeLimit = 1000) {
+export default async function timeLimitPromise(promise, msTimeLimit = 1000) {
   if (!(promise instanceof Promise))
     throw new TypeError(
       'First argument `promise` must be an instance of `Promise`.'
@@ -48,4 +46,4 @@ module.exports = async function timeLimitPromise(promise, msTimeLimit = 1000) {
     // otherwise the process will continue to run until it completes.
     clearTimeout(timeout);
   });
-};
+}

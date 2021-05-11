@@ -1,6 +1,4 @@
-'use strict';
-
-const { AssertionError } = require('assert');
+import { AssertionError } from 'assert';
 
 /**
  * Creates an assertion error that a function was unexpectedly called.
@@ -9,9 +7,9 @@ const { AssertionError } = require('assert');
  * @returns {AssertionError} Assertion error.
  * @ignore
  */
-module.exports = function createUnexpectedCallError() {
+export default function createUnexpectedCallError() {
   return new AssertionError({
     message: 'Unexpected function call.',
     stackStartFn: createUnexpectedCallError,
   });
-};
+}
