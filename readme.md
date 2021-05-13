@@ -4,7 +4,7 @@
 
 [![npm version](https://badgen.net/npm/v/apollo-upload-client)](https://npm.im/apollo-upload-client) [![CI status](https://github.com/jaydenseric/apollo-upload-client/workflows/CI/badge.svg)](https://github.com/jaydenseric/apollo-upload-client/actions)
 
-A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link) for [Apollo Client](https://apollographql.com/docs/react) that allows [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) or [`ReactNativeFile`](#class-reactnativefile) instances within query or mutation variables and sends [GraphQL multipart requests](https://github.com/jaydenseric/graphql-multipart-request-spec).
+A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link) for [Apollo Client](https://apollographql.com/docs/react) that fetches a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec) if the GraphQL variables contain files (by default [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob), or [`ReactNativeFile`](#class-reactnativefile) instances), or else fetches a regular [GraphQL POST or GET request](https://apollographql.com/docs/apollo-server/requests) (depending on the config and GraphQL operation).
 
 ## Setup
 
@@ -185,9 +185,7 @@ _A file in [React Native](https://reactnative.dev) that can be used in query or 
 
 ### function createUploadLink
 
-Creates a [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link) capable of file uploads.
-
-The link matches and extracts files in the GraphQL operation. If there are files it uses a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance as the [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch) `options.body` to make a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec), otherwise it sends a regular POST request.
+Creates a [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link) for [Apollo Client](https://apollographql.com/docs/react) that fetches a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec) if the GraphQL variables contain files (by default [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob), or [`ReactNativeFile`](#class-reactnativefile) instances), or else fetches a regular [GraphQL POST or GET request](https://apollographql.com/docs/apollo-server/requests) (depending on the config and GraphQL operation).
 
 Some of the options are similar to the [`createHttpLink` options](https://apollographql.com/docs/react/api/link/apollo-link-http/#httplink-constructor-options).
 
@@ -205,12 +203,11 @@ Some of the options are similar to the [`createHttpLink` options](https://apollo
 | `options.headers` | object? | Merges with and overrides `options.fetchOptions.headers`. |
 | `options.includeExtensions` | boolean? = `false` | Toggles sending `extensions` fields to the GraphQL server. |
 
-**Returns:** ApolloLink — A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link) capable of file uploads.
+**Returns:** ApolloLink — A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link).
 
 #### See
 
 - [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec).
-- [`apollo-link` on GitHub](https://github.com/apollographql/apollo-link).
 
 #### Examples
 

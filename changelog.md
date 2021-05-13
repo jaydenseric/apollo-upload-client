@@ -26,6 +26,7 @@
 - Simplified JSDoc related package scripts now that [`jsdoc-md`](https://npm.im/jsdoc-md) v10 automatically generates a Prettier formatted readme.
 - Added a package `test:jsdoc` script that checks the readme API docs are up to date with the source JSDoc.
 - Use the `.js` file extension in internal `require` paths.
+- Clearer package and function `createUploadLink` description, fixing [#247](https://github.com/jaydenseric/apollo-upload-client/issues/247).
 - Updated a URL in the changelog entry for v14.0.0.
 - Documentation updates.
 

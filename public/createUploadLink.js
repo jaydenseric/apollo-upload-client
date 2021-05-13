@@ -17,21 +17,20 @@ const isExtractableFile = require('./isExtractableFile.js');
 /**
  * Creates a
  * [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link)
- * capable of file uploads.
- *
- * The link matches and extracts files in the GraphQL operation. If there are
- * files it uses a
- * [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
- * instance as the
- * [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch)
- * `options.body` to make a
- * [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec),
- * otherwise it sends a regular POST request.
+ * for [Apollo Client](https://apollographql.com/docs/react) that fetches a
+ * [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec)
+ * if the GraphQL variables contain files (by default
+ * [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList),
+ * [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File),
+ * [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob), or
+ * [`ReactNativeFile`](#class-reactnativefile) instances), or else fetches a
+ * regular
+ * [GraphQL POST or GET request](https://apollographql.com/docs/apollo-server/requests)
+ * (depending on the config and GraphQL operation).
  *
  * Some of the options are similar to the
  * [`createHttpLink` options](https://apollographql.com/docs/react/api/link/apollo-link-http/#httplink-constructor-options).
  * @see [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec).
- * @see [`apollo-link` on GitHub](https://github.com/apollographql/apollo-link).
  * @kind function
  * @name createUploadLink
  * @param {object} options Options.
@@ -45,7 +44,7 @@ const isExtractableFile = require('./isExtractableFile.js');
  * @param {string} [options.credentials] Overrides `options.fetchOptions.credentials`.
  * @param {object} [options.headers] Merges with and overrides `options.fetchOptions.headers`.
  * @param {boolean} [options.includeExtensions=false] Toggles sending `extensions` fields to the GraphQL server.
- * @returns {ApolloLink} A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link) capable of file uploads.
+ * @returns {ApolloLink} A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link).
  * @example <caption>Ways to `import`.</caption>
  * ```js
  * import { createUploadLink } from 'apollo-upload-client';
