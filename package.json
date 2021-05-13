@@ -45,13 +45,14 @@
   },
   "browserslist": "Node 12.20 - 13 and Node < 13, Node >= 14.13, > 0.5%, not OperaMini all, not IE > 0, not dead",
   "peerDependencies": {
+    "@apollo/client": "^3.0.0",
     "graphql": "14 - 15"
   },
   "dependencies": {
-    "@apollo/client": "^3.3.16",
     "extract-files": "^10.0.0"
   },
   "devDependencies": {
+    "@apollo/client": "^3.3.16",
     "abort-controller": "^3.0.0",
     "coverage-node": "^5.0.1",
     "esbuild": "^0.11.20",

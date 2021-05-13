@@ -6,6 +6,7 @@
 
 - Updated Node.js support to `^12.20 || >= 14.13`.
 - Stopped supporting Internet Explorer.
+- Changed [`@apollo/client`](https://npm.im/@apollo/client) from a dependency to a peer dependency, fixing [#251](https://github.com/jaydenseric/apollo-upload-client/issues/251) via [#252](https://github.com/jaydenseric/apollo-upload-client/pull/252).
 - Updated dependencies, some of which require newer Node.js versions than previously supported.
 - Replaced the the `package.json` `exports` field public [subpath folder mapping](https://nodejs.org/api/packages.html#packages_subpath_folder_mappings) (deprecated by Node.js) with a [subpath pattern](https://nodejs.org/api/packages.html#packages_subpath_patterns). Deep `require` paths within `apollo-upload-client/public/` must now include the `.js` file extension.
 - Removed Babel related dependencies, config, and scripts. Published modules now contain more modern ES syntax.
