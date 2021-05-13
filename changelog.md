@@ -27,6 +27,9 @@
 - Added a package `test:jsdoc` script that checks the readme API docs are up to date with the source JSDoc.
 - Use the `.js` file extension in internal `require` paths.
 - Clearer package and function `createUploadLink` description, fixing [#247](https://github.com/jaydenseric/apollo-upload-client/issues/247).
+- Fixed function `createUploadLink` option `fetchOptions.signal` bugs:
+  - If the given abort controller signal is already aborted, immediately abort the fetch.
+  - Use `once: true` when adding the `abort` event listener on the given abort controller signal to avoid a possible memory leak.
 - Updated a URL in the changelog entry for v14.0.0.
 - Documentation updates.
 

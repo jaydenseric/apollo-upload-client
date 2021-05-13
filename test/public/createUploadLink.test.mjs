@@ -991,7 +991,7 @@ export default (tests) => {
   });
 
   tests.add(
-    '`createUploadLink` with option `fetchOptions.signal`.',
+    '`createUploadLink` with option `fetchOptions.signal`, not yet aborted.',
     async () => {
       let fetchUri;
       let fetchOptions;
@@ -1050,6 +1050,73 @@ export default (tests) => {
         );
 
         controller.abort();
+
+        const observerError = await observerErrorPromise;
+
+        strictEqual(fetchUri, defaultUri);
+        deepStrictEqual(fetchOptions, {
+          method: 'POST',
+          headers: { accept: '*/*', 'content-type': 'application/json' },
+          credentials: undefined,
+          body: JSON.stringify({ variables: {}, query }),
+          signal: controller.signal,
+        });
+        strictEqual(observerError, fetchError);
+      } finally {
+        revertGlobals();
+      }
+    }
+  );
+
+  tests.add(
+    '`createUploadLink` with option `fetchOptions.signal`, already aborted.',
+    async () => {
+      let fetchUri;
+      let fetchOptions;
+
+      const query = '{\n  a\n}\n';
+      const payload = { data: { a: true } };
+
+      const controller = new AbortController();
+      controller.abort();
+
+      const fetchError = new AbortError('The operation was aborted.');
+      const revertGlobals = revertableGlobals({ AbortController, AbortSignal });
+
+      try {
+        const observerErrorPromise = timeLimitPromise(
+          new Promise((resolve, reject) => {
+            execute(
+              createUploadLink({
+                fetchOptions: { signal: controller.signal },
+                async fetch(uri, options) {
+                  fetchUri = uri;
+                  fetchOptions = options;
+
+                  if (options.signal.aborted) throw fetchError;
+
+                  return new Response(
+                    JSON.stringify(payload),
+                    graphqlResponseOptions
+                  );
+                },
+              }),
+              {
+                query: gql(query),
+              }
+            ).subscribe({
+              next() {
+                reject(createUnexpectedCallError());
+              },
+              error(error) {
+                resolve(error);
+              },
+              complete() {
+                reject(createUnexpectedCallError());
+              },
+            });
+          })
+        );
 
         const observerError = await observerErrorPromise;
 

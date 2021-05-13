@@ -179,9 +179,22 @@ module.exports = function createUploadLink({
     if (controller) {
       if (options.signal)
         // Respect the user configured abort controller signal.
-        options.signal.addEventListener('abort', () => {
-          controller.abort();
-        });
+        options.signal.aborted
+          ? // Signal already aborted, so immediately abort.
+            controller.abort()
+          : // Signal not already aborted, so setup a listener to abort when it
+            // does.
+            options.signal.addEventListener(
+              'abort',
+              () => {
+                controller.abort();
+              },
+              {
+                // Prevent a memory leak if the user configured abort controller
+                // is long lasting, or controls multiple things.
+                once: true,
+              }
+            );
 
       options.signal = controller.signal;
     }
