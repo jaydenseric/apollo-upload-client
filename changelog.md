@@ -4,7 +4,7 @@
 
 ### Patch
 
-- Amended the changelog entry for v15.0.0.
+- Amended the changelog entries for v14.0.0 and v15.0.0.
 
 ## 15.0.0
 
@@ -99,7 +99,7 @@
 
 - Updated Node.js support to `^10.17.0 || ^12.0.0 || >= 13.7.0`.
 - Updated dependencies, some of which (only dev dependencies) require newer Node.js versions than previously supported.
-- Added a [package `exports` field](https://nodejs.org/api/esm.html#esm_package_entry_points) with [conditional exports](https://nodejs.org/api/esm.html#esm_conditional_exports) to support native ESM in Node.js and keep internal code private, whilst avoiding [the dual package hazard](https://nodejs.org/api/esm.html#esm_dual_package_hazard). Published files have been reorganized, so previously undocumented deep imports will need to be rewritten according to the newly documented paths.
+- Added a package [`exports`](https://nodejs.org/api/packages.html#packages_exports) field with [conditional exports](https://nodejs.org/api/packages.html#packages_conditional_exports) to support native ESM in Node.js and keep internal code private, whilst avoiding the [dual package hazard](https://nodejs.org/api/packages.html#packages_dual_package_hazard). Published files have been reorganized, so previously undocumented deep imports will need to be rewritten according to the newly documented paths.
 - Support [`@apollo/client`](https://npm.im/@apollo/client) v3, fixing [#174](https://github.com/jaydenseric/apollo-upload-client/issues/174) via [#175](https://github.com/jaydenseric/apollo-upload-client/pull/175/files).
 
 ### Patch
