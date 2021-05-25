@@ -30,7 +30,7 @@
     "public"
   ],
   "sideEffects": false,
-  "main": "./public/index.js",
+  "main": "public",
   "exports": {
     ".": {
       "import": "./public/index.mjs",
