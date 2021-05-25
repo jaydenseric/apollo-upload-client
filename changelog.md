@@ -5,6 +5,7 @@
 ### Patch
 
 - Updated dev dependencies.
+- Renamed variables in the test index module.
 - Increased the bundle size test maximum allowed bundle size.
 - Amended the changelog entries for v14.0.0 and v15.0.0.
 
