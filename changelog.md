@@ -1,5 +1,11 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Patch
+
+- Amended the changelog entry for v15.0.0.
+
 ## 15.0.0
 
 ### Major
@@ -32,6 +38,7 @@
   - Use `once: true` when adding the `abort` event listener on the given abort controller signal to avoid a possible memory leak.
 - Updated a URL in the changelog entry for v14.0.0.
 - Documentation updates.
+- The file `changelog.md` is no longer published.
 
 ## 14.1.3
 
