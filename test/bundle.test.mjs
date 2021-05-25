@@ -22,6 +22,6 @@ export default (tests) => {
 
     console.info(`${kB} kB minified and gzipped bundle.`);
 
-    strictEqual(kB < 1.5, true);
+    strictEqual(kB < 2, true);
   });
 };

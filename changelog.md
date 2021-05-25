@@ -4,6 +4,8 @@
 
 ### Patch
 
+- Updated dev dependencies.
+- Increased the bundle size test maximum allowed bundle size.
 - Amended the changelog entries for v14.0.0 and v15.0.0.
 
 ## 15.0.0

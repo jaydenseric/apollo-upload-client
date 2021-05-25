@@ -126,8 +126,6 @@ Consider polyfilling:
 
 ## API
 
-### Table of contents
-
 - [class ReactNativeFile](#class-reactnativefile)
 - [function createUploadLink](#function-createuploadlink)
 - [function formDataAppendFile](#function-formdataappendfile)
