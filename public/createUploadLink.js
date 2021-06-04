@@ -64,7 +64,7 @@ const isExtractableFile = require('./isExtractableFile.js');
  * @example <caption>A basic Apollo Client setup.</caption>
  * ```js
  * import { ApolloClient, InMemoryCache } from '@apollo/client';
- * import { createUploadLink } from 'apollo-upload-client';
+ * import createUploadLink from 'apollo-upload-client/public/createUploadLink.js';
  *
  * const client = new ApolloClient({
  *   cache: new InMemoryCache(),

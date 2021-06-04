@@ -8,6 +8,7 @@
 - Reverted the more specific package `main` field path.
 - Renamed imports in the test index module.
 - Increased the bundle size test maximum allowed bundle size.
+- Updated code examples to use deep imports.
 - Amended the changelog entries for v14.0.0 and v15.0.0.
 
 ## 15.0.0

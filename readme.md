@@ -233,7 +233,7 @@ _A basic Apollo Client setup._
 
 > ```js
 > import { ApolloClient, InMemoryCache } from '@apollo/client';
-> import { createUploadLink } from 'apollo-upload-client';
+> import createUploadLink from 'apollo-upload-client/public/createUploadLink.js';
 >
 > const client = new ApolloClient({
 >   cache: new InMemoryCache(),
@@ -340,7 +340,7 @@ A function that checks if a value is an extractable file.
 _How to check for the default exactable files, as well as a custom type of file._
 
 > ```js
-> import { isExtractableFile } from 'apollo-upload-client';
+> import isExtractableFile from 'apollo-upload-client/public/isExtractableFile.js';
 >
 > const isExtractableFileEnhanced = (value) =>
 >   isExtractableFile(value) ||
