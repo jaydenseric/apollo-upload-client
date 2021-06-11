@@ -1,10 +1,16 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Patch
+
+- Amended the changelog entry for v16.0.0.
+
 ## 16.0.0
 
 ### Major
 
-- Updated the `extract-files` dependency to [v11](https://github.com/jaydenseric/extract-files/releases/tag/v11.0.0).
+- Updated the [`extract-files`](https://npm.im/extract-files) dependency to [v11](https://github.com/jaydenseric/extract-files/releases/tag/v11.0.0).
 
 ### Patch
 
