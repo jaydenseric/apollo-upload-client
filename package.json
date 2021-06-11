@@ -64,7 +64,7 @@
     "eslint-plugin-jsdoc": "^35.1.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "fetch-blob": "^3.0.0",
+    "fetch-blob": "^2.1.2",
     "formdata-node": "^3.5.3",
     "graphql": "^15.1.0",
     "gzip-size": "^6.0.0",
