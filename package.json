@@ -1,6 +1,6 @@
 {
   "name": "apollo-upload-client",
-  "version": "15.0.0",
+  "version": "16.0.0",
   "description": "A terminating Apollo Link for Apollo Client that fetches a GraphQL multipart request if the GraphQL variables contain files (by default FileList, File, Blob, or ReactNativeFile instances), or else fetches a regular GraphQL POST or GET request (depending on the config and GraphQL operation).",
   "license": "MIT",
   "author": {
