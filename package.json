@@ -49,28 +49,28 @@
     "graphql": "14 - 15"
   },
   "dependencies": {
-    "extract-files": "^10.0.0"
+    "extract-files": "^11.0.0"
   },
   "devDependencies": {
-    "@apollo/client": "^3.3.17",
+    "@apollo/client": "^3.3.20",
     "abort-controller": "^3.0.0",
     "coverage-node": "^5.0.1",
-    "esbuild": "^0.12.1",
-    "eslint": "^7.27.0",
+    "esbuild": "^0.12.8",
+    "eslint": "^7.28.0",
     "eslint-config-env": "^20.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-compat": "^3.9.0",
-    "eslint-plugin-import": "^2.23.3",
-    "eslint-plugin-jsdoc": "^35.0.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsdoc": "^35.1.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "fetch-blob": "^2.1.2",
-    "formdata-node": "^3.4.0",
+    "fetch-blob": "^3.0.0",
+    "formdata-node": "^3.5.3",
     "graphql": "^15.1.0",
     "gzip-size": "^6.0.0",
     "jsdoc-md": "^11.0.0",
     "node-fetch": "^3.0.0-beta.9",
-    "prettier": "^2.3.0",
+    "prettier": "^2.3.1",
     "revertable-globals": "^2.0.0",
     "test-director": "^6.0.0"
   },

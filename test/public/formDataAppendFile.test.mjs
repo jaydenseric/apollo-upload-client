@@ -1,4 +1,8 @@
 import { strictEqual } from 'assert';
+// `eslint-plugin-import` has a parse error if the imported module contains
+// private instance fields, see:
+// https://github.com/benmosher/eslint-plugin-import/issues/2124
+// eslint-disable-next-line import/namespace, import/default, import/no-named-as-default, import/no-named-as-default-member
 import Blob from 'fetch-blob';
 import { FormData } from 'formdata-node';
 import formDataAppendFile from '../../public/formDataAppendFile.js';
