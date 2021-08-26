@@ -179,6 +179,11 @@ _A file in [React Native](https://reactnative.dev) that can be used in query or 
 > });
 > ```
 
+#### Important debugging information
+
+When using the react-native debugger, your uploads will not work as it replaces react-native's fetch with the one bundled inside electron. [See issue comment here](https://github.com/jaydenseric/apollo-upload-client/issues/96#issuecomment-406784588)
+
+
 ---
 
 ### function createUploadLink
@@ -366,7 +371,7 @@ GraphQL request `fetch` options.
 
 ---
 
-### type FormDataFileAppender
+### type FormDataFileAppIf you use React Native Debugger, you have to know that it replaces RN's fetch with the one bundled inside Electron. The Electron's (Chrome's) fetch knows nothing about how to handle React Native's files. So, you should detach your app from the debugger to use RN's fetch. The only way to debug file submissions is to watch the requests at the server side.ender
 
 Appends a file extracted from the GraphQL operation to the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance used as the [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch) `options.body` for the [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec).
 
