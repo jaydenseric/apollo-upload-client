@@ -7,6 +7,7 @@ const {
   parseAndCheckHttpResponse,
   rewriteURIForGET,
   selectHttpOptionsAndBody,
+  defaultPrinter,
   selectURI,
   serializeFetchParameter,
 } = require('@apollo/client/link/http');
@@ -79,6 +80,7 @@ module.exports = function createUploadLink({
   FormData: CustomFormData,
   formDataAppendFile: customFormDataAppendFile = formDataAppendFile,
   fetch: customFetch,
+  print = defaultPrinter,
   fetchOptions,
   credentials,
   headers,
@@ -115,6 +117,7 @@ module.exports = function createUploadLink({
 
     const { options, body } = selectHttpOptionsAndBody(
       operation,
+      print,
       fallbackHttpConfig,
       linkConfig,
       contextConfig
