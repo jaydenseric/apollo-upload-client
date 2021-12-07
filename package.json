@@ -73,12 +73,12 @@
     "test-director": "^7.0.0"
   },
   "scripts": {
-    "jsdoc": "jsdoc-md",
-    "test": "npm run test:eslint && npm run test:prettier && npm run test:jsdoc && npm run test:api",
-    "test:eslint": "eslint --ext mjs,js .",
-    "test:prettier": "prettier -c .",
-    "test:jsdoc": "jsdoc-md -c",
-    "test:api": "coverage-node test/index.mjs",
+    "docs-update": "jsdoc-md",
+    "docs-check": "jsdoc-md -c",
+    "eslint": "eslint .",
+    "prettier": "prettier -c .",
+    "tests": "coverage-node test/index.mjs",
+    "test": "npm run eslint && npm run prettier && npm run docs-check && npm run tests",
     "prepublishOnly": "npm test"
   }
 }
