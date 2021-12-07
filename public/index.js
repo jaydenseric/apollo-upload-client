@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-exports.createUploadLink = require('./createUploadLink.js');
-exports.formDataAppendFile = require('./formDataAppendFile.js');
-exports.isExtractableFile = require('./isExtractableFile.js');
-exports.ReactNativeFile = require('./ReactNativeFile.js');
+exports.createUploadLink = require("./createUploadLink.js");
+exports.formDataAppendFile = require("./formDataAppendFile.js");
+exports.isExtractableFile = require("./isExtractableFile.js");
+exports.ReactNativeFile = require("./ReactNativeFile.js");
 
 /**
  * A React Native
@@ -24,8 +24,8 @@ exports.ReactNativeFile = require('./ReactNativeFile.js');
  * ```js
  * const fileSubstitute = {
  *   uri: uriFromCameraRoll,
- *   name: 'a.jpg',
- *   type: 'image/jpeg',
+ *   name: "a.jpg",
+ *   type: "image/jpeg",
  * };
  * ```
  */
@@ -50,11 +50,11 @@ exports.ReactNativeFile = require('./ReactNativeFile.js');
  * @see [`isExtractableFile`]{@link isExtractableFile} has this type.
  * @example <caption>How to check for the default exactable files, as well as a custom type of file.</caption>
  * ```js
- * import isExtractableFile from 'apollo-upload-client/public/isExtractableFile.js';
+ * import isExtractableFile from "apollo-upload-client/public/isExtractableFile.js";
  *
  * const isExtractableFileEnhanced = (value) =>
  *   isExtractableFile(value) ||
- *   (typeof CustomFile !== 'undefined' && value instanceof CustomFile);
+ *   (typeof CustomFile !== "undefined" && value instanceof CustomFile);
  * ```
  */
 

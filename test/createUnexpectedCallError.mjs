@@ -1,4 +1,4 @@
-import { AssertionError } from 'assert';
+import { AssertionError } from "assert";
 
 /**
  * Creates an assertion error that a function was unexpectedly called.
@@ -9,7 +9,7 @@ import { AssertionError } from 'assert';
  */
 export default function createUnexpectedCallError() {
   return new AssertionError({
-    message: 'Unexpected function call.',
+    message: "Unexpected function call.",
     stackStartFn: createUnexpectedCallError,
   });
 }

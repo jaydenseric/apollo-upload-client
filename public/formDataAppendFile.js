@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * The default implementation for [`createUploadLink`]{@link createUploadLink}
@@ -13,19 +13,19 @@
  * @param {*} file File to append.
  * @example <caption>Ways to `import`.</caption>
  * ```js
- * import { formDataAppendFile } from 'apollo-upload-client';
+ * import { formDataAppendFile } from "apollo-upload-client";
  * ```
  *
  * ```js
- * import formDataAppendFile from 'apollo-upload-client/public/formDataAppendFile.js';
+ * import formDataAppendFile from "apollo-upload-client/public/formDataAppendFile.js";
  * ```
  * @example <caption>Ways to `require`.</caption>
  * ```js
- * const { formDataAppendFile } = require('apollo-upload-client');
+ * const { formDataAppendFile } = require("apollo-upload-client");
  * ```
  *
  * ```js
- * const formDataAppendFile = require('apollo-upload-client/public/formDataAppendFile.js');
+ * const formDataAppendFile = require("apollo-upload-client/public/formDataAppendFile.js");
  * ```
  */
 module.exports = function formDataAppendFile(formData, fieldName, file) {

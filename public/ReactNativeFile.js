@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * Used to mark
@@ -11,27 +11,27 @@
  * @see [`extract-files` `ReactNativeFile` docs](https://github.com/jaydenseric/extract-files#class-reactnativefile).
  * @example <caption>Ways to `import`.</caption>
  * ```js
- * import { ReactNativeFile } from 'apollo-upload-client';
+ * import { ReactNativeFile } from "apollo-upload-client";
  * ```
  *
  * ```js
- * import ReactNativeFile from 'apollo-upload-client/public/ReactNativeFile.js';
+ * import ReactNativeFile from "apollo-upload-client/public/ReactNativeFile.js";
  * ```
  * @example <caption>Ways to `require`.</caption>
  * ```js
- * const { ReactNativeFile } = require('apollo-upload-client');
+ * const { ReactNativeFile } = require("apollo-upload-client");
  * ```
  *
  * ```js
- * const ReactNativeFile = require('apollo-upload-client/public/ReactNativeFile.js');
+ * const ReactNativeFile = require("apollo-upload-client/public/ReactNativeFile.js");
  * ```
  * @example <caption>A file in [React Native](https://reactnative.dev) that can be used in query or mutation variables.</caption>
  * ```js
  * const file = new ReactNativeFile({
  *   uri: uriFromCameraRoll,
- *   name: 'a.jpg',
- *   type: 'image/jpeg',
+ *   name: "a.jpg",
+ *   type: "image/jpeg",
  * });
  * ```
  */
-module.exports = require('extract-files/public/ReactNativeFile.js');
+module.exports = require("extract-files/public/ReactNativeFile.js");

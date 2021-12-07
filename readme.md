@@ -31,7 +31,7 @@ See also the [example API and client](https://github.com/jaydenseric/apollo-uplo
 ### [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList)
 
 ```jsx
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation } from "@apollo/client";
 
 const MUTATION = gql`
   mutation ($files: [Upload!]!) {
@@ -55,7 +55,7 @@ function UploadFiles() {
 ### [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File)
 
 ```jsx
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation } from "@apollo/client";
 
 const MUTATION = gql`
   mutation ($file: Upload!) {
@@ -84,7 +84,7 @@ function UploadFile() {
 ### [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)
 
 ```jsx
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation } from "@apollo/client";
 
 const MUTATION = gql`
   mutation ($file: Upload!) {
@@ -99,10 +99,10 @@ function UploadFile() {
 
   function onChange({ target: { validity, value } }) {
     if (validity.valid) {
-      const file = new Blob([value], { type: 'text/plain' });
+      const file = new Blob([value], { type: "text/plain" });
 
       // Optional, defaults to `blob`.
-      file.name = 'text.txt';
+      file.name = "text.txt";
 
       mutate({ variables: { file } });
     }
@@ -152,21 +152,21 @@ Used to mark [React Native `File` substitutes](#type-reactnativefilesubstitute) 
 _Ways to `import`._
 
 > ```js
-> import { ReactNativeFile } from 'apollo-upload-client';
+> import { ReactNativeFile } from "apollo-upload-client";
 > ```
 >
 > ```js
-> import ReactNativeFile from 'apollo-upload-client/public/ReactNativeFile.js';
+> import ReactNativeFile from "apollo-upload-client/public/ReactNativeFile.js";
 > ```
 
 _Ways to `require`._
 
 > ```js
-> const { ReactNativeFile } = require('apollo-upload-client');
+> const { ReactNativeFile } = require("apollo-upload-client");
 > ```
 >
 > ```js
-> const ReactNativeFile = require('apollo-upload-client/public/ReactNativeFile.js');
+> const ReactNativeFile = require("apollo-upload-client/public/ReactNativeFile.js");
 > ```
 
 _A file in [React Native](https://reactnative.dev) that can be used in query or mutation variables._
@@ -174,8 +174,8 @@ _A file in [React Native](https://reactnative.dev) that can be used in query or 
 > ```js
 > const file = new ReactNativeFile({
 >   uri: uriFromCameraRoll,
->   name: 'a.jpg',
->   type: 'image/jpeg',
+>   name: "a.jpg",
+>   type: "image/jpeg",
 > });
 > ```
 
@@ -212,28 +212,28 @@ Some of the options are similar to the [`createHttpLink` options](https://apollo
 _Ways to `import`._
 
 > ```js
-> import { createUploadLink } from 'apollo-upload-client';
+> import { createUploadLink } from "apollo-upload-client";
 > ```
 >
 > ```js
-> import createUploadLink from 'apollo-upload-client/public/createUploadLink.js';
+> import createUploadLink from "apollo-upload-client/public/createUploadLink.js";
 > ```
 
 _Ways to `require`._
 
 > ```js
-> const { createUploadLink } = require('apollo-upload-client');
+> const { createUploadLink } = require("apollo-upload-client");
 > ```
 >
 > ```js
-> const createUploadLink = require('apollo-upload-client/public/createUploadLink.js');
+> const createUploadLink = require("apollo-upload-client/public/createUploadLink.js");
 > ```
 
 _A basic Apollo Client setup._
 
 > ```js
-> import { ApolloClient, InMemoryCache } from '@apollo/client';
-> import createUploadLink from 'apollo-upload-client/public/createUploadLink.js';
+> import { ApolloClient, InMemoryCache } from "@apollo/client";
+> import createUploadLink from "apollo-upload-client/public/createUploadLink.js";
 >
 > const client = new ApolloClient({
 >   cache: new InMemoryCache(),
@@ -260,21 +260,21 @@ The default implementation for [`createUploadLink`](#function-createuploadlink) 
 _Ways to `import`._
 
 > ```js
-> import { formDataAppendFile } from 'apollo-upload-client';
+> import { formDataAppendFile } from "apollo-upload-client";
 > ```
 >
 > ```js
-> import formDataAppendFile from 'apollo-upload-client/public/formDataAppendFile.js';
+> import formDataAppendFile from "apollo-upload-client/public/formDataAppendFile.js";
 > ```
 
 _Ways to `require`._
 
 > ```js
-> const { formDataAppendFile } = require('apollo-upload-client');
+> const { formDataAppendFile } = require("apollo-upload-client");
 > ```
 >
 > ```js
-> const formDataAppendFile = require('apollo-upload-client/public/formDataAppendFile.js');
+> const formDataAppendFile = require("apollo-upload-client/public/formDataAppendFile.js");
 > ```
 
 ---
@@ -300,21 +300,21 @@ The default implementation for [`createUploadLink`](#function-createuploadlink) 
 _Ways to `import`._
 
 > ```js
-> import { isExtractableFile } from 'apollo-upload-client';
+> import { isExtractableFile } from "apollo-upload-client";
 > ```
 >
 > ```js
-> import isExtractableFile from 'apollo-upload-client/public/isExtractableFile.js';
+> import isExtractableFile from "apollo-upload-client/public/isExtractableFile.js";
 > ```
 
 _Ways to `require`._
 
 > ```js
-> const { isExtractableFile } = require('apollo-upload-client');
+> const { isExtractableFile } = require("apollo-upload-client");
 > ```
 >
 > ```js
-> const isExtractableFile = require('apollo-upload-client/public/isExtractableFile.js');
+> const isExtractableFile = require("apollo-upload-client/public/isExtractableFile.js");
 > ```
 
 ---
@@ -340,11 +340,11 @@ A function that checks if a value is an extractable file.
 _How to check for the default exactable files, as well as a custom type of file._
 
 > ```js
-> import isExtractableFile from 'apollo-upload-client/public/isExtractableFile.js';
+> import isExtractableFile from "apollo-upload-client/public/isExtractableFile.js";
 >
 > const isExtractableFileEnhanced = (value) =>
 >   isExtractableFile(value) ||
->   (typeof CustomFile !== 'undefined' && value instanceof CustomFile);
+>   (typeof CustomFile !== "undefined" && value instanceof CustomFile);
 > ```
 
 ---
@@ -409,7 +409,7 @@ _A camera roll file._
 > ```js
 > const fileSubstitute = {
 >   uri: uriFromCameraRoll,
->   name: 'a.jpg',
->   type: 'image/jpeg',
+>   name: "a.jpg",
+>   type: "image/jpeg",
 > };
 > ```

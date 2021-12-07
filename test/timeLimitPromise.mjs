@@ -1,4 +1,4 @@
-import { AssertionError } from 'assert';
+import { AssertionError } from "assert";
 
 /**
  * Time limits a promise. It will reject with an assertion error if it doesn’t
@@ -16,12 +16,12 @@ import { AssertionError } from 'assert';
 export default async function timeLimitPromise(promise, msTimeLimit = 1000) {
   if (!(promise instanceof Promise))
     throw new TypeError(
-      'First argument `promise` must be an instance of `Promise`.'
+      "First argument `promise` must be an instance of `Promise`."
     );
 
-  if (typeof msTimeLimit !== 'number' || msTimeLimit < 0)
+  if (typeof msTimeLimit !== "number" || msTimeLimit < 0)
     throw new TypeError(
-      'Second argument `msTimeLimit` must be a positive number.'
+      "Second argument `msTimeLimit` must be a positive number."
     );
 
   // Ensure the error stack trace starts at the location where

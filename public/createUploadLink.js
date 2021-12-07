@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const { ApolloLink, Observable } = require('@apollo/client/core');
+const { ApolloLink, Observable } = require("@apollo/client/core");
 const {
   createSignalIfSupported,
   fallbackHttpConfig,
@@ -9,10 +9,10 @@ const {
   selectHttpOptionsAndBody,
   selectURI,
   serializeFetchParameter,
-} = require('@apollo/client/link/http');
-const extractFiles = require('extract-files/public/extractFiles.js');
-const formDataAppendFile = require('./formDataAppendFile.js');
-const isExtractableFile = require('./isExtractableFile.js');
+} = require("@apollo/client/link/http");
+const extractFiles = require("extract-files/public/extractFiles.js");
+const formDataAppendFile = require("./formDataAppendFile.js");
+const isExtractableFile = require("./isExtractableFile.js");
 
 /**
  * Creates a
@@ -34,7 +34,7 @@ const isExtractableFile = require('./isExtractableFile.js');
  * @kind function
  * @name createUploadLink
  * @param {object} options Options.
- * @param {string} [options.uri='/graphql'] GraphQL endpoint URI.
+ * @param {string} [options.uri="/graphql"] GraphQL endpoint URI.
  * @param {boolean} [options.useGETForQueries] Should GET be used to fetch queries, if there are no files to upload.
  * @param {ExtractableFileMatcher} [options.isExtractableFile=isExtractableFile] Customizes how files are matched in the GraphQL operation for extraction.
  * @param {class} [options.FormData] [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) implementation to use, defaulting to the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) global.
@@ -47,24 +47,24 @@ const isExtractableFile = require('./isExtractableFile.js');
  * @returns {ApolloLink} A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link).
  * @example <caption>Ways to `import`.</caption>
  * ```js
- * import { createUploadLink } from 'apollo-upload-client';
+ * import { createUploadLink } from "apollo-upload-client";
  * ```
  *
  * ```js
- * import createUploadLink from 'apollo-upload-client/public/createUploadLink.js';
+ * import createUploadLink from "apollo-upload-client/public/createUploadLink.js";
  * ```
  * @example <caption>Ways to `require`.</caption>
  * ```js
- * const { createUploadLink } = require('apollo-upload-client');
+ * const { createUploadLink } = require("apollo-upload-client");
  * ```
  *
  * ```js
- * const createUploadLink = require('apollo-upload-client/public/createUploadLink.js');
+ * const createUploadLink = require("apollo-upload-client/public/createUploadLink.js");
  * ```
  * @example <caption>A basic Apollo Client setup.</caption>
  * ```js
- * import { ApolloClient, InMemoryCache } from '@apollo/client';
- * import createUploadLink from 'apollo-upload-client/public/createUploadLink.js';
+ * import { ApolloClient, InMemoryCache } from "@apollo/client";
+ * import createUploadLink from "apollo-upload-client/public/createUploadLink.js";
  *
  * const client = new ApolloClient({
  *   cache: new InMemoryCache(),
@@ -73,7 +73,7 @@ const isExtractableFile = require('./isExtractableFile.js');
  * ```
  */
 module.exports = function createUploadLink({
-  uri: fetchUri = '/graphql',
+  uri: fetchUri = "/graphql",
   useGETForQueries,
   isExtractableFile: customIsExtractableFile = isExtractableFile,
   FormData: CustomFormData,
@@ -107,8 +107,8 @@ module.exports = function createUploadLink({
       credentials: context.credentials,
       headers: {
         // Client awareness headers can be overridden by context `headers`.
-        ...(name && { 'apollographql-client-name': name }),
-        ...(version && { 'apollographql-client-version': version }),
+        ...(name && { "apollographql-client-name": name }),
+        ...(version && { "apollographql-client-version": version }),
         ...headers,
       },
     };
@@ -120,13 +120,13 @@ module.exports = function createUploadLink({
       contextConfig
     );
 
-    const { clone, files } = extractFiles(body, '', customIsExtractableFile);
+    const { clone, files } = extractFiles(body, "", customIsExtractableFile);
 
     let uri = selectURI(operation, fetchUri);
 
     if (files.size) {
       // Automatically set by `fetch` when the `body` is a `FormData` instance.
-      delete options.headers['content-type'];
+      delete options.headers["content-type"];
 
       // GraphQL multipart request spec:
       // https://github.com/jaydenseric/graphql-multipart-request-spec
@@ -135,14 +135,14 @@ module.exports = function createUploadLink({
 
       const form = new RuntimeFormData();
 
-      form.append('operations', serializeFetchParameter(clone, 'Payload'));
+      form.append("operations", serializeFetchParameter(clone, "Payload"));
 
       const map = {};
       let i = 0;
       files.forEach((paths) => {
         map[++i] = paths;
       });
-      form.append('map', JSON.stringify(map));
+      form.append("map", JSON.stringify(map));
 
       i = 0;
       files.forEach((paths, file) => {
@@ -156,22 +156,22 @@ module.exports = function createUploadLink({
         // If the operation contains some mutations GET shouldn’t be used.
         !operation.query.definitions.some(
           (definition) =>
-            definition.kind === 'OperationDefinition' &&
-            definition.operation === 'mutation'
+            definition.kind === "OperationDefinition" &&
+            definition.operation === "mutation"
         )
       )
-        options.method = 'GET';
+        options.method = "GET";
 
-      if (options.method === 'GET') {
+      if (options.method === "GET") {
         const { newURI, parseError } = rewriteURIForGET(uri, body);
         if (parseError)
-          // Apollo’s `HttpLink` uses `fromError` for this, but it's not
+          // Apollo’s `HttpLink` uses `fromError` for this, but it’s not
           // exported from `@apollo/client/link/http`.
           return new Observable((observer) => {
             observer.error(parseError);
           });
         uri = newURI;
-      } else options.body = serializeFetchParameter(clone, 'Payload');
+      } else options.body = serializeFetchParameter(clone, "Payload");
     }
 
     const { controller } = createSignalIfSupported();
@@ -185,7 +185,7 @@ module.exports = function createUploadLink({
           : // Signal not already aborted, so setup a listener to abort when it
             // does.
             options.signal.addEventListener(
-              'abort',
+              "abort",
               () => {
                 controller.abort();
               },

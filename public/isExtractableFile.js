@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * The default implementation for [`createUploadLink`]{@link createUploadLink}
@@ -11,19 +11,19 @@
  * @see [`extract-files` `isExtractableFile` docs](https://github.com/jaydenseric/extract-files#function-isextractablefile).
  * @example <caption>Ways to `import`.</caption>
  * ```js
- * import { isExtractableFile } from 'apollo-upload-client';
+ * import { isExtractableFile } from "apollo-upload-client";
  * ```
  *
  * ```js
- * import isExtractableFile from 'apollo-upload-client/public/isExtractableFile.js';
+ * import isExtractableFile from "apollo-upload-client/public/isExtractableFile.js";
  * ```
  * @example <caption>Ways to `require`.</caption>
  * ```js
- * const { isExtractableFile } = require('apollo-upload-client');
+ * const { isExtractableFile } = require("apollo-upload-client");
  * ```
  *
  * ```js
- * const isExtractableFile = require('apollo-upload-client/public/isExtractableFile.js');
+ * const isExtractableFile = require("apollo-upload-client/public/isExtractableFile.js");
  * ```
  */
-module.exports = require('extract-files/public/isExtractableFile.js');
+module.exports = require("extract-files/public/isExtractableFile.js");
