@@ -2,6 +2,10 @@
 
 ## Next
 
+### Major
+
+- Updated Node.js support to `^12.22.0 || ^14.17.0 || >= 16.0.0`.
+
 ### Patch
 
 - Amended the changelog entry for v16.0.0.
