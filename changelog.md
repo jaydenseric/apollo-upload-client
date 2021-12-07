@@ -8,6 +8,7 @@
 
 ### Patch
 
+- Also run GitHub Actions CI with Node.js v17.
 - Amended the changelog entry for v16.0.0.
 
 ## 16.0.0
