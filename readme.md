@@ -6,7 +6,7 @@
 
 A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link) for [Apollo Client](https://apollographql.com/docs/react) that fetches a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec) if the GraphQL variables contain files (by default [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob), or [`ReactNativeFile`](#class-reactnativefile) instances), or else fetches a regular [GraphQL POST or GET request](https://apollographql.com/docs/apollo-server/requests) (depending on the config and GraphQL operation).
 
-## Setup
+## Installation
 
 To install with [npm](https://npmjs.com/get-npm), run:
 
@@ -112,7 +112,7 @@ function UploadFile() {
 }
 ```
 
-## Support
+## Requirements
 
 - [Node.js](https://nodejs.org): `^12.22.0 || ^14.17.0 || >= 16.0.0`
 - [Browsers](https://npm.im/browserslist): `> 0.5%, not OperaMini all, not IE > 0, not dead`

@@ -12,6 +12,7 @@
 - Also run GitHub Actions CI with Node.js v17.
 - Updated the [`graphql`](https://npm.im/graphql) peer dependency to `14 - 16`.
 - Configured Prettier option `singleQuote` to the default, `false`.
+- Documentation tweaks.
 - Amended the changelog entry for v16.0.0.
 
 ## 16.0.0
