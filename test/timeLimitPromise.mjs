@@ -16,13 +16,11 @@ import { AssertionError } from "assert";
 export default async function timeLimitPromise(promise, msTimeLimit = 1000) {
   if (!(promise instanceof Promise))
     throw new TypeError(
-      "First argument `promise` must be an instance of `Promise`."
+      "Argument 1 `promise` must be an instance of `Promise`."
     );
 
   if (typeof msTimeLimit !== "number" || msTimeLimit < 0)
-    throw new TypeError(
-      "Second argument `msTimeLimit` must be a positive number."
-    );
+    throw new TypeError("Argument 2 `msTimeLimit` must be a positive number.");
 
   // Ensure the error stack trace starts at the location where
   // `timeLimitPromise` is called. Creating the error within the `setTimeout`
