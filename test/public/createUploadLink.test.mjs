@@ -1,12 +1,7 @@
 import { deepStrictEqual, strictEqual } from "assert";
 import apolloClientCore from "@apollo/client/core/core.cjs";
 import { AbortController, AbortSignal } from "abort-controller";
-// `eslint-plugin-import` has a parse error if the imported module contains
-// private instance fields, see:
-// https://github.com/benmosher/eslint-plugin-import/issues/2124
-// eslint-disable-next-line import/namespace, import/default, import/no-named-as-default, import/no-named-as-default-member
-import Blob from "fetch-blob";
-import { FormData } from "formdata-node";
+import { File, FormData } from "formdata-node";
 import { AbortError, Response } from "node-fetch";
 import revertableGlobals from "revertable-globals";
 import createUploadLink from "../../public/createUploadLink.js";
@@ -91,9 +86,10 @@ export default (tests) => {
 
       const query = "mutation ($a: Upload!) {\n  a(a: $a)\n}";
       const payload = { data: { a: true } };
-      const filetype = "text/plain";
+      const fileName = "a.txt";
+      const fileType = "text/plain";
       const revertGlobals = revertableGlobals({
-        Blob,
+        File,
         FormData,
         async fetch(uri, options) {
           fetchUri = uri;
@@ -109,7 +105,7 @@ export default (tests) => {
             execute(createUploadLink(), {
               query: gql(query),
               variables: {
-                a: new Blob(["a"], { type: filetype }),
+                a: new File(["a"], fileName, { type: fileType }),
               },
             }).subscribe({
               next(data) {
@@ -153,9 +149,9 @@ export default (tests) => {
           1: ["variables.a"],
         });
         strictEqual(formDataEntries[2][0], "1");
-        strictEqual(formDataEntries[2][1] instanceof Blob, true);
-        strictEqual(formDataEntries[2][1].name, "blob");
-        strictEqual(formDataEntries[2][1].type, filetype);
+        strictEqual(formDataEntries[2][1] instanceof File, true);
+        strictEqual(formDataEntries[2][1].name, fileName);
+        strictEqual(formDataEntries[2][1].type, fileType);
         deepStrictEqual(fetchOptionsRest, {
           method: "POST",
           headers: { accept: "*/*" },
@@ -423,8 +419,9 @@ export default (tests) => {
 
       const query = "query ($a: Upload!) {\n  a(a: $a)\n}";
       const payload = { data: { a: true } };
-      const filetype = "text/plain";
-      const revertGlobals = revertableGlobals({ Blob });
+      const fileName = "a.txt";
+      const fileType = "text/plain";
+      const revertGlobals = revertableGlobals({ File });
 
       try {
         await timeLimitPromise(
@@ -446,7 +443,7 @@ export default (tests) => {
               {
                 query: gql(query),
                 variables: {
-                  a: new Blob(["a"], { type: filetype }),
+                  a: new File(["a"], fileName, { type: fileType }),
                 },
               }
             ).subscribe({
@@ -491,9 +488,9 @@ export default (tests) => {
           1: ["variables.a"],
         });
         strictEqual(formDataEntries[2][0], "1");
-        strictEqual(formDataEntries[2][1] instanceof Blob, true);
-        strictEqual(formDataEntries[2][1].name, "blob");
-        strictEqual(formDataEntries[2][1].type, filetype);
+        strictEqual(formDataEntries[2][1] instanceof File, true);
+        strictEqual(formDataEntries[2][1].name, fileName);
+        strictEqual(formDataEntries[2][1].type, fileType);
         deepStrictEqual(fetchOptionsRest, {
           method: "POST",
           headers: { accept: "*/*" },
@@ -773,11 +770,12 @@ export default (tests) => {
 
       const query = "mutation ($a: Upload!) {\n  a(a: $a)\n}";
       const payload = { data: { a: true } };
-      const filetype = "text/plain";
+      const fileName = "a.txt";
+      const fileType = "text/plain";
 
       class TextFile {
-        constructor(content) {
-          this.blob = new Blob([content], { type: filetype });
+        constructor(content, fileName) {
+          this.file = new File([content], fileName, { type: fileType });
         }
       }
 
@@ -791,7 +789,7 @@ export default (tests) => {
               formDataAppendFile(formData, fieldName, file) {
                 formData.append(
                   fieldName,
-                  file instanceof TextFile ? file.blob : file
+                  file instanceof TextFile ? file.file : file
                 );
               },
               FormData,
@@ -808,7 +806,7 @@ export default (tests) => {
             {
               query: gql(query),
               variables: {
-                a: new TextFile("a"),
+                a: new TextFile("a", fileName),
               },
             }
           ).subscribe({
@@ -853,9 +851,9 @@ export default (tests) => {
         1: ["variables.a"],
       });
       strictEqual(formDataEntries[2][0], "1");
-      strictEqual(formDataEntries[2][1] instanceof Blob, true);
-      strictEqual(formDataEntries[2][1].name, "blob");
-      strictEqual(formDataEntries[2][1].type, filetype);
+      strictEqual(formDataEntries[2][1] instanceof File, true);
+      strictEqual(formDataEntries[2][1].name, fileName);
+      strictEqual(formDataEntries[2][1].type, fileType);
       deepStrictEqual(fetchOptionsRest, {
         method: "POST",
         headers: { accept: "*/*" },

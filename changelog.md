@@ -11,6 +11,7 @@
 
 - Also run GitHub Actions CI with Node.js v17.
 - Updated the [`graphql`](https://npm.im/graphql) peer dependency to `14 - 16`.
+- Refactored tests to remove the [`fetch-blob`](https://npm.im/fetch-blob) dev dependency.
 - Configured Prettier option `singleQuote` to the default, `false`.
 - Documentation tweaks.
 - Amended the changelog entry for v16.0.0.
