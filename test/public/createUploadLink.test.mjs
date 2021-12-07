@@ -5,6 +5,7 @@ import { File, FormData } from "formdata-node";
 import { AbortError, Response } from "node-fetch";
 import revertableGlobals from "revertable-globals";
 import createUploadLink from "../../public/createUploadLink.js";
+import assertBundleSize from "../assertBundleSize.mjs";
 import createUnexpectedCallError from "../createUnexpectedCallError.mjs";
 import timeLimitPromise from "../timeLimitPromise.mjs";
 
@@ -19,6 +20,13 @@ const graphqlResponseOptions = {
 };
 
 export default (tests) => {
+  tests.add("`createUploadLink` bundle size.", async () => {
+    await assertBundleSize(
+      new URL("../../public/createUploadLink.js", import.meta.url),
+      1800
+    );
+  });
+
   tests.add(
     "`createUploadLink` with default options, a query, no files.",
     async () => {

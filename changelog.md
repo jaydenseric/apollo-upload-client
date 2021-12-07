@@ -14,6 +14,10 @@
 - Updated the [`graphql`](https://npm.im/graphql) peer dependency to `14 - 16`.
 - Refactored tests to remove the [`fetch-blob`](https://npm.im/fetch-blob) dev dependency.
 - Simplified package scripts.
+- Use a new `assertBundleSize` function to assert module bundle size in tests:
+  - Failure message contains details about the bundle size and how much the limit was exceeded.
+  - Errors when the surplus is greater than 25% of the limit, suggesting the limit should be reduced.
+  - Resolves the minified bundle and its gzipped size for debugging in tests.
 - Configured Prettier option `singleQuote` to the default, `false`.
 - Documentation tweaks.
 - Amended the changelog entry for v16.0.0.
