@@ -1,7 +1,7 @@
 import { strictEqual } from 'assert';
 import { fileURLToPath } from 'url';
 import esbuild from 'esbuild';
-import gzipSize from 'gzip-size';
+import { gzipSize } from 'gzip-size';
 
 export default (tests) => {
   tests.add('Bundle.', async () => {

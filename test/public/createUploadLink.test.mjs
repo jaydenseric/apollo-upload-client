@@ -1,10 +1,5 @@
 import { deepStrictEqual, strictEqual } from 'assert';
-import {
-  ApolloLink,
-  concat,
-  execute,
-  gql,
-} from '@apollo/client/core/core.cjs.js';
+import apolloClientCore from '@apollo/client/core/core.cjs';
 import { AbortController, AbortSignal } from 'abort-controller';
 // `eslint-plugin-import` has a parse error if the imported module contains
 // private instance fields, see:
@@ -17,6 +12,8 @@ import revertableGlobals from 'revertable-globals';
 import createUploadLink from '../../public/createUploadLink.js';
 import createUnexpectedCallError from '../createUnexpectedCallError.mjs';
 import timeLimitPromise from '../timeLimitPromise.mjs';
+
+const { ApolloLink, concat, execute, gql } = apolloClientCore;
 
 const defaultUri = '/graphql';
 const graphqlResponseOptions = {
@@ -34,7 +31,7 @@ export default (tests) => {
       let fetchOptions;
       let nextData;
 
-      const query = '{\n  a\n}\n';
+      const query = '{\n  a\n}';
       const payload = { data: { a: true } };
       const revertGlobals = revertableGlobals({
         async fetch(uri, options) {
@@ -76,7 +73,6 @@ export default (tests) => {
         deepStrictEqual(fetchOptionsRest, {
           method: 'POST',
           headers: { accept: '*/*', 'content-type': 'application/json' },
-          credentials: undefined,
           body: JSON.stringify({ variables: {}, query }),
         });
         deepStrictEqual(nextData, payload);
@@ -93,7 +89,7 @@ export default (tests) => {
       let fetchOptions;
       let nextData;
 
-      const query = 'mutation ($a: Upload!) {\n  a(a: $a)\n}\n';
+      const query = 'mutation ($a: Upload!) {\n  a(a: $a)\n}';
       const payload = { data: { a: true } };
       const filetype = 'text/plain';
       const revertGlobals = revertableGlobals({
@@ -163,7 +159,6 @@ export default (tests) => {
         deepStrictEqual(fetchOptionsRest, {
           method: 'POST',
           headers: { accept: '*/*' },
-          credentials: undefined,
         });
         deepStrictEqual(nextData, payload);
       } finally {
@@ -178,7 +173,7 @@ export default (tests) => {
     let nextData;
 
     const uri = 'http://localhost:3000';
-    const query = '{\n  a\n}\n';
+    const query = '{\n  a\n}';
     const payload = { data: { a: true } };
 
     await timeLimitPromise(
@@ -224,7 +219,6 @@ export default (tests) => {
     deepStrictEqual(fetchOptionsRest, {
       method: 'POST',
       headers: { accept: '*/*', 'content-type': 'application/json' },
-      credentials: undefined,
       body: JSON.stringify({ variables: {}, query }),
     });
     deepStrictEqual(nextData, payload);
@@ -235,7 +229,7 @@ export default (tests) => {
     let fetchOptions;
     let nextData;
 
-    const query = '{\n  a\n}\n';
+    const query = '{\n  a\n}';
     const payload = { data: { a: true } };
 
     await timeLimitPromise(
@@ -287,7 +281,6 @@ export default (tests) => {
     deepStrictEqual(fetchOptionsRest, {
       method: 'POST',
       headers: { accept: '*/*', 'content-type': 'application/json' },
-      credentials: undefined,
       body: JSON.stringify({
         variables: {},
         extensions: {
@@ -306,7 +299,7 @@ export default (tests) => {
       let fetchOptions;
       let nextData;
 
-      const query = '{\n  a\n}\n';
+      const query = '{\n  a\n}';
       const payload = { data: { a: true } };
 
       await timeLimitPromise(
@@ -343,7 +336,7 @@ export default (tests) => {
 
       strictEqual(
         fetchUri,
-        `${defaultUri}?query=%7B%0A%20%20a%0A%7D%0A&variables=%7B%7D`
+        `${defaultUri}?query=%7B%0A%20%20a%0A%7D&variables=%7B%7D`
       );
 
       const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
@@ -355,7 +348,6 @@ export default (tests) => {
       deepStrictEqual(fetchOptionsRest, {
         method: 'GET',
         headers: { accept: '*/*', 'content-type': 'application/json' },
-        credentials: undefined,
       });
       deepStrictEqual(nextData, payload);
     }
@@ -368,7 +360,7 @@ export default (tests) => {
       let fetchOptions;
       let nextData;
 
-      const query = '{\n  a\n}\n';
+      const query = '{\n  a\n}';
       const payload = { data: { a: true } };
 
       await timeLimitPromise(
@@ -405,7 +397,7 @@ export default (tests) => {
 
       strictEqual(
         fetchUri,
-        `${defaultUri}?query=%7B%0A%20%20a%0A%7D%0A&variables=%7B%7D`
+        `${defaultUri}?query=%7B%0A%20%20a%0A%7D&variables=%7B%7D`
       );
 
       const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
@@ -417,7 +409,6 @@ export default (tests) => {
       deepStrictEqual(fetchOptionsRest, {
         method: 'GET',
         headers: { accept: '*/*', 'content-type': 'application/json' },
-        credentials: undefined,
       });
       deepStrictEqual(nextData, payload);
     }
@@ -430,7 +421,7 @@ export default (tests) => {
       let fetchOptions;
       let nextData;
 
-      const query = 'query ($a: Upload!) {\n  a(a: $a)\n}\n';
+      const query = 'query ($a: Upload!) {\n  a(a: $a)\n}';
       const payload = { data: { a: true } };
       const filetype = 'text/plain';
       const revertGlobals = revertableGlobals({ Blob });
@@ -506,7 +497,6 @@ export default (tests) => {
         deepStrictEqual(fetchOptionsRest, {
           method: 'POST',
           headers: { accept: '*/*' },
-          credentials: undefined,
         });
         deepStrictEqual(nextData, payload);
       } finally {
@@ -520,7 +510,7 @@ export default (tests) => {
     async () => {
       let fetched = false;
 
-      const query = 'query($a: Boolean) {\n  a(a: $a)\n}\n';
+      const query = 'query($a: Boolean) {\n  a(a: $a)\n}';
       const payload = { data: { a: true } };
       const parseError = new Error('Unserializable.');
       const observerError = await timeLimitPromise(
@@ -577,7 +567,7 @@ export default (tests) => {
       let fetchOptions;
       let nextData;
 
-      const query = 'mutation {\n  a\n}\n';
+      const query = 'mutation {\n  a\n}';
       const payload = { data: { a: true } };
 
       await timeLimitPromise(
@@ -623,7 +613,6 @@ export default (tests) => {
       deepStrictEqual(fetchOptionsRest, {
         method: 'POST',
         headers: { accept: '*/*', 'content-type': 'application/json' },
-        credentials: undefined,
         body: JSON.stringify({ variables: {}, query }),
       });
       deepStrictEqual(nextData, payload);
@@ -636,7 +625,7 @@ export default (tests) => {
     let nextData;
 
     const clientAwareness = { name: 'a', version: '1.0.0' };
-    const query = '{\n  a\n}\n';
+    const query = '{\n  a\n}';
     const payload = { data: { a: true } };
 
     await timeLimitPromise(
@@ -692,7 +681,6 @@ export default (tests) => {
         'apollographql-client-name': clientAwareness.name,
         'apollographql-client-version': clientAwareness.version,
       },
-      credentials: undefined,
       body: JSON.stringify({ variables: {}, query }),
     });
     deepStrictEqual(nextData, payload);
@@ -707,7 +695,7 @@ export default (tests) => {
 
       const clientAwarenessOriginal = { name: 'a', version: '1.0.0' };
       const clientAwarenessOverride = { name: 'b', version: '2.0.0' };
-      const query = '{\n  a\n}\n';
+      const query = '{\n  a\n}';
       const payload = { data: { a: true } };
 
       await timeLimitPromise(
@@ -770,7 +758,6 @@ export default (tests) => {
           'apollographql-client-name': clientAwarenessOverride.name,
           'apollographql-client-version': clientAwarenessOverride.version,
         },
-        credentials: undefined,
         body: JSON.stringify({ variables: {}, query }),
       });
       deepStrictEqual(nextData, payload);
@@ -784,7 +771,7 @@ export default (tests) => {
       let fetchOptions;
       let nextData;
 
-      const query = 'mutation ($a: Upload!) {\n  a(a: $a)\n}\n';
+      const query = 'mutation ($a: Upload!) {\n  a(a: $a)\n}';
       const payload = { data: { a: true } };
       const filetype = 'text/plain';
 
@@ -872,7 +859,6 @@ export default (tests) => {
       deepStrictEqual(fetchOptionsRest, {
         method: 'POST',
         headers: { accept: '*/*' },
-        credentials: undefined,
       });
       deepStrictEqual(nextData, payload);
     }
@@ -1000,7 +986,7 @@ export default (tests) => {
       let fetchUri;
       let fetchOptions;
 
-      const query = '{\n  a\n}\n';
+      const query = '{\n  a\n}';
       const payload = { data: { a: true } };
       const controller = new AbortController();
       const fetchError = new AbortError('The operation was aborted.');
@@ -1061,7 +1047,6 @@ export default (tests) => {
         deepStrictEqual(fetchOptions, {
           method: 'POST',
           headers: { accept: '*/*', 'content-type': 'application/json' },
-          credentials: undefined,
           body: JSON.stringify({ variables: {}, query }),
           signal: controller.signal,
         });
@@ -1078,7 +1063,7 @@ export default (tests) => {
       let fetchUri;
       let fetchOptions;
 
-      const query = '{\n  a\n}\n';
+      const query = '{\n  a\n}';
       const payload = { data: { a: true } };
 
       const controller = new AbortController();
@@ -1128,7 +1113,6 @@ export default (tests) => {
         deepStrictEqual(fetchOptions, {
           method: 'POST',
           headers: { accept: '*/*', 'content-type': 'application/json' },
-          credentials: undefined,
           body: JSON.stringify({ variables: {}, query }),
           signal: controller.signal,
         });

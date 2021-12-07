@@ -5,10 +5,12 @@
 ### Major
 
 - Updated Node.js support to `^12.22.0 || ^14.17.0 || >= 16.0.0`.
+- Updated dev dependencies, some of which require newer Node.js versions than previously supported.
 
 ### Patch
 
 - Also run GitHub Actions CI with Node.js v17.
+- Updated the [`graphql`](https://npm.im/graphql) peer dependency to `14 - 16`.
 - Amended the changelog entry for v16.0.0.
 
 ## 16.0.0
