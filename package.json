@@ -37,7 +37,6 @@
       "require": "./public/index.js"
     },
     "./public/*": "./public/*",
-    "./package": "./package.json",
     "./package.json": "./package.json"
   },
   "engines": {
