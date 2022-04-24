@@ -2,10 +2,18 @@
 
 ## Next
 
+### Major
+
+- Updated Node.js support to `^14.17.0 || ^16.0.0 || >= 18.0.0`.
+
 ### Patch
 
 - Updated dev dependencies.
 - Simplified dev dependencies and config for ESLint.
+- Updated GitHub Actions CI config:
+  - Run tests with Node.js v14, v16, v18.
+  - Updated `actions/checkout` to v3.
+  - Updated `actions/setup-node` to v3.
 
 ## 17.0.0
 
