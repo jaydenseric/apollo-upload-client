@@ -1,9 +1,10 @@
-import { deepStrictEqual, strictEqual } from "assert";
 import apolloClientCore from "@apollo/client/core/core.cjs";
 import { AbortController, AbortSignal } from "abort-controller";
+import { deepStrictEqual, strictEqual } from "assert";
 import { File, FormData } from "formdata-node";
 import { AbortError, Response } from "node-fetch";
 import revertableGlobals from "revertable-globals";
+
 import createUploadLink from "../../public/createUploadLink.js";
 import assertBundleSize from "../assertBundleSize.mjs";
 import createUnexpectedCallError from "../createUnexpectedCallError.mjs";
