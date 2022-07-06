@@ -6,6 +6,34 @@
 
 - Updated Node.js support to `^14.17.0 || ^16.0.0 || >= 18.0.0`.
 - Public modules are now individually listed in the package `files` and `exports` fields.
+- Removed the package main index module; deep imports must be used. To migrate:
+
+  ```diff
+  - import {
+  -   createUploadLink,
+  -   formDataAppendFile,
+  -   isExtractableFile,
+  -   ReactNativeFile
+  - } from "apollo-upload-client";
+  + import createUploadLink from "apollo-upload-client/createUploadLink.js";
+  + import formDataAppendFile from "apollo-upload-client/formDataAppendFile.js";
+  + import isExtractableFile from "apollo-upload-client/isExtractableFile.js";
+  + import ReactNativeFile from "apollo-upload-client/ReactNativeFile.js";
+  ```
+
+  ```diff
+  - const {
+  -   createUploadLink,
+  -   formDataAppendFile,
+  -   isExtractableFile,
+  -   ReactNativeFile
+  - } = require("apollo-upload-client");
+  + const createUploadLink = require("apollo-upload-client/createUploadLink.js");
+  + const formDataAppendFile = require("apollo-upload-client/formDataAppendFile.js");
+  + const isExtractableFile = require("apollo-upload-client/isExtractableFile.js");
+  + const ReactNativeFile = require("apollo-upload-client/ReactNativeFile.js");
+  ```
+
 - Shortened public module deep import paths, removing the `/public/`. To migrate:
 
   ```diff

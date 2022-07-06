@@ -29,18 +29,11 @@
   "files": [
     "createUploadLink.js",
     "formDataAppendFile.js",
-    "index.js",
-    "index.mjs",
     "isExtractableFile.js",
     "ReactNativeFile.js"
   ],
   "sideEffects": false,
-  "main": "./index",
   "exports": {
-    ".": {
-      "import": "./index.mjs",
-      "require": "./index.js"
-    },
     "./createUploadLink.js": "./createUploadLink.js",
     "./formDataAppendFile.js": "./formDataAppendFile.js",
     "./isExtractableFile.js": "./isExtractableFile.js",

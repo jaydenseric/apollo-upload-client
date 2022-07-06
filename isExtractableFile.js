@@ -9,19 +9,11 @@
  * @param {*} value Value to check.
  * @returns {boolean} Is the value an extractable file.
  * @see [`extract-files` `isExtractableFile` docs](https://github.com/jaydenseric/extract-files#function-isextractablefile).
- * @example <caption>Ways to `import`.</caption>
- * ```js
- * import { isExtractableFile } from "apollo-upload-client";
- * ```
- *
+ * @example <caption>How to `import`.</caption>
  * ```js
  * import isExtractableFile from "apollo-upload-client/isExtractableFile.js";
  * ```
- * @example <caption>Ways to `require`.</caption>
- * ```js
- * const { isExtractableFile } = require("apollo-upload-client");
- * ```
- *
+ * @example <caption>How to `require`.</caption>
  * ```js
  * const isExtractableFile = require("apollo-upload-client/isExtractableFile.js");
  * ```

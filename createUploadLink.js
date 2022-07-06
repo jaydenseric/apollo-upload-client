@@ -45,19 +45,11 @@ const isExtractableFile = require("./isExtractableFile.js");
  * @param {object} [options.headers] Merges with and overrides `options.fetchOptions.headers`.
  * @param {boolean} [options.includeExtensions=false] Toggles sending `extensions` fields to the GraphQL server.
  * @returns {ApolloLink} A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link).
- * @example <caption>Ways to `import`.</caption>
- * ```js
- * import { createUploadLink } from "apollo-upload-client";
- * ```
- *
+ * @example <caption>How to `import`.</caption>
  * ```js
  * import createUploadLink from "apollo-upload-client/createUploadLink.js";
  * ```
- * @example <caption>Ways to `require`.</caption>
- * ```js
- * const { createUploadLink } = require("apollo-upload-client");
- * ```
- *
+ * @example <caption>How to `require`.</caption>
  * ```js
  * const createUploadLink = require("apollo-upload-client/createUploadLink.js");
  * ```
@@ -241,3 +233,45 @@ module.exports = function createUploadLink({
     });
   });
 };
+
+/**
+ * A function that checks if a value is an extractable file.
+ * @kind typedef
+ * @name ExtractableFileMatcher
+ * @type {Function}
+ * @param {*} value Value to check.
+ * @returns {boolean} Is the value an extractable file.
+ * @see [`isExtractableFile`]{@link isExtractableFile} has this type.
+ * @example <caption>How to check for the default exactable files, as well as a custom type of file.</caption>
+ * ```js
+ * import isExtractableFile from "apollo-upload-client/isExtractableFile.js";
+ *
+ * const isExtractableFileEnhanced = (value) =>
+ *   isExtractableFile(value) ||
+ *   (typeof CustomFile !== "undefined" && value instanceof CustomFile);
+ * ```
+ */
+
+/**
+ * GraphQL request `fetch` options.
+ * @kind typedef
+ * @name FetchOptions
+ * @type {object}
+ * @see [Polyfillable fetch options](https://github.github.io/fetch#options).
+ * @prop {object} headers HTTP request headers.
+ * @prop {string} [credentials] Authentication credentials mode.
+ */
+
+/**
+ * Appends a file extracted from the GraphQL operation to the
+ * [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
+ * instance used as the [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch)
+ * `options.body` for the [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec).
+ * @kind typedef
+ * @name FormDataFileAppender
+ * @param {FormData} formData [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to append the specified file to.
+ * @param {string} fieldName Field name for the file.
+ * @param {*} file File to append. The file type depends on what the [`ExtractableFileMatcher`]{@link ExtractableFileMatcher} extracts.
+ * @see [`formDataAppendFile`]{@link formDataAppendFile} has this type.
+ * @see [`createUploadLink`]{@link createUploadLink} accepts this type in `options.formDataAppendFile`.
+ */

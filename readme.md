@@ -149,22 +149,14 @@ Used to mark [React Native `File` substitutes](#type-reactnativefilesubstitute) 
 
 #### Examples
 
-_Ways to `import`._
+_How to `import`._
 
-> ```js
-> import { ReactNativeFile } from "apollo-upload-client";
-> ```
->
 > ```js
 > import ReactNativeFile from "apollo-upload-client/ReactNativeFile.js";
 > ```
 
-_Ways to `require`._
+_How to `require`._
 
-> ```js
-> const { ReactNativeFile } = require("apollo-upload-client");
-> ```
->
 > ```js
 > const ReactNativeFile = require("apollo-upload-client/ReactNativeFile.js");
 > ```
@@ -209,22 +201,14 @@ Some of the options are similar to the [`createHttpLink` options](https://apollo
 
 #### Examples
 
-_Ways to `import`._
+_How to `import`._
 
-> ```js
-> import { createUploadLink } from "apollo-upload-client";
-> ```
->
 > ```js
 > import createUploadLink from "apollo-upload-client/createUploadLink.js";
 > ```
 
-_Ways to `require`._
+_How to `require`._
 
-> ```js
-> const { createUploadLink } = require("apollo-upload-client");
-> ```
->
 > ```js
 > const createUploadLink = require("apollo-upload-client/createUploadLink.js");
 > ```
@@ -257,22 +241,14 @@ The default implementation for [`createUploadLink`](#function-createuploadlink) 
 
 #### Examples
 
-_Ways to `import`._
+_How to `import`._
 
-> ```js
-> import { formDataAppendFile } from "apollo-upload-client";
-> ```
->
 > ```js
 > import formDataAppendFile from "apollo-upload-client/formDataAppendFile.js";
 > ```
 
-_Ways to `require`._
+_How to `require`._
 
-> ```js
-> const { formDataAppendFile } = require("apollo-upload-client");
-> ```
->
 > ```js
 > const formDataAppendFile = require("apollo-upload-client/formDataAppendFile.js");
 > ```
@@ -297,22 +273,14 @@ The default implementation for [`createUploadLink`](#function-createuploadlink) 
 
 #### Examples
 
-_Ways to `import`._
+_How to `import`._
 
-> ```js
-> import { isExtractableFile } from "apollo-upload-client";
-> ```
->
 > ```js
 > import isExtractableFile from "apollo-upload-client/isExtractableFile.js";
 > ```
 
-_Ways to `require`._
+_How to `require`._
 
-> ```js
-> const { isExtractableFile } = require("apollo-upload-client");
-> ```
->
 > ```js
 > const isExtractableFile = require("apollo-upload-client/isExtractableFile.js");
 > ```
