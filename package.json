@@ -27,17 +27,25 @@
     "mjs"
   ],
   "files": [
-    "public"
+    "createUploadLink.js",
+    "formDataAppendFile.js",
+    "index.js",
+    "index.mjs",
+    "isExtractableFile.js",
+    "ReactNativeFile.js"
   ],
   "sideEffects": false,
-  "main": "public",
+  "main": "./index",
   "exports": {
     ".": {
-      "import": "./public/index.mjs",
-      "require": "./public/index.js"
+      "import": "./index.mjs",
+      "require": "./index.js"
     },
-    "./public/*": "./public/*",
-    "./package.json": "./package.json"
+    "./createUploadLink.js": "./createUploadLink.js",
+    "./formDataAppendFile.js": "./formDataAppendFile.js",
+    "./isExtractableFile.js": "./isExtractableFile.js",
+    "./package.json": "./package.json",
+    "./ReactNativeFile.js": "./ReactNativeFile.js"
   },
   "engines": {
     "node": "^14.17.0 || ^16.0.0 || >= 18.0.0"
@@ -71,7 +79,7 @@
     "docs-check": "jsdoc-md -c",
     "eslint": "eslint .",
     "prettier": "prettier -c .",
-    "tests": "coverage-node test/index.mjs",
+    "tests": "coverage-node test.mjs",
     "test": "npm run eslint && npm run prettier && npm run docs-check && npm run tests",
     "prepublishOnly": "npm test"
   }

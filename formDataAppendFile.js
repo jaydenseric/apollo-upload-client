@@ -17,7 +17,7 @@
  * ```
  *
  * ```js
- * import formDataAppendFile from "apollo-upload-client/public/formDataAppendFile.js";
+ * import formDataAppendFile from "apollo-upload-client/formDataAppendFile.js";
  * ```
  * @example <caption>Ways to `require`.</caption>
  * ```js
@@ -25,7 +25,7 @@
  * ```
  *
  * ```js
- * const formDataAppendFile = require("apollo-upload-client/public/formDataAppendFile.js");
+ * const formDataAppendFile = require("apollo-upload-client/formDataAppendFile.js");
  * ```
  */
 module.exports = function formDataAppendFile(formData, fieldName, file) {

@@ -5,6 +5,36 @@
 ### Major
 
 - Updated Node.js support to `^14.17.0 || ^16.0.0 || >= 18.0.0`.
+- Public modules are now individually listed in the package `files` and `exports` fields.
+- Shortened public module deep import paths, removing the `/public/`. To migrate:
+
+  ```diff
+  - import createUploadLink from "apollo-upload-client/public/createUploadLink.js";
+  + import createUploadLink from "apollo-upload-client/createUploadLink.js";
+
+  - import formDataAppendFile from "apollo-upload-client/public/formDataAppendFile.js";
+  + import formDataAppendFile from "apollo-upload-client/formDataAppendFile.js";
+
+  - import isExtractableFile from "apollo-upload-client/public/isExtractableFile.js";
+  + import isExtractableFile from "apollo-upload-client/isExtractableFile.js";
+
+  - import ReactNativeFile from "apollo-upload-client/public/ReactNativeFile.js";
+  + import ReactNativeFile from "apollo-upload-client/ReactNativeFile.js";
+  ```
+
+  ```diff
+  - const createUploadLink = require("apollo-upload-client/public/createUploadLink.js");
+  + const createUploadLink = require("apollo-upload-client/createUploadLink.js");
+
+  - const formDataAppendFile = require("apollo-upload-client/public/formDataAppendFile.js");
+  + const formDataAppendFile = require("apollo-upload-client/formDataAppendFile.js");
+
+  - const isExtractableFile = require("apollo-upload-client/public/isExtractableFile.js");
+  + const isExtractableFile = require("apollo-upload-client/isExtractableFile.js");
+
+  - const ReactNativeFile = require("apollo-upload-client/public/ReactNativeFile.js");
+  + const ReactNativeFile = require("apollo-upload-client/ReactNativeFile.js");
+  ```
 
 ### Patch
 
@@ -14,6 +44,7 @@
   - Run tests with Node.js v14, v16, v18.
   - Updated `actions/checkout` to v3.
   - Updated `actions/setup-node` to v3.
+- Reorganized the test file structure.
 
 ## 17.0.0
 

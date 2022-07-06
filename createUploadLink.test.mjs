@@ -5,10 +5,10 @@ import { File, FormData } from "formdata-node";
 import { AbortError, Response } from "node-fetch";
 import revertableGlobals from "revertable-globals";
 
-import createUploadLink from "../../public/createUploadLink.js";
-import assertBundleSize from "../assertBundleSize.mjs";
-import createUnexpectedCallError from "../createUnexpectedCallError.mjs";
-import timeLimitPromise from "../timeLimitPromise.mjs";
+import createUploadLink from "./createUploadLink.js";
+import assertBundleSize from "./test/assertBundleSize.mjs";
+import createUnexpectedCallError from "./test/createUnexpectedCallError.mjs";
+import timeLimitPromise from "./test/timeLimitPromise.mjs";
 
 const { ApolloLink, concat, execute, gql } = apolloClientCore;
 
@@ -23,7 +23,7 @@ const graphqlResponseOptions = {
 export default (tests) => {
   tests.add("`createUploadLink` bundle size.", async () => {
     await assertBundleSize(
-      new URL("../../public/createUploadLink.js", import.meta.url),
+      new URL("./createUploadLink.js", import.meta.url),
       1800
     );
   });

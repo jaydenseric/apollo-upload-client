@@ -15,7 +15,7 @@
  * ```
  *
  * ```js
- * import ReactNativeFile from "apollo-upload-client/public/ReactNativeFile.js";
+ * import ReactNativeFile from "apollo-upload-client/ReactNativeFile.js";
  * ```
  * @example <caption>Ways to `require`.</caption>
  * ```js
@@ -23,7 +23,7 @@
  * ```
  *
  * ```js
- * const ReactNativeFile = require("apollo-upload-client/public/ReactNativeFile.js");
+ * const ReactNativeFile = require("apollo-upload-client/ReactNativeFile.js");
  * ```
  * @example <caption>A file in [React Native](https://reactnative.dev) that can be used in query or mutation variables.</caption>
  * ```js

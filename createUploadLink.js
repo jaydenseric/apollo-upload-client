@@ -51,7 +51,7 @@ const isExtractableFile = require("./isExtractableFile.js");
  * ```
  *
  * ```js
- * import createUploadLink from "apollo-upload-client/public/createUploadLink.js";
+ * import createUploadLink from "apollo-upload-client/createUploadLink.js";
  * ```
  * @example <caption>Ways to `require`.</caption>
  * ```js
@@ -59,12 +59,12 @@ const isExtractableFile = require("./isExtractableFile.js");
  * ```
  *
  * ```js
- * const createUploadLink = require("apollo-upload-client/public/createUploadLink.js");
+ * const createUploadLink = require("apollo-upload-client/createUploadLink.js");
  * ```
  * @example <caption>A basic Apollo Client setup.</caption>
  * ```js
  * import { ApolloClient, InMemoryCache } from "@apollo/client";
- * import createUploadLink from "apollo-upload-client/public/createUploadLink.js";
+ * import createUploadLink from "apollo-upload-client/createUploadLink.js";
  *
  * const client = new ApolloClient({
  *   cache: new InMemoryCache(),

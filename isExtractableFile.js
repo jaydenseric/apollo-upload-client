@@ -15,7 +15,7 @@
  * ```
  *
  * ```js
- * import isExtractableFile from "apollo-upload-client/public/isExtractableFile.js";
+ * import isExtractableFile from "apollo-upload-client/isExtractableFile.js";
  * ```
  * @example <caption>Ways to `require`.</caption>
  * ```js
@@ -23,7 +23,7 @@
  * ```
  *
  * ```js
- * const isExtractableFile = require("apollo-upload-client/public/isExtractableFile.js");
+ * const isExtractableFile = require("apollo-upload-client/isExtractableFile.js");
  * ```
  */
 module.exports = require("extract-files/public/isExtractableFile.js");

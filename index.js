@@ -50,7 +50,7 @@ exports.ReactNativeFile = require("./ReactNativeFile.js");
  * @see [`isExtractableFile`]{@link isExtractableFile} has this type.
  * @example <caption>How to check for the default exactable files, as well as a custom type of file.</caption>
  * ```js
- * import isExtractableFile from "apollo-upload-client/public/isExtractableFile.js";
+ * import isExtractableFile from "apollo-upload-client/isExtractableFile.js";
  *
  * const isExtractableFileEnhanced = (value) =>
  *   isExtractableFile(value) ||

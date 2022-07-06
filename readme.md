@@ -156,7 +156,7 @@ _Ways to `import`._
 > ```
 >
 > ```js
-> import ReactNativeFile from "apollo-upload-client/public/ReactNativeFile.js";
+> import ReactNativeFile from "apollo-upload-client/ReactNativeFile.js";
 > ```
 
 _Ways to `require`._
@@ -166,7 +166,7 @@ _Ways to `require`._
 > ```
 >
 > ```js
-> const ReactNativeFile = require("apollo-upload-client/public/ReactNativeFile.js");
+> const ReactNativeFile = require("apollo-upload-client/ReactNativeFile.js");
 > ```
 
 _A file in [React Native](https://reactnative.dev) that can be used in query or mutation variables._
@@ -216,7 +216,7 @@ _Ways to `import`._
 > ```
 >
 > ```js
-> import createUploadLink from "apollo-upload-client/public/createUploadLink.js";
+> import createUploadLink from "apollo-upload-client/createUploadLink.js";
 > ```
 
 _Ways to `require`._
@@ -226,14 +226,14 @@ _Ways to `require`._
 > ```
 >
 > ```js
-> const createUploadLink = require("apollo-upload-client/public/createUploadLink.js");
+> const createUploadLink = require("apollo-upload-client/createUploadLink.js");
 > ```
 
 _A basic Apollo Client setup._
 
 > ```js
 > import { ApolloClient, InMemoryCache } from "@apollo/client";
-> import createUploadLink from "apollo-upload-client/public/createUploadLink.js";
+> import createUploadLink from "apollo-upload-client/createUploadLink.js";
 >
 > const client = new ApolloClient({
 >   cache: new InMemoryCache(),
@@ -264,7 +264,7 @@ _Ways to `import`._
 > ```
 >
 > ```js
-> import formDataAppendFile from "apollo-upload-client/public/formDataAppendFile.js";
+> import formDataAppendFile from "apollo-upload-client/formDataAppendFile.js";
 > ```
 
 _Ways to `require`._
@@ -274,7 +274,7 @@ _Ways to `require`._
 > ```
 >
 > ```js
-> const formDataAppendFile = require("apollo-upload-client/public/formDataAppendFile.js");
+> const formDataAppendFile = require("apollo-upload-client/formDataAppendFile.js");
 > ```
 
 ---
@@ -304,7 +304,7 @@ _Ways to `import`._
 > ```
 >
 > ```js
-> import isExtractableFile from "apollo-upload-client/public/isExtractableFile.js";
+> import isExtractableFile from "apollo-upload-client/isExtractableFile.js";
 > ```
 
 _Ways to `require`._
@@ -314,7 +314,7 @@ _Ways to `require`._
 > ```
 >
 > ```js
-> const isExtractableFile = require("apollo-upload-client/public/isExtractableFile.js");
+> const isExtractableFile = require("apollo-upload-client/isExtractableFile.js");
 > ```
 
 ---
@@ -340,7 +340,7 @@ A function that checks if a value is an extractable file.
 _How to check for the default exactable files, as well as a custom type of file._
 
 > ```js
-> import isExtractableFile from "apollo-upload-client/public/isExtractableFile.js";
+> import isExtractableFile from "apollo-upload-client/isExtractableFile.js";
 >
 > const isExtractableFileEnhanced = (value) =>
 >   isExtractableFile(value) ||
