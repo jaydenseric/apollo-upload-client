@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Used to mark
  * [React Native `File` substitutes]{@link ReactNativeFileSubstitute} as it’s
@@ -9,13 +7,9 @@
  * @name ReactNativeFile
  * @param {ReactNativeFileSubstitute} file A [React Native](https://reactnative.dev) [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) substitute.
  * @see [`extract-files` `ReactNativeFile` docs](https://github.com/jaydenseric/extract-files#class-reactnativefile).
- * @example <caption>How to `import`.</caption>
+ * @example <caption>How to import.</caption>
  * ```js
- * import ReactNativeFile from "apollo-upload-client/ReactNativeFile.js";
- * ```
- * @example <caption>How to `require`.</caption>
- * ```js
- * const ReactNativeFile = require("apollo-upload-client/ReactNativeFile.js");
+ * import ReactNativeFile from "apollo-upload-client/ReactNativeFile.mjs";
  * ```
  * @example <caption>A file in [React Native](https://reactnative.dev) that can be used in query or mutation variables.</caption>
  * ```js
@@ -26,7 +20,7 @@
  * });
  * ```
  */
-module.exports = require("extract-files/public/ReactNativeFile.js");
+export { default } from "extract-files/public/ReactNativeFile.js";
 
 /**
  * A React Native

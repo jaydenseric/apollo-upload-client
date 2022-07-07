@@ -5,6 +5,7 @@
 ### Major
 
 - Updated Node.js support to `^14.17.0 || ^16.0.0 || >= 18.0.0`.
+- Updated the [`@apollo/client`](https://npm.im/@apollo/client) peer dependency to `^3.6.0`.
 - Public modules are now individually listed in the package `files` and `exports` fields.
 - Removed the package main index module; deep imports must be used. To migrate:
 
@@ -15,54 +16,29 @@
   -   isExtractableFile,
   -   ReactNativeFile
   - } from "apollo-upload-client";
-  + import createUploadLink from "apollo-upload-client/createUploadLink.js";
-  + import formDataAppendFile from "apollo-upload-client/formDataAppendFile.js";
-  + import isExtractableFile from "apollo-upload-client/isExtractableFile.js";
-  + import ReactNativeFile from "apollo-upload-client/ReactNativeFile.js";
-  ```
-
-  ```diff
-  - const {
-  -   createUploadLink,
-  -   formDataAppendFile,
-  -   isExtractableFile,
-  -   ReactNativeFile
-  - } = require("apollo-upload-client");
-  + const createUploadLink = require("apollo-upload-client/createUploadLink.js");
-  + const formDataAppendFile = require("apollo-upload-client/formDataAppendFile.js");
-  + const isExtractableFile = require("apollo-upload-client/isExtractableFile.js");
-  + const ReactNativeFile = require("apollo-upload-client/ReactNativeFile.js");
+  + import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
+  + import formDataAppendFile from "apollo-upload-client/formDataAppendFile.mjs";
+  + import isExtractableFile from "apollo-upload-client/isExtractableFile.mjs";
+  + import ReactNativeFile from "apollo-upload-client/ReactNativeFile.mjs";
   ```
 
 - Shortened public module deep import paths, removing the `/public/`. To migrate:
 
   ```diff
   - import createUploadLink from "apollo-upload-client/public/createUploadLink.js";
-  + import createUploadLink from "apollo-upload-client/createUploadLink.js";
+  + import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 
   - import formDataAppendFile from "apollo-upload-client/public/formDataAppendFile.js";
-  + import formDataAppendFile from "apollo-upload-client/formDataAppendFile.js";
+  + import formDataAppendFile from "apollo-upload-client/formDataAppendFile.mjs";
 
   - import isExtractableFile from "apollo-upload-client/public/isExtractableFile.js";
-  + import isExtractableFile from "apollo-upload-client/isExtractableFile.js";
+  + import isExtractableFile from "apollo-upload-client/isExtractableFile.mjs";
 
   - import ReactNativeFile from "apollo-upload-client/public/ReactNativeFile.js";
-  + import ReactNativeFile from "apollo-upload-client/ReactNativeFile.js";
+  + import ReactNativeFile from "apollo-upload-client/ReactNativeFile.mjs";
   ```
 
-  ```diff
-  - const createUploadLink = require("apollo-upload-client/public/createUploadLink.js");
-  + const createUploadLink = require("apollo-upload-client/createUploadLink.js");
-
-  - const formDataAppendFile = require("apollo-upload-client/public/formDataAppendFile.js");
-  + const formDataAppendFile = require("apollo-upload-client/formDataAppendFile.js");
-
-  - const isExtractableFile = require("apollo-upload-client/public/isExtractableFile.js");
-  + const isExtractableFile = require("apollo-upload-client/isExtractableFile.js");
-
-  - const ReactNativeFile = require("apollo-upload-client/public/ReactNativeFile.js");
-  + const ReactNativeFile = require("apollo-upload-client/ReactNativeFile.js");
-  ```
+- The API is now ESM in `.mjs` files instead of CJS in `.js` files, [accessible via `import` but not `require`](https://nodejs.org/dist/latest/docs/api/esm.html#require).
 
 ### Patch
 

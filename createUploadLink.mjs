@@ -1,18 +1,18 @@
-"use strict";
-
-const { ApolloLink, Observable } = require("@apollo/client/core");
-const {
-  createSignalIfSupported,
+import { ApolloLink } from "@apollo/client/link/core/ApolloLink.js";
+import { createSignalIfSupported } from "@apollo/client/link/http/createSignalIfSupported.js";
+import { parseAndCheckHttpResponse } from "@apollo/client/link/http/parseAndCheckHttpResponse.js";
+import { rewriteURIForGET } from "@apollo/client/link/http/rewriteURIForGET.js";
+import {
   fallbackHttpConfig,
-  parseAndCheckHttpResponse,
-  rewriteURIForGET,
   selectHttpOptionsAndBody,
-  selectURI,
-  serializeFetchParameter,
-} = require("@apollo/client/link/http");
-const extractFiles = require("extract-files/public/extractFiles.js");
-const formDataAppendFile = require("./formDataAppendFile.js");
-const isExtractableFile = require("./isExtractableFile.js");
+} from "@apollo/client/link/http/selectHttpOptionsAndBody.js";
+import { selectURI } from "@apollo/client/link/http/selectURI.js";
+import { serializeFetchParameter } from "@apollo/client/link/http/serializeFetchParameter.js";
+import { Observable } from "@apollo/client/utilities/observables/Observable.js";
+import extractFiles from "extract-files/public/extractFiles.js";
+
+import formDataAppendFile from "./formDataAppendFile.mjs";
+import isExtractableFile from "./isExtractableFile.mjs";
 
 /**
  * Creates a
@@ -45,18 +45,14 @@ const isExtractableFile = require("./isExtractableFile.js");
  * @param {object} [options.headers] Merges with and overrides `options.fetchOptions.headers`.
  * @param {boolean} [options.includeExtensions=false] Toggles sending `extensions` fields to the GraphQL server.
  * @returns {ApolloLink} A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link).
- * @example <caption>How to `import`.</caption>
+ * @example <caption>How to import.</caption>
  * ```js
- * import createUploadLink from "apollo-upload-client/createUploadLink.js";
- * ```
- * @example <caption>How to `require`.</caption>
- * ```js
- * const createUploadLink = require("apollo-upload-client/createUploadLink.js");
+ * import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
  * ```
  * @example <caption>A basic Apollo Client setup.</caption>
  * ```js
  * import { ApolloClient, InMemoryCache } from "@apollo/client";
- * import createUploadLink from "apollo-upload-client/createUploadLink.js";
+ * import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
  *
  * const client = new ApolloClient({
  *   cache: new InMemoryCache(),
@@ -64,7 +60,7 @@ const isExtractableFile = require("./isExtractableFile.js");
  * });
  * ```
  */
-module.exports = function createUploadLink({
+export default function createUploadLink({
   uri: fetchUri = "/graphql",
   useGETForQueries,
   isExtractableFile: customIsExtractableFile = isExtractableFile,
@@ -232,7 +228,7 @@ module.exports = function createUploadLink({
       };
     });
   });
-};
+}
 
 /**
  * A function that checks if a value is an extractable file.
@@ -244,7 +240,7 @@ module.exports = function createUploadLink({
  * @see [`isExtractableFile`]{@link isExtractableFile} has this type.
  * @example <caption>How to check for the default exactable files, as well as a custom type of file.</caption>
  * ```js
- * import isExtractableFile from "apollo-upload-client/isExtractableFile.js";
+ * import isExtractableFile from "apollo-upload-client/isExtractableFile.mjs";
  *
  * const isExtractableFileEnhanced = (value) =>
  *   isExtractableFile(value) ||

@@ -27,25 +27,25 @@
     "mjs"
   ],
   "files": [
-    "createUploadLink.js",
-    "formDataAppendFile.js",
-    "isExtractableFile.js",
-    "ReactNativeFile.js"
+    "createUploadLink.mjs",
+    "formDataAppendFile.mjs",
+    "isExtractableFile.mjs",
+    "ReactNativeFile.mjs"
   ],
   "sideEffects": false,
   "exports": {
-    "./createUploadLink.js": "./createUploadLink.js",
-    "./formDataAppendFile.js": "./formDataAppendFile.js",
-    "./isExtractableFile.js": "./isExtractableFile.js",
+    "./createUploadLink.mjs": "./createUploadLink.mjs",
+    "./formDataAppendFile.mjs": "./formDataAppendFile.mjs",
+    "./isExtractableFile.mjs": "./isExtractableFile.mjs",
     "./package.json": "./package.json",
-    "./ReactNativeFile.js": "./ReactNativeFile.js"
+    "./ReactNativeFile.mjs": "./ReactNativeFile.mjs"
   },
   "engines": {
     "node": "^14.17.0 || ^16.0.0 || >= 18.0.0"
   },
   "browserslist": "Node 14.17 - 15 and Node < 15, Node 16 - 17 and Node < 17, Node >= 18, > 0.5%, not OperaMini all, not IE > 0, not dead",
   "peerDependencies": {
-    "@apollo/client": "^3.0.0",
+    "@apollo/client": "^3.6.0",
     "graphql": "14 - 16"
   },
   "dependencies": {
@@ -60,6 +60,7 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "formdata-node": "^4.3.3",
     "graphql": "^16.5.0",
+    "graphql-tag": "^2.12.6",
     "gzip-size": "^7.0.0",
     "jsdoc-md": "^11.0.2",
     "node-fetch": "^3.2.6",

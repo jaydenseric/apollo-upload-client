@@ -1,16 +1,17 @@
-import apolloClientCore from "@apollo/client/core/core.cjs";
+import { ApolloLink } from "@apollo/client/link/core/ApolloLink.js";
+import { concat } from "@apollo/client/link/core/concat.js";
+import { execute } from "@apollo/client/link/core/execute.js";
 import { AbortController, AbortSignal } from "abort-controller";
 import { deepStrictEqual, strictEqual } from "assert";
 import { File, FormData } from "formdata-node";
+import gql from "graphql-tag";
 import { AbortError, Response } from "node-fetch";
 import revertableGlobals from "revertable-globals";
 
-import createUploadLink from "./createUploadLink.js";
+import createUploadLink from "./createUploadLink.mjs";
 import assertBundleSize from "./test/assertBundleSize.mjs";
 import createUnexpectedCallError from "./test/createUnexpectedCallError.mjs";
 import timeLimitPromise from "./test/timeLimitPromise.mjs";
-
-const { ApolloLink, concat, execute, gql } = apolloClientCore;
 
 const defaultUri = "/graphql";
 const graphqlResponseOptions = {
@@ -23,7 +24,7 @@ const graphqlResponseOptions = {
 export default (tests) => {
   tests.add("`createUploadLink` bundle size.", async () => {
     await assertBundleSize(
-      new URL("./createUploadLink.js", import.meta.url),
+      new URL("./createUploadLink.mjs", import.meta.url),
       1800
     );
   });

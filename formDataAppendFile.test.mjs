@@ -1,14 +1,14 @@
 import { strictEqual } from "assert";
 import { File, FormData } from "formdata-node";
 
-import formDataAppendFile from "./formDataAppendFile.js";
+import formDataAppendFile from "./formDataAppendFile.mjs";
 import assertBundleSize from "./test/assertBundleSize.mjs";
 
 export default (tests) => {
   tests.add("`formDataAppendFile` bundle size.", async () => {
     await assertBundleSize(
-      new URL("./formDataAppendFile.js", import.meta.url),
-      150
+      new URL("./formDataAppendFile.mjs", import.meta.url),
+      100
     );
   });
 
