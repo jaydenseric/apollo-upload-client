@@ -4,7 +4,7 @@
 
 [![npm version](https://badgen.net/npm/v/apollo-upload-client)](https://npm.im/apollo-upload-client) [![CI status](https://github.com/jaydenseric/apollo-upload-client/workflows/CI/badge.svg)](https://github.com/jaydenseric/apollo-upload-client/actions)
 
-A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link) for [Apollo Client](https://apollographql.com/docs/react) that fetches a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec) if the GraphQL variables contain files (by default [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob), or [`ReactNativeFile`](#class-reactnativefile) instances), or else fetches a regular [GraphQL POST or GET request](https://apollographql.com/docs/apollo-server/requests) (depending on the config and GraphQL operation).
+A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link) for [Apollo Client](https://apollographql.com/docs/react) that fetches a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec) if the GraphQL variables contain files (by default [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), or [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) instances), or else fetches a regular [GraphQL POST or GET request](https://apollographql.com/docs/apollo-server/requests) (depending on the config and GraphQL operation).
 
 ## Installation
 
@@ -24,7 +24,7 @@ Also ensure the GraphQL server implements the [GraphQL multipart request spec](h
 
 ## Usage
 
-Use [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) or [`ReactNativeFile`](#class-reactnativefile) instances anywhere within query or mutation variables to send a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec).
+Use [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), or [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) instances anywhere within query or mutation variables to send a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec).
 
 See also the [example API and client](https://github.com/jaydenseric/apollo-upload-examples).
 
@@ -116,7 +116,6 @@ function UploadFile() {
 
 - [Node.js](https://nodejs.org): `^14.17.0 || ^16.0.0 || >= 18.0.0`
 - [Browsers](https://npm.im/browserslist): `> 0.5%, not OperaMini all, not IE > 0, not dead`
-- [React Native](https://reactnative.dev)
 
 Consider polyfilling:
 
@@ -126,50 +125,16 @@ Consider polyfilling:
 
 ## API
 
-- [class ReactNativeFile](#class-reactnativefile)
 - [function createUploadLink](#function-createuploadlink)
 - [function formDataAppendFile](#function-formdataappendfile)
 - [function isExtractableFile](#function-isextractablefile)
 - [type ExtractableFileMatcher](#type-extractablefilematcher)
 - [type FetchOptions](#type-fetchoptions)
 - [type FormDataFileAppender](#type-formdatafileappender)
-- [type ReactNativeFileSubstitute](#type-reactnativefilesubstitute)
-
-### class ReactNativeFile
-
-Used to mark [React Native `File` substitutes](#type-reactnativefilesubstitute) as it’s too risky to assume all objects with `uri`, `type` and `name` properties are extractable files.
-
-| Parameter | Type | Description |
-| :-- | :-- | :-- |
-| `file` | [ReactNativeFileSubstitute](#type-reactnativefilesubstitute) | A [React Native](https://reactnative.dev) [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) substitute. |
-
-#### See
-
-- [`extract-files` `ReactNativeFile` docs](https://github.com/jaydenseric/extract-files#class-reactnativefile).
-
-#### Examples
-
-_How to import._
-
-> ```js
-> import ReactNativeFile from "apollo-upload-client/ReactNativeFile.mjs";
-> ```
-
-_A file in [React Native](https://reactnative.dev) that can be used in query or mutation variables._
-
-> ```js
-> const file = new ReactNativeFile({
->   uri: uriFromCameraRoll,
->   name: "a.jpg",
->   type: "image/jpeg",
-> });
-> ```
-
----
 
 ### function createUploadLink
 
-Creates a [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link) for [Apollo Client](https://apollographql.com/docs/react) that fetches a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec) if the GraphQL variables contain files (by default [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob), or [`ReactNativeFile`](#class-reactnativefile) instances), or else fetches a regular [GraphQL POST or GET request](https://apollographql.com/docs/apollo-server/requests) (depending on the config and GraphQL operation).
+Creates a [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link) for [Apollo Client](https://apollographql.com/docs/react) that fetches a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec) if the GraphQL variables contain files (by default [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), or [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) instances), or else fetches a regular [GraphQL POST or GET request](https://apollographql.com/docs/apollo-server/requests) (depending on the config and GraphQL operation).
 
 Some of the options are similar to the [`createHttpLink` options](https://apollographql.com/docs/react/api/link/apollo-link-http/#httplink-constructor-options).
 
@@ -251,7 +216,7 @@ The default implementation for [`createUploadLink`](#function-createuploadlink) 
 
 #### See
 
-- [`extract-files` `isExtractableFile` docs](https://github.com/jaydenseric/extract-files#function-isextractablefile).
+- [`extract-files` `isExtractableFile` docs](https://github.com/jaydenseric/extract-files#isextractablefilemjs).
 
 #### Examples
 
@@ -324,36 +289,3 @@ Appends a file extracted from the GraphQL operation to the [`FormData`](https://
 
 - [`formDataAppendFile`](#function-formdataappendfile) has this type.
 - [`createUploadLink`](#function-createuploadlink) accepts this type in `options.formDataAppendFile`.
-
----
-
-### type ReactNativeFileSubstitute
-
-A React Native [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) substitute.
-
-Be aware that inspecting network traffic with buggy versions of dev tools such as [Flipper](https://fbflipper.com) can interfere with the React Native `FormData` implementation, causing multipart requests to have network errors.
-
-**Type:** object
-
-| Property | Type | Description |
-| :-- | :-- | :-- |
-| `uri` | string | Filesystem path. |
-| `name` | string? | File name. |
-| `type` | string? | File content type. Some environments (particularly Android) require a valid MIME type; Expo `ImageResult.type` is unreliable as it can be just `image`. |
-
-#### See
-
-- [`extract-files` `ReactNativeFileSubstitute` docs](https://github.com/jaydenseric/extract-files#type-reactnativefilesubstitute).
-- [React Native `FormData` polyfill source](https://github.com/facebook/react-native/blob/v0.45.1/Libraries/Network/FormData.js#L34).
-
-#### Examples
-
-_A camera roll file._
-
-> ```js
-> const fileSubstitute = {
->   uri: uriFromCameraRoll,
->   name: "a.jpg",
->   type: "image/jpeg",
-> };
-> ```

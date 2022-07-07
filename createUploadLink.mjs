@@ -9,7 +9,7 @@ import {
 import { selectURI } from "@apollo/client/link/http/selectURI.js";
 import { serializeFetchParameter } from "@apollo/client/link/http/serializeFetchParameter.js";
 import { Observable } from "@apollo/client/utilities/observables/Observable.js";
-import extractFiles from "extract-files/public/extractFiles.js";
+import extractFiles from "extract-files/extractFiles.mjs";
 
 import formDataAppendFile from "./formDataAppendFile.mjs";
 import isExtractableFile from "./isExtractableFile.mjs";
@@ -21,10 +21,9 @@ import isExtractableFile from "./isExtractableFile.mjs";
  * [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec)
  * if the GraphQL variables contain files (by default
  * [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList),
- * [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File),
- * [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob), or
- * [`ReactNativeFile`](#class-reactnativefile) instances), or else fetches a
- * regular
+ * [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), or
+ * [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) instances),
+ * or else fetches a regular
  * [GraphQL POST or GET request](https://apollographql.com/docs/apollo-server/requests)
  * (depending on the config and GraphQL operation).
  *
@@ -108,7 +107,7 @@ export default function createUploadLink({
       contextConfig
     );
 
-    const { clone, files } = extractFiles(body, "", customIsExtractableFile);
+    const { clone, files } = extractFiles(body, customIsExtractableFile, "");
 
     let uri = selectURI(operation, fetchUri);
 

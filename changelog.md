@@ -6,6 +6,20 @@
 
 - Updated Node.js support to `^14.17.0 || ^16.0.0 || >= 18.0.0`.
 - Updated the [`@apollo/client`](https://npm.im/@apollo/client) peer dependency to `^3.6.0`.
+- Updated the [`extract-files`](http://npm.im/extract-files) dependency to v12.
+
+  - React Native is no longer supported out of the box.
+
+    The class `ReactNativeFile` is no longer exported, or matched by the function `isExtractableFile`.
+
+    This class was bloating non React Native environments with an extra module, increasing bundle sizes when building and adding an extra step to ESM loading waterfalls in browsers.
+
+    It’s the responsibility of Facebook to adhere to web standards and implement spec-complaint `File`, `Glob`, and `FormData` globals in the React Native environment.
+
+    To migrate, React Native projects that are unable to use the standard globals can manually implement a class `ReactNativeFile` and match it with a custom function `isReactNativeFile` for use with the function `createUploadLink` option `isExtractableFile`.
+
+  - “Plain” objects in the GraphQL operation that aren’t `Object` instances (e.g. `Object.create(null)`) are now also deep cloned when searching for extractable files.
+
 - Public modules are now individually listed in the package `files` and `exports` fields.
 - Removed the package main index module; deep imports must be used. To migrate:
 
@@ -13,13 +27,11 @@
   - import {
   -   createUploadLink,
   -   formDataAppendFile,
-  -   isExtractableFile,
-  -   ReactNativeFile
+  -   isExtractableFile
   - } from "apollo-upload-client";
   + import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
   + import formDataAppendFile from "apollo-upload-client/formDataAppendFile.mjs";
   + import isExtractableFile from "apollo-upload-client/isExtractableFile.mjs";
-  + import ReactNativeFile from "apollo-upload-client/ReactNativeFile.mjs";
   ```
 
 - Shortened public module deep import paths, removing the `/public/`. To migrate:
@@ -33,9 +45,6 @@
 
   - import isExtractableFile from "apollo-upload-client/public/isExtractableFile.js";
   + import isExtractableFile from "apollo-upload-client/isExtractableFile.mjs";
-
-  - import ReactNativeFile from "apollo-upload-client/public/ReactNativeFile.js";
-  + import ReactNativeFile from "apollo-upload-client/ReactNativeFile.mjs";
   ```
 
 - The API is now ESM in `.mjs` files instead of CJS in `.js` files, [accessible via `import` but not `require`](https://nodejs.org/dist/latest/docs/api/esm.html#require).
