@@ -51,7 +51,7 @@
     "extract-files": "^11.0.0"
   },
   "devDependencies": {
-    "@apollo/client": "^3.5.10",
+    "@apollo/client": "^3.8.3",
     "abort-controller": "^3.0.0",
     "coverage-node": "^6.1.0",
     "esbuild": "^0.14.38",
