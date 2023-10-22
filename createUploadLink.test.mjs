@@ -1,11 +1,10 @@
+import "./test/polyfillFile.mjs";
+
 import { ApolloLink } from "@apollo/client/link/core/ApolloLink.js";
 import { concat } from "@apollo/client/link/core/concat.js";
 import { execute } from "@apollo/client/link/core/execute.js";
-import { AbortController, AbortSignal } from "abort-controller";
 import { deepEqual, deepStrictEqual, strictEqual } from "assert";
-import { File, FormData } from "formdata-node";
 import gql from "graphql-tag";
-import { AbortError, Response } from "node-fetch";
 import revertableGlobals from "revertable-globals";
 
 import createUploadLink from "./createUploadLink.mjs";
@@ -71,10 +70,7 @@ export default (tests) => {
         const { signal: fetchOptionsSignal, ...fetchOptionsRest } =
           fetchOptions;
 
-        // Defined in Node.js v15+.
-        if (global.AbortSignal)
-          strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
-
+        strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
         deepEqual(fetchOptionsRest, {
           method: "POST",
           headers: { accept: "*/*", "content-type": "application/json" },
@@ -99,8 +95,6 @@ export default (tests) => {
       const fileName = "a.txt";
       const fileType = "text/plain";
       const revertGlobals = revertableGlobals({
-        File,
-        FormData,
         async fetch(uri, options) {
           fetchUri = uri;
           fetchOptions = options;
@@ -140,10 +134,7 @@ export default (tests) => {
           ...fetchOptionsRest
         } = fetchOptions;
 
-        // Defined in Node.js v15+.
-        if (global.AbortSignal)
-          strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
-
+        strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
         strictEqual(fetchOptionsBody instanceof FormData, true);
 
         const formDataEntries = Array.from(fetchOptionsBody.entries());
@@ -218,10 +209,7 @@ export default (tests) => {
 
     const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
 
-    // Defined in Node.js v15+.
-    if (global.AbortSignal)
-      strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
-
+    strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
     deepEqual(fetchOptionsRest, {
       method: "POST",
       headers: { accept: "*/*", "content-type": "application/json" },
@@ -280,10 +268,7 @@ export default (tests) => {
 
     const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
 
-    // Defined in Node.js v15+.
-    if (global.AbortSignal)
-      strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
-
+    strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
     deepEqual(fetchOptionsRest, {
       method: "POST",
       headers: { accept: "*/*", "content-type": "application/json" },
@@ -347,10 +332,7 @@ export default (tests) => {
 
       const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
 
-      // Defined in Node.js v15+.
-      if (global.AbortSignal)
-        strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
-
+      strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
       deepEqual(fetchOptionsRest, {
         method: "GET",
         headers: { accept: "*/*", "content-type": "application/json" },
@@ -408,10 +390,7 @@ export default (tests) => {
 
       const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
 
-      // Defined in Node.js v15+.
-      if (global.AbortSignal)
-        strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
-
+      strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
       deepEqual(fetchOptionsRest, {
         method: "GET",
         headers: { accept: "*/*", "content-type": "application/json" },
@@ -431,84 +410,76 @@ export default (tests) => {
       const payload = { data: { a: true } };
       const fileName = "a.txt";
       const fileType = "text/plain";
-      const revertGlobals = revertableGlobals({ File });
 
-      try {
-        await timeLimitPromise(
-          new Promise((resolve, reject) => {
-            execute(
-              createUploadLink({
-                useGETForQueries: true,
-                FormData,
-                async fetch(uri, options) {
-                  fetchUri = uri;
-                  fetchOptions = options;
+      await timeLimitPromise(
+        new Promise((resolve, reject) => {
+          execute(
+            createUploadLink({
+              useGETForQueries: true,
+              FormData,
+              async fetch(uri, options) {
+                fetchUri = uri;
+                fetchOptions = options;
 
-                  return new Response(
-                    JSON.stringify(payload),
-                    graphqlResponseOptions,
-                  );
-                },
-              }),
-              {
-                query: gql(query),
-                variables: {
-                  a: new File(["a"], fileName, { type: fileType }),
-                },
+                return new Response(
+                  JSON.stringify(payload),
+                  graphqlResponseOptions,
+                );
               },
-            ).subscribe({
-              next(data) {
-                nextData = data;
+            }),
+            {
+              query: gql(query),
+              variables: {
+                a: new File(["a"], fileName, { type: fileType }),
               },
-              error() {
-                reject(createUnexpectedCallError());
-              },
-              complete() {
-                resolve();
-              },
-            });
-          }),
-        );
+            },
+          ).subscribe({
+            next(data) {
+              nextData = data;
+            },
+            error() {
+              reject(createUnexpectedCallError());
+            },
+            complete() {
+              resolve();
+            },
+          });
+        }),
+      );
 
-        strictEqual(fetchUri, defaultUri);
-        strictEqual(typeof fetchOptions, "object");
+      strictEqual(fetchUri, defaultUri);
+      strictEqual(typeof fetchOptions, "object");
 
-        const {
-          signal: fetchOptionsSignal,
-          body: fetchOptionsBody,
-          ...fetchOptionsRest
-        } = fetchOptions;
+      const {
+        signal: fetchOptionsSignal,
+        body: fetchOptionsBody,
+        ...fetchOptionsRest
+      } = fetchOptions;
 
-        // Defined in Node.js v15+.
-        if (global.AbortSignal)
-          strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
+      strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
+      strictEqual(fetchOptionsBody instanceof FormData, true);
 
-        strictEqual(fetchOptionsBody instanceof FormData, true);
+      const formDataEntries = Array.from(fetchOptionsBody.entries());
 
-        const formDataEntries = Array.from(fetchOptionsBody.entries());
-
-        strictEqual(formDataEntries.length, 3);
-        strictEqual(formDataEntries[0][0], "operations");
-        deepStrictEqual(JSON.parse(formDataEntries[0][1]), {
-          query,
-          variables: { a: null },
-        });
-        strictEqual(formDataEntries[1][0], "map");
-        deepStrictEqual(JSON.parse(formDataEntries[1][1]), {
-          1: ["variables.a"],
-        });
-        strictEqual(formDataEntries[2][0], "1");
-        strictEqual(formDataEntries[2][1] instanceof File, true);
-        strictEqual(formDataEntries[2][1].name, fileName);
-        strictEqual(formDataEntries[2][1].type, fileType);
-        deepEqual(fetchOptionsRest, {
-          method: "POST",
-          headers: { accept: "*/*" },
-        });
-        deepStrictEqual(nextData, payload);
-      } finally {
-        revertGlobals();
-      }
+      strictEqual(formDataEntries.length, 3);
+      strictEqual(formDataEntries[0][0], "operations");
+      deepStrictEqual(JSON.parse(formDataEntries[0][1]), {
+        query,
+        variables: { a: null },
+      });
+      strictEqual(formDataEntries[1][0], "map");
+      deepStrictEqual(JSON.parse(formDataEntries[1][1]), {
+        1: ["variables.a"],
+      });
+      strictEqual(formDataEntries[2][0], "1");
+      strictEqual(formDataEntries[2][1] instanceof File, true);
+      strictEqual(formDataEntries[2][1].name, fileName);
+      strictEqual(formDataEntries[2][1].type, fileType);
+      deepEqual(fetchOptionsRest, {
+        method: "POST",
+        headers: { accept: "*/*" },
+      });
+      deepStrictEqual(nextData, payload);
     },
   );
 
@@ -613,10 +584,7 @@ export default (tests) => {
 
       const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
 
-      // Defined in Node.js v15+.
-      if (global.AbortSignal)
-        strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
-
+      strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
       deepEqual(fetchOptionsRest, {
         method: "POST",
         headers: { accept: "*/*", "content-type": "application/json" },
@@ -676,10 +644,7 @@ export default (tests) => {
 
     const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
 
-    // Defined in Node.js v15+.
-    if (global.AbortSignal)
-      strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
-
+    strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
     deepEqual(fetchOptionsRest, {
       method: "POST",
       headers: {
@@ -753,10 +718,7 @@ export default (tests) => {
 
       const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
 
-      // Defined in Node.js v15+.
-      if (global.AbortSignal)
-        strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
-
+      strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
       deepEqual(fetchOptionsRest, {
         method: "POST",
         headers: {
@@ -842,10 +804,7 @@ export default (tests) => {
         ...fetchOptionsRest
       } = fetchOptions;
 
-      // Defined in Node.js v15+.
-      if (global.AbortSignal)
-        strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
-
+      strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
       strictEqual(fetchOptionsBody instanceof FormData, true);
 
       const formDataEntries = Array.from(fetchOptionsBody.entries());
@@ -997,71 +956,66 @@ export default (tests) => {
       const query = "{\n  a\n}";
       const payload = { data: { a: true } };
       const controller = new AbortController();
-      const fetchError = new AbortError("The operation was aborted.");
-      const revertGlobals = revertableGlobals({ AbortController, AbortSignal });
+      const fetchError = new Error("The operation was aborted.");
 
-      try {
-        const observerErrorPromise = timeLimitPromise(
-          new Promise((resolve, reject) => {
-            execute(
-              createUploadLink({
-                fetchOptions: { signal: controller.signal },
-                fetch(uri, options) {
-                  fetchUri = uri;
-                  fetchOptions = options;
+      const observerErrorPromise = timeLimitPromise(
+        new Promise((resolve, reject) => {
+          execute(
+            createUploadLink({
+              fetchOptions: { signal: controller.signal },
+              fetch(uri, options) {
+                fetchUri = uri;
+                fetchOptions = options;
 
-                  return new Promise((resolve, reject) => {
-                    // Sleep a few seconds to simulate a slow request and
-                    // response. In this test the fetch should be aborted before
-                    // the timeout.
-                    const timeout = setTimeout(() => {
-                      resolve(
-                        new Response(
-                          JSON.stringify(payload),
-                          graphqlResponseOptions,
-                        ),
-                      );
-                    }, 4000);
+                return new Promise((resolve, reject) => {
+                  // Sleep a few seconds to simulate a slow request and
+                  // response. In this test the fetch should be aborted before
+                  // the timeout.
+                  const timeout = setTimeout(() => {
+                    resolve(
+                      new Response(
+                        JSON.stringify(payload),
+                        graphqlResponseOptions,
+                      ),
+                    );
+                  }, 4000);
 
-                    options.signal.addEventListener("abort", () => {
-                      clearTimeout(timeout);
-                      reject(fetchError);
-                    });
+                  options.signal.addEventListener("abort", () => {
+                    clearTimeout(timeout);
+                    reject(fetchError);
                   });
-                },
-              }),
-              {
-                query: gql(query),
+                });
               },
-            ).subscribe({
-              next() {
-                reject(createUnexpectedCallError());
-              },
-              error(error) {
-                resolve(error);
-              },
-              complete() {
-                reject(createUnexpectedCallError());
-              },
-            });
-          }),
-        );
+            }),
+            {
+              query: gql(query),
+            },
+          ).subscribe({
+            next() {
+              reject(createUnexpectedCallError());
+            },
+            error(error) {
+              resolve(error);
+            },
+            complete() {
+              reject(createUnexpectedCallError());
+            },
+          });
+        }),
+      );
 
-        controller.abort();
+      controller.abort();
 
-        const observerError = await observerErrorPromise;
+      const observerError = await observerErrorPromise;
 
-        strictEqual(fetchUri, defaultUri);
-        deepEqual(fetchOptions, {
-          method: "POST",
-          headers: { accept: "*/*", "content-type": "application/json" },
-          body: JSON.stringify({ variables: {}, query }),
-          signal: controller.signal,
-        });
-        strictEqual(observerError, fetchError);
-      } finally {
-        revertGlobals();
-      }
+      strictEqual(fetchUri, defaultUri);
+      deepEqual(fetchOptions, {
+        method: "POST",
+        headers: { accept: "*/*", "content-type": "application/json" },
+        body: JSON.stringify({ variables: {}, query }),
+        signal: controller.signal,
+      });
+      strictEqual(observerError, fetchError);
     },
   );
 
@@ -1077,57 +1031,52 @@ export default (tests) => {
       const controller = new AbortController();
       controller.abort();
 
-      const fetchError = new AbortError("The operation was aborted.");
-      const revertGlobals = revertableGlobals({ AbortController, AbortSignal });
+      const fetchError = new Error("The operation was aborted.");
 
-      try {
-        const observerErrorPromise = timeLimitPromise(
-          new Promise((resolve, reject) => {
-            execute(
-              createUploadLink({
-                fetchOptions: { signal: controller.signal },
-                async fetch(uri, options) {
-                  fetchUri = uri;
-                  fetchOptions = options;
+      const observerErrorPromise = timeLimitPromise(
+        new Promise((resolve, reject) => {
+          execute(
+            createUploadLink({
+              fetchOptions: { signal: controller.signal },
+              async fetch(uri, options) {
+                fetchUri = uri;
+                fetchOptions = options;
 
-                  if (options.signal.aborted) throw fetchError;
+                if (options.signal.aborted) throw fetchError;
 
-                  return new Response(
-                    JSON.stringify(payload),
-                    graphqlResponseOptions,
-                  );
-                },
-              }),
-              {
-                query: gql(query),
+                return new Response(
+                  JSON.stringify(payload),
+                  graphqlResponseOptions,
+                );
               },
-            ).subscribe({
-              next() {
-                reject(createUnexpectedCallError());
-              },
-              error(error) {
-                resolve(error);
-              },
-              complete() {
-                reject(createUnexpectedCallError());
-              },
-            });
-          }),
-        );
+            }),
+            {
+              query: gql(query),
+            },
+          ).subscribe({
+            next() {
+              reject(createUnexpectedCallError());
+            },
+            error(error) {
+              resolve(error);
+            },
+            complete() {
+              reject(createUnexpectedCallError());
+            },
+          });
+        }),
+      );
 
-        const observerError = await observerErrorPromise;
+      const observerError = await observerErrorPromise;
 
-        strictEqual(fetchUri, defaultUri);
-        deepEqual(fetchOptions, {
-          method: "POST",
-          headers: { accept: "*/*", "content-type": "application/json" },
-          body: JSON.stringify({ variables: {}, query }),
-          signal: controller.signal,
-        });
-        strictEqual(observerError, fetchError);
-      } finally {
-        revertGlobals();
-      }
+      strictEqual(fetchUri, defaultUri);
+      deepEqual(fetchOptions, {
+        method: "POST",
+        headers: { accept: "*/*", "content-type": "application/json" },
+        body: JSON.stringify({ variables: {}, query }),
+        signal: controller.signal,
+      });
+      strictEqual(observerError, fetchError);
     },
   );
 };

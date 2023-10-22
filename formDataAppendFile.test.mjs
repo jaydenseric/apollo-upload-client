@@ -1,5 +1,6 @@
+import "./test/polyfillFile.mjs";
+
 import { strictEqual } from "assert";
-import { File, FormData } from "formdata-node";
 
 import formDataAppendFile from "./formDataAppendFile.mjs";
 import assertBundleSize from "./test/assertBundleSize.mjs";

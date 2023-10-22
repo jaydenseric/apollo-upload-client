@@ -50,16 +50,13 @@
   },
   "devDependencies": {
     "@apollo/client": "^3.8.6",
-    "abort-controller": "^3.0.0",
     "coverage-node": "^8.0.0",
     "esbuild": "^0.19.5",
     "eslint": "^8.52.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "formdata-node": "^5.0.1",
     "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
     "gzip-size": "^7.0.0",
-    "node-fetch": "^3.3.2",
     "prettier": "^3.0.3",
     "revertable-globals": "^4.0.0",
     "test-director": "^11.0.0"
