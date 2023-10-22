@@ -25,7 +25,7 @@ export default (tests) => {
   tests.add("`createUploadLink` bundle size.", async () => {
     await assertBundleSize(
       new URL("./createUploadLink.mjs", import.meta.url),
-      1800
+      1800,
     );
   });
 
@@ -63,7 +63,7 @@ export default (tests) => {
                 resolve();
               },
             });
-          })
+          }),
         );
 
         strictEqual(fetchUri, defaultUri);
@@ -84,7 +84,7 @@ export default (tests) => {
       } finally {
         revertGlobals();
       }
-    }
+    },
   );
 
   tests.add(
@@ -128,7 +128,7 @@ export default (tests) => {
                 resolve();
               },
             });
-          })
+          }),
         );
 
         strictEqual(fetchUri, defaultUri);
@@ -170,7 +170,7 @@ export default (tests) => {
       } finally {
         revertGlobals();
       }
-    }
+    },
   );
 
   tests.add("`createUploadLink` with option `uri`.", async () => {
@@ -193,13 +193,13 @@ export default (tests) => {
 
               return new Response(
                 JSON.stringify(payload),
-                graphqlResponseOptions
+                graphqlResponseOptions,
               );
             },
           }),
           {
             query: gql(query),
-          }
+          },
         ).subscribe({
           next(data) {
             nextData = data;
@@ -211,7 +211,7 @@ export default (tests) => {
             resolve();
           },
         });
-      })
+      }),
     );
 
     strictEqual(fetchUri, uri);
@@ -254,14 +254,14 @@ export default (tests) => {
 
                 return new Response(
                   JSON.stringify(payload),
-                  graphqlResponseOptions
+                  graphqlResponseOptions,
                 );
               },
-            })
+            }),
           ),
           {
             query: gql(query),
-          }
+          },
         ).subscribe({
           next(data) {
             nextData = data;
@@ -273,7 +273,7 @@ export default (tests) => {
             resolve();
           },
         });
-      })
+      }),
     );
 
     strictEqual(fetchUri, defaultUri);
@@ -319,13 +319,13 @@ export default (tests) => {
 
                 return new Response(
                   JSON.stringify(payload),
-                  graphqlResponseOptions
+                  graphqlResponseOptions,
                 );
               },
             }),
             {
               query: gql(query),
-            }
+            },
           ).subscribe({
             next(data) {
               nextData = data;
@@ -337,12 +337,12 @@ export default (tests) => {
               resolve();
             },
           });
-        })
+        }),
       );
 
       strictEqual(
         fetchUri,
-        `${defaultUri}?query=%7B%0A%20%20a%0A%7D&variables=%7B%7D`
+        `${defaultUri}?query=%7B%0A%20%20a%0A%7D&variables=%7B%7D`,
       );
 
       const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
@@ -356,7 +356,7 @@ export default (tests) => {
         headers: { accept: "*/*", "content-type": "application/json" },
       });
       deepStrictEqual(nextData, payload);
-    }
+    },
   );
 
   tests.add(
@@ -380,13 +380,13 @@ export default (tests) => {
 
                 return new Response(
                   JSON.stringify(payload),
-                  graphqlResponseOptions
+                  graphqlResponseOptions,
                 );
               },
             }),
             {
               query: gql(query),
-            }
+            },
           ).subscribe({
             next(data) {
               nextData = data;
@@ -398,12 +398,12 @@ export default (tests) => {
               resolve();
             },
           });
-        })
+        }),
       );
 
       strictEqual(
         fetchUri,
-        `${defaultUri}?query=%7B%0A%20%20a%0A%7D&variables=%7B%7D`
+        `${defaultUri}?query=%7B%0A%20%20a%0A%7D&variables=%7B%7D`,
       );
 
       const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
@@ -417,7 +417,7 @@ export default (tests) => {
         headers: { accept: "*/*", "content-type": "application/json" },
       });
       deepStrictEqual(nextData, payload);
-    }
+    },
   );
 
   tests.add(
@@ -446,7 +446,7 @@ export default (tests) => {
 
                   return new Response(
                     JSON.stringify(payload),
-                    graphqlResponseOptions
+                    graphqlResponseOptions,
                   );
                 },
               }),
@@ -455,7 +455,7 @@ export default (tests) => {
                 variables: {
                   a: new File(["a"], fileName, { type: fileType }),
                 },
-              }
+              },
             ).subscribe({
               next(data) {
                 nextData = data;
@@ -467,7 +467,7 @@ export default (tests) => {
                 resolve();
               },
             });
-          })
+          }),
         );
 
         strictEqual(fetchUri, defaultUri);
@@ -509,7 +509,7 @@ export default (tests) => {
       } finally {
         revertGlobals();
       }
-    }
+    },
   );
 
   tests.add(
@@ -530,7 +530,7 @@ export default (tests) => {
 
                 return new Response(
                   JSON.stringify(payload),
-                  graphqlResponseOptions
+                  graphqlResponseOptions,
                 );
               },
             }),
@@ -545,7 +545,7 @@ export default (tests) => {
                   throw parseError;
                 },
               },
-            }
+            },
           ).subscribe({
             next() {
               reject(createUnexpectedCallError());
@@ -557,14 +557,14 @@ export default (tests) => {
               reject(createUnexpectedCallError());
             },
           });
-        })
+        }),
       );
 
       strictEqual(fetched, false);
       strictEqual(typeof observerError, "object");
       strictEqual(observerError.name, "Invariant Violation");
       strictEqual(observerError.parseError, parseError);
-    }
+    },
   );
 
   tests.add(
@@ -588,13 +588,13 @@ export default (tests) => {
 
                 return new Response(
                   JSON.stringify(payload),
-                  graphqlResponseOptions
+                  graphqlResponseOptions,
                 );
               },
             }),
             {
               query: gql(query),
-            }
+            },
           ).subscribe({
             next(data) {
               nextData = data;
@@ -606,7 +606,7 @@ export default (tests) => {
               resolve();
             },
           });
-        })
+        }),
       );
 
       strictEqual(fetchUri, defaultUri);
@@ -623,7 +623,7 @@ export default (tests) => {
         body: JSON.stringify({ variables: {}, query }),
       });
       deepStrictEqual(nextData, payload);
-    }
+    },
   );
 
   tests.add("`createUploadLink` with context `clientAwareness`.", async () => {
@@ -650,14 +650,14 @@ export default (tests) => {
 
                 return new Response(
                   JSON.stringify(payload),
-                  graphqlResponseOptions
+                  graphqlResponseOptions,
                 );
               },
-            })
+            }),
           ),
           {
             query: gql(query),
-          }
+          },
         ).subscribe({
           next(data) {
             nextData = data;
@@ -669,7 +669,7 @@ export default (tests) => {
             resolve();
           },
         });
-      })
+      }),
     );
 
     strictEqual(fetchUri, defaultUri);
@@ -727,14 +727,14 @@ export default (tests) => {
 
                   return new Response(
                     JSON.stringify(payload),
-                    graphqlResponseOptions
+                    graphqlResponseOptions,
                   );
                 },
-              })
+              }),
             ),
             {
               query: gql(query),
-            }
+            },
           ).subscribe({
             next(data) {
               nextData = data;
@@ -746,7 +746,7 @@ export default (tests) => {
               resolve();
             },
           });
-        })
+        }),
       );
 
       strictEqual(fetchUri, defaultUri);
@@ -768,7 +768,7 @@ export default (tests) => {
         body: JSON.stringify({ variables: {}, query }),
       });
       deepStrictEqual(nextData, payload);
-    }
+    },
   );
 
   tests.add(
@@ -799,7 +799,7 @@ export default (tests) => {
               formDataAppendFile(formData, fieldName, file) {
                 formData.append(
                   fieldName,
-                  file instanceof TextFile ? file.file : file
+                  file instanceof TextFile ? file.file : file,
                 );
               },
               FormData,
@@ -809,7 +809,7 @@ export default (tests) => {
 
                 return new Response(
                   JSON.stringify(payload),
-                  graphqlResponseOptions
+                  graphqlResponseOptions,
                 );
               },
             }),
@@ -818,7 +818,7 @@ export default (tests) => {
               variables: {
                 a: new TextFile("a", fileName),
               },
-            }
+            },
           ).subscribe({
             next(data) {
               nextData = data;
@@ -830,7 +830,7 @@ export default (tests) => {
               resolve();
             },
           });
-        })
+        }),
       );
 
       strictEqual(fetchUri, defaultUri);
@@ -869,7 +869,7 @@ export default (tests) => {
         headers: { accept: "*/*" },
       });
       deepStrictEqual(nextData, payload);
-    }
+    },
   );
 
   tests.add("`createUploadLink` with a HTTP error, data.", async () => {
@@ -898,7 +898,7 @@ export default (tests) => {
           }),
           {
             query: gql("{ a b }"),
-          }
+          },
         ).subscribe({
           next(data) {
             nextData = data;
@@ -910,7 +910,7 @@ export default (tests) => {
             reject(createUnexpectedCallError());
           },
         });
-      })
+      }),
     );
 
     strictEqual(observerError.name, "ServerError");
@@ -937,7 +937,7 @@ export default (tests) => {
           }),
           {
             query: gql("{ a }"),
-          }
+          },
         ).subscribe({
           next() {
             reject(createUnexpectedCallError());
@@ -949,7 +949,7 @@ export default (tests) => {
             reject(createUnexpectedCallError());
           },
         });
-      })
+      }),
     );
 
     strictEqual(observerError.name, "ServerError");
@@ -970,7 +970,7 @@ export default (tests) => {
           }),
           {
             query: gql("{ a }"),
-          }
+          },
         ).subscribe({
           next() {
             reject(createUnexpectedCallError());
@@ -982,7 +982,7 @@ export default (tests) => {
             reject(createUnexpectedCallError());
           },
         });
-      })
+      }),
     );
 
     strictEqual(observerError, fetchError);
@@ -1018,8 +1018,8 @@ export default (tests) => {
                       resolve(
                         new Response(
                           JSON.stringify(payload),
-                          graphqlResponseOptions
-                        )
+                          graphqlResponseOptions,
+                        ),
                       );
                     }, 4000);
 
@@ -1032,7 +1032,7 @@ export default (tests) => {
               }),
               {
                 query: gql(query),
-              }
+              },
             ).subscribe({
               next() {
                 reject(createUnexpectedCallError());
@@ -1044,7 +1044,7 @@ export default (tests) => {
                 reject(createUnexpectedCallError());
               },
             });
-          })
+          }),
         );
 
         controller.abort();
@@ -1062,7 +1062,7 @@ export default (tests) => {
       } finally {
         revertGlobals();
       }
-    }
+    },
   );
 
   tests.add(
@@ -1094,13 +1094,13 @@ export default (tests) => {
 
                   return new Response(
                     JSON.stringify(payload),
-                    graphqlResponseOptions
+                    graphqlResponseOptions,
                   );
                 },
               }),
               {
                 query: gql(query),
-              }
+              },
             ).subscribe({
               next() {
                 reject(createUnexpectedCallError());
@@ -1112,7 +1112,7 @@ export default (tests) => {
                 reject(createUnexpectedCallError());
               },
             });
-          })
+          }),
         );
 
         const observerError = await observerErrorPromise;
@@ -1128,6 +1128,6 @@ export default (tests) => {
       } finally {
         revertGlobals();
       }
-    }
+    },
   );
 };

@@ -6,7 +6,7 @@
 
 - Updated Node.js support to `^18.15.0 || >=20.4.0`.
 - Updated the [`@apollo/client`](https://npm.im/@apollo/client) peer dependency to `^3.6.0`.
-- Updated the [`extract-files`](http://npm.im/extract-files) dependency to v12.
+- Updated the [`extract-files`](http://npm.im/extract-files) dependency to v13.
 
   - React Native is no longer supported out of the box.
 
@@ -20,6 +20,7 @@
 
   - “Plain” objects in the GraphQL operation that aren’t `Object` instances (e.g. `Object.create(null)`) are now also deep cloned when searching for extractable files.
 
+- Updated dev dependencies, some of which require newer Node.js versions than previously supported.
 - Public modules are now individually listed in the package `files` and `exports` fields.
 - Removed the package main index module; deep imports must be used. To migrate:
 

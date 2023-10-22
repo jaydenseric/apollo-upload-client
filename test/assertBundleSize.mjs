@@ -39,7 +39,7 @@ export default async function assertBundleSize(moduleUrl, limit) {
     fail(
       `${gzippedSize} B minified and gzipped bundle exceeds the ${limit} B limit by ${
         gzippedSize - limit
-      } B; increase the limit or reduce the bundle size.`
+      } B; increase the limit or reduce the bundle size.`,
     );
 
   const surplus = limit - gzippedSize;
@@ -47,7 +47,7 @@ export default async function assertBundleSize(moduleUrl, limit) {
   // Error if the surplus is greater than 25% of the limit.
   if (surplus > limit * 0.25)
     throw new Error(
-      `${gzippedSize} B minified and gzipped bundle is under the ${limit} B limit by ${surplus} B; reduce the limit.`
+      `${gzippedSize} B minified and gzipped bundle is under the ${limit} B limit by ${surplus} B; reduce the limit.`,
     );
 
   // For debugging in tests.

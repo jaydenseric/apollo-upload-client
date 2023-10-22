@@ -16,7 +16,7 @@ import { AssertionError } from "assert";
 export default async function timeLimitPromise(promise, msTimeLimit = 1000) {
   if (!(promise instanceof Promise))
     throw new TypeError(
-      "Argument 1 `promise` must be an instance of `Promise`."
+      "Argument 1 `promise` must be an instance of `Promise`.",
     );
 
   if (typeof msTimeLimit !== "number" || msTimeLimit < 0)

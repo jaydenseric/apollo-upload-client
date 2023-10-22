@@ -104,7 +104,7 @@ export default function createUploadLink({
       operation,
       fallbackHttpConfig,
       linkConfig,
-      contextConfig
+      contextConfig,
     );
 
     const { clone, files } = extractFiles(body, customIsExtractableFile, "");
@@ -144,7 +144,7 @@ export default function createUploadLink({
         !operation.query.definitions.some(
           (definition) =>
             definition.kind === "OperationDefinition" &&
-            definition.operation === "mutation"
+            definition.operation === "mutation",
         )
       )
         options.method = "GET";
@@ -180,7 +180,7 @@ export default function createUploadLink({
                 // Prevent a memory leak if the user configured abort controller
                 // is long lasting, or controls multiple things.
                 once: true,
-              }
+              },
             );
 
       options.signal = controller.signal;

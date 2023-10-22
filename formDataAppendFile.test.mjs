@@ -8,7 +8,7 @@ export default (tests) => {
   tests.add("`formDataAppendFile` bundle size.", async () => {
     await assertBundleSize(
       new URL("./formDataAppendFile.mjs", import.meta.url),
-      100
+      100,
     );
   });
 
@@ -21,7 +21,7 @@ export default (tests) => {
     formDataAppendFile(
       formData,
       fieldName,
-      new File(["a"], fileName, { type: fileType })
+      new File(["a"], fileName, { type: fileType }),
     );
 
     const formDataEntries = Array.from(formData.entries());
