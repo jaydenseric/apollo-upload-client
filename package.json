@@ -38,9 +38,9 @@
     "./package.json": "./package.json"
   },
   "engines": {
-    "node": "^14.17.0 || ^16.0.0 || >= 18.0.0"
+    "node": "^18.15.0 || >=20.4.0"
   },
-  "browserslist": "Node 14.17 - 15 and Node < 15, Node 16 - 17 and Node < 17, Node >= 18, > 0.5%, not OperaMini all, not IE > 0, not dead",
+  "browserslist": "Node 18.15 - 19 and Node < 19, Node >= 20.4, > 0.5%, not OperaMini all, not IE > 0, not dead",
   "peerDependencies": {
     "@apollo/client": "^3.6.0",
     "graphql": "14 - 16"

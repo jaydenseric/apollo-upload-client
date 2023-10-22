@@ -114,7 +114,7 @@ function UploadFile() {
 
 ## Requirements
 
-- [Node.js](https://nodejs.org): `^14.17.0 || ^16.0.0 || >= 18.0.0`
+- [Node.js](https://nodejs.org): `^18.15.0 || >=20.4.0`
 - [Browsers](https://npm.im/browserslist): `> 0.5%, not OperaMini all, not IE > 0, not dead`
 
 Consider polyfilling:

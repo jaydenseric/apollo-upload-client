@@ -4,7 +4,7 @@
 
 ### Major
 
-- Updated Node.js support to `^14.17.0 || ^16.0.0 || >= 18.0.0`.
+- Updated Node.js support to `^18.15.0 || >=20.4.0`.
 - Updated the [`@apollo/client`](https://npm.im/@apollo/client) peer dependency to `^3.6.0`.
 - Updated the [`extract-files`](http://npm.im/extract-files) dependency to v12.
 
@@ -54,7 +54,7 @@
 - Updated dev dependencies.
 - Simplified dev dependencies and config for ESLint.
 - Updated GitHub Actions CI config:
-  - Run tests with Node.js v14, v16, v18.
+  - Run tests with Node.js v18, v20, v21.
   - Updated `actions/checkout` to v3.
   - Updated `actions/setup-node` to v3.
 - Reorganized the test file structure.
