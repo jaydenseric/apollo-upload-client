@@ -53,6 +53,7 @@
 
 - Updated dev dependencies.
 - Simplified dev dependencies and config for ESLint.
+- Removed the [`jsdoc-md`](https://npm.im/jsdoc-md) dev dependency and the related package scripts, replacing the readme “API” section with a manually written “Exports” section.
 - Updated GitHub Actions CI config:
   - Run tests with Node.js v18, v20, v21.
   - Updated `actions/checkout` to v3.

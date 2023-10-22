@@ -59,19 +59,16 @@
     "graphql": "^16.5.0",
     "graphql-tag": "^2.12.6",
     "gzip-size": "^7.0.0",
-    "jsdoc-md": "^11.0.2",
     "node-fetch": "^3.2.6",
     "prettier": "^2.7.1",
     "revertable-globals": "^3.0.0",
     "test-director": "^8.0.2"
   },
   "scripts": {
-    "docs-update": "jsdoc-md",
-    "docs-check": "jsdoc-md -c",
     "eslint": "eslint .",
     "prettier": "prettier -c .",
     "tests": "coverage-node test.mjs",
-    "test": "npm run eslint && npm run prettier && npm run docs-check && npm run tests",
+    "test": "npm run eslint && npm run prettier && npm run tests",
     "prepublishOnly": "npm test"
   }
 }
