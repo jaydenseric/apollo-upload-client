@@ -1,9 +1,10 @@
 import "./test/polyfillFile.mjs";
 
+import { deepEqual, deepStrictEqual, strictEqual } from "node:assert";
+
 import { ApolloLink } from "@apollo/client/link/core/ApolloLink.js";
 import { concat } from "@apollo/client/link/core/concat.js";
 import { execute } from "@apollo/client/link/core/execute.js";
-import { deepEqual, deepStrictEqual, strictEqual } from "assert";
 import gql from "graphql-tag";
 import revertableGlobals from "revertable-globals";
 

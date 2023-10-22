@@ -1,4 +1,4 @@
-import { File as NodeFile } from "buffer";
+import { File as NodeFile } from "node:buffer";
 
 // TODO: Delete this polyfill once all supported Node.js versions have the
 // global `File`:

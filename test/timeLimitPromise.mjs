@@ -1,4 +1,4 @@
-import { AssertionError } from "assert";
+import { AssertionError } from "node:assert";
 
 /**
  * Time limits a promise. It will reject with an assertion error if it doesn’t
