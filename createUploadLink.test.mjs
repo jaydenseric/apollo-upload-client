@@ -2,7 +2,7 @@ import { ApolloLink } from "@apollo/client/link/core/ApolloLink.js";
 import { concat } from "@apollo/client/link/core/concat.js";
 import { execute } from "@apollo/client/link/core/execute.js";
 import { AbortController, AbortSignal } from "abort-controller";
-import { deepStrictEqual, strictEqual } from "assert";
+import { deepEqual, deepStrictEqual, strictEqual } from "assert";
 import { File, FormData } from "formdata-node";
 import gql from "graphql-tag";
 import { AbortError, Response } from "node-fetch";
@@ -75,7 +75,7 @@ export default (tests) => {
         if (global.AbortSignal)
           strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
 
-        deepStrictEqual(fetchOptionsRest, {
+        deepEqual(fetchOptionsRest, {
           method: "POST",
           headers: { accept: "*/*", "content-type": "application/json" },
           body: JSON.stringify({ variables: {}, query }),
@@ -162,7 +162,7 @@ export default (tests) => {
         strictEqual(formDataEntries[2][1] instanceof File, true);
         strictEqual(formDataEntries[2][1].name, fileName);
         strictEqual(formDataEntries[2][1].type, fileType);
-        deepStrictEqual(fetchOptionsRest, {
+        deepEqual(fetchOptionsRest, {
           method: "POST",
           headers: { accept: "*/*" },
         });
@@ -222,7 +222,7 @@ export default (tests) => {
     if (global.AbortSignal)
       strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
 
-    deepStrictEqual(fetchOptionsRest, {
+    deepEqual(fetchOptionsRest, {
       method: "POST",
       headers: { accept: "*/*", "content-type": "application/json" },
       body: JSON.stringify({ variables: {}, query }),
@@ -284,7 +284,7 @@ export default (tests) => {
     if (global.AbortSignal)
       strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
 
-    deepStrictEqual(fetchOptionsRest, {
+    deepEqual(fetchOptionsRest, {
       method: "POST",
       headers: { accept: "*/*", "content-type": "application/json" },
       body: JSON.stringify({
@@ -351,7 +351,7 @@ export default (tests) => {
       if (global.AbortSignal)
         strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
 
-      deepStrictEqual(fetchOptionsRest, {
+      deepEqual(fetchOptionsRest, {
         method: "GET",
         headers: { accept: "*/*", "content-type": "application/json" },
       });
@@ -412,7 +412,7 @@ export default (tests) => {
       if (global.AbortSignal)
         strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
 
-      deepStrictEqual(fetchOptionsRest, {
+      deepEqual(fetchOptionsRest, {
         method: "GET",
         headers: { accept: "*/*", "content-type": "application/json" },
       });
@@ -501,7 +501,7 @@ export default (tests) => {
         strictEqual(formDataEntries[2][1] instanceof File, true);
         strictEqual(formDataEntries[2][1].name, fileName);
         strictEqual(formDataEntries[2][1].type, fileType);
-        deepStrictEqual(fetchOptionsRest, {
+        deepEqual(fetchOptionsRest, {
           method: "POST",
           headers: { accept: "*/*" },
         });
@@ -617,7 +617,7 @@ export default (tests) => {
       if (global.AbortSignal)
         strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
 
-      deepStrictEqual(fetchOptionsRest, {
+      deepEqual(fetchOptionsRest, {
         method: "POST",
         headers: { accept: "*/*", "content-type": "application/json" },
         body: JSON.stringify({ variables: {}, query }),
@@ -680,7 +680,7 @@ export default (tests) => {
     if (global.AbortSignal)
       strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
 
-    deepStrictEqual(fetchOptionsRest, {
+    deepEqual(fetchOptionsRest, {
       method: "POST",
       headers: {
         accept: "*/*",
@@ -757,7 +757,7 @@ export default (tests) => {
       if (global.AbortSignal)
         strictEqual(fetchOptionsSignal instanceof global.AbortSignal, true);
 
-      deepStrictEqual(fetchOptionsRest, {
+      deepEqual(fetchOptionsRest, {
         method: "POST",
         headers: {
           accept: "*/*",
@@ -864,7 +864,7 @@ export default (tests) => {
       strictEqual(formDataEntries[2][1] instanceof File, true);
       strictEqual(formDataEntries[2][1].name, fileName);
       strictEqual(formDataEntries[2][1].type, fileType);
-      deepStrictEqual(fetchOptionsRest, {
+      deepEqual(fetchOptionsRest, {
         method: "POST",
         headers: { accept: "*/*" },
       });
@@ -1052,7 +1052,7 @@ export default (tests) => {
         const observerError = await observerErrorPromise;
 
         strictEqual(fetchUri, defaultUri);
-        deepStrictEqual(fetchOptions, {
+        deepEqual(fetchOptions, {
           method: "POST",
           headers: { accept: "*/*", "content-type": "application/json" },
           body: JSON.stringify({ variables: {}, query }),
@@ -1118,7 +1118,7 @@ export default (tests) => {
         const observerError = await observerErrorPromise;
 
         strictEqual(fetchUri, defaultUri);
-        deepStrictEqual(fetchOptions, {
+        deepEqual(fetchOptions, {
           method: "POST",
           headers: { accept: "*/*", "content-type": "application/json" },
           body: JSON.stringify({ variables: {}, query }),
