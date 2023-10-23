@@ -2,7 +2,7 @@
 
 # apollo-upload-client
 
-A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link) for [Apollo Client](https://apollographql.com/docs/react) that fetches a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec) if the GraphQL variables contain files (by default [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), or [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) instances), or else fetches a regular [GraphQL POST or GET request](https://apollographql.com/docs/apollo-server/requests) (depending on the config and GraphQL operation).
+A [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link) for [Apollo Client](https://www.apollographql.com/docs/react) that fetches a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec) if the GraphQL variables contain files (by default [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), or [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) instances), or else fetches a regular [GraphQL POST or GET request](https://www.apollographql.com/docs/apollo-server/workflow/requests) (depending on the config and GraphQL operation).
 
 - [Installation](#installation)
 - [Examples](#examples)
@@ -11,7 +11,7 @@ A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introd
 
 ## Installation
 
-To install with [npm](https://npmjs.com/get-npm), run:
+To install with [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm), run:
 
 ```sh
 npm install apollo-upload-client
@@ -19,11 +19,11 @@ npm install apollo-upload-client
 
 Polyfill any required globals (see [_**Requirements**_](#requirements)) that are missing in your server and client environments.
 
-Remove any `uri`, `credentials`, or `headers` options from the [`ApolloClient` constructor](https://apollographql.com/docs/react/api/core/ApolloClient/#the-apolloclient-constructor).
+Remove any `uri`, `credentials`, or `headers` options from the [`ApolloClient` constructor](https://www.apollographql.com/docs/react/api/core/ApolloClient/#the-apolloclient-constructor).
 
-[Apollo Client](https://apollographql.com/docs/react) can only have 1 [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link) that sends the GraphQL requests; if one such as [`HttpLink`](https://apollographql.com/docs/react/api/link/apollo-link-http) is already setup, remove it.
+[Apollo Client](https://www.apollographql.com/docs/react) can only have 1 [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link) that sends the GraphQL requests; if one such as [`HttpLink`](https://www.apollographql.com/docs/react/api/link/apollo-link-http) is already setup, remove it.
 
-Initialize the client with a [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link) using the function [`createUploadLink`](./createUploadLink.mjs).
+Initialize the client with a [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link) using the function [`createUploadLink`](./createUploadLink.mjs).
 
 Also ensure the GraphQL server implements the [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec) and that uploads are handled correctly in resolvers.
 
@@ -128,7 +128,7 @@ Consider polyfilling:
 - [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 - [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
 
-Projects must configure [TypeScript](https://typescriptlang.org) to use types from the ECMAScript modules that have a `// @ts-check` comment:
+Projects must configure [TypeScript](https://www.typescriptlang.org) to use types from the ECMAScript modules that have a `// @ts-check` comment:
 
 - [`compilerOptions.allowJs`](https://www.typescriptlang.org/tsconfig#allowJs) should be `true`.
 - [`compilerOptions.maxNodeModuleJsDepth`](https://www.typescriptlang.org/tsconfig#maxNodeModuleJsDepth) should be reasonably large, e.g. `10`.

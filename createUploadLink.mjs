@@ -18,19 +18,19 @@ import isExtractableFile from "./isExtractableFile.mjs";
 
 /**
  * Creates a
- * [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link)
- * for [Apollo Client](https://apollographql.com/docs/react) that fetches a
+ * [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link)
+ * for [Apollo Client](https://www.apollographql.com/docs/react) that fetches a
  * [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec)
  * if the GraphQL variables contain files (by default
  * [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList),
  * [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), or
  * [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) instances),
  * or else fetches a regular
- * [GraphQL POST or GET request](https://apollographql.com/docs/apollo-server/requests)
+ * [GraphQL POST or GET request](https://www.apollographql.com/docs/apollo-server/workflow/requests)
  * (depending on the config and GraphQL operation).
  *
  * Some of the options are similar to the
- * [`createHttpLink` options](https://apollographql.com/docs/react/api/link/apollo-link-http/#httplink-constructor-options).
+ * [`createHttpLink` options](https://www.apollographql.com/docs/react/api/link/apollo-link-http/#httplink-constructor-options).
  * @see [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec).
  * @param {object} options Options.
  * @param {string} [options.uri] GraphQL endpoint URI. Defaults to `"/graphql"`.
@@ -58,7 +58,7 @@ import isExtractableFile from "./isExtractableFile.mjs";
  *   {@linkcode fetchOptions}.
  * @param {boolean} [options.includeExtensions] Toggles sending `extensions`
  *   fields to the GraphQL server. Defaults to `false`.
- * @returns A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link).
+ * @returns A [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link).
  * @example
  * A basic Apollo Client setup:
  *
@@ -105,7 +105,7 @@ export default function createUploadLink({
     const {
       // Apollo Studio client awareness `name` and `version` can be configured
       // via `ApolloClient` constructor options:
-      // https://apollographql.com/docs/studio/client-awareness/#using-apollo-server-and-apollo-client
+      // https://www.apollographql.com/docs/graphos/metrics/client-awareness/#setup
       clientAwareness: { name, version } = {},
       headers,
     } = context;
