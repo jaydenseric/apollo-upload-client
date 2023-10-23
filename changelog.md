@@ -79,6 +79,7 @@
 - In tests, for objects with the property `headers` that as of [`@apollo/client`](https://npm.im/@apollo/client) [v3.7.0](https://github.com/apollographql/apollo-client/releases/tag/v3.7.0) is a null-prototype object, use the assertion `deepEqual` instead of `deepStrictEqual`.
 - Tweaked code for type safety.
 - Updated documentation, including link URLs.
+- Refactored example code in the readme.
 - Removed the readme badges.
 
 ## 17.0.0

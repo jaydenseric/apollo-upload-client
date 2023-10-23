@@ -49,11 +49,21 @@ const MUTATION = gql`
 function UploadFiles() {
   const [mutate] = useMutation(MUTATION);
 
-  function onChange({ target: { validity, files } }) {
-    if (validity.valid) mutate({ variables: { files } });
-  }
-
-  return <input type="file" multiple required onChange={onChange} />;
+  return (
+    <input
+      type="file"
+      multiple
+      required
+      onChange={({ target: { validity, files } }) => {
+        if (validity.valid)
+          mutate({
+            variables: {
+              files,
+            },
+          });
+      }}
+    />
+  );
 }
 ```
 
@@ -73,16 +83,25 @@ const MUTATION = gql`
 function UploadFile() {
   const [mutate] = useMutation(MUTATION);
 
-  function onChange({
-    target: {
-      validity,
-      files: [file],
-    },
-  }) {
-    if (validity.valid) mutate({ variables: { file } });
-  }
-
-  return <input type="file" required onChange={onChange} />;
+  return (
+    <input
+      type="file"
+      required
+      onChange={({
+        target: {
+          validity,
+          files: [file],
+        },
+      }) => {
+        if (validity.valid)
+          mutate({
+            variables: {
+              file,
+            },
+          });
+      }}
+    />
+  );
 }
 ```
 
@@ -102,18 +121,26 @@ const MUTATION = gql`
 function UploadFile() {
   const [mutate] = useMutation(MUTATION);
 
-  function onChange({ target: { validity, value } }) {
-    if (validity.valid) {
-      const file = new Blob([value], { type: "text/plain" });
+  return (
+    <input
+      type="text"
+      required
+      onChange={({ target: { validity, value } }) => {
+        if (validity.valid) {
+          const file = new Blob([value], { type: "text/plain" });
 
-      // Optional, defaults to `blob`.
-      file.name = "text.txt";
+          // Optional, defaults to `blob`.
+          file.name = "text.txt";
 
-      mutate({ variables: { file } });
-    }
-  }
-
-  return <input type="text" required onChange={onChange} />;
+          mutate({
+            variables: {
+              file,
+            },
+          });
+        }
+      }}
+    />
+  );
 }
 ```
 
