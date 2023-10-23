@@ -1,5 +1,11 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Patch
+
+- Fixed a typo in the changelog entry for v18.0.0.
+
 ## 18.0.0
 
 ### Major
@@ -14,7 +20,7 @@
 
     This class was bloating non React Native environments with an extra module, increasing bundle sizes when building and adding an extra step to ESM loading waterfalls in browsers.
 
-    It’s the responsibility of Facebook to adhere to web standards and implement spec-complaint `File`, `Glob`, and `FormData` globals in the React Native environment.
+    It’s the responsibility of Facebook to adhere to web standards and implement spec-complaint `Blob`, `File`, and `FormData` globals in the React Native environment.
 
     To migrate, React Native projects that are unable to use the standard globals can manually implement a class `ReactNativeFile` and match it with a custom function `isReactNativeFile` for use with the function `createUploadLink` option `isExtractableFile`.
 
