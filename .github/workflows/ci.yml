@@ -1,5 +1,5 @@
 name: CI
-on: [push, pull_request]
+on: [push, workflow_dispatch]
 jobs:
   test:
     name: Test with Node.js v${{ matrix.node }} and ${{ matrix.os }}

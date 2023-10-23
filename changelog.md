@@ -67,6 +67,8 @@
 - Check TypeScript types via a new package `types` script.
 - Removed the [`jsdoc-md`](https://npm.im/jsdoc-md) dev dependency and the related package scripts, replacing the readme “API” section with a manually written “Exports” section.
 - Updated GitHub Actions CI config:
+  - The workflow no longer triggers on pull request, but still does on push.
+  - The workflow can now be manually triggered.
   - Run tests with Node.js v18, v20, v21.
   - Updated `actions/checkout` to v4.
   - Updated `actions/setup-node` to v3.
