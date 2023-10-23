@@ -8,6 +8,7 @@ import { describe, it } from "node:test";
 import { ApolloLink } from "@apollo/client/link/core/ApolloLink.js";
 import { concat } from "@apollo/client/link/core/concat.js";
 import { execute } from "@apollo/client/link/core/execute.js";
+import { stripIgnoredCharacters } from "graphql";
 import { gql } from "graphql-tag";
 import revertableGlobals from "revertable-globals";
 
@@ -310,6 +311,71 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
           a: true,
         },
         query,
+      }),
+    });
+    deepStrictEqual(nextData, payload);
+  });
+
+  it("Option `print`.", async () => {
+    /** @type {unknown} */
+    let fetchInput;
+
+    /** @type {RequestInit | undefined} */
+    let fetchOptions;
+
+    /** @type {unknown} */
+    let nextData;
+
+    const query = "{\n  a\n}";
+    const payload = { data: { a: true } };
+
+    await timeLimitPromise(
+      /** @type {Promise<void>} */ (
+        new Promise((resolve, reject) => {
+          execute(
+            createUploadLink({
+              print: (ast, originalPrint) =>
+                stripIgnoredCharacters(originalPrint(ast)),
+              async fetch(input, options) {
+                fetchInput = input;
+                fetchOptions = options;
+
+                return new Response(
+                  JSON.stringify(payload),
+                  graphqlResponseOptions,
+                );
+              },
+            }),
+            {
+              query: gql(query),
+            },
+          ).subscribe({
+            next(data) {
+              nextData = data;
+            },
+            error() {
+              reject(createUnexpectedCallError());
+            },
+            complete() {
+              resolve();
+            },
+          });
+        })
+      ),
+    );
+
+    strictEqual(fetchInput, defaultUri);
+    ok(typeof fetchOptions === "object");
+
+    const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
+
+    ok(fetchOptionsSignal instanceof AbortSignal);
+    deepEqual(fetchOptionsRest, {
+      method: "POST",
+      headers: { accept: "*/*", "content-type": "application/json" },
+      body: JSON.stringify({
+        variables: {},
+        query: stripIgnoredCharacters(query),
       }),
     });
     deepStrictEqual(nextData, payload);

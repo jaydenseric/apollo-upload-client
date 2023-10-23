@@ -5,8 +5,9 @@ import { createSignalIfSupported } from "@apollo/client/link/http/createSignalIf
 import { parseAndCheckHttpResponse } from "@apollo/client/link/http/parseAndCheckHttpResponse.js";
 import { rewriteURIForGET } from "@apollo/client/link/http/rewriteURIForGET.js";
 import {
+  defaultPrinter,
   fallbackHttpConfig,
-  selectHttpOptionsAndBody,
+  selectHttpOptionsAndBodyInternal,
 } from "@apollo/client/link/http/selectHttpOptionsAndBody.js";
 import { selectURI } from "@apollo/client/link/http/selectURI.js";
 import { serializeFetchParameter } from "@apollo/client/link/http/serializeFetchParameter.js";
@@ -46,6 +47,9 @@ import isExtractableFile from "./isExtractableFile.mjs";
  *   Customizes how extracted files are appended to the
  *   [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
  *   instance. Defaults to {@linkcode formDataAppendFile}.
+ * @param {import("@apollo/client/link/http/selectHttpOptionsAndBody.js").Printer} [options.print]
+ *   Prints the GraphQL query or mutation AST to a string for transport.
+ *   Defaults to {@linkcode defaultPrinter}.
  * @param {typeof fetch} [options.fetch] [`fetch`](https://fetch.spec.whatwg.org)
  *   implementation. Defaults to the {@linkcode fetch} global.
  * @param {RequestInit} [options.fetchOptions] `fetch` options; overridden by
@@ -78,6 +82,7 @@ export default function createUploadLink({
   isExtractableFile: customIsExtractableFile = isExtractableFile,
   FormData: CustomFormData,
   formDataAppendFile: customFormDataAppendFile = formDataAppendFile,
+  print = defaultPrinter,
   fetch: customFetch,
   fetchOptions,
   credentials,
@@ -122,8 +127,9 @@ export default function createUploadLink({
       },
     };
 
-    const { options, body } = selectHttpOptionsAndBody(
+    const { options, body } = selectHttpOptionsAndBodyInternal(
       operation,
+      print,
       fallbackHttpConfig,
       linkConfig,
       contextConfig,

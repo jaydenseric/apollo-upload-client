@@ -61,6 +61,12 @@
   - [`compilerOptions.maxNodeModuleJsDepth`](https://www.typescriptlang.org/tsconfig#maxNodeModuleJsDepth) should be reasonably large, e.g. `10`.
   - [`compilerOptions.module`](https://www.typescriptlang.org/tsconfig#module) should be `"node16"` or `"nodenext"`.
 
+- Internally, use the function `selectHttpOptionsAndBodyInternal` that was added in [`@apollo/client`](https://npm.im/@apollo/client) [v3.5.5](https://github.com/apollographql/apollo-client/releases/tag/v3.5.5).
+
+### Minor
+
+- Added a new option `print` for the function `createUploadLink`, to customize how the GraphQL query or mutation AST prints to a string for transport. It that works like the same option for [`HttpLink`](https://www.apollographql.com/docs/react/api/link/apollo-link-http).
+
 ### Patch
 
 - Updated dev dependencies.
