@@ -8,7 +8,10 @@
     "email": "me@jaydenseric.com",
     "url": "https://jaydenseric.com"
   },
-  "repository": "github:jaydenseric/apollo-upload-client",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaydenseric/apollo-upload-client.git"
+  },
   "homepage": "https://github.com/jaydenseric/apollo-upload-client#readme",
   "bugs": "https://github.com/jaydenseric/apollo-upload-client/issues",
   "funding": "https://github.com/sponsors/jaydenseric",
