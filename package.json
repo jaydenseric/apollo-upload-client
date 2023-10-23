@@ -60,14 +60,13 @@
     "gzip-size": "^7.0.0",
     "prettier": "^3.0.3",
     "revertable-globals": "^4.0.0",
-    "test-director": "^11.0.0",
     "typescript": "^5.2.2"
   },
   "scripts": {
     "eslint": "eslint .",
     "prettier": "prettier -c .",
     "types": "tsc -p jsconfig.json",
-    "tests": "coverage-node test.mjs",
+    "tests": "coverage-node --test-reporter=spec --test",
     "test": "npm run eslint && npm run prettier && npm run types && npm run tests",
     "prepublishOnly": "npm test"
   }

@@ -3,23 +3,20 @@
 import "./test/polyfillFile.mjs";
 
 import { ok, strictEqual } from "node:assert";
+import { describe, it } from "node:test";
 
 import formDataAppendFile from "./formDataAppendFile.mjs";
 import assertBundleSize from "./test/assertBundleSize.mjs";
 
-/**
- * Adds `formDataAppendFile` tests.
- * @param {import("test-director").default} tests Test director.
- */
-export default (tests) => {
-  tests.add("`formDataAppendFile` bundle size.", async () => {
+describe("Function `formDataAppendFile`.", { concurrency: true }, () => {
+  it("Bundle size.", async () => {
     await assertBundleSize(
       new URL("./formDataAppendFile.mjs", import.meta.url),
       100,
     );
   });
 
-  tests.add("`formDataAppendFile` functionality, `Blob` instance.", () => {
+  it("`Blob` instance.", () => {
     const formData = new FormData();
     const fieldName = "a";
     const fileType = "text/plain";
@@ -39,7 +36,7 @@ export default (tests) => {
     strictEqual(formDataEntries[0][1].type, fileType);
   });
 
-  tests.add("`formDataAppendFile` functionality, `File` instance.", () => {
+  it("`File` instance.", () => {
     const formData = new FormData();
     const fieldName = "a";
     const fileName = "a.txt";
@@ -59,4 +56,4 @@ export default (tests) => {
     strictEqual(formDataEntries[0][1].name, fileName);
     strictEqual(formDataEntries[0][1].type, fileType);
   });
-};
+});

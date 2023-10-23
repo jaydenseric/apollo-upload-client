@@ -21,6 +21,7 @@
   - “Plain” objects in the GraphQL operation that aren’t `Object` instances (e.g. `Object.create(null)`) are now also deep cloned when searching for extractable files.
 
 - Updated dev dependencies, some of which require newer Node.js versions than previously supported.
+- Use the Node.js test runner API and remove the dev dependency [`test-director`](https://npm.im/test-director).
 - Refactored tests to use the standard `AbortController`, `AbortSignal`, `File`, `FormData`, and `Response` APIs available in modern Node.js and removed the dev dependencies [`abort-controller`](https://npm.im/abort-controller), [`formdata-node`](https://npm.im/formdata-node), and [`node-fetch`](https://npm.im/node-fetch).
 - Public modules are now individually listed in the package `files` and `exports` fields.
 - Removed the package main index module; deep imports must be used. To migrate:
