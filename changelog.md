@@ -5,7 +5,7 @@
 ### Major
 
 - Updated Node.js support to `^18.15.0 || >=20.4.0`.
-- Updated the [`@apollo/client`](https://npm.im/@apollo/client) peer dependency to `^3.6.0`.
+- Updated the [`@apollo/client`](https://npm.im/@apollo/client) peer dependency to `^3.8.0`.
 - Updated the [`extract-files`](http://npm.im/extract-files) dependency to v13.
 
   - React Native is no longer supported out of the box.

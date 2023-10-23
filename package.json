@@ -42,7 +42,7 @@
   },
   "browserslist": "Node 18.15 - 19 and Node < 19, Node >= 20.4, > 0.5%, not OperaMini all, not IE > 0, not dead",
   "peerDependencies": {
-    "@apollo/client": "^3.6.0",
+    "@apollo/client": "^3.8.0",
     "graphql": "14 - 16"
   },
   "dependencies": {
