@@ -1,11 +1,13 @@
+// @ts-check
+
 import "./test/polyfillFile.mjs";
 
-import { deepEqual, deepStrictEqual, strictEqual } from "node:assert";
+import { deepEqual, deepStrictEqual, ok, strictEqual } from "node:assert";
 
 import { ApolloLink } from "@apollo/client/link/core/ApolloLink.js";
 import { concat } from "@apollo/client/link/core/concat.js";
 import { execute } from "@apollo/client/link/core/execute.js";
-import gql from "graphql-tag";
+import { gql } from "graphql-tag";
 import revertableGlobals from "revertable-globals";
 
 import createUploadLink from "./createUploadLink.mjs";
@@ -21,6 +23,10 @@ const graphqlResponseOptions = {
   },
 };
 
+/**
+ * Adds `createUploadLink` tests.
+ * @param {import("test-director").default} tests Test director.
+ */
 export default (tests) => {
   tests.add("`createUploadLink` bundle size.", async () => {
     await assertBundleSize(
@@ -32,15 +38,21 @@ export default (tests) => {
   tests.add(
     "`createUploadLink` with default options, a query, no files.",
     async () => {
-      let fetchUri;
+      /** @type {unknown} */
+      let fetchInput;
+
+      /** @type {RequestInit | undefined} */
       let fetchOptions;
+
+      /** @type {unknown} */
       let nextData;
 
       const query = "{\n  a\n}";
       const payload = { data: { a: true } };
       const revertGlobals = revertableGlobals({
-        async fetch(uri, options) {
-          fetchUri = uri;
+        /** @satisfies {typeof fetch} */
+        fetch: async function fetch(input, options) {
+          fetchInput = input;
           fetchOptions = options;
 
           return new Response(JSON.stringify(payload), graphqlResponseOptions);
@@ -49,29 +61,32 @@ export default (tests) => {
 
       try {
         await timeLimitPromise(
-          new Promise((resolve, reject) => {
-            execute(createUploadLink(), {
-              query: gql(query),
-            }).subscribe({
-              next(data) {
-                nextData = data;
-              },
-              error() {
-                reject(createUnexpectedCallError());
-              },
-              complete() {
-                resolve();
-              },
-            });
-          }),
+          /** @type {Promise<void>} */ (
+            new Promise((resolve, reject) => {
+              execute(createUploadLink(), {
+                query: gql(query),
+              }).subscribe({
+                next(data) {
+                  nextData = data;
+                },
+                error() {
+                  reject(createUnexpectedCallError());
+                },
+                complete() {
+                  resolve();
+                },
+              });
+            })
+          ),
         );
 
-        strictEqual(fetchUri, defaultUri);
+        strictEqual(fetchInput, defaultUri);
+        ok(typeof fetchOptions === "object");
 
         const { signal: fetchOptionsSignal, ...fetchOptionsRest } =
           fetchOptions;
 
-        strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
+        ok(fetchOptionsSignal instanceof AbortSignal);
         deepEqual(fetchOptionsRest, {
           method: "POST",
           headers: { accept: "*/*", "content-type": "application/json" },
@@ -87,8 +102,13 @@ export default (tests) => {
   tests.add(
     "`createUploadLink` with default options, a mutation, files.",
     async () => {
-      let fetchUri;
+      /** @type {unknown} */
+      let fetchInput;
+
+      /** @type {RequestInit | undefined} */
       let fetchOptions;
+
+      /** @type {unknown} */
       let nextData;
 
       const query = "mutation ($a: Upload!) {\n  a(a: $a)\n}";
@@ -96,8 +116,9 @@ export default (tests) => {
       const fileName = "a.txt";
       const fileType = "text/plain";
       const revertGlobals = revertableGlobals({
-        async fetch(uri, options) {
-          fetchUri = uri;
+        /** @satisfies {typeof fetch} */
+        fetch: async function fetch(input, options) {
+          fetchInput = input;
           fetchOptions = options;
 
           return new Response(JSON.stringify(payload), graphqlResponseOptions);
@@ -106,28 +127,30 @@ export default (tests) => {
 
       try {
         await timeLimitPromise(
-          new Promise((resolve, reject) => {
-            execute(createUploadLink(), {
-              query: gql(query),
-              variables: {
-                a: new File(["a"], fileName, { type: fileType }),
-              },
-            }).subscribe({
-              next(data) {
-                nextData = data;
-              },
-              error() {
-                reject(createUnexpectedCallError());
-              },
-              complete() {
-                resolve();
-              },
-            });
-          }),
+          /** @type {Promise<void>} */ (
+            new Promise((resolve, reject) => {
+              execute(createUploadLink(), {
+                query: gql(query),
+                variables: {
+                  a: new File(["a"], fileName, { type: fileType }),
+                },
+              }).subscribe({
+                next(data) {
+                  nextData = data;
+                },
+                error() {
+                  reject(createUnexpectedCallError());
+                },
+                complete() {
+                  resolve();
+                },
+              });
+            })
+          ),
         );
 
-        strictEqual(fetchUri, defaultUri);
-        strictEqual(typeof fetchOptions, "object");
+        strictEqual(fetchInput, defaultUri);
+        ok(typeof fetchOptions === "object");
 
         const {
           signal: fetchOptionsSignal,
@@ -135,23 +158,25 @@ export default (tests) => {
           ...fetchOptionsRest
         } = fetchOptions;
 
-        strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
-        strictEqual(fetchOptionsBody instanceof FormData, true);
+        ok(fetchOptionsSignal instanceof AbortSignal);
+        ok(fetchOptionsBody instanceof FormData);
 
         const formDataEntries = Array.from(fetchOptionsBody.entries());
 
         strictEqual(formDataEntries.length, 3);
         strictEqual(formDataEntries[0][0], "operations");
+        ok(typeof formDataEntries[0][1] === "string");
         deepStrictEqual(JSON.parse(formDataEntries[0][1]), {
           query,
           variables: { a: null },
         });
         strictEqual(formDataEntries[1][0], "map");
+        ok(typeof formDataEntries[1][1] === "string");
         deepStrictEqual(JSON.parse(formDataEntries[1][1]), {
           1: ["variables.a"],
         });
         strictEqual(formDataEntries[2][0], "1");
-        strictEqual(formDataEntries[2][1] instanceof File, true);
+        ok(formDataEntries[2][1] instanceof File);
         strictEqual(formDataEntries[2][1].name, fileName);
         strictEqual(formDataEntries[2][1].type, fileType);
         deepEqual(fetchOptionsRest, {
@@ -166,8 +191,13 @@ export default (tests) => {
   );
 
   tests.add("`createUploadLink` with option `uri`.", async () => {
-    let fetchUri;
+    /** @type {unknown} */
+    let fetchInput;
+
+    /** @type {RequestInit | undefined} */
     let fetchOptions;
+
+    /** @type {unknown} */
     let nextData;
 
     const uri = "http://localhost:3000";
@@ -175,42 +205,45 @@ export default (tests) => {
     const payload = { data: { a: true } };
 
     await timeLimitPromise(
-      new Promise((resolve, reject) => {
-        execute(
-          createUploadLink({
-            uri,
-            async fetch(uri, options) {
-              fetchUri = uri;
-              fetchOptions = options;
+      /** @type {Promise<void>} */ (
+        new Promise((resolve, reject) => {
+          execute(
+            createUploadLink({
+              uri,
+              async fetch(input, options) {
+                fetchInput = input;
+                fetchOptions = options;
 
-              return new Response(
-                JSON.stringify(payload),
-                graphqlResponseOptions,
-              );
+                return new Response(
+                  JSON.stringify(payload),
+                  graphqlResponseOptions,
+                );
+              },
+            }),
+            {
+              query: gql(query),
             },
-          }),
-          {
-            query: gql(query),
-          },
-        ).subscribe({
-          next(data) {
-            nextData = data;
-          },
-          error() {
-            reject(createUnexpectedCallError());
-          },
-          complete() {
-            resolve();
-          },
-        });
-      }),
+          ).subscribe({
+            next(data) {
+              nextData = data;
+            },
+            error() {
+              reject(createUnexpectedCallError());
+            },
+            complete() {
+              resolve();
+            },
+          });
+        })
+      ),
     );
 
-    strictEqual(fetchUri, uri);
+    strictEqual(fetchInput, uri);
+    ok(typeof fetchOptions === "object");
 
     const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
 
-    strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
+    ok(fetchOptionsSignal instanceof AbortSignal);
     deepEqual(fetchOptionsRest, {
       method: "POST",
       headers: { accept: "*/*", "content-type": "application/json" },
@@ -220,56 +253,64 @@ export default (tests) => {
   });
 
   tests.add("`createUploadLink` with option `includeExtensions`.", async () => {
-    let fetchUri;
+    /** @type {unknown} */
+    let fetchInput;
+
+    /** @type {RequestInit | undefined} */
     let fetchOptions;
+
+    /** @type {unknown} */
     let nextData;
 
     const query = "{\n  a\n}";
     const payload = { data: { a: true } };
 
     await timeLimitPromise(
-      new Promise((resolve, reject) => {
-        execute(
-          concat(
-            new ApolloLink((operation, forward) => {
-              operation.extensions.a = true;
-              return forward(operation);
-            }),
-            createUploadLink({
-              includeExtensions: true,
-              async fetch(uri, options) {
-                fetchUri = uri;
-                fetchOptions = options;
+      /** @type {Promise<void>} */ (
+        new Promise((resolve, reject) => {
+          execute(
+            concat(
+              new ApolloLink((operation, forward) => {
+                operation.extensions.a = true;
+                return forward(operation);
+              }),
+              createUploadLink({
+                includeExtensions: true,
+                async fetch(input, options) {
+                  fetchInput = input;
+                  fetchOptions = options;
 
-                return new Response(
-                  JSON.stringify(payload),
-                  graphqlResponseOptions,
-                );
-              },
-            }),
-          ),
-          {
-            query: gql(query),
-          },
-        ).subscribe({
-          next(data) {
-            nextData = data;
-          },
-          error() {
-            reject(createUnexpectedCallError());
-          },
-          complete() {
-            resolve();
-          },
-        });
-      }),
+                  return new Response(
+                    JSON.stringify(payload),
+                    graphqlResponseOptions,
+                  );
+                },
+              }),
+            ),
+            {
+              query: gql(query),
+            },
+          ).subscribe({
+            next(data) {
+              nextData = data;
+            },
+            error() {
+              reject(createUnexpectedCallError());
+            },
+            complete() {
+              resolve();
+            },
+          });
+        })
+      ),
     );
 
-    strictEqual(fetchUri, defaultUri);
+    strictEqual(fetchInput, defaultUri);
+    ok(typeof fetchOptions === "object");
 
     const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
 
-    strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
+    ok(fetchOptionsSignal instanceof AbortSignal);
     deepEqual(fetchOptionsRest, {
       method: "POST",
       headers: { accept: "*/*", "content-type": "application/json" },
@@ -287,53 +328,61 @@ export default (tests) => {
   tests.add(
     "`createUploadLink` with option `fetchOptions.method`.",
     async () => {
-      let fetchUri;
+      /** @type {unknown} */
+      let fetchInput;
+
+      /** @type {RequestInit | undefined} */
       let fetchOptions;
+
+      /** @type {unknown} */
       let nextData;
 
       const query = "{\n  a\n}";
       const payload = { data: { a: true } };
 
       await timeLimitPromise(
-        new Promise((resolve, reject) => {
-          execute(
-            createUploadLink({
-              fetchOptions: { method: "GET" },
-              async fetch(uri, options) {
-                fetchUri = uri;
-                fetchOptions = options;
+        /** @type {Promise<void>} */ (
+          new Promise((resolve, reject) => {
+            execute(
+              createUploadLink({
+                fetchOptions: { method: "GET" },
+                async fetch(input, options) {
+                  fetchInput = input;
+                  fetchOptions = options;
 
-                return new Response(
-                  JSON.stringify(payload),
-                  graphqlResponseOptions,
-                );
+                  return new Response(
+                    JSON.stringify(payload),
+                    graphqlResponseOptions,
+                  );
+                },
+              }),
+              {
+                query: gql(query),
               },
-            }),
-            {
-              query: gql(query),
-            },
-          ).subscribe({
-            next(data) {
-              nextData = data;
-            },
-            error() {
-              reject(createUnexpectedCallError());
-            },
-            complete() {
-              resolve();
-            },
-          });
-        }),
+            ).subscribe({
+              next(data) {
+                nextData = data;
+              },
+              error() {
+                reject(createUnexpectedCallError());
+              },
+              complete() {
+                resolve();
+              },
+            });
+          })
+        ),
       );
 
       strictEqual(
-        fetchUri,
+        fetchInput,
         `${defaultUri}?query=%7B%0A%20%20a%0A%7D&variables=%7B%7D`,
       );
+      ok(typeof fetchOptions === "object");
 
       const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
 
-      strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
+      ok(fetchOptionsSignal instanceof AbortSignal);
       deepEqual(fetchOptionsRest, {
         method: "GET",
         headers: { accept: "*/*", "content-type": "application/json" },
@@ -345,53 +394,61 @@ export default (tests) => {
   tests.add(
     "`createUploadLink` with option `useGETForQueries`, query, no files.",
     async () => {
-      let fetchUri;
+      /** @type {unknown} */
+      let fetchInput;
+
+      /** @type {RequestInit | undefined} */
       let fetchOptions;
+
+      /** @type {unknown} */
       let nextData;
 
       const query = "{\n  a\n}";
       const payload = { data: { a: true } };
 
       await timeLimitPromise(
-        new Promise((resolve, reject) => {
-          execute(
-            createUploadLink({
-              useGETForQueries: true,
-              async fetch(uri, options) {
-                fetchUri = uri;
-                fetchOptions = options;
+        /** @type {Promise<void>} */ (
+          new Promise((resolve, reject) => {
+            execute(
+              createUploadLink({
+                useGETForQueries: true,
+                async fetch(input, options) {
+                  fetchInput = input;
+                  fetchOptions = options;
 
-                return new Response(
-                  JSON.stringify(payload),
-                  graphqlResponseOptions,
-                );
+                  return new Response(
+                    JSON.stringify(payload),
+                    graphqlResponseOptions,
+                  );
+                },
+              }),
+              {
+                query: gql(query),
               },
-            }),
-            {
-              query: gql(query),
-            },
-          ).subscribe({
-            next(data) {
-              nextData = data;
-            },
-            error() {
-              reject(createUnexpectedCallError());
-            },
-            complete() {
-              resolve();
-            },
-          });
-        }),
+            ).subscribe({
+              next(data) {
+                nextData = data;
+              },
+              error() {
+                reject(createUnexpectedCallError());
+              },
+              complete() {
+                resolve();
+              },
+            });
+          })
+        ),
       );
 
       strictEqual(
-        fetchUri,
+        fetchInput,
         `${defaultUri}?query=%7B%0A%20%20a%0A%7D&variables=%7B%7D`,
       );
+      ok(typeof fetchOptions === "object");
 
       const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
 
-      strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
+      ok(fetchOptionsSignal instanceof AbortSignal);
       deepEqual(fetchOptionsRest, {
         method: "GET",
         headers: { accept: "*/*", "content-type": "application/json" },
@@ -403,8 +460,13 @@ export default (tests) => {
   tests.add(
     "`createUploadLink` with option `useGETForQueries`, query, files.",
     async () => {
-      let fetchUri;
+      /** @type {unknown} */
+      let fetchInput;
+
+      /** @type {RequestInit | undefined} */
       let fetchOptions;
+
+      /** @type {unknown} */
       let nextData;
 
       const query = "query ($a: Upload!) {\n  a(a: $a)\n}";
@@ -413,43 +475,45 @@ export default (tests) => {
       const fileType = "text/plain";
 
       await timeLimitPromise(
-        new Promise((resolve, reject) => {
-          execute(
-            createUploadLink({
-              useGETForQueries: true,
-              FormData,
-              async fetch(uri, options) {
-                fetchUri = uri;
-                fetchOptions = options;
+        /** @type {Promise<void>} */ (
+          new Promise((resolve, reject) => {
+            execute(
+              createUploadLink({
+                useGETForQueries: true,
+                FormData,
+                async fetch(input, options) {
+                  fetchInput = input;
+                  fetchOptions = options;
 
-                return new Response(
-                  JSON.stringify(payload),
-                  graphqlResponseOptions,
-                );
+                  return new Response(
+                    JSON.stringify(payload),
+                    graphqlResponseOptions,
+                  );
+                },
+              }),
+              {
+                query: gql(query),
+                variables: {
+                  a: new File(["a"], fileName, { type: fileType }),
+                },
               },
-            }),
-            {
-              query: gql(query),
-              variables: {
-                a: new File(["a"], fileName, { type: fileType }),
+            ).subscribe({
+              next(data) {
+                nextData = data;
               },
-            },
-          ).subscribe({
-            next(data) {
-              nextData = data;
-            },
-            error() {
-              reject(createUnexpectedCallError());
-            },
-            complete() {
-              resolve();
-            },
-          });
-        }),
+              error() {
+                reject(createUnexpectedCallError());
+              },
+              complete() {
+                resolve();
+              },
+            });
+          })
+        ),
       );
 
-      strictEqual(fetchUri, defaultUri);
-      strictEqual(typeof fetchOptions, "object");
+      strictEqual(fetchInput, defaultUri);
+      ok(typeof fetchOptions === "object");
 
       const {
         signal: fetchOptionsSignal,
@@ -457,23 +521,25 @@ export default (tests) => {
         ...fetchOptionsRest
       } = fetchOptions;
 
-      strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
-      strictEqual(fetchOptionsBody instanceof FormData, true);
+      ok(fetchOptionsSignal instanceof AbortSignal);
+      ok(fetchOptionsBody instanceof FormData);
 
       const formDataEntries = Array.from(fetchOptionsBody.entries());
 
       strictEqual(formDataEntries.length, 3);
       strictEqual(formDataEntries[0][0], "operations");
+      ok(typeof formDataEntries[0][1] === "string");
       deepStrictEqual(JSON.parse(formDataEntries[0][1]), {
         query,
         variables: { a: null },
       });
       strictEqual(formDataEntries[1][0], "map");
+      ok(typeof formDataEntries[1][1] === "string");
       deepStrictEqual(JSON.parse(formDataEntries[1][1]), {
         1: ["variables.a"],
       });
       strictEqual(formDataEntries[2][0], "1");
-      strictEqual(formDataEntries[2][1] instanceof File, true);
+      ok(formDataEntries[2][1] instanceof File);
       strictEqual(formDataEntries[2][1].name, fileName);
       strictEqual(formDataEntries[2][1].type, fileType);
       deepEqual(fetchOptionsRest, {
@@ -533,7 +599,7 @@ export default (tests) => {
       );
 
       strictEqual(fetched, false);
-      strictEqual(typeof observerError, "object");
+      ok(typeof observerError === "object");
       strictEqual(observerError.name, "Invariant Violation");
       strictEqual(observerError.parseError, parseError);
     },
@@ -542,50 +608,58 @@ export default (tests) => {
   tests.add(
     "`createUploadLink` with option `useGETForQueries`, mutation, no files.",
     async () => {
-      let fetchUri;
+      /** @type {unknown} */
+      let fetchInput;
+
+      /** @type {RequestInit | undefined} */
       let fetchOptions;
+
+      /** @type {unknown} */
       let nextData;
 
       const query = "mutation {\n  a\n}";
       const payload = { data: { a: true } };
 
       await timeLimitPromise(
-        new Promise((resolve, reject) => {
-          execute(
-            createUploadLink({
-              useGETForQueries: true,
-              async fetch(uri, options) {
-                fetchUri = uri;
-                fetchOptions = options;
+        /** @type {Promise<void>} */ (
+          new Promise((resolve, reject) => {
+            execute(
+              createUploadLink({
+                useGETForQueries: true,
+                async fetch(input, options) {
+                  fetchInput = input;
+                  fetchOptions = options;
 
-                return new Response(
-                  JSON.stringify(payload),
-                  graphqlResponseOptions,
-                );
+                  return new Response(
+                    JSON.stringify(payload),
+                    graphqlResponseOptions,
+                  );
+                },
+              }),
+              {
+                query: gql(query),
               },
-            }),
-            {
-              query: gql(query),
-            },
-          ).subscribe({
-            next(data) {
-              nextData = data;
-            },
-            error() {
-              reject(createUnexpectedCallError());
-            },
-            complete() {
-              resolve();
-            },
-          });
-        }),
+            ).subscribe({
+              next(data) {
+                nextData = data;
+              },
+              error() {
+                reject(createUnexpectedCallError());
+              },
+              complete() {
+                resolve();
+              },
+            });
+          })
+        ),
       );
 
-      strictEqual(fetchUri, defaultUri);
+      strictEqual(fetchInput, defaultUri);
+      ok(typeof fetchOptions === "object");
 
       const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
 
-      strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
+      ok(fetchOptionsSignal instanceof AbortSignal);
       deepEqual(fetchOptionsRest, {
         method: "POST",
         headers: { accept: "*/*", "content-type": "application/json" },
@@ -596,8 +670,13 @@ export default (tests) => {
   );
 
   tests.add("`createUploadLink` with context `clientAwareness`.", async () => {
-    let fetchUri;
+    /** @type {unknown} */
+    let fetchInput;
+
+    /** @type {RequestInit | undefined} */
     let fetchOptions;
+
+    /** @type {unknown} */
     let nextData;
 
     const clientAwareness = { name: "a", version: "1.0.0" };
@@ -605,90 +684,17 @@ export default (tests) => {
     const payload = { data: { a: true } };
 
     await timeLimitPromise(
-      new Promise((resolve, reject) => {
-        execute(
-          concat(
-            new ApolloLink((operation, forward) => {
-              operation.setContext({ clientAwareness });
-              return forward(operation);
-            }),
-            createUploadLink({
-              async fetch(uri, options) {
-                fetchUri = uri;
-                fetchOptions = options;
-
-                return new Response(
-                  JSON.stringify(payload),
-                  graphqlResponseOptions,
-                );
-              },
-            }),
-          ),
-          {
-            query: gql(query),
-          },
-        ).subscribe({
-          next(data) {
-            nextData = data;
-          },
-          error() {
-            reject(createUnexpectedCallError());
-          },
-          complete() {
-            resolve();
-          },
-        });
-      }),
-    );
-
-    strictEqual(fetchUri, defaultUri);
-
-    const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
-
-    strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
-    deepEqual(fetchOptionsRest, {
-      method: "POST",
-      headers: {
-        accept: "*/*",
-        "content-type": "application/json",
-        "apollographql-client-name": clientAwareness.name,
-        "apollographql-client-version": clientAwareness.version,
-      },
-      body: JSON.stringify({ variables: {}, query }),
-    });
-    deepStrictEqual(nextData, payload);
-  });
-
-  tests.add(
-    "`createUploadLink` with context `clientAwareness`, overridden by context `headers`.",
-    async () => {
-      let fetchUri;
-      let fetchOptions;
-      let nextData;
-
-      const clientAwarenessOriginal = { name: "a", version: "1.0.0" };
-      const clientAwarenessOverride = { name: "b", version: "2.0.0" };
-      const query = "{\n  a\n}";
-      const payload = { data: { a: true } };
-
-      await timeLimitPromise(
+      /** @type {Promise<void>} */ (
         new Promise((resolve, reject) => {
           execute(
             concat(
               new ApolloLink((operation, forward) => {
-                operation.setContext({
-                  clientAwareness: clientAwarenessOriginal,
-                  headers: {
-                    "apollographql-client-name": clientAwarenessOverride.name,
-                    "apollographql-client-version":
-                      clientAwarenessOverride.version,
-                  },
-                });
+                operation.setContext({ clientAwareness });
                 return forward(operation);
               }),
               createUploadLink({
-                async fetch(uri, options) {
-                  fetchUri = uri;
+                async fetch(input, options) {
+                  fetchInput = input;
                   fetchOptions = options;
 
                   return new Response(
@@ -712,14 +718,98 @@ export default (tests) => {
               resolve();
             },
           });
-        }),
+        })
+      ),
+    );
+
+    strictEqual(fetchInput, defaultUri);
+    ok(typeof fetchOptions === "object");
+
+    const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
+
+    ok(fetchOptionsSignal instanceof AbortSignal);
+    deepEqual(fetchOptionsRest, {
+      method: "POST",
+      headers: {
+        accept: "*/*",
+        "content-type": "application/json",
+        "apollographql-client-name": clientAwareness.name,
+        "apollographql-client-version": clientAwareness.version,
+      },
+      body: JSON.stringify({ variables: {}, query }),
+    });
+    deepStrictEqual(nextData, payload);
+  });
+
+  tests.add(
+    "`createUploadLink` with context `clientAwareness`, overridden by context `headers`.",
+    async () => {
+      /** @type {unknown} */
+      let fetchInput;
+
+      /** @type {RequestInit | undefined} */
+      let fetchOptions;
+
+      /** @type {unknown} */
+      let nextData;
+
+      const clientAwarenessOriginal = { name: "a", version: "1.0.0" };
+      const clientAwarenessOverride = { name: "b", version: "2.0.0" };
+      const query = "{\n  a\n}";
+      const payload = { data: { a: true } };
+
+      await timeLimitPromise(
+        /** @type {Promise<void>} */ (
+          new Promise((resolve, reject) => {
+            execute(
+              concat(
+                new ApolloLink((operation, forward) => {
+                  operation.setContext({
+                    clientAwareness: clientAwarenessOriginal,
+                    headers: {
+                      "apollographql-client-name": clientAwarenessOverride.name,
+                      "apollographql-client-version":
+                        clientAwarenessOverride.version,
+                    },
+                  });
+                  return forward(operation);
+                }),
+                createUploadLink({
+                  async fetch(input, options) {
+                    fetchInput = input;
+                    fetchOptions = options;
+
+                    return new Response(
+                      JSON.stringify(payload),
+                      graphqlResponseOptions,
+                    );
+                  },
+                }),
+              ),
+              {
+                query: gql(query),
+              },
+            ).subscribe({
+              next(data) {
+                nextData = data;
+              },
+              error() {
+                reject(createUnexpectedCallError());
+              },
+              complete() {
+                resolve();
+              },
+            });
+          })
+        ),
       );
 
-      strictEqual(fetchUri, defaultUri);
+      strictEqual(fetchInput, defaultUri);
+      ok(typeof fetchOptions === "object");
 
       const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
 
-      strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
+      ok(fetchOptionsSignal instanceof AbortSignal);
       deepEqual(fetchOptionsRest, {
         method: "POST",
         headers: {
@@ -737,8 +827,13 @@ export default (tests) => {
   tests.add(
     "`createUploadLink` with options `isExtractableFile` and `formDataAppendFile`.",
     async () => {
-      let fetchUri;
+      /** @type {unknown} */
+      let fetchInput;
+
+      /** @type {RequestInit | undefined} */
       let fetchOptions;
+
+      /** @type {unknown} */
       let nextData;
 
       const query = "mutation ($a: Upload!) {\n  a(a: $a)\n}";
@@ -747,57 +842,64 @@ export default (tests) => {
       const fileType = "text/plain";
 
       class TextFile {
-        constructor(content, fileName) {
-          this.file = new File([content], fileName, { type: fileType });
+        /**
+         * @param {string} text Text.
+         * @param {string} fileName File name.
+         */
+        constructor(text, fileName) {
+          this.file = new File([text], fileName, { type: fileType });
         }
       }
 
       await timeLimitPromise(
-        new Promise((resolve, reject) => {
-          execute(
-            createUploadLink({
-              isExtractableFile(value) {
-                return value instanceof TextFile;
-              },
-              formDataAppendFile(formData, fieldName, file) {
-                formData.append(
-                  fieldName,
-                  file instanceof TextFile ? file.file : file,
-                );
-              },
-              FormData,
-              async fetch(uri, options) {
-                fetchUri = uri;
-                fetchOptions = options;
+        /** @type {Promise<void>} */ (
+          new Promise((resolve, reject) => {
+            execute(
+              createUploadLink({
+                /** @returns {value is TextFile} */
+                isExtractableFile(value) {
+                  return value instanceof TextFile;
+                },
+                formDataAppendFile(formData, fieldName, file) {
+                  formData.append(
+                    fieldName,
+                    file instanceof TextFile ? file.file : file,
+                  );
+                },
+                FormData,
+                async fetch(input, options) {
+                  fetchInput = input;
+                  fetchOptions = options;
 
-                return new Response(
-                  JSON.stringify(payload),
-                  graphqlResponseOptions,
-                );
+                  return new Response(
+                    JSON.stringify(payload),
+                    graphqlResponseOptions,
+                  );
+                },
+              }),
+              {
+                query: gql(query),
+                variables: {
+                  a: new TextFile("a", fileName),
+                },
               },
-            }),
-            {
-              query: gql(query),
-              variables: {
-                a: new TextFile("a", fileName),
+            ).subscribe({
+              next(data) {
+                nextData = data;
               },
-            },
-          ).subscribe({
-            next(data) {
-              nextData = data;
-            },
-            error() {
-              reject(createUnexpectedCallError());
-            },
-            complete() {
-              resolve();
-            },
-          });
-        }),
+              error() {
+                reject(createUnexpectedCallError());
+              },
+              complete() {
+                resolve();
+              },
+            });
+          })
+        ),
       );
 
-      strictEqual(fetchUri, defaultUri);
-      strictEqual(typeof fetchOptions, "object");
+      strictEqual(fetchInput, defaultUri);
+      ok(typeof fetchOptions === "object");
 
       const {
         signal: fetchOptionsSignal,
@@ -805,23 +907,25 @@ export default (tests) => {
         ...fetchOptionsRest
       } = fetchOptions;
 
-      strictEqual(fetchOptionsSignal instanceof AbortSignal, true);
-      strictEqual(fetchOptionsBody instanceof FormData, true);
+      ok(fetchOptionsSignal instanceof AbortSignal);
+      ok(fetchOptionsBody instanceof FormData);
 
       const formDataEntries = Array.from(fetchOptionsBody.entries());
 
       strictEqual(formDataEntries.length, 3);
       strictEqual(formDataEntries[0][0], "operations");
+      ok(typeof formDataEntries[0][1] === "string");
       deepStrictEqual(JSON.parse(formDataEntries[0][1]), {
         query,
         variables: { a: null },
       });
       strictEqual(formDataEntries[1][0], "map");
+      ok(typeof formDataEntries[1][1] === "string");
       deepStrictEqual(JSON.parse(formDataEntries[1][1]), {
         1: ["variables.a"],
       });
       strictEqual(formDataEntries[2][0], "1");
-      strictEqual(formDataEntries[2][1] instanceof File, true);
+      ok(formDataEntries[2][1] instanceof File);
       strictEqual(formDataEntries[2][1].name, fileName);
       strictEqual(formDataEntries[2][1].type, fileType);
       deepEqual(fetchOptionsRest, {
@@ -833,7 +937,10 @@ export default (tests) => {
   );
 
   tests.add("`createUploadLink` with a HTTP error, data.", async () => {
+    /** @type {Response | undefined} */
     let fetchResponse;
+
+    /** @type {unknown} */
     let nextData;
 
     const payload = {
@@ -881,6 +988,7 @@ export default (tests) => {
   });
 
   tests.add("`createUploadLink` with a HTTP error, no data.", async () => {
+    /** @type {Response | undefined} */
     let fetchResponse;
 
     const payload = { errors: [{ message: "Unauthorized." }] };
@@ -951,7 +1059,10 @@ export default (tests) => {
   tests.add(
     "`createUploadLink` with option `fetchOptions.signal`, not yet aborted.",
     async () => {
-      let fetchUri;
+      /** @type {unknown} */
+      let fetchInput;
+
+      /** @type {RequestInit | undefined} */
       let fetchOptions;
 
       const query = "{\n  a\n}";
@@ -964,8 +1075,8 @@ export default (tests) => {
           execute(
             createUploadLink({
               fetchOptions: { signal: controller.signal },
-              fetch(uri, options) {
-                fetchUri = uri;
+              fetch(input, options) {
+                fetchInput = input;
                 fetchOptions = options;
 
                 return new Promise((resolve, reject) => {
@@ -981,7 +1092,7 @@ export default (tests) => {
                     );
                   }, 4000);
 
-                  options.signal.addEventListener("abort", () => {
+                  options?.signal?.addEventListener("abort", () => {
                     clearTimeout(timeout);
                     reject(fetchError);
                   });
@@ -1009,7 +1120,7 @@ export default (tests) => {
 
       const observerError = await observerErrorPromise;
 
-      strictEqual(fetchUri, defaultUri);
+      strictEqual(fetchInput, defaultUri);
       deepEqual(fetchOptions, {
         method: "POST",
         headers: { accept: "*/*", "content-type": "application/json" },
@@ -1023,7 +1134,10 @@ export default (tests) => {
   tests.add(
     "`createUploadLink` with option `fetchOptions.signal`, already aborted.",
     async () => {
-      let fetchUri;
+      /** @type {unknown} */
+      let fetchInput;
+
+      /** @type {RequestInit | undefined} */
       let fetchOptions;
 
       const query = "{\n  a\n}";
@@ -1039,11 +1153,11 @@ export default (tests) => {
           execute(
             createUploadLink({
               fetchOptions: { signal: controller.signal },
-              async fetch(uri, options) {
-                fetchUri = uri;
+              async fetch(input, options) {
+                fetchInput = input;
                 fetchOptions = options;
 
-                if (options.signal.aborted) throw fetchError;
+                if (options?.signal?.aborted) throw fetchError;
 
                 return new Response(
                   JSON.stringify(payload),
@@ -1070,7 +1184,7 @@ export default (tests) => {
 
       const observerError = await observerErrorPromise;
 
-      strictEqual(fetchUri, defaultUri);
+      strictEqual(fetchInput, defaultUri);
       deepEqual(fetchOptions, {
         method: "POST",
         headers: { accept: "*/*", "content-type": "application/json" },

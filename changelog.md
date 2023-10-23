@@ -50,11 +50,21 @@
   ```
 
 - The API is now ESM in `.mjs` files instead of CJS in `.js` files, [accessible via `import` but not `require`](https://nodejs.org/dist/latest/docs/api/esm.html#require).
+- Implemented TypeScript types via JSDoc comments.
+
+  Types published in [`@types/apollo-upload-client`](https://npm.im/@types/apollo-upload-client) should no longer be used.
+
+  Projects must configure [TypeScript](https://typescriptlang.org) to use types from the ECMAScript modules that have a `// @ts-check` comment:
+
+  - [`compilerOptions.allowJs`](https://www.typescriptlang.org/tsconfig#allowJs) should be `true`.
+  - [`compilerOptions.maxNodeModuleJsDepth`](https://www.typescriptlang.org/tsconfig#maxNodeModuleJsDepth) should be reasonably large, e.g. `10`.
+  - [`compilerOptions.module`](https://www.typescriptlang.org/tsconfig#module) should be `"node16"` or `"nodenext"`.
 
 ### Patch
 
 - Updated dev dependencies.
 - Simplified dev dependencies and config for ESLint.
+- Check TypeScript types via a new package `types` script.
 - Removed the [`jsdoc-md`](https://npm.im/jsdoc-md) dev dependency and the related package scripts, replacing the readme “API” section with a manually written “Exports” section.
 - Updated GitHub Actions CI config:
   - Run tests with Node.js v18, v20, v21.
@@ -63,6 +73,8 @@
 - Use the `node:` URL scheme for Node.js builtin module imports.
 - Reorganized the test file structure.
 - In tests, for objects with the property `headers` that as of [`@apollo/client`](https://npm.im/@apollo/client) [v3.7.0](https://github.com/apollographql/apollo-client/releases/tag/v3.7.0) is a null-prototype object, use the assertion `deepEqual` instead of `deepStrictEqual`.
+- Tweaked code for type safety.
+- Updated documentation.
 
 ## 17.0.0
 

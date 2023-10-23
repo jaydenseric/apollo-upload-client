@@ -123,6 +123,12 @@ Consider polyfilling:
 - [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 - [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
 
+Projects must configure [TypeScript](https://typescriptlang.org) to use types from the ECMAScript modules that have a `// @ts-check` comment:
+
+- [`compilerOptions.allowJs`](https://www.typescriptlang.org/tsconfig#allowJs) should be `true`.
+- [`compilerOptions.maxNodeModuleJsDepth`](https://www.typescriptlang.org/tsconfig#maxNodeModuleJsDepth) should be reasonably large, e.g. `10`.
+- [`compilerOptions.module`](https://www.typescriptlang.org/tsconfig#module) should be `"node16"` or `"nodenext"`.
+
 ## Exports
 
 The [npm](https://npmjs.com) package [`apollo-upload-client`](https://npm.im/apollo-upload-client) features [optimal JavaScript module design](https://jaydenseric.com/blog/optimal-javascript-module-design). It doesn’t have a main index module, so use deep imports from the ECMAScript modules that are exported via the [`package.json`](./package.json) field [`exports`](https://nodejs.org/api/packages.html#exports):

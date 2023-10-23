@@ -1,3 +1,5 @@
+// @ts-check
+
 import { AssertionError } from "node:assert";
 
 /**
@@ -6,12 +8,10 @@ import { AssertionError } from "node:assert";
  * that are expected to either resolve or reject, as the Node.js behavior when
  * neither happens is to exit the process without an error, potentially causing
  * the illusion that tests passed.
- * @kind function
- * @name timeLimitPromise
- * @param {Promise} promise Promise to time limit.
- * @param {number} [msTimeLimit=1000] Time limit in milliseconds.
- * @returns {Promise} Time limited promise.
- * @ignore
+ * @template T
+ * @param {Promise<T>} promise Promise to time limit.
+ * @param {number} [msTimeLimit] Time limit in milliseconds. Defaults to 1000.
+ * @returns {Promise<T>} Time limited promise.
  */
 export default async function timeLimitPromise(promise, msTimeLimit = 1000) {
   if (!(promise instanceof Promise))
@@ -30,6 +30,7 @@ export default async function timeLimitPromise(promise, msTimeLimit = 1000) {
     stackStartFn: timeLimitPromise,
   });
 
+  /** @type {ReturnType<typeof setTimeout>} */
   let timeout;
 
   return Promise.race([

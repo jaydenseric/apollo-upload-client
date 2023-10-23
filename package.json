@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "@apollo/client": "^3.8.6",
+    "@types/node": "^20.8.7",
     "coverage-node": "^8.0.0",
     "esbuild": "^0.19.5",
     "eslint": "^8.52.0",
@@ -59,13 +60,15 @@
     "gzip-size": "^7.0.0",
     "prettier": "^3.0.3",
     "revertable-globals": "^4.0.0",
-    "test-director": "^11.0.0"
+    "test-director": "^11.0.0",
+    "typescript": "^5.2.2"
   },
   "scripts": {
     "eslint": "eslint .",
     "prettier": "prettier -c .",
+    "types": "tsc -p jsconfig.json",
     "tests": "coverage-node test.mjs",
-    "test": "npm run eslint && npm run prettier && npm run tests",
+    "test": "npm run eslint && npm run prettier && npm run types && npm run tests",
     "prepublishOnly": "npm test"
   }
 }

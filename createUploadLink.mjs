@@ -1,3 +1,5 @@
+// @ts-check
+
 import { ApolloLink } from "@apollo/client/link/core/ApolloLink.js";
 import { createSignalIfSupported } from "@apollo/client/link/http/createSignalIfSupported.js";
 import { parseAndCheckHttpResponse } from "@apollo/client/link/http/parseAndCheckHttpResponse.js";
@@ -30,25 +32,36 @@ import isExtractableFile from "./isExtractableFile.mjs";
  * Some of the options are similar to the
  * [`createHttpLink` options](https://apollographql.com/docs/react/api/link/apollo-link-http/#httplink-constructor-options).
  * @see [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec).
- * @kind function
- * @name createUploadLink
  * @param {object} options Options.
- * @param {string} [options.uri="/graphql"] GraphQL endpoint URI.
- * @param {boolean} [options.useGETForQueries] Should GET be used to fetch queries, if there are no files to upload.
- * @param {ExtractableFileMatcher} [options.isExtractableFile=isExtractableFile] Customizes how files are matched in the GraphQL operation for extraction.
- * @param {class} [options.FormData] [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) implementation to use, defaulting to the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) global.
- * @param {FormDataFileAppender} [options.formDataAppendFile=formDataAppendFile] Customizes how extracted files are appended to the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance.
- * @param {Function} [options.fetch] [`fetch`](https://fetch.spec.whatwg.org) implementation to use, defaulting to the [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch) global.
- * @param {FetchOptions} [options.fetchOptions] [`fetch` options]{@link FetchOptions}; overridden by upload requirements.
- * @param {string} [options.credentials] Overrides `options.fetchOptions.credentials`.
- * @param {object} [options.headers] Merges with and overrides `options.fetchOptions.headers`.
- * @param {boolean} [options.includeExtensions=false] Toggles sending `extensions` fields to the GraphQL server.
- * @returns {ApolloLink} A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link).
- * @example <caption>How to import.</caption>
- * ```js
- * import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
- * ```
- * @example <caption>A basic Apollo Client setup.</caption>
+ * @param {string} [options.uri] GraphQL endpoint URI. Defaults to `"/graphql"`.
+ * @param {boolean} [options.useGETForQueries] Should GET be used to fetch
+ *   queries, if there are no files to upload.
+ * @param {ExtractableFileMatcher} [options.isExtractableFile] Matches
+ *   extractable files in the GraphQL operation. Defaults to
+ *   {@linkcode isExtractableFile}.
+ * @param {typeof FormData} [options.FormData]
+ *   [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
+ *   class. Defaults to the {@linkcode FormData} global.
+ * @param {FormDataFileAppender} [options.formDataAppendFile]
+ *   Customizes how extracted files are appended to the
+ *   [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
+ *   instance. Defaults to {@linkcode formDataAppendFile}.
+ * @param {typeof fetch} [options.fetch] [`fetch`](https://fetch.spec.whatwg.org)
+ *   implementation. Defaults to the {@linkcode fetch} global.
+ * @param {RequestInit} [options.fetchOptions] `fetch` options; overridden by
+ *   upload requirements.
+ * @param {string} [options.credentials] Overrides
+ *   {@linkcode RequestInit.credentials credentials} in
+ *   {@linkcode fetchOptions}.
+ * @param {{ [headerName: string]: string }} [options.headers] Merges with and
+ *   overrides {@linkcode RequestInit.headers headers} in
+ *   {@linkcode fetchOptions}.
+ * @param {boolean} [options.includeExtensions] Toggles sending `extensions`
+ *   fields to the GraphQL server. Defaults to `false`.
+ * @returns A [terminating Apollo Link](https://apollographql.com/docs/react/api/link/introduction/#the-terminating-link).
+ * @example
+ * A basic Apollo Client setup:
+ *
  * ```js
  * import { ApolloClient, InMemoryCache } from "@apollo/client";
  * import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
@@ -79,7 +92,16 @@ export default function createUploadLink({
   };
 
   return new ApolloLink((operation) => {
-    const context = operation.getContext();
+    const context =
+      /**
+       * @type {import("@apollo/client/core/types.js").DefaultContext & {
+       *   clientAwareness?: {
+       *     name?: string,
+       *     version?: string,
+       *   },
+       * }}
+       */
+      (operation.getContext());
     const {
       // Apollo Studio client awareness `name` and `version` can be configured
       // via `ApolloClient` constructor options:
@@ -112,8 +134,9 @@ export default function createUploadLink({
     let uri = selectURI(operation, fetchUri);
 
     if (files.size) {
-      // Automatically set by `fetch` when the `body` is a `FormData` instance.
-      delete options.headers["content-type"];
+      if (options.headers)
+        // Automatically set by `fetch` when the `body` is a `FormData` instance.
+        delete options.headers["content-type"];
 
       // GraphQL multipart request spec:
       // https://github.com/jaydenseric/graphql-multipart-request-spec
@@ -124,7 +147,9 @@ export default function createUploadLink({
 
       form.append("operations", serializeFetchParameter(clone, "Payload"));
 
+      /** @type {{ [key: string]: Array<string> }} */
       const map = {};
+
       let i = 0;
       files.forEach((paths) => {
         map[++i] = paths;
@@ -133,7 +158,7 @@ export default function createUploadLink({
 
       i = 0;
       files.forEach((paths, file) => {
-        customFormDataAppendFile(form, ++i, file);
+        customFormDataAppendFile(form, String(++i), file);
       });
 
       options.body = form;
@@ -163,7 +188,7 @@ export default function createUploadLink({
 
     const { controller } = createSignalIfSupported();
 
-    if (controller) {
+    if (typeof controller !== "boolean") {
       if (options.signal)
         // Respect the user configured abort controller signal.
         options.signal.aborted
@@ -189,7 +214,10 @@ export default function createUploadLink({
     const runtimeFetch = customFetch || fetch;
 
     return new Observable((observer) => {
-      // Used to track if the observable is being cleaned up.
+      /**
+       * Is the observable being cleaned up.
+       * @type {boolean}
+       */
       let cleaningUp;
 
       runtimeFetch(uri, options)
@@ -223,21 +251,22 @@ export default function createUploadLink({
         cleaningUp = true;
 
         // Abort fetch. It’s ok to signal an abort even when not fetching.
-        if (controller) controller.abort();
+        if (typeof controller !== "boolean") controller.abort();
       };
     });
   });
 }
 
 /**
- * A function that checks if a value is an extractable file.
- * @kind typedef
- * @name ExtractableFileMatcher
- * @type {Function}
- * @param {*} value Value to check.
- * @returns {boolean} Is the value an extractable file.
- * @see [`isExtractableFile`]{@link isExtractableFile} has this type.
- * @example <caption>How to check for the default exactable files, as well as a custom type of file.</caption>
+ * Checks if a value is an extractable file.
+ * @template [ExtractableFile=any] Extractable file.
+ * @callback ExtractableFileMatcher
+ * @param {unknown} value Value to check.
+ * @returns {value is ExtractableFile} Is the value an extractable file.
+ * @example
+ * How to check for the default exactable files, as well as a custom type of
+ * file:
+ *
  * ```js
  * import isExtractableFile from "apollo-upload-client/isExtractableFile.mjs";
  *
@@ -248,25 +277,18 @@ export default function createUploadLink({
  */
 
 /**
- * GraphQL request `fetch` options.
- * @kind typedef
- * @name FetchOptions
- * @type {object}
- * @see [Polyfillable fetch options](https://github.github.io/fetch#options).
- * @prop {object} headers HTTP request headers.
- * @prop {string} [credentials] Authentication credentials mode.
- */
-
-/**
  * Appends a file extracted from the GraphQL operation to the
  * [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
- * instance used as the [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch)
- * `options.body` for the [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec).
- * @kind typedef
- * @name FormDataFileAppender
- * @param {FormData} formData [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to append the specified file to.
- * @param {string} fieldName Field name for the file.
- * @param {*} file File to append. The file type depends on what the [`ExtractableFileMatcher`]{@link ExtractableFileMatcher} extracts.
- * @see [`formDataAppendFile`]{@link formDataAppendFile} has this type.
- * @see [`createUploadLink`]{@link createUploadLink} accepts this type in `options.formDataAppendFile`.
+ * instance used as the
+ * [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch)
+ * `options.body` for the
+ * [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec).
+ * @template [ExtractableFile=any] Extractable file.
+ * @callback FormDataFileAppender
+ * @param {FormData} formData
+ *   [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
+ *   instance to append the specified file to.
+ * @param {string} fieldName Form data field name to append the file with.
+ * @param {ExtractableFile} file File to append. The file type depends on what
+ *   the extractable file matcher extracts.
  */

@@ -1,12 +1,8 @@
+// @ts-check
+
 import { AssertionError } from "node:assert";
 
-/**
- * Creates an assertion error that a function was unexpectedly called.
- * @kind function
- * @name createUnexpectedCallError
- * @returns {AssertionError} Assertion error.
- * @ignore
- */
+/** Creates an assertion error that a function was unexpectedly called. */
 export default function createUnexpectedCallError() {
   return new AssertionError({
     message: "Unexpected function call.",
