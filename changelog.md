@@ -65,6 +65,7 @@
 
 - Updated dev dependencies.
 - Simplified dev dependencies and config for ESLint.
+- Integrated the ESLint plugin [`eslint-plugin-optimal-modules`](https://npm.im/eslint-plugin-optimal-modules).
 - Check TypeScript types via a new package `types` script.
 - Removed the [`jsdoc-md`](https://npm.im/jsdoc-md) dev dependency and the related package scripts, replacing the readme “API” section with a manually written “Exports” section.
 - Updated GitHub Actions CI config:
