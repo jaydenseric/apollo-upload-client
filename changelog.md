@@ -4,6 +4,7 @@
 
 ### Patch
 
+- Corrected the function `createUploadLink` option `uri` type, fixing [#316](https://github.com/jaydenseric/apollo-upload-client/issues/316).
 - Prefixed unused parameters with `_`, fixing [#317](https://github.com/jaydenseric/apollo-upload-client/issues/317).
 - Fixed a typo in the changelog entry for v18.0.0.
 

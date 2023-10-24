@@ -34,7 +34,8 @@ import isExtractableFile from "./isExtractableFile.mjs";
  * [`createHttpLink` options](https://www.apollographql.com/docs/react/api/link/apollo-link-http/#httplink-constructor-options).
  * @see [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec).
  * @param {object} options Options.
- * @param {string} [options.uri] GraphQL endpoint URI. Defaults to `"/graphql"`.
+ * @param {Parameters<typeof selectURI>[1]} [options.uri] GraphQL endpoint URI.
+ *   Defaults to `"/graphql"`.
  * @param {boolean} [options.useGETForQueries] Should GET be used to fetch
  *   queries, if there are no files to upload.
  * @param {ExtractableFileMatcher} [options.isExtractableFile] Matches
