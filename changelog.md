@@ -1,6 +1,6 @@
 # apollo-upload-client changelog
 
-## Next
+## 18.0.1
 
 ### Patch
 
