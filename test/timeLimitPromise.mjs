@@ -35,7 +35,7 @@ export default async function timeLimitPromise(promise, msTimeLimit = 1000) {
 
   return Promise.race([
     promise,
-    new Promise((resolve, reject) => {
+    new Promise((_resolve, reject) => {
       timeout = setTimeout(() => {
         reject(error);
       }, msTimeLimit);

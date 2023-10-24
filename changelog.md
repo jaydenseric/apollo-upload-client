@@ -4,6 +4,7 @@
 
 ### Patch
 
+- Prefixed unused parameters with `_`, fixing [#317](https://github.com/jaydenseric/apollo-upload-client/issues/317).
 - Fixed a typo in the changelog entry for v18.0.0.
 
 ## 18.0.0

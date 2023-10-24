@@ -163,7 +163,7 @@ export default function createUploadLink({
       form.append("map", JSON.stringify(map));
 
       i = 0;
-      files.forEach((paths, file) => {
+      files.forEach((_paths, file) => {
         customFormDataAppendFile(form, String(++i), file);
       });
 
