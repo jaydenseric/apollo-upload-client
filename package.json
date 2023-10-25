@@ -36,8 +36,14 @@
   "sideEffects": false,
   "exports": {
     "./createUploadLink.mjs": "./createUploadLink.mjs",
+    "./createUploadLink.d.mts": "./createUploadLink.d.mts",
+    "./createUploadLink.d.mts.map": "./createUploadLink.d.mts.map",
     "./formDataAppendFile.mjs": "./formDataAppendFile.mjs",
+    "./formDataAppendFile.d.mts": "./formDataAppendFile.d.mts",
+    "./formDataAppendFile.d.mts.map": "./formDataAppendFile.d.mts.map",
     "./isExtractableFile.mjs": "./isExtractableFile.mjs",
+    "./isExtractableFile.d.mts": "./isExtractableFile.d.mts",
+    "./isExtractableFile.d.mts.map": "./isExtractableFile.d.mts.map",
     "./package.json": "./package.json"
   },
   "engines": {
@@ -49,7 +55,8 @@
     "graphql": "14 - 16"
   },
   "dependencies": {
-    "extract-files": "^13.0.0"
+    "extract-files": "^13.0.0",
+    "rimraf": "^5.0.5"
   },
   "devDependencies": {
     "@apollo/client": "^3.8.6",
@@ -69,9 +76,12 @@
   "scripts": {
     "eslint": "eslint .",
     "prettier": "prettier -c .",
-    "types": "tsc -p jsconfig.json",
+    "types:check": "tsc -p jsconfig.json",
+    "types:generate": "tsc -p jsconfig.json --noEmit false --emitDeclarationOnly --declarationMap --declaration",
+    "types:clean": "rimraf *.d.mts *.d.mts.map",
     "tests": "coverage-node --test-reporter=spec --test",
-    "test": "npm run eslint && npm run prettier && npm run types && npm run tests",
-    "prepublishOnly": "npm test"
+    "test": "npm run eslint && npm run prettier && npm run types:check && npm run tests",
+    "prepublishOnly": "npm test && npm run types:check",
+    "postpack": "npm run types:clean"
   }
 }
