@@ -316,6 +316,147 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     deepStrictEqual(nextData, payload);
   });
 
+  it("Option `includeUnusedVariables`, set to false", async () => {
+    /** @type {unknown} */
+    let fetchInput;
+
+    /** @type {RequestInit | undefined} */
+    let fetchOptions;
+
+    /** @type {unknown} */
+    let nextData;
+
+    const query = "query ($a: Boolean) {\n  a(a: $a)\n}";
+    const payload = { data: { a: true, b: true } };
+
+    await timeLimitPromise(
+      /** @type {Promise<void>} */ (
+        new Promise((resolve, reject) => {
+          execute(
+            createUploadLink({
+              includeUnusedVariables: false,
+              async fetch(input, options) {
+                fetchInput = input;
+                fetchOptions = options;
+
+                return new Response(
+                  JSON.stringify(payload),
+                  graphqlResponseOptions,
+                );
+              },
+            }),
+            {
+              query: gql(query),
+              variables: {
+                a: true,
+                b: true,
+              },
+            },
+          ).subscribe({
+            next(data) {
+              nextData = data;
+            },
+            error() {
+              reject(createUnexpectedCallError());
+            },
+            complete() {
+              resolve();
+            },
+          });
+        })
+      ),
+    );
+
+    strictEqual(fetchInput, defaultUri);
+    ok(typeof fetchOptions === "object");
+
+    const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
+
+    ok(fetchOptionsSignal instanceof AbortSignal);
+    deepEqual(fetchOptionsRest, {
+      method: "POST",
+      headers: { accept: "*/*", "content-type": "application/json" },
+      body: JSON.stringify({
+        variables: {
+          a: true,
+        },
+        query,
+      }),
+    });
+    deepStrictEqual(nextData, payload);
+  });
+
+  it("Option `includeUnusedVariables`, set to true", async () => {
+    /** @type {unknown} */
+    let fetchInput;
+
+    /** @type {RequestInit | undefined} */
+    let fetchOptions;
+
+    /** @type {unknown} */
+    let nextData;
+
+    const query = "query ($a: Boolean) {\n  a(a: $a)\n}";
+    const payload = { data: { a: true, b: true } };
+
+    await timeLimitPromise(
+      /** @type {Promise<void>} */ (
+        new Promise((resolve, reject) => {
+          execute(
+            createUploadLink({
+              includeUnusedVariables: true,
+              async fetch(input, options) {
+                fetchInput = input;
+                fetchOptions = options;
+
+                return new Response(
+                  JSON.stringify(payload),
+                  graphqlResponseOptions,
+                );
+              },
+            }),
+            {
+              query: gql(query),
+              variables: {
+                a: true,
+                b: true,
+              },
+            },
+          ).subscribe({
+            next(data) {
+              nextData = data;
+            },
+            error() {
+              reject(createUnexpectedCallError());
+            },
+            complete() {
+              resolve();
+            },
+          });
+        })
+      ),
+    );
+
+    strictEqual(fetchInput, defaultUri);
+    ok(typeof fetchOptions === "object");
+
+    const { signal: fetchOptionsSignal, ...fetchOptionsRest } = fetchOptions;
+
+    ok(fetchOptionsSignal instanceof AbortSignal);
+    deepEqual(fetchOptionsRest, {
+      method: "POST",
+      headers: { accept: "*/*", "content-type": "application/json" },
+      body: JSON.stringify({
+        variables: {
+          a: true,
+          b: true,
+        },
+        query,
+      }),
+    });
+    deepStrictEqual(nextData, payload);
+  });
+
   it("Option `print`.", async () => {
     /** @type {unknown} */
     let fetchInput;
@@ -608,6 +749,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
         execute(
           createUploadLink({
             useGETForQueries: true,
+            includeUnusedVariables: true,
             async fetch() {
               fetched = true;
 
