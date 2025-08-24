@@ -62,7 +62,7 @@
     "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
     "gzip-size": "^7.0.0",
-    "prettier": "^3.0.3",
+    "prettier": "^3.6.2",
     "revertable-globals": "^4.0.0",
     "typescript": "^5.2.2"
   },
