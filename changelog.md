@@ -8,10 +8,16 @@
 
 ### Patch
 
+- Updated the package scripts:
+  - Reordered and renamed scripts.
+  - Replaced `npm run` with `node --run`.
 - Updated GitHub Actions CI config:
-  - Run tests with Node.js v20, v22, v24.
+  - Run checks in separate jobs.
+  - Removed custom step names.
   - Updated `actions/checkout` to v5.
   - Updated `actions/setup-node` to v4.
+  - Replaced `npm run` with `node --run`.
+  - Run tests with Node.js v20, v22, v24.
 
 ## 18.0.1
 
