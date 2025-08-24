@@ -55,7 +55,7 @@
     "@apollo/client": "^3.8.6",
     "@types/node": "^20.8.7",
     "coverage-node": "^8.0.0",
-    "esbuild": "^0.19.5",
+    "esbuild": "^0.25.9",
     "eslint": "^8.52.0",
     "eslint-plugin-optimal-modules": "^1.0.2",
     "eslint-plugin-simple-import-sort": "^10.0.0",
