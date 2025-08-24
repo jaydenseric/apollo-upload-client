@@ -146,7 +146,7 @@ function UploadFile() {
 
 ## Requirements
 
-- [Node.js](https://nodejs.org) versions `^18.15.0 || >=20.4.0`.
+- [Node.js](https://nodejs.org) versions `^20.9.0 || >=22.0.0`.
 - Browsers matching the [Browserslist](https://browsersl.ist) query [`> 0.5%, not OperaMini all, not dead`](https://browsersl.ist/?q=%3E+0.5%25%2C+not+OperaMini+all%2C+not+dead).
 
 Consider polyfilling:

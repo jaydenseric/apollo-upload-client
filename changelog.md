@@ -1,5 +1,18 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Major
+
+- Updated Node.js support to `^20.9.0 || >=22.0.0`.
+
+### Patch
+
+- Updated GitHub Actions CI config:
+  - Run tests with Node.js v20, v22, v24.
+  - Updated `actions/checkout` to v5.
+  - Updated `actions/setup-node` to v4.
+
 ## 18.0.1
 
 ### Patch
