@@ -64,7 +64,7 @@
     "gzip-size": "^7.0.0",
     "prettier": "^3.6.2",
     "revertable-globals": "^4.0.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.9.2"
   },
   "scripts": {
     "prettier": "prettier -c .",
