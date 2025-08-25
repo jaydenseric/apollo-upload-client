@@ -5,6 +5,7 @@
 ### Major
 
 - Updated Node.js support to `^20.9.0 || >=22.0.0`.
+- Use the TypeScript v5.5+ JSDoc tag `@import` to import types in modules.
 
 ### Patch
 
