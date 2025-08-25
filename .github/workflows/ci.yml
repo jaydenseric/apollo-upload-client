@@ -1,5 +1,9 @@
 name: CI
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
 jobs:
   prettier:
     name: Prettier

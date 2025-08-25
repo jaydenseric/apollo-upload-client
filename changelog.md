@@ -14,6 +14,7 @@
   - Reordered and renamed scripts.
   - Replaced `npm run` with `node --run`.
 - Updated GitHub Actions CI config:
+  - Updated workflow triggers.
   - Run checks in separate jobs.
   - Removed custom step names.
   - Updated `actions/checkout` to v5.
