@@ -18,6 +18,7 @@ import {
 } from "@apollo/client/link/http/selectHttpOptionsAndBody.js";
 import { selectURI } from "@apollo/client/link/http/selectURI.js";
 import { serializeFetchParameter } from "@apollo/client/link/http/serializeFetchParameter.js";
+import { filterOperationVariables } from "@apollo/client/link/utils/filterOperationVariables.js";
 import { Observable } from "@apollo/client/utilities/observables/Observable.js";
 import extractFiles from "extract-files/extractFiles.mjs";
 
@@ -69,6 +70,8 @@ import isExtractableFile from "./isExtractableFile.mjs";
  *   {@linkcode fetchOptions}.
  * @param {boolean} [options.includeExtensions] Toggles sending `extensions`
  *   fields to the GraphQL server. Defaults to `false`.
+ * @param {boolean} [options.includeUnusedVariables] Toggles including unused
+ *   GraphQL variables in the request. Defaults to `false`.
  * @returns A [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link).
  * @example
  * A basic Apollo Client setup:
@@ -95,6 +98,7 @@ export default function createUploadLink({
   credentials,
   headers,
   includeExtensions,
+  includeUnusedVariables = false,
 } = {}) {
   const linkConfig = {
     http: { includeExtensions },
@@ -141,6 +145,12 @@ export default function createUploadLink({
       linkConfig,
       contextConfig,
     );
+
+    if (body.variables && !includeUnusedVariables)
+      body.variables = filterOperationVariables(
+        body.variables,
+        operation.query,
+      );
 
     const { clone, files } = extractFiles(body, customIsExtractableFile, "");
 
