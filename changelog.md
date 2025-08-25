@@ -20,6 +20,7 @@
   - Updated `actions/setup-node` to v4.
   - Replaced `npm run` with `node --run`.
   - Run tests with Node.js v20, v22, v24.
+- Enabled the TypeScript compiler options `noUnusedLocals` and `noUnusedParameters`.
 
 ## 18.0.1
 
