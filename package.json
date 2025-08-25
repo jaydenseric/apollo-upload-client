@@ -52,14 +52,14 @@
     "extract-files": "^13.0.0"
   },
   "devDependencies": {
-    "@apollo/client": "^3.8.6",
-    "@types/node": "^20.8.7",
+    "@apollo/client": "^3.14.0",
+    "@types/node": "^24.3.0",
     "coverage-node": "^8.0.0",
     "esbuild": "^0.25.9",
-    "eslint": "^8.52.0",
+    "eslint": "^8.57.1",
     "eslint-plugin-optimal-modules": "^1.0.2",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "graphql": "^16.8.1",
+    "graphql": "^16.11.0",
     "graphql-tag": "^2.12.6",
     "gzip-size": "^7.0.0",
     "prettier": "^3.6.2",
