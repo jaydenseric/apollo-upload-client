@@ -1,5 +1,29 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Major
+
+- Updated Node.js support to `^20.9.0 || >=22.0.0`.
+- Use the TypeScript v5.5+ JSDoc tag `@import` to import types in modules.
+- Updated dev dependencies, some of which require newer Node.js versions than previously supported.
+
+### Patch
+
+- Updated the package scripts:
+  - Reordered and renamed scripts.
+  - Replaced `npm run` with `node --run`.
+- Updated GitHub Actions CI config:
+  - Run checks in separate jobs.
+  - Removed custom step names.
+  - Updated `actions/checkout` to v5.
+  - Updated `actions/setup-node` to v4.
+  - Replaced `npm run` with `node --run`.
+  - Run tests with Node.js v20, v22, v24.
+- Enabled the TypeScript compiler options `noUnusedLocals` and `noUnusedParameters`.
+- Migrated to the ESLint v9 CLI and “flat” config.
+- In tests, removed the no longer needed polyfill for the global `File`.
+
 ## 18.0.1
 
 ### Patch
@@ -15,7 +39,6 @@
 - Updated Node.js support to `^18.15.0 || >=20.4.0`.
 - Updated the [`@apollo/client`](https://npm.im/@apollo/client) peer dependency to `^3.8.0`.
 - Updated the [`extract-files`](http://npm.im/extract-files) dependency to v13.
-
   - React Native is no longer supported out of the box.
 
     The class `ReactNativeFile` is no longer exported, or matched by the function `isExtractableFile`.
@@ -64,7 +87,6 @@
   Types published in [`@types/apollo-upload-client`](https://npm.im/@types/apollo-upload-client) should no longer be used.
 
   Projects must configure TypeScript to use types from the ECMAScript modules that have a `// @ts-check` comment:
-
   - [`compilerOptions.allowJs`](https://www.typescriptlang.org/tsconfig#allowJs) should be `true`.
   - [`compilerOptions.maxNodeModuleJsDepth`](https://www.typescriptlang.org/tsconfig#maxNodeModuleJsDepth) should be reasonably large, e.g. `10`.
   - [`compilerOptions.module`](https://www.typescriptlang.org/tsconfig#module) should be `"node16"` or `"nodenext"`.

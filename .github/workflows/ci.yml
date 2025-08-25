@@ -1,18 +1,50 @@
 name: CI
 on: [push, workflow_dispatch]
 jobs:
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
+      - run: npm install
+      - run: node --run prettier
+  eslint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
+      - run: npm install
+      - run: node --run eslint
+  types:
+    name: Types
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
+      - run: npm install
+      - run: node --run types
   test:
-    name: Test with Node.js v${{ matrix.node }} and ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: Test
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        node: ["18", "20", "21"]
+        node: [20, 22, 24]
+    runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node.js v${{ matrix.node }}
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      - name: npm install and test
-        run: npm install-test
+      - run: npm install
+      - run: npm run test
+        if: matrix.node < 22
+      - run: node --run test
+        if: matrix.node >= 22

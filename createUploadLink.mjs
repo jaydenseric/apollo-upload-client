@@ -1,5 +1,12 @@
 // @ts-check
 
+/**
+ * @import { DefaultContext } from "@apollo/client/core/types.js"
+ * @import {
+ *   Printer
+ * } from "@apollo/client/link/http/selectHttpOptionsAndBody.js"
+ */
+
 import { ApolloLink } from "@apollo/client/link/core/ApolloLink.js";
 import { createSignalIfSupported } from "@apollo/client/link/http/createSignalIfSupported.js";
 import { parseAndCheckHttpResponse } from "@apollo/client/link/http/parseAndCheckHttpResponse.js";
@@ -49,9 +56,8 @@ import isExtractableFile from "./isExtractableFile.mjs";
  *   Customizes how extracted files are appended to the
  *   [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
  *   instance. Defaults to {@linkcode formDataAppendFile}.
- * @param {import("@apollo/client/link/http/selectHttpOptionsAndBody.js").Printer} [options.print]
- *   Prints the GraphQL query or mutation AST to a string for transport.
- *   Defaults to {@linkcode defaultPrinter}.
+ * @param {Printer} [options.print] Prints the GraphQL query or mutation AST to
+ *   a string for transport. Defaults to {@linkcode defaultPrinter}.
  * @param {typeof fetch} [options.fetch] [`fetch`](https://fetch.spec.whatwg.org)
  *   implementation. Defaults to the {@linkcode fetch} global.
  * @param {RequestInit} [options.fetchOptions] `fetch` options; overridden by
@@ -104,7 +110,7 @@ export default function createUploadLink({
   return new ApolloLink((operation) => {
     const context =
       /**
-       * @type {import("@apollo/client/core/types.js").DefaultContext & {
+       * @type {DefaultContext & {
        *   clientAwareness?: {
        *     name?: string,
        *     version?: string,

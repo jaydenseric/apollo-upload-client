@@ -3,6 +3,8 @@
     "maxNodeModuleJsDepth": 10,
     "module": "nodenext",
     "noEmit": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "strict": true
   },
   "typeAcquisition": {

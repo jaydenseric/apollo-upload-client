@@ -1,7 +1,5 @@
 // @ts-check
 
-import "./test/polyfillFile.mjs";
-
 import { deepEqual, deepStrictEqual, ok, strictEqual } from "node:assert";
 import { describe, it } from "node:test";
 
