@@ -22,6 +22,7 @@
   - Run tests with Node.js v20, v22, v24.
 - Enabled the TypeScript compiler options `noUnusedLocals` and `noUnusedParameters`.
 - Migrated to the ESLint v9 CLI and “flat” config.
+- In tests, removed the no longer needed polyfill for the global `File`.
 
 ## 18.0.1
 
