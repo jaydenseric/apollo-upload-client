@@ -739,7 +739,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
   it("Option `useGETForQueries`, query, no files, unserializable variables.", async () => {
     let fetched = false;
 
-    const query = "query($a: Boolean) {\n  a(a: $a)\n}";
+    const query = "query ($a: Boolean) {\n  a(a: $a)\n}";
     const payload = { data: { a: true } };
     const parseError = new Error("Unserializable.");
     const observerError = await timeLimitPromise(
