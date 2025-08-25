@@ -8,6 +8,10 @@
 - Use the TypeScript v5.5+ JSDoc tag `@import` to import types in modules.
 - Updated dev dependencies, some of which require newer Node.js versions than previously supported.
 
+### Minor
+
+- Added a new function `createUploadLink` option `includeUnusedVariables` defaulting to `false` to toggle including unused GraphQL variables in the request (similar to the Apollo `BaseHttpLink` option [`includeUnusedVariables`](https://www.apollographql.com/docs/react/api/link/apollo-link-base-http#options-includeunusedvariables)), via [#348](https://github.com/jaydenseric/apollo-upload-client/pull/348).
+
 ### Patch
 
 - Updated the package scripts:

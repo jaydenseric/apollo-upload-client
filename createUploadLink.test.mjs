@@ -314,7 +314,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     deepStrictEqual(nextData, payload);
   });
 
-  it("Option `includeUnusedVariables`, set to false", async () => {
+  it("Option `includeUnusedVariables`, set to false.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
@@ -325,7 +325,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     let nextData;
 
     const query = "query ($a: Boolean) {\n  a(a: $a)\n}";
-    const payload = { data: { a: true, b: true } };
+    const payload = { data: { a: true } };
 
     await timeLimitPromise(
       /** @type {Promise<void>} */ (
@@ -384,7 +384,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     deepStrictEqual(nextData, payload);
   });
 
-  it("Option `includeUnusedVariables`, set to true", async () => {
+  it("Option `includeUnusedVariables`, set to true.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
@@ -395,7 +395,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     let nextData;
 
     const query = "query ($a: Boolean) {\n  a(a: $a)\n}";
-    const payload = { data: { a: true, b: true } };
+    const payload = { data: { a: true } };
 
     await timeLimitPromise(
       /** @type {Promise<void>} */ (

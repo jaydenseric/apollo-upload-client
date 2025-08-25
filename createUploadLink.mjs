@@ -70,8 +70,8 @@ import isExtractableFile from "./isExtractableFile.mjs";
  *   {@linkcode fetchOptions}.
  * @param {boolean} [options.includeExtensions] Toggles sending `extensions`
  *   fields to the GraphQL server. Defaults to `false`.
- * @param {boolean} [options.includeUnusedVariables] * If set to true, the default behavior of stripping unused variables
- * from the request will be disabled. Defaults to `false`.
+ * @param {boolean} [options.includeUnusedVariables] Toggles including unused
+ *   GraphQL variables in the request. Defaults to `false`.
  * @returns A [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link).
  * @example
  * A basic Apollo Client setup:
@@ -146,12 +146,11 @@ export default function createUploadLink({
       contextConfig,
     );
 
-    if (body.variables && !includeUnusedVariables) {
+    if (body.variables && !includeUnusedVariables)
       body.variables = filterOperationVariables(
         body.variables,
         operation.query,
       );
-    }
 
     const { clone, files } = extractFiles(body, customIsExtractableFile, "");
 
