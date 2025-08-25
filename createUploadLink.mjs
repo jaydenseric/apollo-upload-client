@@ -1,7 +1,6 @@
 // @ts-check
 
 /**
- * @import { DefaultContext } from "@apollo/client/core/types.js"
  * @import {
  *   Printer
  * } from "@apollo/client/link/http/selectHttpOptionsAndBody.js"
@@ -108,34 +107,12 @@ export default function createUploadLink({
   };
 
   return new ApolloLink((operation) => {
-    const context =
-      /**
-       * @type {DefaultContext & {
-       *   clientAwareness?: {
-       *     name?: string,
-       *     version?: string,
-       *   },
-       * }}
-       */
-      (operation.getContext());
-    const {
-      // Apollo Studio client awareness `name` and `version` can be configured
-      // via `ApolloClient` constructor options:
-      // https://www.apollographql.com/docs/graphos/metrics/client-awareness/#setup
-      clientAwareness: { name, version } = {},
-      headers,
-    } = context;
-
+    const context = operation.getContext();
     const contextConfig = {
       http: context.http,
       options: context.fetchOptions,
       credentials: context.credentials,
-      headers: {
-        // Client awareness headers can be overridden by context `headers`.
-        ...(name && { "apollographql-client-name": name }),
-        ...(version && { "apollographql-client-version": version }),
-        ...headers,
-      },
+      headers: context.headers,
     };
 
     const { options, body } = selectHttpOptionsAndBodyInternal(
