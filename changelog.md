@@ -6,10 +6,10 @@
 
 - Updated Node.js support to `^20.9.0 || >=22.0.0`.
 - Use the TypeScript v5.5+ JSDoc tag `@import` to import types in modules.
+- Updated dev dependencies, some of which require newer Node.js versions than previously supported.
 
 ### Patch
 
-- Updated dev dependencies.
 - Updated the package scripts:
   - Reordered and renamed scripts.
   - Replaced `npm run` with `node --run`.
@@ -21,6 +21,7 @@
   - Replaced `npm run` with `node --run`.
   - Run tests with Node.js v20, v22, v24.
 - Enabled the TypeScript compiler options `noUnusedLocals` and `noUnusedParameters`.
+- Migrated to the ESLint v9 CLI and “flat” config.
 
 ## 18.0.1
 
