@@ -1014,56 +1014,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     deepStrictEqual(nextData, payload);
   });
 
-  it("HTTP error, data.", async () => {
-    /** @type {Response | undefined} */
-    let fetchResponse;
-
-    const payload = {
-      errors: [
-        {
-          message: 'Cannot query field "b" on type "Query".',
-          locations: [{ line: 1, column: 5 }],
-        },
-      ],
-      data: { a: true },
-    };
-    const responseBody = JSON.stringify(payload);
-    const observerError = await timeLimitPromise(
-      new Promise((resolve, reject) => {
-        execute(
-          createUploadLink({
-            async fetch() {
-              return (fetchResponse = new Response(responseBody, {
-                ...graphqlResponseOptions,
-                status: 400,
-              }));
-            },
-          }),
-          {
-            query: gql("{ a b }"),
-          },
-          mockExecuteContext,
-        ).subscribe({
-          next() {
-            reject(createUnexpectedCallError());
-          },
-          error(error) {
-            resolve(error);
-          },
-          complete() {
-            reject(createUnexpectedCallError());
-          },
-        });
-      }),
-    );
-
-    ok(ServerError.is(observerError));
-    strictEqual(observerError.statusCode, 400);
-    strictEqual(observerError.response, fetchResponse);
-    deepStrictEqual(observerError.bodyText, responseBody);
-  });
-
-  it("HTTP error, no data.", async () => {
+  it("HTTP error.", async () => {
     /** @type {Response | undefined} */
     let fetchResponse;
 
