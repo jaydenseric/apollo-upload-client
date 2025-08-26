@@ -16,6 +16,7 @@ import createUnexpectedCallError from "./test/createUnexpectedCallError.mjs";
 import timeLimitPromise from "./test/timeLimitPromise.mjs";
 
 const defaultUri = "/graphql";
+const graphqlRequestHeaderAccept = "*/*";
 const graphqlResponseOptions = {
   status: 200,
   headers: {
@@ -82,7 +83,10 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       ok(fetchOptionsSignal instanceof AbortSignal);
       deepEqual(fetchOptionsRest, {
         method: "POST",
-        headers: { accept: "*/*", "content-type": "application/json" },
+        headers: {
+          accept: graphqlRequestHeaderAccept,
+          "content-type": "application/json",
+        },
         body: JSON.stringify({ variables: {}, query }),
       });
       deepStrictEqual(nextData, payload);
@@ -171,7 +175,9 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       strictEqual(formDataEntries[2][1].type, fileType);
       deepEqual(fetchOptionsRest, {
         method: "POST",
-        headers: { accept: "*/*" },
+        headers: {
+          accept: graphqlRequestHeaderAccept,
+        },
       });
       deepStrictEqual(nextData, payload);
     } finally {
@@ -235,7 +241,10 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     ok(fetchOptionsSignal instanceof AbortSignal);
     deepEqual(fetchOptionsRest, {
       method: "POST",
-      headers: { accept: "*/*", "content-type": "application/json" },
+      headers: {
+        accept: graphqlRequestHeaderAccept,
+        "content-type": "application/json",
+      },
       body: JSON.stringify({ variables: {}, query }),
     });
     deepStrictEqual(nextData, payload);
@@ -302,7 +311,10 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     ok(fetchOptionsSignal instanceof AbortSignal);
     deepEqual(fetchOptionsRest, {
       method: "POST",
-      headers: { accept: "*/*", "content-type": "application/json" },
+      headers: {
+        accept: graphqlRequestHeaderAccept,
+        "content-type": "application/json",
+      },
       body: JSON.stringify({
         variables: {},
         extensions: {
@@ -373,7 +385,10 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     ok(fetchOptionsSignal instanceof AbortSignal);
     deepEqual(fetchOptionsRest, {
       method: "POST",
-      headers: { accept: "*/*", "content-type": "application/json" },
+      headers: {
+        accept: graphqlRequestHeaderAccept,
+        "content-type": "application/json",
+      },
       body: JSON.stringify({
         variables: {
           a: true,
@@ -443,7 +458,10 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     ok(fetchOptionsSignal instanceof AbortSignal);
     deepEqual(fetchOptionsRest, {
       method: "POST",
-      headers: { accept: "*/*", "content-type": "application/json" },
+      headers: {
+        accept: graphqlRequestHeaderAccept,
+        "content-type": "application/json",
+      },
       body: JSON.stringify({
         variables: {
           a: true,
@@ -511,7 +529,10 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     ok(fetchOptionsSignal instanceof AbortSignal);
     deepEqual(fetchOptionsRest, {
       method: "POST",
-      headers: { accept: "*/*", "content-type": "application/json" },
+      headers: {
+        accept: graphqlRequestHeaderAccept,
+        "content-type": "application/json",
+      },
       body: JSON.stringify({
         variables: {},
         query: stripIgnoredCharacters(query),
@@ -578,7 +599,10 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     ok(fetchOptionsSignal instanceof AbortSignal);
     deepEqual(fetchOptionsRest, {
       method: "GET",
-      headers: { accept: "*/*", "content-type": "application/json" },
+      headers: {
+        accept: graphqlRequestHeaderAccept,
+        "content-type": "application/json",
+      },
     });
     deepStrictEqual(nextData, payload);
   });
@@ -641,7 +665,10 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     ok(fetchOptionsSignal instanceof AbortSignal);
     deepEqual(fetchOptionsRest, {
       method: "GET",
-      headers: { accept: "*/*", "content-type": "application/json" },
+      headers: {
+        accept: graphqlRequestHeaderAccept,
+        "content-type": "application/json",
+      },
     });
     deepStrictEqual(nextData, payload);
   });
@@ -731,7 +758,9 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     strictEqual(formDataEntries[2][1].type, fileType);
     deepEqual(fetchOptionsRest, {
       method: "POST",
-      headers: { accept: "*/*" },
+      headers: {
+        accept: graphqlRequestHeaderAccept,
+      },
     });
     deepStrictEqual(nextData, payload);
   });
@@ -844,7 +873,10 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     ok(fetchOptionsSignal instanceof AbortSignal);
     deepEqual(fetchOptionsRest, {
       method: "POST",
-      headers: { accept: "*/*", "content-type": "application/json" },
+      headers: {
+        accept: graphqlRequestHeaderAccept,
+        "content-type": "application/json",
+      },
       body: JSON.stringify({ variables: {}, query }),
     });
     deepStrictEqual(nextData, payload);
@@ -954,7 +986,9 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     strictEqual(formDataEntries[2][1].type, fileType);
     deepEqual(fetchOptionsRest, {
       method: "POST",
-      headers: { accept: "*/*" },
+      headers: {
+        accept: graphqlRequestHeaderAccept,
+      },
     });
     deepStrictEqual(nextData, payload);
   });
@@ -1144,7 +1178,10 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     strictEqual(fetchInput, defaultUri);
     deepEqual(fetchOptions, {
       method: "POST",
-      headers: { accept: "*/*", "content-type": "application/json" },
+      headers: {
+        accept: graphqlRequestHeaderAccept,
+        "content-type": "application/json",
+      },
       body: JSON.stringify({ variables: {}, query }),
       signal: controller.signal,
     });
@@ -1205,7 +1242,10 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     strictEqual(fetchInput, defaultUri);
     deepEqual(fetchOptions, {
       method: "POST",
-      headers: { accept: "*/*", "content-type": "application/json" },
+      headers: {
+        accept: graphqlRequestHeaderAccept,
+        "content-type": "application/json",
+      },
       body: JSON.stringify({ variables: {}, query }),
       signal: controller.signal,
     });
