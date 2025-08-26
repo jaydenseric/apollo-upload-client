@@ -14,6 +14,7 @@
 
 ### Patch
 
+- Avoid the deprecated Apollo Link HTTP utility function `createSignalIfSupported`.
 - Updated the package scripts:
   - Reordered and renamed scripts.
   - Replaced `npm run` with `node --run`.

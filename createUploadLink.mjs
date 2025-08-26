@@ -4,7 +4,6 @@
 
 import { ApolloLink } from "@apollo/client/link";
 import {
-  createSignalIfSupported,
   defaultPrinter,
   fallbackHttpConfig,
   parseAndCheckHttpResponse,
@@ -182,9 +181,15 @@ export default function createUploadLink({
       } else options.body = JSON.stringify(clone);
     }
 
-    const { controller } = createSignalIfSupported();
+    /**
+     * Abort controller for the fetch.
+     * @type {AbortController}
+     */
+    let controller;
 
-    if (typeof controller !== "boolean") {
+    if (typeof AbortController !== "undefined") {
+      controller = new AbortController();
+
       if (options.signal)
         // Respect the user configured abort controller signal.
         options.signal.aborted
@@ -240,7 +245,7 @@ export default function createUploadLink({
         cleaningUp = true;
 
         // Abort fetch. It’s ok to signal an abort even when not fetching.
-        if (typeof controller !== "boolean") controller.abort();
+        if (controller) controller.abort();
       };
     });
   });
