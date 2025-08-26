@@ -28,6 +28,7 @@
 - Enabled the TypeScript compiler options `noUnusedLocals` and `noUnusedParameters`.
 - Migrated to the ESLint v9 CLI and “flat” config.
 - In tests, removed the no longer needed polyfill for the global `File`.
+- In tests, use `ApolloLink.from` instead of the deprecated Apollo Link utility function `concat`.
 
 ## 18.0.1
 

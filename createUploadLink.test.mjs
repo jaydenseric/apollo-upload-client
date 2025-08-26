@@ -5,7 +5,7 @@ import { describe, it } from "node:test";
 
 import { ServerError } from "@apollo/client/errors";
 import { ApolloLink } from "@apollo/client/link";
-import { concat, execute } from "@apollo/client/link";
+import { execute } from "@apollo/client/link";
 import { stripIgnoredCharacters } from "graphql";
 import { gql } from "graphql-tag";
 import revertableGlobals from "revertable-globals";
@@ -280,7 +280,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       /** @type {Promise<void>} */ (
         new Promise((resolve, reject) => {
           execute(
-            concat(
+            ApolloLink.from([
               new ApolloLink((operation, forward) => {
                 operation.extensions.a = true;
                 return forward(operation);
@@ -297,7 +297,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
                   );
                 },
               }),
-            ),
+            ]),
             {
               query: gql(query),
             },
