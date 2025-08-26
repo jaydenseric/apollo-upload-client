@@ -1,25 +1,20 @@
 // @ts-check
 
-/**
- * @import {
- *   Printer
- * } from "@apollo/client/link/http/selectHttpOptionsAndBody.js"
- */
+/** @import { BaseHttpLink } from "@apollo/client/link/http" */
 
-import { ApolloLink } from "@apollo/client/link/core/ApolloLink.js";
-import { createSignalIfSupported } from "@apollo/client/link/http/createSignalIfSupported.js";
-import { parseAndCheckHttpResponse } from "@apollo/client/link/http/parseAndCheckHttpResponse.js";
-import { rewriteURIForGET } from "@apollo/client/link/http/rewriteURIForGET.js";
+import { ApolloLink } from "@apollo/client/link";
 import {
+  createSignalIfSupported,
   defaultPrinter,
   fallbackHttpConfig,
+  parseAndCheckHttpResponse,
+  rewriteURIForGET,
   selectHttpOptionsAndBodyInternal,
-} from "@apollo/client/link/http/selectHttpOptionsAndBody.js";
-import { selectURI } from "@apollo/client/link/http/selectURI.js";
-import { serializeFetchParameter } from "@apollo/client/link/http/serializeFetchParameter.js";
-import { filterOperationVariables } from "@apollo/client/link/utils/filterOperationVariables.js";
-import { Observable } from "@apollo/client/utilities/observables/Observable.js";
+  selectURI,
+} from "@apollo/client/link/http";
+import { filterOperationVariables } from "@apollo/client/link/utils";
 import extractFiles from "extract-files/extractFiles.mjs";
+import { Observable } from "rxjs/internal/Observable";
 
 import formDataAppendFile from "./formDataAppendFile.mjs";
 import isExtractableFile from "./isExtractableFile.mjs";
@@ -55,8 +50,9 @@ import isExtractableFile from "./isExtractableFile.mjs";
  *   Customizes how extracted files are appended to the
  *   [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
  *   instance. Defaults to {@linkcode formDataAppendFile}.
- * @param {Printer} [options.print] Prints the GraphQL query or mutation AST to
- *   a string for transport. Defaults to {@linkcode defaultPrinter}.
+ * @param {BaseHttpLink.Printer} [options.print] Prints the GraphQL query or
+ *   mutation AST to a string for transport. Defaults to
+ *   {@linkcode defaultPrinter}.
  * @param {typeof fetch} [options.fetch] [`fetch`](https://fetch.spec.whatwg.org)
  *   implementation. Defaults to the {@linkcode fetch} global.
  * @param {RequestInit} [options.fetchOptions] `fetch` options; overridden by
@@ -145,7 +141,7 @@ export default function createUploadLink({
 
       const form = new RuntimeFormData();
 
-      form.append("operations", serializeFetchParameter(clone, "Payload"));
+      form.append("operations", JSON.stringify(clone));
 
       /** @type {{ [key: string]: Array<string> }} */
       const map = {};
@@ -183,7 +179,7 @@ export default function createUploadLink({
             observer.error(parseError);
           });
         uri = newURI;
-      } else options.body = serializeFetchParameter(clone, "Payload");
+      } else options.body = JSON.stringify(clone);
     }
 
     const { controller } = createSignalIfSupported();
@@ -236,14 +232,7 @@ export default function createUploadLink({
           // next or error because there are no more subscribers. An error after
           // cleanup begins is likely from the cleanup function aborting the
           // fetch.
-          if (!cleaningUp) {
-            // For errors such as an invalid fetch URI there will be no GraphQL
-            // result with errors or data to forward.
-            if (error.result && error.result.errors && error.result.data)
-              observer.next(error.result);
-
-            observer.error(error);
-          }
+          if (!cleaningUp) observer.error(error);
         });
 
       // Cleanup function.

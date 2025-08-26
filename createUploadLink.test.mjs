@@ -3,9 +3,9 @@
 import { deepEqual, deepStrictEqual, ok, strictEqual } from "node:assert";
 import { describe, it } from "node:test";
 
-import { ApolloLink } from "@apollo/client/link/core/ApolloLink.js";
-import { concat } from "@apollo/client/link/core/concat.js";
-import { execute } from "@apollo/client/link/core/execute.js";
+import { ServerError } from "@apollo/client/errors";
+import { ApolloLink } from "@apollo/client/link";
+import { concat, execute } from "@apollo/client/link";
 import { stripIgnoredCharacters } from "graphql";
 import { gql } from "graphql-tag";
 import revertableGlobals from "revertable-globals";
@@ -16,13 +16,17 @@ import createUnexpectedCallError from "./test/createUnexpectedCallError.mjs";
 import timeLimitPromise from "./test/timeLimitPromise.mjs";
 
 const defaultUri = "/graphql";
-const graphqlRequestHeaderAccept = "*/*";
+const graphqlRequestHeaderAccept =
+  "application/graphql-response+json,application/json;q=0.9";
 const graphqlResponseOptions = {
   status: 200,
   headers: {
     "Content-Type": "application/graphql+json",
   },
 };
+const mockExecuteContext = /** @type {ApolloLink.ExecuteContext} */ (
+  Object.freeze({})
+);
 
 describe("Function `createUploadLink`.", { concurrency: true }, () => {
   it("Bundle size.", async () => {
@@ -58,9 +62,13 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       await timeLimitPromise(
         /** @type {Promise<void>} */ (
           new Promise((resolve, reject) => {
-            execute(createUploadLink(), {
-              query: gql(query),
-            }).subscribe({
+            execute(
+              createUploadLink(),
+              {
+                query: gql(query),
+              },
+              mockExecuteContext,
+            ).subscribe({
               next(data) {
                 nextData = data;
               },
@@ -123,12 +131,16 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       await timeLimitPromise(
         /** @type {Promise<void>} */ (
           new Promise((resolve, reject) => {
-            execute(createUploadLink(), {
-              query: gql(query),
-              variables: {
-                a: new File(["a"], fileName, { type: fileType }),
+            execute(
+              createUploadLink(),
+              {
+                query: gql(query),
+                variables: {
+                  a: new File(["a"], fileName, { type: fileType }),
+                },
               },
-            }).subscribe({
+              mockExecuteContext,
+            ).subscribe({
               next(data) {
                 nextData = data;
               },
@@ -218,6 +230,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
             {
               query: gql(query),
             },
+            mockExecuteContext,
           ).subscribe({
             next(data) {
               nextData = data;
@@ -288,6 +301,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
             {
               query: gql(query),
             },
+            mockExecuteContext,
           ).subscribe({
             next(data) {
               nextData = data;
@@ -362,6 +376,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
                 b: true,
               },
             },
+            mockExecuteContext,
           ).subscribe({
             next(data) {
               nextData = data;
@@ -435,6 +450,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
                 b: true,
               },
             },
+            mockExecuteContext,
           ).subscribe({
             next(data) {
               nextData = data;
@@ -506,6 +522,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
             {
               query: gql(query),
             },
+            mockExecuteContext,
           ).subscribe({
             next(data) {
               nextData = data;
@@ -573,6 +590,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
             {
               query: gql(query),
             },
+            mockExecuteContext,
           ).subscribe({
             next(data) {
               nextData = data;
@@ -639,6 +657,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
             {
               query: gql(query),
             },
+            mockExecuteContext,
           ).subscribe({
             next(data) {
               nextData = data;
@@ -711,6 +730,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
                 a: new File(["a"], fileName, { type: fileType }),
               },
             },
+            mockExecuteContext,
           ).subscribe({
             next(data) {
               nextData = data;
@@ -798,6 +818,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
               },
             },
           },
+          mockExecuteContext,
         ).subscribe({
           next() {
             reject(createUnexpectedCallError());
@@ -813,9 +834,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     );
 
     strictEqual(fetched, false);
-    ok(typeof observerError === "object");
-    strictEqual(observerError.name, "Invariant Violation");
-    strictEqual(observerError.parseError, parseError);
+    strictEqual(observerError, parseError);
   });
 
   it("Option `useGETForQueries`, mutation, no files.", async () => {
@@ -850,6 +869,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
             {
               query: gql(query),
             },
+            mockExecuteContext,
           ).subscribe({
             next(data) {
               nextData = data;
@@ -939,6 +959,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
                 a: new TextFile("a", fileName),
               },
             },
+            mockExecuteContext,
           ).subscribe({
             next(data) {
               nextData = data;
@@ -997,9 +1018,6 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     /** @type {Response | undefined} */
     let fetchResponse;
 
-    /** @type {unknown} */
-    let nextData;
-
     const payload = {
       errors: [
         {
@@ -1009,12 +1027,13 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       ],
       data: { a: true },
     };
+    const responseBody = JSON.stringify(payload);
     const observerError = await timeLimitPromise(
       new Promise((resolve, reject) => {
         execute(
           createUploadLink({
             async fetch() {
-              return (fetchResponse = new Response(JSON.stringify(payload), {
+              return (fetchResponse = new Response(responseBody, {
                 ...graphqlResponseOptions,
                 status: 400,
               }));
@@ -1023,46 +1042,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
           {
             query: gql("{ a b }"),
           },
-        ).subscribe({
-          next(data) {
-            nextData = data;
-          },
-          error(error) {
-            resolve(error);
-          },
-          complete() {
-            reject(createUnexpectedCallError());
-          },
-        });
-      }),
-    );
-
-    strictEqual(observerError.name, "ServerError");
-    strictEqual(observerError.statusCode, 400);
-    strictEqual(observerError.response, fetchResponse);
-    deepStrictEqual(observerError.result, payload);
-    deepStrictEqual(nextData, payload);
-  });
-
-  it("HTTP error, no data.", async () => {
-    /** @type {Response | undefined} */
-    let fetchResponse;
-
-    const payload = { errors: [{ message: "Unauthorized." }] };
-    const observerError = await timeLimitPromise(
-      new Promise((resolve, reject) => {
-        execute(
-          createUploadLink({
-            async fetch() {
-              return (fetchResponse = new Response(JSON.stringify(payload), {
-                ...graphqlResponseOptions,
-                status: 401,
-              }));
-            },
-          }),
-          {
-            query: gql("{ a }"),
-          },
+          mockExecuteContext,
         ).subscribe({
           next() {
             reject(createUnexpectedCallError());
@@ -1077,10 +1057,51 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       }),
     );
 
-    strictEqual(observerError.name, "ServerError");
+    ok(ServerError.is(observerError));
+    strictEqual(observerError.statusCode, 400);
+    strictEqual(observerError.response, fetchResponse);
+    deepStrictEqual(observerError.bodyText, responseBody);
+  });
+
+  it("HTTP error, no data.", async () => {
+    /** @type {Response | undefined} */
+    let fetchResponse;
+
+    const payload = { errors: [{ message: "Unauthorized." }] };
+    const responseBody = JSON.stringify(payload);
+    const observerError = await timeLimitPromise(
+      new Promise((resolve, reject) => {
+        execute(
+          createUploadLink({
+            async fetch() {
+              return (fetchResponse = new Response(responseBody, {
+                ...graphqlResponseOptions,
+                status: 401,
+              }));
+            },
+          }),
+          {
+            query: gql("{ a }"),
+          },
+          mockExecuteContext,
+        ).subscribe({
+          next() {
+            reject(createUnexpectedCallError());
+          },
+          error(error) {
+            resolve(error);
+          },
+          complete() {
+            reject(createUnexpectedCallError());
+          },
+        });
+      }),
+    );
+
+    ok(ServerError.is(observerError));
     strictEqual(observerError.statusCode, 401);
     strictEqual(observerError.response, fetchResponse);
-    deepStrictEqual(observerError.result, payload);
+    deepStrictEqual(observerError.bodyText, responseBody);
   });
 
   it("Fetch error.", async () => {
@@ -1096,6 +1117,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
           {
             query: gql("{ a }"),
           },
+          mockExecuteContext,
         ).subscribe({
           next() {
             reject(createUnexpectedCallError());
@@ -1157,6 +1179,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
           {
             query: gql(query),
           },
+          mockExecuteContext,
         ).subscribe({
           next() {
             reject(createUnexpectedCallError());
@@ -1223,6 +1246,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
           {
             query: gql(query),
           },
+          mockExecuteContext,
         ).subscribe({
           next() {
             reject(createUnexpectedCallError());

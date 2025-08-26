@@ -26,7 +26,7 @@ export default async function assertBundleSize(moduleUrl, limit) {
     entryPoints: [fileURLToPath(moduleUrl)],
     external:
       // Package peer dependencies.
-      ["@apollo/client", "graphql"],
+      ["@apollo/client", "graphql", "rxjs"],
     write: false,
     bundle: true,
     minify: true,
