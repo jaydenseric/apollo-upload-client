@@ -20,7 +20,7 @@ import isExtractableFile from "./isExtractableFile.mjs";
 
 /**
  * A
- * [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link)
+ * [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction#the-terminating-link)
  * for [Apollo Client](https://www.apollographql.com/docs/react) that fetches a
  * [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec)
  * if the GraphQL variables contain files (by default

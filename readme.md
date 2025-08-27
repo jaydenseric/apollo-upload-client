@@ -2,7 +2,7 @@
 
 # apollo-upload-client
 
-A [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link) for [Apollo Client](https://www.apollographql.com/docs/react) that fetches a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec) if the GraphQL variables contain files (by default [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), or [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) instances), or else fetches a regular [GraphQL POST or GET request](https://www.apollographql.com/docs/apollo-server/workflow/requests) (depending on the config and GraphQL operation).
+A [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction#the-terminating-link) for [Apollo Client](https://www.apollographql.com/docs/react) that fetches a [GraphQL multipart request](https://github.com/jaydenseric/graphql-multipart-request-spec) if the GraphQL variables contain files (by default [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList), [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File), or [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) instances), or else fetches a regular [GraphQL POST or GET request](https://www.apollographql.com/docs/apollo-server/workflow/requests) (depending on the config and GraphQL operation).
 
 - [Installation](#installation)
 - [Examples](#examples)
@@ -19,11 +19,9 @@ npm install apollo-upload-client
 
 Polyfill any required globals (see [_**Requirements**_](#requirements)) that are missing in your server and client environments.
 
-Remove any `uri`, `credentials`, or `headers` options from the [`ApolloClient` constructor](https://www.apollographql.com/docs/react/api/core/ApolloClient/#the-apolloclient-constructor).
+[Apollo Client](https://www.apollographql.com/docs/react) can only have 1 [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction#the-terminating-link) that sends the GraphQL requests; if one such as [`HttpLink`](https://www.apollographql.com/docs/react/api/link/apollo-link-http) is already setup, remove it.
 
-[Apollo Client](https://www.apollographql.com/docs/react) can only have 1 [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link) that sends the GraphQL requests; if one such as [`HttpLink`](https://www.apollographql.com/docs/react/api/link/apollo-link-http) is already setup, remove it.
-
-Initialize the client with a [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link) using the class [`UploadHttpLink`](./UploadHttpLink.mjs).
+Construct [`ApolloClient`](https://www.apollographql.com/docs/react/api/core/ApolloClient) with a [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction#the-terminating-link) using the class [`UploadHttpLink`](./UploadHttpLink.mjs). For client awareness features, compose the Apollo Link [`ClientAwarenessLink`](https://www.apollographql.com/docs/react/api/link/apollo-link-client-awareness) before the terminating link.
 
 Also ensure the GraphQL server implements the [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec) and that uploads are handled correctly in resolvers.
 
