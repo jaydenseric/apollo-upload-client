@@ -29,16 +29,16 @@
     "mjs"
   ],
   "files": [
-    "createUploadLink.mjs",
     "formDataAppendFile.mjs",
-    "isExtractableFile.mjs"
+    "isExtractableFile.mjs",
+    "UploadHttpLink.mjs"
   ],
   "sideEffects": false,
   "exports": {
-    "./createUploadLink.mjs": "./createUploadLink.mjs",
     "./formDataAppendFile.mjs": "./formDataAppendFile.mjs",
     "./isExtractableFile.mjs": "./isExtractableFile.mjs",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./UploadHttpLink.mjs": "./UploadHttpLink.mjs"
   },
   "engines": {
     "node": "^20.9.0 || >=22.0.0"

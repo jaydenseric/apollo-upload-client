@@ -6,6 +6,19 @@
 
 - Updated Node.js support to `^20.9.0 || >=22.0.0`.
 - Use the TypeScript v5.5+ JSDoc tag `@import` to import types in modules.
+- The function `createUploadLink` has been removed and the upload terminating Apollo Link is now the exported class `UploadHttpLink` that extends `ApolloLink`. To migrate:
+
+  ```diff
+  - import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
+  + import UploadHttpLink from "apollo-upload-client/UploadHttpLink.mjs";
+
+    const terminatingLink =
+  -   createUploadLink({
+  +   new UploadHttpLink({
+        // Options…
+      });
+  ```
+
 - Updated dev dependencies, some of which require newer Node.js versions than previously supported.
 
 ### Minor

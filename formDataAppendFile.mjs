@@ -3,7 +3,7 @@
 /** @import { ExtractableFile } from "./isExtractableFile.mjs" */
 
 /**
- * The default implementation for the function `createUploadLink` option
+ * The default implementation for the class `UploadHttpLink` constructor option
  * `formDataAppendFile` that uses the standard {@linkcode FormData.append}
  * method.
  * @param {FormData} formData Form data to append the specified file to.

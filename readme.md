@@ -23,7 +23,7 @@ Remove any `uri`, `credentials`, or `headers` options from the [`ApolloClient` c
 
 [Apollo Client](https://www.apollographql.com/docs/react) can only have 1 [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link) that sends the GraphQL requests; if one such as [`HttpLink`](https://www.apollographql.com/docs/react/api/link/apollo-link-http) is already setup, remove it.
 
-Initialize the client with a [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link) using the function [`createUploadLink`](./createUploadLink.mjs).
+Initialize the client with a [terminating Apollo Link](https://www.apollographql.com/docs/react/api/link/introduction/#the-terminating-link) using the class [`UploadHttpLink`](./UploadHttpLink.mjs).
 
 Also ensure the GraphQL server implements the [GraphQL multipart request spec](https://github.com/jaydenseric/graphql-multipart-request-spec) and that uploads are handled correctly in resolvers.
 
@@ -165,6 +165,6 @@ Projects must configure [TypeScript](https://www.typescriptlang.org) to use type
 
 The [npm](https://npmjs.com) package [`apollo-upload-client`](https://npm.im/apollo-upload-client) features [optimal JavaScript module design](https://jaydenseric.com/blog/optimal-javascript-module-design). It doesn’t have a main index module, so use deep imports from the ECMAScript modules that are exported via the [`package.json`](./package.json) field [`exports`](https://nodejs.org/api/packages.html#exports):
 
-- [`createUploadLink.mjs`](./createUploadLink.mjs)
 - [`formDataAppendFile.mjs`](./formDataAppendFile.mjs)
 - [`isExtractableFile.mjs`](./isExtractableFile.mjs)
+- [`UploadHttpLink.mjs`](./UploadHttpLink.mjs)

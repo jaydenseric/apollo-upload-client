@@ -10,10 +10,10 @@ import { stripIgnoredCharacters } from "graphql";
 import { gql } from "graphql-tag";
 import revertableGlobals from "revertable-globals";
 
-import createUploadLink from "./createUploadLink.mjs";
 import assertBundleSize from "./test/assertBundleSize.mjs";
 import createUnexpectedCallError from "./test/createUnexpectedCallError.mjs";
 import timeLimitPromise from "./test/timeLimitPromise.mjs";
+import UploadHttpLink from "./UploadHttpLink.mjs";
 
 const defaultUri = "/graphql";
 const graphqlRequestHeaderAccept =
@@ -28,10 +28,10 @@ const mockExecuteContext = /** @type {ApolloLink.ExecuteContext} */ (
   Object.freeze({})
 );
 
-describe("Function `createUploadLink`.", { concurrency: true }, () => {
+describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
   it("Bundle size.", async () => {
     await assertBundleSize(
-      new URL("./createUploadLink.mjs", import.meta.url),
+      new URL("./UploadHttpLink.mjs", import.meta.url),
       1800,
     );
   });
@@ -63,7 +63,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
         /** @type {Promise<void>} */ (
           new Promise((resolve, reject) => {
             execute(
-              createUploadLink(),
+              new UploadHttpLink(),
               {
                 query: gql(query),
               },
@@ -132,7 +132,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
         /** @type {Promise<void>} */ (
           new Promise((resolve, reject) => {
             execute(
-              createUploadLink(),
+              new UploadHttpLink(),
               {
                 query: gql(query),
                 variables: {
@@ -215,7 +215,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       /** @type {Promise<void>} */ (
         new Promise((resolve, reject) => {
           execute(
-            createUploadLink({
+            new UploadHttpLink({
               uri,
               async fetch(input, options) {
                 fetchInput = input;
@@ -285,7 +285,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
                 operation.extensions.a = true;
                 return forward(operation);
               }),
-              createUploadLink({
+              new UploadHttpLink({
                 includeExtensions: true,
                 async fetch(input, options) {
                   fetchInput = input;
@@ -357,7 +357,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       /** @type {Promise<void>} */ (
         new Promise((resolve, reject) => {
           execute(
-            createUploadLink({
+            new UploadHttpLink({
               includeUnusedVariables: false,
               async fetch(input, options) {
                 fetchInput = input;
@@ -431,7 +431,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       /** @type {Promise<void>} */ (
         new Promise((resolve, reject) => {
           execute(
-            createUploadLink({
+            new UploadHttpLink({
               includeUnusedVariables: true,
               async fetch(input, options) {
                 fetchInput = input;
@@ -506,7 +506,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       /** @type {Promise<void>} */ (
         new Promise((resolve, reject) => {
           execute(
-            createUploadLink({
+            new UploadHttpLink({
               print: (ast, originalPrint) =>
                 stripIgnoredCharacters(originalPrint(ast)),
               async fetch(input, options) {
@@ -575,7 +575,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       /** @type {Promise<void>} */ (
         new Promise((resolve, reject) => {
           execute(
-            createUploadLink({
+            new UploadHttpLink({
               fetchOptions: { method: "GET" },
               async fetch(input, options) {
                 fetchInput = input;
@@ -642,7 +642,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       /** @type {Promise<void>} */ (
         new Promise((resolve, reject) => {
           execute(
-            createUploadLink({
+            new UploadHttpLink({
               useGETForQueries: true,
               async fetch(input, options) {
                 fetchInput = input;
@@ -711,7 +711,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       /** @type {Promise<void>} */ (
         new Promise((resolve, reject) => {
           execute(
-            createUploadLink({
+            new UploadHttpLink({
               useGETForQueries: true,
               FormData,
               async fetch(input, options) {
@@ -794,7 +794,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     const observerError = await timeLimitPromise(
       new Promise((resolve, reject) => {
         execute(
-          createUploadLink({
+          new UploadHttpLink({
             useGETForQueries: true,
             includeUnusedVariables: true,
             async fetch() {
@@ -854,7 +854,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       /** @type {Promise<void>} */ (
         new Promise((resolve, reject) => {
           execute(
-            createUploadLink({
+            new UploadHttpLink({
               useGETForQueries: true,
               async fetch(input, options) {
                 fetchInput = input;
@@ -931,7 +931,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
       /** @type {Promise<void>} */ (
         new Promise((resolve, reject) => {
           execute(
-            createUploadLink({
+            new UploadHttpLink({
               /** @returns {value is TextFile} */
               isExtractableFile(value) {
                 return value instanceof TextFile;
@@ -1023,7 +1023,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     const observerError = await timeLimitPromise(
       new Promise((resolve, reject) => {
         execute(
-          createUploadLink({
+          new UploadHttpLink({
             async fetch() {
               return (fetchResponse = new Response(responseBody, {
                 ...graphqlResponseOptions,
@@ -1060,7 +1060,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     const observerError = await timeLimitPromise(
       new Promise((resolve, reject) => {
         execute(
-          createUploadLink({
+          new UploadHttpLink({
             async fetch() {
               throw fetchError;
             },
@@ -1101,7 +1101,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     const observerErrorPromise = timeLimitPromise(
       new Promise((resolve, reject) => {
         execute(
-          createUploadLink({
+          new UploadHttpLink({
             fetchOptions: { signal: controller.signal },
             fetch(input, options) {
               fetchInput = input;
@@ -1180,7 +1180,7 @@ describe("Function `createUploadLink`.", { concurrency: true }, () => {
     const observerErrorPromise = timeLimitPromise(
       new Promise((resolve, reject) => {
         execute(
-          createUploadLink({
+          new UploadHttpLink({
             fetchOptions: { signal: controller.signal },
             async fetch(input, options) {
               fetchInput = input;
