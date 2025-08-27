@@ -177,8 +177,6 @@ export default class UploadHttpLink extends ApolloLink {
           const { newURI, parseError } = rewriteURIForGET(uri, body);
 
           if (parseError)
-            // Apollo’s `HttpLink` uses `fromError` for this, but it’s not
-            // exported from `@apollo/client/link/http`.
             return new Observable((observer) => {
               observer.error(parseError);
             });
