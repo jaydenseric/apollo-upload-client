@@ -33,6 +33,7 @@
 - Updated the package scripts:
   - Reordered and renamed scripts.
   - Replaced `npm run` with `node --run`.
+  - Target test modules with a glob.
 - Updated GitHub Actions CI config:
   - Updated workflow triggers.
   - Run checks in separate jobs.

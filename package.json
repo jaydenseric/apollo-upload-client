@@ -73,7 +73,7 @@
     "prettier": "prettier -c .",
     "eslint": "eslint",
     "types": "tsc -p jsconfig.json",
-    "test": "coverage-node --test-reporter=spec --test",
+    "test": "coverage-node --test-reporter=spec --test *.test.mjs",
     "check": "node --run prettier && node --run eslint && node --run types && node --run test",
     "prepublishOnly": "node --run check"
   }
