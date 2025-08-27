@@ -182,7 +182,7 @@ export default function createUploadLink({
     }
 
     /**
-     * Abort controller for the fetch.
+     * Abort controller for the GraphQL request.
      * @type {AbortController}
      */
     let controller;
@@ -212,6 +212,12 @@ export default function createUploadLink({
       options.signal = controller.signal;
     }
 
+    /**
+     * Fetcher for the GraphQL request. Determined when fetching instead of
+     * when constructing the link to allow more time for instrumenting the
+     * global `fetch`.
+     * @see https://github.com/apollographql/apollo-client/issues/7832
+     */
     const runtimeFetch = customFetch || fetch;
 
     return new Observable((observer) => {
