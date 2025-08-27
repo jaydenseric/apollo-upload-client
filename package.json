@@ -43,7 +43,7 @@
   "engines": {
     "node": "^20.9.0 || >=22.0.0"
   },
-  "browserslist": "Node 20.9 - 21 and Node < 21, Node >= 22, > 0.5%, not OperaMini all, not IE > 0, not dead",
+  "browserslist": "Node 20.9 - 21 and Node < 21, Node >= 22, > 0.5%, not OperaMini all, not dead",
   "peerDependencies": {
     "@apollo/client": "^4.0.0",
     "graphql": "14 - 16",
