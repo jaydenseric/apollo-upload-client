@@ -5,7 +5,9 @@
 ### Major
 
 - Updated Node.js support to `^20.9.0 || >=22.0.0`.
-- Use the TypeScript v5.5+ JSDoc tag `@import` to import types in modules.
+- Use the TypeScript v5.5+ JSDoc tag `@import` to import types in modules. To migrate: Upgrade TypeScript to v5.5+.
+- Updated the peer dependency [`@apollo/client`](https://npm.im/@apollo/client) to `^4.0.0`.
+- Added a new peer dependency [`rxjs`](https://npm.im/rxjs) at `^7.3.0`. This is an Apollo Client v4 requirement.
 - The function `createUploadLink` has been removed and the upload terminating Apollo Link is now the exported class `UploadHttpLink` that extends `ApolloLink`. To migrate:
 
   ```diff
