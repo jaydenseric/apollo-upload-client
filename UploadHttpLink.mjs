@@ -68,8 +68,9 @@ export default class UploadHttpLink extends ApolloLink {
    * @param {BaseHttpLink.Printer} [options.print] Prints the GraphQL query or
    *   mutation AST to a string for transport. Defaults to
    *   {@linkcode defaultPrinter}.
-   * @param {typeof fetch} [options.fetch] [`fetch`](https://fetch.spec.whatwg.org)
-   *   implementation. Defaults to the {@linkcode fetch} global.
+   * @param {typeof fetch} [options.fetch]
+   *   [`fetch`](https://fetch.spec.whatwg.org) implementation. Defaults to the
+   *   {@linkcode fetch} global.
    * @param {RequestInit} [options.fetchOptions] `fetch` options; overridden by
    *   upload requirements.
    * @param {string} [options.credentials] Overrides
