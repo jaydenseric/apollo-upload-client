@@ -809,10 +809,8 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
           {
             query: gql(query),
             variables: {
-              // A circular reference would be a more realistic way to cause a
-              // `JSON.stringify` error, but unfortunately that triggers an
-              // `extractFiles` bug:
-              // https://github.com/jaydenseric/extract-files/issues/14
+              // A circular reference would be a realistic way to cause a
+              // `JSON.stringify` error, but this is a simpler test.
               toJSON() {
                 throw parseError;
               },
