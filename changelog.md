@@ -51,6 +51,7 @@
 - In tests, use `ApolloLink.from` instead of the deprecated Apollo Link utility function `concat`.
 - Improved internal comments.
 - Corrected the package field `browserslist` to match what’s documented in the readme.
+- Improved readme examples.
 - Fixed a typo in the changelog entry for v18.0.0.
 
 ## 18.0.1

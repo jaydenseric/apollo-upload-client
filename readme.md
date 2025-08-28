@@ -33,19 +33,22 @@ See also the [example API and client](https://github.com/jaydenseric/apollo-uplo
 
 ### [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList)
 
-```jsx
-import { gql, useMutation } from "@apollo/client";
+```tsx
+import { gql } from "@apollo/client/core";
+import { useMutation } from "@apollo/client/react";
 
-const MUTATION = gql`
-  mutation ($files: [Upload!]!) {
-    uploadFiles(files: $files) {
-      success
+/** React component for a uploading a file list. */
+function UploadFileList() {
+  const [mutate] = useMutation<
+    {
+      uploadFiles: {
+        success: boolean;
+      };
+    },
+    {
+      files: FileList;
     }
-  }
-`;
-
-function UploadFiles() {
-  const [mutate] = useMutation(MUTATION);
+  >(mutation);
 
   return (
     <input
@@ -63,23 +66,34 @@ function UploadFiles() {
     />
   );
 }
-```
 
-### [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File)
-
-```jsx
-import { gql, useMutation } from "@apollo/client";
-
-const MUTATION = gql`
-  mutation ($file: Upload!) {
-    uploadFile(file: $file) {
+const mutation = gql`
+  mutation ($files: [Upload!]!) {
+    uploadFiles(files: $files) {
       success
     }
   }
 `;
+```
 
+### [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File)
+
+```tsx
+import { gql } from "@apollo/client/core";
+import { useMutation } from "@apollo/client/react";
+
+/** React component for a uploading a file. */
 function UploadFile() {
-  const [mutate] = useMutation(MUTATION);
+  const [mutate] = useMutation<
+    {
+      uploadFile: {
+        success: boolean;
+      };
+    },
+    {
+      file: File;
+    }
+  >(mutation);
 
   return (
     <input
@@ -101,23 +115,34 @@ function UploadFile() {
     />
   );
 }
-```
 
-### [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)
-
-```jsx
-import { gql, useMutation } from "@apollo/client";
-
-const MUTATION = gql`
+const mutation = gql`
   mutation ($file: Upload!) {
     uploadFile(file: $file) {
       success
     }
   }
 `;
+```
 
-function UploadFile() {
-  const [mutate] = useMutation(MUTATION);
+### [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)
+
+```tsx
+import { gql } from "@apollo/client/core";
+import { useMutation } from "@apollo/client/react";
+
+/** React component for a uploading a blob. */
+function UploadBlob() {
+  const [mutate] = useMutation<
+    {
+      uploadFile: {
+        success: boolean;
+      };
+    },
+    {
+      file: Blob;
+    }
+  >(mutation);
 
   return (
     <input
@@ -125,7 +150,9 @@ function UploadFile() {
       required
       onChange={({ target: { validity, value } }) => {
         if (validity.valid) {
-          const file = new Blob([value], { type: "text/plain" });
+          const file = new Blob([value], {
+            type: "text/plain",
+          });
 
           // Optional, defaults to `blob`.
           file.name = "text.txt";
@@ -140,6 +167,14 @@ function UploadFile() {
     />
   );
 }
+
+const mutation = gql`
+  mutation ($file: Upload!) {
+    uploadFile(file: $file) {
+      success
+    }
+  }
+`;
 ```
 
 ## Requirements
