@@ -97,168 +97,169 @@ export default class UploadHttpLink extends ApolloLink {
     includeExtensions,
     includeUnusedVariables = false,
   } = {}) {
-    const linkConfig = {
-      http: { includeExtensions },
-      options: fetchOptions,
-      credentials,
-      headers,
-    };
+    super(
+      (operation) =>
+        new Observable((observer) => {
+          const context = operation.getContext();
+          const { options, body } = selectHttpOptionsAndBodyInternal(
+            operation,
+            print,
+            fallbackHttpConfig,
+            {
+              http: {
+                includeExtensions,
+              },
+              options: fetchOptions,
+              credentials,
+              headers,
+            },
+            {
+              http: context.http,
+              options: context.fetchOptions,
+              credentials: context.credentials,
+              headers: context.headers,
+            },
+          );
 
-    super((operation) => {
-      const context = operation.getContext();
-      const contextConfig = {
-        http: context.http,
-        options: context.fetchOptions,
-        credentials: context.credentials,
-        headers: context.headers,
-      };
+          if (body.variables && !includeUnusedVariables)
+            body.variables = filterOperationVariables(
+              body.variables,
+              operation.query,
+            );
 
-      const { options, body } = selectHttpOptionsAndBodyInternal(
-        operation,
-        print,
-        fallbackHttpConfig,
-        linkConfig,
-        contextConfig,
-      );
+          const { clone, files } = extractFiles(
+            body,
+            customIsExtractableFile,
+            "",
+          );
 
-      if (body.variables && !includeUnusedVariables)
-        body.variables = filterOperationVariables(
-          body.variables,
-          operation.query,
-        );
+          let uri = selectURI(operation, fetchUri);
 
-      const { clone, files } = extractFiles(body, customIsExtractableFile, "");
+          if (files.size) {
+            if (options.headers)
+              // Automatically set by `fetch` when the `body` is a `FormData`
+              // instance.
+              delete options.headers["content-type"];
 
-      let uri = selectURI(operation, fetchUri);
+            // GraphQL multipart request spec:
+            // https://github.com/jaydenseric/graphql-multipart-request-spec
 
-      if (files.size) {
-        if (options.headers)
-          // Automatically set by `fetch` when the `body` is a `FormData`
-          // instance.
-          delete options.headers["content-type"];
+            const RuntimeFormData = CustomFormData || FormData;
 
-        // GraphQL multipart request spec:
-        // https://github.com/jaydenseric/graphql-multipart-request-spec
+            const form = new RuntimeFormData();
 
-        const RuntimeFormData = CustomFormData || FormData;
+            form.append("operations", JSON.stringify(clone));
 
-        const form = new RuntimeFormData();
+            /** @type {{ [key: string]: Array<string> }} */
+            const map = {};
 
-        form.append("operations", JSON.stringify(clone));
+            let i = 0;
+            files.forEach((paths) => {
+              map[++i] = paths;
+            });
+            form.append("map", JSON.stringify(map));
 
-        /** @type {{ [key: string]: Array<string> }} */
-        const map = {};
-
-        let i = 0;
-        files.forEach((paths) => {
-          map[++i] = paths;
-        });
-        form.append("map", JSON.stringify(map));
-
-        i = 0;
-        files.forEach((_paths, file) => {
-          customFormDataAppendFile(form, String(++i), file);
-        });
-
-        options.body = form;
-      } else {
-        if (
-          useGETForQueries &&
-          // If the operation contains some mutations GET shouldn’t be used.
-          !operation.query.definitions.some(
-            (definition) =>
-              definition.kind === "OperationDefinition" &&
-              definition.operation === "mutation",
-          )
-        )
-          options.method = "GET";
-
-        if (options.method === "GET") {
-          const { newURI, parseError } = rewriteURIForGET(uri, body);
-
-          if (parseError)
-            return new Observable((observer) => {
-              observer.error(parseError);
+            i = 0;
+            files.forEach((_paths, file) => {
+              customFormDataAppendFile(form, String(++i), file);
             });
 
-          uri = newURI;
-        } else options.body = JSON.stringify(clone);
-      }
+            options.body = form;
+          } else {
+            if (
+              useGETForQueries &&
+              // If the operation contains some mutations GET shouldn’t be used.
+              !operation.query.definitions.some(
+                (definition) =>
+                  definition.kind === "OperationDefinition" &&
+                  definition.operation === "mutation",
+              )
+            )
+              options.method = "GET";
 
-      /**
-       * Abort controller for the GraphQL request.
-       * @type {AbortController}
-       */
-      let controller;
+            if (options.method === "GET") {
+              const { newURI, parseError } = rewriteURIForGET(uri, body);
 
-      if (typeof AbortController !== "undefined") {
-        controller = new AbortController();
+              if (parseError) throw parseError;
 
-        if (options.signal)
-          // Respect the user configured abort controller signal.
-          options.signal.aborted
-            ? // Signal already aborted, so immediately abort.
-              controller.abort()
-            : // Signal not already aborted, so setup a listener to abort when
-              // it does.
-              options.signal.addEventListener(
-                "abort",
-                () => {
-                  controller.abort();
-                },
-                {
-                  // Prevent a memory leak if the user configured abort
-                  // controller is long lasting, or controls multiple things.
-                  once: true,
-                },
-              );
+              uri = newURI;
+            } else options.body = JSON.stringify(clone);
+          }
 
-        options.signal = controller.signal;
-      }
+          /**
+           * Abort controller for the GraphQL request.
+           * @type {AbortController}
+           */
+          let controller;
 
-      /**
-       * Fetcher for the GraphQL request. Determined when fetching instead of
-       * when constructing the link to allow more time for instrumenting the
-       * global `fetch`.
-       * @see https://github.com/apollographql/apollo-client/issues/7832
-       */
-      const runtimeFetch = customFetch || fetch;
+          if (typeof AbortController !== "undefined") {
+            controller = new AbortController();
 
-      return new Observable((observer) => {
-        /**
-         * Is the observable being cleaned up.
-         * @type {boolean}
-         */
-        let cleaningUp;
+            if (options.signal)
+              // Respect the user configured abort controller signal.
+              options.signal.aborted
+                ? // Signal already aborted, so immediately abort.
+                  controller.abort()
+                : // Signal not already aborted, so setup a listener to abort
+                  // when it does.
+                  options.signal.addEventListener(
+                    "abort",
+                    () => {
+                      controller.abort();
+                    },
+                    {
+                      // Prevent a memory leak if the user configured abort
+                      // controller is long lasting, or controls multiple
+                      // things.
+                      once: true,
+                    },
+                  );
 
-        runtimeFetch(uri, options)
-          .then((response) => {
-            // Forward the response on the context.
-            operation.setContext({ response });
-            return response;
-          })
-          .then(parseAndCheckHttpResponse(operation))
-          .then((result) => {
-            observer.next(result);
-            observer.complete();
-          })
-          .catch((error) => {
-            // If the observable is being cleaned up, there is no need to call
-            // next or error because there are no more subscribers. An error
-            // after cleanup begins is likely from the cleanup function aborting
-            // the fetch.
-            if (!cleaningUp) observer.error(error);
-          });
+            options.signal = controller.signal;
+          }
 
-        // Cleanup function.
-        return () => {
-          cleaningUp = true;
+          /**
+           * Fetcher for the GraphQL request. Determined when fetching instead
+           * of when constructing the link to allow more time for instrumenting
+           * the global `fetch`.
+           * @see https://github.com/apollographql/apollo-client/issues/7832
+           */
+          const runtimeFetch = customFetch || fetch;
 
-          // Abort fetch. It’s ok to signal an abort even when not fetching.
-          if (controller) controller.abort();
-        };
-      });
-    });
+          /**
+           * Is the observable being cleaned up.
+           * @type {boolean}
+           */
+          let cleaningUp;
+
+          runtimeFetch(uri, options)
+            .then((response) => {
+              // Forward the response on the context.
+              operation.setContext({ response });
+              return response;
+            })
+            .then(parseAndCheckHttpResponse(operation))
+            .then((result) => {
+              observer.next(result);
+              observer.complete();
+            })
+            .catch((error) => {
+              // If the observable is being cleaned up, there is no need to call
+              // next or error because there are no more subscribers. An error
+              // after cleanup begins is likely from the cleanup function
+              // aborting the fetch.
+              if (!cleaningUp) observer.error(error);
+            });
+
+          // Cleanup function.
+          return () => {
+            cleaningUp = true;
+
+            // Abort fetch. It’s ok to signal an abort even when not fetching.
+            if (controller) controller.abort();
+          };
+        }),
+    );
   }
 }
 

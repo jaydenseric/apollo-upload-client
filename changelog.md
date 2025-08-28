@@ -30,6 +30,7 @@
 ### Patch
 
 - Avoid the deprecated Apollo Link HTTP utility function `createSignalIfSupported`.
+- Moved all the upload terminating Apollo Link request handler code into a single constructed `Observer` that’s returned regardless of errors.
 - Updated the package scripts:
   - Reordered and renamed scripts.
   - Replaced `npm run` with `node --run`.
