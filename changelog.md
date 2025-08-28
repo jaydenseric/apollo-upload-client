@@ -51,6 +51,7 @@
 - In tests, use `ApolloLink.from` instead of the deprecated Apollo Link utility function `concat`.
 - Improved internal comments.
 - Corrected the package field `browserslist` to match what’s documented in the readme.
+- Fixed a typo in the changelog entry for v18.0.0.
 
 ## 18.0.1
 
@@ -123,7 +124,7 @@
 
 ### Minor
 
-- Added a new option `print` for the function `createUploadLink`, to customize how the GraphQL query or mutation AST prints to a string for transport. It that works like the same option for [`HttpLink`](https://www.apollographql.com/docs/react/api/link/apollo-link-http).
+- Added a new option `print` for the function `createUploadLink`, to customize how the GraphQL query or mutation AST prints to a string for transport. It works like the same option for [`HttpLink`](https://www.apollographql.com/docs/react/api/link/apollo-link-http).
 
 ### Patch
 
