@@ -134,6 +134,10 @@ export default class UploadHttpLink extends ApolloLink {
             "",
           );
 
+          /**
+           * URI for the GraphQL request.
+           * @type {string}
+           */
           let uri = selectURI(operation, fetchUri);
 
           if (files.size) {
@@ -179,11 +183,16 @@ export default class UploadHttpLink extends ApolloLink {
               options.method = "GET";
 
             if (options.method === "GET") {
-              const { newURI, parseError } = rewriteURIForGET(uri, body);
+              const result =
+                /** @type {{ newURI: string } | { parseError: unknown }} */ (
+                  // The return type is incorrect; `newURI` and `parseError`
+                  // will never both be present.
+                  rewriteURIForGET(uri, body)
+                );
 
-              if (parseError) throw parseError;
+              if ("parseError" in result) throw result.parseError;
 
-              uri = newURI;
+              uri = result.newURI;
             } else options.body = JSON.stringify(clone);
           }
 
