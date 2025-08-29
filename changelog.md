@@ -1,5 +1,11 @@
 # apollo-upload-client changelog
 
+## Next
+
+### Patch
+
+- Updated the readme code examples.
+
 ## 19.0.0
 
 ### Major

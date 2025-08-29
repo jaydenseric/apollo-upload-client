@@ -56,7 +56,7 @@ function UploadFileList() {
       multiple
       required
       onChange={({ target: { validity, files } }) => {
-        if (validity.valid)
+        if (validity.valid && files?.[0])
           mutate({
             variables: {
               files,
@@ -99,16 +99,11 @@ function UploadFile() {
     <input
       type="file"
       required
-      onChange={({
-        target: {
-          validity,
-          files: [file],
-        },
-      }) => {
-        if (validity.valid)
+      onChange={({ target: { validity, files } }) => {
+        if (validity.valid && files?.[0])
           mutate({
             variables: {
-              file,
+              file: files[0],
             },
           });
       }}
@@ -145,20 +140,20 @@ function UploadBlob() {
   >(mutation);
 
   return (
-    <input
-      type="text"
-      required
-      onChange={({ target: { validity, value } }) => {
-        if (validity.valid)
-          mutate({
-            variables: {
-              file: new Blob([value], {
-                type: "text/plain",
-              }),
-            },
-          });
+    <button
+      type="button"
+      onClick={() => {
+        mutate({
+          variables: {
+            file: new Blob(["Content here."], {
+              type: "text/plain",
+            }),
+          },
+        });
       }}
-    />
+    >
+      Upload
+    </button>
   );
 }
 
