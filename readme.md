@@ -189,12 +189,6 @@ new File(
 - [Node.js](https://nodejs.org) versions `^20.9.0 || >=22.0.0`.
 - Browsers matching the [Browserslist](https://browsersl.ist) query [`> 0.5%, not OperaMini all, not dead`](https://browsersl.ist/?q=%3E+0.5%25%2C+not+OperaMini+all%2C+not+dead).
 
-Consider polyfilling:
-
-- [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController)
-- [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
-- [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
-
 Projects must configure [TypeScript](https://www.typescriptlang.org) to use types from the ECMAScript modules that have a `// @ts-check` comment:
 
 - [`compilerOptions.allowJs`](https://www.typescriptlang.org/tsconfig#allowJs) should be `true`.
