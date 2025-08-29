@@ -56,7 +56,7 @@ function UploadFileList() {
       multiple
       required
       onChange={({ target: { validity, files } }) => {
-        if (validity.valid && files?.[0])
+        if (validity.valid && files?.length)
           mutate({
             variables: {
               files,
