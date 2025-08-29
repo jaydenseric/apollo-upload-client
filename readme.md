@@ -171,7 +171,7 @@ const mutation = gql`
 `;
 ```
 
-To avoid the upload default file name `blob`, replace the `Blob` approach with `File`:
+To avoid the upload default file name `blob`, replace the [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) approach with [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File):
 
 ```ts
 new File(
