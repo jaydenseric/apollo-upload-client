@@ -38,9 +38,7 @@ export default async function assertBundleSize(moduleUrl, limit) {
 
   if (gzippedSize > limit)
     fail(
-      `${gzippedSize} B minified and gzipped bundle exceeds the ${limit} B limit by ${
-        gzippedSize - limit
-      } B; increase the limit or reduce the bundle size.`,
+      `${gzippedSize} B minified and gzipped bundle exceeds the ${limit} B limit by ${gzippedSize - limit} B; increase the limit or reduce the bundle size.`,
     );
 
   const surplus = limit - gzippedSize;
@@ -52,5 +50,8 @@ export default async function assertBundleSize(moduleUrl, limit) {
     );
 
   // For debugging in tests.
-  return { bundle: bundle.text, gzippedSize };
+  return {
+    bundle: bundle.text,
+    gzippedSize,
+  };
 }

@@ -22,7 +22,9 @@ describe("Function `formDataAppendFile`.", { concurrency: true }, () => {
     formDataAppendFile(
       formData,
       fieldName,
-      new Blob(["a"], { type: fileType }),
+      new Blob(["a"], {
+        type: fileType,
+      }),
     );
 
     const formDataEntries = Array.from(formData.entries());
@@ -43,7 +45,9 @@ describe("Function `formDataAppendFile`.", { concurrency: true }, () => {
     formDataAppendFile(
       formData,
       fieldName,
-      new File(["a"], fileName, { type: fileType }),
+      new File(["a"], fileName, {
+        type: fileType,
+      }),
     );
 
     const formDataEntries = Array.from(formData.entries());
