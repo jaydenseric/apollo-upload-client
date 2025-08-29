@@ -149,20 +149,14 @@ function UploadBlob() {
       type="text"
       required
       onChange={({ target: { validity, value } }) => {
-        if (validity.valid) {
-          const file = new Blob([value], {
-            type: "text/plain",
-          });
-
-          // Optional, defaults to `blob`.
-          file.name = "text.txt";
-
+        if (validity.valid)
           mutate({
             variables: {
-              file,
+              file: new Blob([value], {
+                type: "text/plain",
+              }),
             },
           });
-        }
       }}
     />
   );
@@ -175,6 +169,19 @@ const mutation = gql`
     }
   }
 `;
+```
+
+To avoid the upload default file name `blob`, replace the `Blob` approach with `File`:
+
+```ts
+new File(
+  [value],
+  // Custom file name.
+  "text.txt",
+  {
+    type: "text/plain",
+  },
+);
 ```
 
 ## Requirements
