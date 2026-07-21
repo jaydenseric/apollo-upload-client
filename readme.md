@@ -181,7 +181,7 @@ new File(
 
 ## Requirements
 
-- [Node.js](https://nodejs.org) versions `^20.9.0 || >=22.0.0`.
+- [Node.js](https://nodejs.org) versions `^22.13.0 || ^24.0.0 || >=26.0.0`.
 - Browsers matching the [Browserslist](https://browsersl.ist) query [`> 0.5%, not OperaMini all, not dead`](https://browsersl.ist/?q=%3E+0.5%25%2C+not+OperaMini+all%2C+not+dead).
 
 Projects must configure [TypeScript](https://www.typescriptlang.org) to use types from the ECMAScript modules that have a `// @ts-check` comment:

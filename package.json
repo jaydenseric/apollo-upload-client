@@ -41,9 +41,9 @@
     "./UploadHttpLink.mjs": "./UploadHttpLink.mjs"
   },
   "engines": {
-    "node": "^20.9.0 || >=22.0.0"
+    "node": "^22.13.0 || ^24.0.0 || >=26.0.0"
   },
-  "browserslist": "Node 20.9 - 21 and Node < 21, Node >= 22, > 0.5%, not OperaMini all, not dead",
+  "browserslist": "Node 22.13 - 23 and Node < 23, Node 24 - 25 and Node < 25, Node >= 26, > 0.5%, not OperaMini all, not dead",
   "peerDependencies": {
     "@apollo/client": "^4.0.0",
     "graphql": "14 - 16",
