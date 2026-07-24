@@ -10,6 +10,8 @@
 ### Patch
 
 - Updated dev dependencies.
+- Migrated config for TypeScript v7.
+- Updated VS Code workspace settings.
 - Updated GitHub Actions CI config:
   - Run tests with Node.js v22, v24, v26.
   - Removed conditionality for Node.js < v22 support.

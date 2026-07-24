@@ -1,5 +1,6 @@
 {
-  "typescript.disableAutomaticTypeAcquisition": true,
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "js/ts.experimental.useTsgo": true,
+  "js/ts.tsdk.path": "node_modules/typescript",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+  "js/ts.tsserver.automaticTypeAcquisition.enabled": false
 }
