@@ -50,7 +50,7 @@
     "rxjs": "^7.3.0"
   },
   "dependencies": {
-    "extract-files": "^13.0.0"
+    "extract-files": "^14.0.0"
   },
   "devDependencies": {
     "@apollo/client": "^4.1.6",

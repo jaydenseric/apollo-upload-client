@@ -5,6 +5,7 @@
 ### Major
 
 - Updated Node.js support to `^22.13.0 || ^24.0.0 || >=26.0.0`.
+- Updated the dependency [`extract-files`](https://npm.im/extract-files) to v14.
 
 ### Patch
 
