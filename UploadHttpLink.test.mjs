@@ -10,9 +10,9 @@ import { stripIgnoredCharacters } from "graphql";
 import { gql } from "graphql-tag";
 import revertableGlobals from "revertable-globals";
 
-import assertBundleSize from "./test/assertBundleSize.mjs";
-import createUnexpectedCallError from "./test/createUnexpectedCallError.mjs";
-import timeLimitPromise from "./test/timeLimitPromise.mjs";
+import assertBundleSize from "./test-helpers/assertBundleSize.mjs";
+import createUnexpectedCallError from "./test-helpers/createUnexpectedCallError.mjs";
+import timeLimitPromise from "./test-helpers/timeLimitPromise.mjs";
 import UploadHttpLink from "./UploadHttpLink.mjs";
 
 const defaultUri = "/graphql";

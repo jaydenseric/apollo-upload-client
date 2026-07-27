@@ -4,7 +4,7 @@ import { ok, strictEqual } from "node:assert";
 import { describe, it } from "node:test";
 
 import formDataAppendFile from "./formDataAppendFile.mjs";
-import assertBundleSize from "./test/assertBundleSize.mjs";
+import assertBundleSize from "./test-helpers/assertBundleSize.mjs";
 
 describe("Function `formDataAppendFile`.", { concurrency: true }, () => {
   it("Bundle size.", async () => {
