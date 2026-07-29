@@ -37,7 +37,7 @@ See also the [example API and client](https://github.com/jaydenseric/apollo-uplo
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client/react";
 
-/** React component for a uploading a file list. */
+/** React component for uploading a file list. */
 function UploadFileList() {
   const [mutate] = useMutation<
     {
@@ -82,7 +82,7 @@ const mutation = gql`
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client/react";
 
-/** React component for a uploading a file. */
+/** React component for uploading a file. */
 function UploadFile() {
   const [mutate] = useMutation<
     {
@@ -126,7 +126,7 @@ const mutation = gql`
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client/react";
 
-/** React component for a uploading a blob. */
+/** React component for uploading a blob. */
 function UploadBlob() {
   const [mutate] = useMutation<
     {

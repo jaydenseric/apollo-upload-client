@@ -24,8 +24,9 @@
 - Improved the test helper function `assertBundleSize`.
 - Added a `.gitattributes` file to enforce LF line endings.
 - Sorted config in `.editorconfig`.
-- Updated the readme code examples.
+- Updated the readme code examples and fixed typos.
 - Replaced in docs example imports from `@apollo/client/core` with `@apollo/client`, via [#363](https://github.com/jaydenseric/apollo-upload-client/pull/363).
+- Fixed changelog entry typos for v15.0.0 and v18.0.0.
 
 ## 19.0.0
 
@@ -103,7 +104,7 @@
 
     This class was bloating non React Native environments with an extra module, increasing bundle sizes when building and adding an extra step to ESM loading waterfalls in browsers.
 
-    It’s the responsibility of Facebook to adhere to web standards and implement spec-complaint `Blob`, `File`, and `FormData` globals in the React Native environment.
+    It’s the responsibility of Facebook to adhere to web standards and implement spec-compliant `Blob`, `File`, and `FormData` globals in the React Native environment.
 
     To migrate, React Native projects that are unable to use the standard globals can manually implement a class `ReactNativeFile` and match it with a custom function `isReactNativeFile` for use with the function `createUploadLink` option `isExtractableFile`.
 
@@ -223,7 +224,7 @@
 - Stopped supporting Internet Explorer.
 - Changed [`@apollo/client`](https://npm.im/@apollo/client) from a dependency to a peer dependency, fixing [#251](https://github.com/jaydenseric/apollo-upload-client/issues/251) via [#252](https://github.com/jaydenseric/apollo-upload-client/pull/252).
 - Updated dependencies, some of which require newer Node.js versions than previously supported.
-- Replaced the the `package.json` `exports` field public [subpath folder mapping](https://nodejs.org/api/packages.html#packages_subpath_folder_mappings) (deprecated by Node.js) with a [subpath pattern](https://nodejs.org/api/packages.html#packages_subpath_patterns). Deep `require` paths within `apollo-upload-client/public/` must now include the `.js` file extension.
+- Replaced the `package.json` `exports` field public [subpath folder mapping](https://nodejs.org/api/packages.html#packages_subpath_folder_mappings) (deprecated by Node.js) with a [subpath pattern](https://nodejs.org/api/packages.html#packages_subpath_patterns). Deep `require` paths within `apollo-upload-client/public/` must now include the `.js` file extension.
 - Removed Babel related dependencies, config, and scripts. Published modules now contain more modern ES syntax.
 - Published modules now contain JSDoc comments, which might affect TypeScript projects.
 - The tests are now ESM in `.mjs` files instead of CJS in `.js` files.
