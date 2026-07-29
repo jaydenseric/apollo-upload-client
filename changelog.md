@@ -5,6 +5,7 @@
 ### Major
 
 - Updated Node.js support to `^22.13.0 || ^24.0.0 || >=26.0.0`.
+- Updated the [`graphql`](https://npm.im/graphql) peer dependency to `^16.0.0 || ^17.0.0`, fixing [#368](https://github.com/jaydenseric/apollo-upload-client/issues/368).
 - Updated the dependency [`extract-files`](https://npm.im/extract-files) to v14.
 
 ### Patch
