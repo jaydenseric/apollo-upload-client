@@ -10,6 +10,7 @@
 ### Patch
 
 - Updated dev dependencies.
+- Added the missing dev dependency [`globals`](https://npm.im/globals).
 - Migrated config for TypeScript v7.
 - Updated VS Code workspace settings.
 - Updated GitHub Actions CI config:
