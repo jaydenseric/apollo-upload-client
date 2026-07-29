@@ -24,6 +24,7 @@
 - Added a `.gitattributes` file to enforce LF line endings.
 - Sorted config in `.editorconfig`.
 - Updated the readme code examples.
+- Replaced in docs example imports from `@apollo/client/core` with `@apollo/client`, via [#363](https://github.com/jaydenseric/apollo-upload-client/pull/363).
 
 ## 19.0.0
 
