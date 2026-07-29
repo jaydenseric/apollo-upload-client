@@ -14,7 +14,7 @@
 - Migrated config for TypeScript v7.
 - Updated VS Code workspace settings.
 - Updated GitHub Actions CI config:
-  - Run tests with Node.js v22, v24, v26.
+  - Run tests with the lower and upper bounds of each supported major Node.js version.
   - Removed conditionality for Node.js < v22 support.
   - Updated `actions/checkout` to v7.
   - Updated `actions/setup-node` to v7.
