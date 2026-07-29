@@ -19,6 +19,7 @@
   - Updated `actions/checkout` to v7.
   - Updated `actions/setup-node` to v7.
 - Switched to the Node.js test runner code coverage, removing the dev dependency [`coverage-node`](https://npm.im/coverage-node).
+- Added a `.gitattributes` file to enforce LF line endings.
 - Updated the readme code examples.
 
 ## 19.0.0
