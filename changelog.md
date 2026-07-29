@@ -19,6 +19,7 @@
   - Updated `actions/checkout` to v7.
   - Updated `actions/setup-node` to v7.
 - Switched to the Node.js test runner code coverage, removing the dev dependency [`coverage-node`](https://npm.im/coverage-node).
+- Improved the test helper function `assertBundleSize`.
 - Added a `.gitattributes` file to enforce LF line endings.
 - Sorted config in `.editorconfig`.
 - Updated the readme code examples.

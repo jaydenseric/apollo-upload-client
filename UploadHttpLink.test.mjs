@@ -33,6 +33,8 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     await assertBundleSize(
       new URL("./UploadHttpLink.mjs", import.meta.url),
       1800,
+      // Package peer dependencies.
+      ["@apollo/client", "graphql", "rxjs"],
     );
   });
 
