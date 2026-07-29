@@ -38,8 +38,8 @@ import isExtractableFile from "./isExtractableFile.mjs";
  * A basic Apollo Client setup:
  *
  * ```js
+ * import { ApolloClient } from "@apollo/client";
  * import { InMemoryCache } from "@apollo/client/cache";
- * import { ApolloClient } from "@apollo/client/core";
  * import UploadHttpLink from "apollo-upload-client/UploadHttpLink.mjs";
  *
  * const client = new ApolloClient({

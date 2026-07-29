@@ -34,7 +34,7 @@ See also the [example API and client](https://github.com/jaydenseric/apollo-uplo
 ### [`FileList`](https://developer.mozilla.org/en-US/docs/Web/API/FileList)
 
 ```tsx
-import { gql } from "@apollo/client/core";
+import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client/react";
 
 /** React component for a uploading a file list. */
@@ -79,7 +79,7 @@ const mutation = gql`
 ### [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File)
 
 ```tsx
-import { gql } from "@apollo/client/core";
+import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client/react";
 
 /** React component for a uploading a file. */
@@ -123,7 +123,7 @@ const mutation = gql`
 ### [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)
 
 ```tsx
-import { gql } from "@apollo/client/core";
+import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client/react";
 
 /** React component for a uploading a blob. */
