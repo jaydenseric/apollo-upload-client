@@ -41,39 +41,39 @@
     "./UploadHttpLink.mjs": "./UploadHttpLink.mjs"
   },
   "engines": {
-    "node": "^20.9.0 || >=22.0.0"
+    "node": "^22.13.0 || ^24.0.0 || >=26.0.0"
   },
-  "browserslist": "Node 20.9 - 21 and Node < 21, Node >= 22, > 0.5%, not OperaMini all, not dead",
+  "browserslist": "Node 22.13 - 23 and Node < 23, Node 24 - 25 and Node < 25, Node >= 26, > 0.5%, not OperaMini all, not dead",
   "peerDependencies": {
     "@apollo/client": "^4.0.0",
     "graphql": "14 - 16",
     "rxjs": "^7.3.0"
   },
   "dependencies": {
-    "extract-files": "^13.0.0"
+    "extract-files": "^14.0.0"
   },
   "devDependencies": {
-    "@apollo/client": "^4.0.2",
-    "@eslint/js": "^9.34.0",
-    "@types/node": "^24.3.0",
-    "coverage-node": "^8.0.0",
-    "esbuild": "^0.25.9",
-    "eslint": "^9.34.0",
-    "eslint-plugin-optimal-modules": "^3.0.0",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "graphql": "^16.11.0",
+    "@apollo/client": "^4.1.6",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.1.1",
+    "esbuild": "^0.28.1",
+    "eslint": "^10.8.0",
+    "eslint-plugin-optimal-modules": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^14.0.0",
+    "globals": "^17.8.0",
+    "graphql": "^16.13.0",
     "graphql-tag": "^2.12.6",
     "gzip-size": "^7.0.0",
-    "prettier": "^3.6.2",
+    "prettier": "^3.8.1",
     "revertable-globals": "^4.0.0",
     "rxjs": "^7.8.2",
-    "typescript": "^5.9.2"
+    "typescript": "^7.0.2"
   },
   "scripts": {
     "prettier": "prettier -c .",
     "eslint": "eslint",
     "types": "tsc -p jsconfig.json",
-    "test": "coverage-node --test-reporter=spec --test *.test.mjs",
+    "test": "node --test --experimental-test-coverage --test-coverage-lines=100 --test-coverage-branches=100 --test-coverage-functions=100 --test-coverage-exclude='**/*.test.*' --test-coverage-exclude='test-helpers/**' --test-reporter=spec",
     "check": "node --run prettier && node --run eslint && node --run types && node --run test",
     "prepublishOnly": "node --run check"
   }

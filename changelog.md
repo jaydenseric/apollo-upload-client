@@ -2,8 +2,27 @@
 
 ## Next
 
+### Major
+
+- Updated Node.js support to `^22.13.0 || ^24.0.0 || >=26.0.0`.
+- Updated the dependency [`extract-files`](https://npm.im/extract-files) to v14.
+
 ### Patch
 
+- Updated dev dependencies.
+- Added the missing dev dependency [`globals`](https://npm.im/globals).
+- Migrated config for TypeScript v7.
+- Updated VS Code workspace settings.
+- Updated GitHub Actions CI config:
+  - Run tests with the lower and upper bounds of each supported major Node.js version.
+  - Removed conditionality for Node.js < v22 support.
+  - Updated `actions/checkout` to v7.
+  - Updated `actions/setup-node` to v7.
+- Switched to the Node.js test runner code coverage, removing the dev dependency [`coverage-node`](https://npm.im/coverage-node).
+- Refactored tests from `describe` and `it` to `suite` and `test`.
+- Improved the test helper function `assertBundleSize`.
+- Added a `.gitattributes` file to enforce LF line endings.
+- Sorted config in `.editorconfig`.
 - Updated the readme code examples.
 
 ## 19.0.0

@@ -5,7 +5,7 @@
     "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "strict": true
+    "types": ["node"]
   },
   "typeAcquisition": {
     "enable": false

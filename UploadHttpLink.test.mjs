@@ -1,7 +1,7 @@
 // @ts-check
 
 import { deepEqual, deepStrictEqual, ok, strictEqual } from "node:assert";
-import { describe, it } from "node:test";
+import { suite, test } from "node:test";
 
 import { ServerError } from "@apollo/client/errors";
 import { ApolloLink } from "@apollo/client/link";
@@ -10,9 +10,9 @@ import { stripIgnoredCharacters } from "graphql";
 import { gql } from "graphql-tag";
 import revertableGlobals from "revertable-globals";
 
-import assertBundleSize from "./test/assertBundleSize.mjs";
-import createUnexpectedCallError from "./test/createUnexpectedCallError.mjs";
-import timeLimitPromise from "./test/timeLimitPromise.mjs";
+import assertBundleSize from "./test-helpers/assertBundleSize.mjs";
+import createUnexpectedCallError from "./test-helpers/createUnexpectedCallError.mjs";
+import timeLimitPromise from "./test-helpers/timeLimitPromise.mjs";
 import UploadHttpLink from "./UploadHttpLink.mjs";
 
 const defaultUri = "/graphql";
@@ -28,15 +28,17 @@ const mockExecuteContext = /** @type {ApolloLink.ExecuteContext} */ (
   Object.freeze({})
 );
 
-describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
-  it("Bundle size.", async () => {
+suite("Class `UploadHttpLink`.", { concurrency: true }, () => {
+  test("Bundle size.", async () => {
     await assertBundleSize(
       new URL("./UploadHttpLink.mjs", import.meta.url),
       1800,
+      // Package peer dependencies.
+      ["@apollo/client", "graphql", "rxjs"],
     );
   });
 
-  it("Default options, a query, no files.", async () => {
+  test("Default options, a query, no files.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
@@ -103,7 +105,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     }
   });
 
-  it("Default options, a mutation, files.", async () => {
+  test("Default options, a mutation, files.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
@@ -197,7 +199,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     }
   });
 
-  it("Option `uri`.", async () => {
+  test("Option `uri`.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
@@ -263,7 +265,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     deepStrictEqual(nextData, payload);
   });
 
-  it("Option `includeExtensions`.", async () => {
+  test("Option `includeExtensions`.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
@@ -340,7 +342,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     deepStrictEqual(nextData, payload);
   });
 
-  it("Option `includeUnusedVariables`, set to false.", async () => {
+  test("Option `includeUnusedVariables`, set to false.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
@@ -414,7 +416,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     deepStrictEqual(nextData, payload);
   });
 
-  it("Option `includeUnusedVariables`, set to true.", async () => {
+  test("Option `includeUnusedVariables`, set to true.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
@@ -489,7 +491,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     deepStrictEqual(nextData, payload);
   });
 
-  it("Option `print`.", async () => {
+  test("Option `print`.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
@@ -558,7 +560,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     deepStrictEqual(nextData, payload);
   });
 
-  it("Option `fetchOptions.method`.", async () => {
+  test("Option `fetchOptions.method`.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
@@ -625,7 +627,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     deepStrictEqual(nextData, payload);
   });
 
-  it("Option `useGETForQueries`, query, no files.", async () => {
+  test("Option `useGETForQueries`, query, no files.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
@@ -692,7 +694,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     deepStrictEqual(nextData, payload);
   });
 
-  it("Option `useGETForQueries`, query, files.", async () => {
+  test("Option `useGETForQueries`, query, files.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
@@ -785,7 +787,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     deepStrictEqual(nextData, payload);
   });
 
-  it("Option `useGETForQueries`, query, no files, unserializable variables.", async () => {
+  test("Option `useGETForQueries`, query, no files, unserializable variables.", async () => {
     let fetched = false;
 
     const query = "query ($a: Boolean) {\n  a(a: $a)\n}";
@@ -835,7 +837,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     strictEqual(observerError, parseError);
   });
 
-  it("Option `useGETForQueries`, mutation, no files.", async () => {
+  test("Option `useGETForQueries`, mutation, no files.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
@@ -900,7 +902,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     deepStrictEqual(nextData, payload);
   });
 
-  it("Options `isExtractableFile` and `formDataAppendFile`.", async () => {
+  test("Options `isExtractableFile` and `formDataAppendFile`.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
@@ -1012,7 +1014,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     deepStrictEqual(nextData, payload);
   });
 
-  it("HTTP error.", async () => {
+  test("HTTP error.", async () => {
     /** @type {Response | undefined} */
     let fetchResponse;
 
@@ -1053,7 +1055,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     deepStrictEqual(observerError.bodyText, responseBody);
   });
 
-  it("Fetch error.", async () => {
+  test("Fetch error.", async () => {
     const fetchError = new Error("Expected.");
     const observerError = await timeLimitPromise(
       new Promise((resolve, reject) => {
@@ -1084,7 +1086,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     strictEqual(observerError, fetchError);
   });
 
-  it("Option `fetchOptions.signal`, not yet aborted.", async () => {
+  test("Option `fetchOptions.signal`, not yet aborted.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
@@ -1160,7 +1162,7 @@ describe("Class `UploadHttpLink`.", { concurrency: true }, () => {
     strictEqual(observerError, fetchError);
   });
 
-  it("Option `fetchOptions.signal`, already aborted.", async () => {
+  test("Option `fetchOptions.signal`, already aborted.", async () => {
     /** @type {unknown} */
     let fetchInput;
 
